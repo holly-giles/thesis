@@ -1,0 +1,36 @@
+# Introduction
+
+```{r loadLibraries, echo = FALSE}
+library(ggplot2)
+```
+
+Brief: 
+Referencing: 
+* What do we already know about the subject (literature review)? Use citations:
+  @JCIpaper shows that... Alternative Forms of the Wald test are
+  considered [@JCIpaper].
+
+* Provide an overview of your results.
+
+* Outline of the paper:\
+  _The thesis is organized as follows. The next section describes the model
+  under investigation. Section "[Data]" describes the data set
+  and Section "[Results]" presents the results. Finally, Section
+  "[Conclusion]" concludes._
+  
+* The introduction should  be around  8 pages.
+
+The microenvironment in CLL constitutes cross talk via soluble factors and cell-cell contacts, in the blood, bone marrow and lymph nodes. \@ref(fig:microenvironmentOverview)
+```{r microenvironmentCrosstalk, fig.cap= "Summary of microenvironmental in CLL", echo = FALSE}
+
+#knitr::include_graphics("figures/microenvironmentCrosstalk.eps")
+
+```
+
+```{r microenvironmentTissues, fig.cap= "The tissues that constitute the microenvironment in CLL", echo = FALSE}
+
+#knitr::include_graphics("figures/microenvironmentTissues.eps")
+
+```
+
+

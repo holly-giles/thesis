@@ -1,0 +1,573 @@
+---
+title: 'CLL Cytokine Screen 2021: Figure 6 sense check'
+author: "Holly Giles"
+date: "`r doc_date()`"
+output:
+  BiocStyle::html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+    code_folding: "hide" 
+---
+
+# Set up
+```{r setup6}
+set.seed(1996)
+```
+
+Load libraries
+```{r, loadLibraries6, cache = FALSE, message = FALSE, warning = FALSE}
+library(plyr)
+library(dplyr)
+library(ggpubr)
+library(ggbeeswarm)
+library(ggplot2)
+library(data.table)
+library(magrittr)
+library(pheatmap)
+library(gtable)
+library(glmnet)
+library(RColorBrewer)
+library(gridExtra)
+library(patchwork)
+library(cowplot)
+library(tidyverse)
+
+```
+
+Set plot directory
+```{r plotDir6}
+plotDir = ifelse(exists(".standalone"), "", "../../inst/figs/")
+if(plotDir!="") if(!file.exists(plotDir)) dir.create(plotDir)
+```
+
+# Load data
+Load raw files
+```{r LoadData6}
+
+#df: tibblecontaining all screening viability data
+load( "../../data/df.RData")
+df_clean <- df
+
+#patMeta: tibble containing all patient genetic data
+load( "../../data/patMeta.RData")
+
+```
+
+Process data
+```{r processData6}
+
+#only high concentrations of drugs
+df <- 
+  dplyr::filter(df, Drug_Concentration %in% c("None","High")) %>% 
+  dplyr::select(PatientID, Drug, Cytokine, DCK, Log)
+
+#rename columns
+df <- 
+  plyr::rename(df, 
+               c("Drug"="treatment_drug", 
+                 "Cytokine"="treatment_cytokine", 
+                 "Log"="Viability"))
+    
+```
+
+Define lists
+```{r getLists6}
+#lists for drug and cytokine treatments
+thecytokines <- unique(df$treatment_cytokine) %>% setdiff("No Cytokine")
+thedrugs <- unique(df$treatment_drug) %>% setdiff("DMSO")
+
+```
+
+
+# Define aesthetics
+```{r defineAesthetics6}
+
+source("../../R/themes_colors.R")
+
+```
+
+# Define gene matrix 
+```{r featureMatrix6}
+#select features from patient meta file
+geneMatrix <- dplyr::select(patMeta, -c(gender:treatment, Methylation_Cluster)) %>%
+  
+  #adjust IGHV levels to 1 and 0 
+  mutate(IGHV.status = ifelse(is.na(IGHV.status), NA, 
+                              ifelse(IGHV.status == "M", 1, 0))) %>% 
+  
+    #change factors to characters and then to numeric  
+    mutate_if(is.factor, as.character) %>% 
+  
+    mutate_at(vars(-PatientID), as.numeric) %>%
+  
+  #convert to matrix format
+  data.frame() %>% 
+  column_to_rownames("PatientID") %>% 
+  as.matrix()
+#Remove genes with higher than 20% missing values
+geneMatrix <- geneMatrix[,colSums(is.na(geneMatrix))/nrow(geneMatrix) <= 0.2]
+#Filter for patients with complete data
+geneMatrix.complete <- geneMatrix[complete.cases(geneMatrix),]
+nrow(geneMatrix.complete)
+#Combine KRAS, NRAS and BRAF mutations into a single column
+##Add Ras_raf column
+Ras_Raf <- matrix(NA, nrow = nrow(geneMatrix.complete), ncol = 1)
+colnames(Ras_Raf) <- "KRAS,\nNRAS,\nBRAF"
+geneMatrix.complete <- cbind(geneMatrix.complete, Ras_Raf)
+#Add a 1 where any of KRAS, NRAS or BRAF are mutated
+geneMatrix.complete[,"KRAS,\nNRAS,\nBRAF"] <- ifelse(geneMatrix.complete[,"KRAS"]==1,1,
+		                                        ifelse(geneMatrix.complete[,"BRAF"]==1,1,
+	                	                          ifelse(geneMatrix.complete[,"NRAS"]==1, 1, 0)))
+#Remove individual KRAS, NRAS and BRAF columns 
+geneMatrix.complete <- geneMatrix.complete[, !colnames(geneMatrix.complete) %in%  c("KRAS", "NRAS", "BRAF")]
+```
+
+
+## Define Response matrix
+Run linear model to get drug:stimulus:patient coefficients
+```{r responseMatrix6}
+
+#create a list of drug - cytokine combinations
+combos <- expand.grid(thedrugs, thecytokines) %>% mutate(combination = paste(Var1, Var2, sep = ":")) %>% dplyr::select(combination)
+
+
+#create object to store linear model fit
+fit <- vector(mode = 'list', length = length(combos$combination))
+names(fit) <- combos$combination
+
+#create an object to store coefficients from fit
+coefficients_6 <- vector(mode = 'list', length = length(combos$combination))
+names(coefficients_6) <- combos$combination
+
+#define drugs and cytokines to run the model for
+for(x in thedrugs){
+  for(y in thecytokines){
+    
+    #get data for given drug and stimulis, and matching pateints to feature matrix
+    modelTab <- dplyr::filter(df, 
+                       PatientID %in% rownames(geneMatrix.complete), 
+                       treatment_drug%in% c(x, "DMSO"), 
+                       treatment_cytokine %in% c(y, "No Cytokine") )
+    
+ 
+    
+    #define the base level per treatment_type as the "no"-treatment
+    modelTab$treatment_drug <- as.factor(modelTab$treatment_drug)
+    modelTab$treatment_cytokine <- as.factor(modelTab$treatment_cytokine)
+    modelTab$PatientID <- as.factor(modelTab$PatientID)
+    
+    #generate patient 0 as average of other patients 
+    Pat_0 <- modelTab %>%
+    group_by(DCK) %>%
+    dplyr::summarize(Mean = mean(Viability)) %>% ungroup() %>% mutate(PatientID = "Pat_000")
+    colnames(Pat_0) <-c("DCK", "Viability", "PatientID") 
+    
+    #add treatment columns 
+    treatcol <- filter(modelTab, PatientID == "Pat_001") %>% select(DCK, treatment_drug,treatment_cytokine )
+    Pat_0 <- left_join(Pat_0, treatcol, by = "DCK") 
+    
+    #put in correct order
+    Pat_0$PatientID <- as.factor(Pat_0$PatientID)
+    Pat_0 <- Pat_0[c(3, 4,5,1,2)]
+    
+    #join to modelTab
+    modelTab <- rbind(Pat_0, modelTab)
+
+    modelTab$treatment_cytokine %<>% relevel("No Cytokine")
+    modelTab$treatment_drug %<>% relevel("DMSO")
+    modelTab$PatientID %<>% relevel("Pat_000")
+    
+    # fit linear model, with interaction
+    nam <- paste(x,y, sep = ":")
+    fit.lm <- lm(Viability ~ treatment_drug * treatment_cytokine * PatientID, modelTab)
+    fit[[nam]] <- fit.lm
+    
+    #extract coefficients and p values and put into a dataframe
+    coeffdf <- summary(fit.lm)$coefficients[,1] %>% as.data.frame()
+
+    #process coeffdf
+    setDT(coeffdf, keep.rownames = TRUE)[]
+    colnames(coeffdf) <- c("treatment", "beta")
+
+    #filter out non-drug:cytokine:patient coefficients
+    coeffdf <- dplyr::filter(coeffdf,
+                      grepl('treatment_drug.*treatment_cytokine.*PatientID*', treatment))
+
+      #remove treatment
+      coeffdf <- coeffdf %>% 
+        #remove treatment_drug string
+        mutate_at(vars(treatment), list(~as.character(gsub("treatment_drug", "", .)))) %>%
+        #remove treatment_cytokine string
+        mutate_at(vars(treatment), list(~as.character(gsub("treatment_cytokine", "", .)))) %>%
+        #remove PatientID string
+        mutate_at(vars(treatment), list(~as.character(gsub("PatientID", "", .))))
+
+      #split up into seperate drug, cytokine and patient columns, by colons
+      coeffdf <- data.frame(coeffdf, do.call(rbind, strsplit(coeffdf$treatment, split = ":", fixed = TRUE)))
+
+      #select columns of interest and rename
+      coeffdf <- coeffdf[, c("beta", "X1", "X2", "X3")]
+      colnames(coeffdf) <- c("beta","Drug", "Cytokine", "PatientID")
+      
+      #store in coefficients object 
+      coefficients_6[[nam]] <- coeffdf
+         
+  }
+}
+
+```
+
+# get coefficients from figure 5
+
+
+
+
+Process data
+```{r processData5}
+
+df <- df_clean
+
+# List of Cytokines, Drugs and treatments 
+  ##Drugs
+  thedrugs <- unique(df$Drug) 
+
+  ##Cytokines
+  thecytokines <- unique(df$Cytokine) 
+
+  #Treatments
+  #drugs
+  drugtreatments <- list()
+  drugtreatments <- 
+    lapply(thedrugs, function(x){
+      paste("treatment_drug", x, sep='')
+      })
+  
+  
+  #cytokines
+  cytokinetreatments <- list()
+  cytokinetreatments <- 
+    lapply(thecytokines, function(y){
+      paste("treatment_cytokine", y, sep='')
+      })
+
+
+# Tidy up data frame to use in linear model
+df <- 
+  dplyr::filter(df,
+                #use high concentrations only
+                Drug_Concentration %in% c("High","None")) %>% 
+  #select columns for linear model
+  dplyr::select(PatientID, Drug, Cytokine, Log) %>%  
+        
+  #rename columns 
+  plyr::rename(c("Drug"="treatment_drug", "Cytokine"="treatment_cytokine", "Log"="Viability"))
+
+```
+
+# Pre - work
+Fit the linear model
+```{r linearModel5, message=FALSE}
+
+
+# define the base level per treatment_type as the "no"-treatment
+df$treatment_drug <- as.factor(df$treatment_drug)
+df$treatment_cytokine <- as.factor(df$treatment_cytokine)
+
+df$treatment_drug %<>% relevel("DMSO")
+df$treatment_cytokine %<>% relevel("No Cytokine")
+
+
+# inspect design matrix of interaction model
+# model.matrix(~treatment_drug + treatment_cytokine + treatment_drug:treatment_cytokine, df)
+
+# fit model with interaction
+fit_fig5 <- lm(Viability ~ treatment_drug * treatment_cytokine, df)
+
+
+```
+
+
+# Compare with coefficients from figure 5 
+
+```{r}
+
+mean(coefficients_6$`Fludarabine:CpG ODN`$beta)
+
+fit_fig5$coefficients["treatment_drugFludarabine:treatment_cytokineCpG ODN"]
+
+mean(coefficients_6$`Ibrutinib:IL-4`$beta)
+
+fit_fig5$coefficients["treatment_drugIbrutinib:treatment_cytokineIL-4"]
+
+fit$`Fludarabine:CpG ODN`
+
+
+```
+
+# Attempt 2
+
+```{r}
+
+coefficients_6$`Fludarabine:CpG ODN`$beta[1] + mean(coefficients_6$`Fludarabine:CpG ODN`$beta[2:length(coefficients_6$`Fludarabine:CpG ODN`$beta)])
+
+fit_fig5$coefficients["treatment_drugFludarabine:treatment_cytokineCpG ODN"]
+
+mean(coefficients_6$`Ibrutinib:IL-4`$beta)
+
+fit_fig5$coefficients["treatment_drugIbrutinib:treatment_cytokineIL-4"]
+
+fit$`Fludarabine:CpG ODN`
+
+
+```
+#Attempt 3
+# Load data
+Load raw files
+```{r LoadData6}
+
+#df: tibblecontaining all screening viability data
+load( "../../data/df.RData")
+df_clean <- df
+
+#patMeta: tibble containing all patient genetic data
+load( "../../data/patMeta.RData")
+
+```
+
+Process data
+```{r processData6}
+
+#only high concentrations of drugs
+df <- 
+  dplyr::filter(df, Drug_Concentration %in% c("None","High")) %>% 
+  dplyr::select(PatientID, Drug, Cytokine, DCK, Log)
+
+#rename columns
+df <- 
+  plyr::rename(df, 
+               c("Drug"="treatment_drug", 
+                 "Cytokine"="treatment_cytokine", 
+                 "Log"="Viability"))
+    
+```
+
+Define lists
+```{r getLists6}
+#lists for drug and cytokine treatments
+thecytokines <- unique(df$treatment_cytokine) %>% setdiff("No Cytokine")
+thedrugs <- unique(df$treatment_drug) %>% setdiff("DMSO")
+
+```
+
+
+# Define aesthetics
+```{r defineAesthetics6}
+
+source("../../R/themes_colors.R")
+
+```
+
+# Define gene matrix 
+```{r featureMatrix6}
+#select features from patient meta file
+geneMatrix <- dplyr::select(patMeta, -c(gender:treatment, Methylation_Cluster)) %>%
+  
+  #adjust IGHV levels to 1 and 0 
+  mutate(IGHV.status = ifelse(is.na(IGHV.status), NA, 
+                              ifelse(IGHV.status == "M", 1, 0))) %>% 
+  
+    #change factors to characters and then to numeric  
+    mutate_if(is.factor, as.character) %>% 
+  
+    mutate_at(vars(-PatientID), as.numeric) %>%
+  
+  #convert to matrix format
+  data.frame() %>% 
+  column_to_rownames("PatientID") %>% 
+  as.matrix()
+#Remove genes with higher than 20% missing values
+geneMatrix <- geneMatrix[,colSums(is.na(geneMatrix))/nrow(geneMatrix) <= 0.2]
+#Filter for patients with complete data
+geneMatrix.complete <- geneMatrix[complete.cases(geneMatrix),]
+nrow(geneMatrix.complete)
+#Combine KRAS, NRAS and BRAF mutations into a single column
+##Add Ras_raf column
+Ras_Raf <- matrix(NA, nrow = nrow(geneMatrix.complete), ncol = 1)
+colnames(Ras_Raf) <- "KRAS,\nNRAS,\nBRAF"
+geneMatrix.complete <- cbind(geneMatrix.complete, Ras_Raf)
+#Add a 1 where any of KRAS, NRAS or BRAF are mutated
+geneMatrix.complete[,"KRAS,\nNRAS,\nBRAF"] <- ifelse(geneMatrix.complete[,"KRAS"]==1,1,
+		                                        ifelse(geneMatrix.complete[,"BRAF"]==1,1,
+	                	                          ifelse(geneMatrix.complete[,"NRAS"]==1, 1, 0)))
+#Remove individual KRAS, NRAS and BRAF columns 
+geneMatrix.complete <- geneMatrix.complete[, !colnames(geneMatrix.complete) %in%  c("KRAS", "NRAS", "BRAF")]
+```
+
+
+## Define Response matrix
+Run linear model to get drug:stimulus:patient coefficients
+```{r responseMatrix6}
+
+#create a list of drug - cytokine combinations
+combos <- expand.grid(thedrugs, thecytokines) %>% mutate(combination = paste(Var1, Var2, sep = ":")) %>% dplyr::select(combination)
+
+
+#create object to store linear model fit
+fit <- vector(mode = 'list', length = length(combos$combination))
+names(fit) <- combos$combination
+
+#create an object to store coefficients from fit
+coefficients_6 <- vector(mode = 'list', length = length(combos$combination))
+names(coefficients_6) <- combos$combination
+
+#define drugs and cytokines to run the model for
+for(x in thedrugs){
+  for(y in thecytokines){
+    
+    #get data for given drug and stimulis, and matching pateints to feature matrix
+    modelTab <- dplyr::filter(df, 
+                       PatientID %in% rownames(geneMatrix.complete), 
+                       treatment_drug%in% c(x, "DMSO"), 
+                       treatment_cytokine %in% c(y, "No Cytokine") )
+    
+ 
+    
+    #define the base level per treatment_type as the "no"-treatment
+    modelTab$treatment_drug <- as.factor(modelTab$treatment_drug)
+    modelTab$treatment_cytokine <- as.factor(modelTab$treatment_cytokine)
+    modelTab$PatientID <- as.factor(modelTab$PatientID)
+    
+  
+    modelTab$treatment_cytokine %<>% relevel("No Cytokine")
+    modelTab$treatment_drug %<>% relevel("DMSO")
+    modelTab$PatientID %<>% relevel("Pat_001")
+    
+    # fit linear model, with interaction
+    nam <- paste(x,y, sep = ":")
+    fit.lm <- lm(Viability ~ treatment_drug * treatment_cytokine * PatientID, modelTab)
+    fit[[nam]] <- fit.lm
+    
+    #extract coefficients and p values and put into a dataframe
+    coeffdf <- summary(fit.lm)$coefficients[,1] %>% as.data.frame()
+
+    #process coeffdf
+    setDT(coeffdf, keep.rownames = TRUE)[]
+    colnames(coeffdf) <- c("treatment", "beta")
+
+    #filter out non-drug:cytokine:patient coefficients
+    coeffdf <- dplyr::filter(coeffdf,
+                      grepl('treatment_drug.*treatment_cytokine.*PatientID*', treatment))
+
+      #remove treatment
+      coeffdf <- coeffdf %>% 
+        #remove treatment_drug string
+        mutate_at(vars(treatment), list(~as.character(gsub("treatment_drug", "", .)))) %>%
+        #remove treatment_cytokine string
+        mutate_at(vars(treatment), list(~as.character(gsub("treatment_cytokine", "", .)))) %>%
+        #remove PatientID string
+        mutate_at(vars(treatment), list(~as.character(gsub("PatientID", "", .))))
+
+      #split up into seperate drug, cytokine and patient columns, by colons
+      coeffdf <- data.frame(coeffdf, do.call(rbind, strsplit(coeffdf$treatment, split = ":", fixed = TRUE)))
+
+      #select columns of interest and rename
+      coeffdf <- coeffdf[, c("beta", "X1", "X2", "X3")]
+      colnames(coeffdf) <- c("beta","Drug", "Cytokine", "PatientID")
+      
+      #store in coefficients object 
+      coefficients_6[[nam]] <- coeffdf
+         
+  }
+}
+
+```
+
+# get coefficients from figure 5
+
+
+
+
+Process data
+```{r processData5}
+
+df <- df_clean
+
+# List of Cytokines, Drugs and treatments 
+  ##Drugs
+  thedrugs <- unique(df$Drug) 
+
+  ##Cytokines
+  thecytokines <- unique(df$Cytokine) 
+
+  #Treatments
+  #drugs
+  drugtreatments <- list()
+  drugtreatments <- 
+    lapply(thedrugs, function(x){
+      paste("treatment_drug", x, sep='')
+      })
+  
+  
+  #cytokines
+  cytokinetreatments <- list()
+  cytokinetreatments <- 
+    lapply(thecytokines, function(y){
+      paste("treatment_cytokine", y, sep='')
+      })
+
+
+# Tidy up data frame to use in linear model
+df <- 
+  dplyr::filter(df,
+                #use high concentrations only
+                Drug_Concentration %in% c("High","None")) %>% 
+  #select columns for linear model
+  dplyr::select(PatientID, Drug, Cytokine, Log) %>%  
+        
+  #rename columns 
+  plyr::rename(c("Drug"="treatment_drug", "Cytokine"="treatment_cytokine", "Log"="Viability"))
+
+```
+
+# Pre - work
+Fit the linear model
+```{r linearModel5, message=FALSE}
+
+
+# define the base level per treatment_type as the "no"-treatment
+df$treatment_drug <- as.factor(df$treatment_drug)
+df$treatment_cytokine <- as.factor(df$treatment_cytokine)
+
+df$treatment_drug %<>% relevel("DMSO")
+df$treatment_cytokine %<>% relevel("No Cytokine")
+
+
+# inspect design matrix of interaction model
+# model.matrix(~treatment_drug + treatment_cytokine + treatment_drug:treatment_cytokine, df)
+
+# fit model with interaction
+fit_fig5 <- lm(Viability ~ treatment_drug * treatment_cytokine, df)
+
+
+```
+
+```{r}
+
+fit$`Fludarabine:CpG ODN`$coefficients["(Intercept)"] + mean(coefficients_6$`Fludarabine:CpG ODN`$beta)
+
+fit_fig5$coefficients["treatment_drugFludarabine:treatment_cytokineCpG ODN"]
+
+
+fit$`Ibrutinib:IL-4`$coefficients["(Intercept)"] + mean(coefficients_6$`Ibrutinib:IL-4`$beta)
+
+fit_fig5$coefficients["treatment_drugIbrutinib:treatment_cytokineIL-4"]
+
+
+fit$`Luminespib:Interferon gamma`$coefficients["(Intercept)"] + mean(coefficients_6$`Luminespib:Interferon gamma`$beta)
+
+fit_fig5$coefficients["treatment_drugLuminespib:treatment_cytokineInterferon gamma"]
+
+
+
+```

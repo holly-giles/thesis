@@ -1,0 +1,1167 @@
+---
+title: 'Figure 6'
+author: "Holly Giles, Peter Bruch"
+date: "`r doc_date()`"
+output:
+  BiocStyle::html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+    
+---
+
+
+This is an rmd to replicate Figure 6 of the [Drug:Cytokine Screen 2020 Paper](https://docs.google.com/presentation/d/1If-vKsdeObLqaz2YLdMufWBMqflxJXZ7PLEw1l-HfrU/edit#slide=id.g71fba574c2_5_14). 
+
+# Set up
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE, message = TRUE, warning = TRUE, cache = TRUE, include = TRUE )
+set.seed(1996)
+```
+
+Load libraries
+```{r, loadLibraries}
+library(tidyverse)
+library(data.table)
+library(pheatmap)
+library(gtable)
+library(glmnet)
+library(RColorBrewer)
+library(gridExtra)
+library(patchwork)
+library(cowplot)
+library(ggbeeswarm)
+library(ggpubr)
+```
+
+Set plot directory
+```{r plotDir}
+plotDir = ifelse(exists(".standalone"), "", "../figs/")
+if(plotDir!="") if(!file.exists(plotDir)) dir.create(plotDir)
+```
+
+#Load data
+Load raw files
+```{r Load data}
+#indicate filepath of git repo
+filepath<-"/Volumes/huber/users/giles/projects/publications/cytokine_screen_2020/"
+#filepath<-"C:/Users/PeterBruch/cytokine_screen_2020/"
+
+load(paste(filepath, "/vignettes/Finalised/data/Cytokine_Screen_27_09_20.RData", sep = ""))
+
+```
+
+Process data
+```{r tidyData}
+
+#only high concentrations of drugs
+df <- 
+  dplyr::filter(df, Drug_Concentration %in% c("None","High")) %>% 
+  dplyr::select(PatientID, Drug, Cytokine, DCK, Log)
+
+#rename columns
+df <- 
+  plyr::rename(df, 
+               c("Drug"="treatment_drug", 
+                 "Cytokine"="treatment_cytokine", 
+                 "Log"="Viability"))
+    
+
+
+#merge meta data and viability data
+df_patmeta <- left_join(df, patMeta, by = "PatientID")
+```
+
+Define lists
+```{r getLists}
+#lists for drug and cytokine treatments
+thecytokines <- unique(df$treatment_cytokine) %>% setdiff("No Cytokine")
+thedrugs <- unique(df$treatment_drug) %>% setdiff("DMSO")
+
+```
+
+# Define Aesthetics
+```{r defineAesthetics}
+
+source(paste0(filepath, "/vignettes/Finalised/themes_colors.R"))
+
+```
+
+
+# Define functions
+*Run Glmnet function:*  This function takes a feature matrix(X), the patient genetic features and a continuous response matrix (y), the interaction coefficients for a given drug : stimulus combination, for each patient. The function runs lasso or ridge regularized regression, in order to identify genetic predictors of the size of an interaction between a drug and stimulus. The function will run the cv.glmnet function for the chosen number of repeats,  applying cross-fold validation using chosen number of folds. 
+```{r runGlm }
+#Function for multi-variant regression
+runGlm <- function(X, y, method = "lasso", repeats = 20, folds = 3) {
+  #set up objects to store results
+  modelList <- list()
+  lambdaList <- c()
+  varExplain <- c()
+  coefMat <- matrix(NA, ncol(X), repeats)
+  rownames(coefMat) <- colnames(X)
+
+  #set alpha
+  if (method == "lasso"){
+    alpha = 1
+  } else if (method == "ridge") {
+    alpha = 0
+  }
+  
+  #for the set number of repeats, run the regression
+  for (i in seq(repeats)) {
+    if (ncol(X) > 2) {
+      #run cross validated generalised linear model with given parameters
+      res <- cv.glmnet(X,y, type.measure = "mse", family="gaussian", 
+                       nfolds = folds, alpha = alpha, standardize = FALSE)
+      
+      #store lamdas and min lambda value
+      lambdaList <- c(lambdaList, res$lambda.min)
+      
+      #store result of cv.glmnet
+      modelList[[i]] <- res
+      
+      #get coefficents with min lambda value 
+      coefModel <- coef(res, s = "lambda.min")[-1] #remove intercept row
+      
+      #store coefficients for this repeat
+      coefMat[,i] <- coefModel
+      
+      #calculate variance explained
+      if(sum(coefModel !=0)){
+      y.pred <- predict(res, s = "lambda.min", newx = X)
+      #if there are no predictors, all y.pred will be the same so its not possible to calculate variance explained because the SD is 0
+      varExp <- cor(as.vector(y),as.vector(y.pred))^2
+      }else{ varExp <- NA}
+      varExplain[i] <- ifelse(is.na(varExp), 0, varExp) 
+      
+     
+      
+    } else {
+      fitlm<-lm(y~., data.frame(X))
+      varExp <- summary(fitlm)$r.squared
+      varExplain <- c(varExplain, varExp)
+      
+    }
+
+  }
+  #store all results 
+  list(modelList = modelList, lambdaList = lambdaList, varExplain = varExplain, coefMat = coefMat)
+}
+```
+
+
+
+# Running Lasso
+## Feature matrix
+```{r Feature matrix}
+#select features from patient meta file
+geneMatrix <- dplyr::select(patMeta, -c(gender:date.of.first.treatment, Methylation_Cluster)) %>%
+
+  
+  #adjust IGHV levels to 1 and 0 
+  mutate(IGHV.status = ifelse(is.na(IGHV.status), NA, 
+                              ifelse(IGHV.status == "M", 1, 0))) %>% 
+  
+  #change factors to characters and then to numeric  
+    mutate_if(is.factor, as.character) %>% 
+  
+    mutate_at(vars(-PatientID), as.numeric) %>%
+  
+  #convert to matrix format
+  data.frame() %>% 
+  column_to_rownames("PatientID") %>% 
+  as.matrix()
+
+
+#Remove genes with higher than 20% missing values
+#this geneMatrix can be used in t tests
+geneMatrix <- geneMatrix[,colSums(is.na(geneMatrix))/nrow(geneMatrix) <= 0.2]
+
+
+
+#Further geneMatrix processing for glmnet
+#Filter for patients with complete data
+geneMatrix.complete <- geneMatrix[complete.cases(geneMatrix),]
+nrow(geneMatrix.complete)
+
+#Combine KRAS, NRAS and BRAF mutations into a single column
+##Add Ras_raf column
+Ras_Raf <- matrix(NA, nrow = nrow(geneMatrix.complete), ncol = 1)
+colnames(Ras_Raf) <- "KRAS,\nNRAS,\nBRAF"
+geneMatrix.complete <- cbind(geneMatrix.complete, Ras_Raf)
+
+#Add a 1 where any of KRAS, NRAS or BRAF are mutated
+geneMatrix.complete[,"KRAS,\nNRAS,\nBRAF"] <- ifelse(geneMatrix.complete[,"KRAS"]==1,1,
+		                                        ifelse(geneMatrix.complete[,"BRAF"]==1,1,
+	                	                          ifelse(geneMatrix.complete[,"NRAS"]==1, 1, 0)))
+
+#Remove individual KRAS, NRAS and BRAF columns 
+geneMatrix.complete <- geneMatrix.complete[, !colnames(geneMatrix.complete) %in%  c("KRAS", "NRAS", "BRAF")]
+
+
+```
+
+## Response matrix
+Run linear model to get drug - cyt - patient coefficients
+```{r Linear model}
+#create a list of drug - cytokien combinations
+combos <- expand.grid(thedrugs, thecytokines) %>% mutate(combination = paste(Var1, Var2, sep = ":")) %>% select(combination)
+
+recalculateFit <- FALSE
+
+if(recalculateFit){
+
+#create object to sotre linear model fit
+fit <- vector(mode = 'list', length = length(combos$combination))
+names(fit) <- combos$combination
+
+#create an object to store coefficients from fit
+coefficients <- vector(mode = 'list', length = length(combos$combination))
+names(coefficients) <- combos$combination
+
+#define drugs and cytokines to run the model for
+for(x in thedrugs){
+  for(y in thecytokines){
+   
+    modelTab <- filter(df, PatientID %in% rownames(geneMatrix.complete), treatment_drug%in% c(x, "DMSO"), treatment_cytokine %in% c(y, "No Cytokine") )
+    
+    #define the base level per treatment_type as the "no"-treatment
+    modelTab$treatment_drug <- as.factor(modelTab$treatment_drug)
+    modelTab$treatment_cytokine <- as.factor(modelTab$treatment_cytokine)
+    modelTab$PatientID <- as.factor(modelTab$PatientID)
+
+    modelTab$treatment_cytokine %<>% relevel("No Cytokine")
+    modelTab$treatment_drug %<>% relevel("DMSO")
+    modelTab$PatientID %<>% relevel("Pat_001")
+    
+    # fit model with interaction
+    nam <- paste(x,y, sep = ":")
+    fit.lm <- lm(Viability ~ treatment_drug * treatment_cytokine * PatientID, modelTab)
+    fit[[nam]] <- fit.lm
+    
+    #extract coefficients and p values and put into a dataframe
+    coeffdf <- summary(fit.lm)$coefficients[,1] %>% as.data.frame()
+
+    #process coeffdf
+    setDT(coeffdf, keep.rownames = TRUE)[]
+    colnames(coeffdf) <- c("treatment", "beta")
+
+    #filter out non-drug:cytokine:patient coefficients
+    coeffdf <- filter(coeffdf,
+                      grepl('treatment_drug.*treatment_cytokine.*PatientID*', treatment))
+
+      #remove treatment
+      coeffdf <- coeffdf %>% 
+        #remove treatment_drug string
+        mutate_at(vars(treatment), list(~as.character(gsub("treatment_drug", "", .)))) %>%
+        #remove treatment_cytokine string
+        mutate_at(vars(treatment), list(~as.character(gsub("treatment_cytokine", "", .)))) %>%
+        #remove PatientID string
+        mutate_at(vars(treatment), list(~as.character(gsub("PatientID", "", .))))
+
+      #split up intp sperate drug, cytokine and patient columns, by colons
+      coeffdf <- data.frame(coeffdf, do.call(rbind, strsplit(coeffdf$treatment, split = ":", fixed = TRUE)))
+
+      #select columns of interst and rename
+      coeffdf <- coeffdf[, c("beta", "X1", "X2", "X3")]
+      colnames(coeffdf) <- c("beta","Drug", "Cytokine", "PatientID")
+      
+      coefficients[[nam]] <- coeffdf
+         
+  }
+}
+
+
+
+save(coefficients, file=paste0(filepath, "/data/Figure6/lm_coefficients.RData"))
+
+}else{
+
+  
+
+load(file=paste0(filepath, "/data/Figure6/lm_coefficients.RData"))
+  
+}
+
+```
+
+Generate response matrix from lm coefficients
+```{r Coeff Matrix}
+
+#bind together all result
+coefficients.all <- rbindlist(coefficients)
+
+#make matrix
+betaMatrix <- 
+  dplyr:: mutate(coefficients.all, 
+                 drugCytokine = paste0(Drug," + ",Cytokine)) %>%
+  dplyr::select(-Cytokine, -Drug) %>%
+  spread(key = PatientID, value = beta) %>% 
+  data.frame() %>% 
+  remove_rownames() %>%
+  column_to_rownames("drugCytokine")
+
+#make sure the sample order is the same as the geneMatrix
+geneMatrix.complete <- geneMatrix.complete[ rownames(geneMatrix.complete) != "Pat_001",]
+betaMatrix <- betaMatrix[,rownames(geneMatrix.complete)]
+
+#check there are no NAs 
+which(is.na(betaMatrix))
+
+which(betaMatrix == 0)
+
+```
+
+
+## Run glmnet
+
+```{r lasso1}
+
+recalculatelasso = FALSE
+
+if(recalculatelasso){
+
+  dataResult <- list()
+
+for (x in rownames(betaMatrix)){ 
+      #prepare input and response matrices
+      y <- unlist(betaMatrix[x,])
+      X <- geneMatrix.complete
+    
+      #fit the model and find optimal value of lamba
+      cvglmfit <- runGlm(X, y, method="lasso", repeats=30, folds=3)
+      dataResult[[x]] <- cvglmfit
+
+}
+
+save(dataResult, file = paste0(filepath, "/data/Figure6/lassoResult.RData")) 
+
+}else{
+  
+  load(file = paste0(filepath, "/data/Figure6/lassoResult.RData"))
+}
+
+
+```
+
+# Figures
+## Fig 6A
+Heatmap of all sig coefficients
+```{r}
+
+#Set up vector to hold coeff values
+barValues <- vector(mode="list", length=length(dataResult))
+names(barValues) <- names(dataResult)
+
+
+#Set cut offs  
+coefCut <- 0.01
+freqCut <- 0.4
+
+lassoOut <- dataResult
+
+for (seaName in names(lassoOut)) { 
+    #get the result from DataResult for given drug:cytokine interaction, extraxt coefficient matrix and find row means 
+    barValue <- rowMeans(lassoOut[[seaName]]$coefMat)
+    
+    #check numberof occurences of each coefficient in lasso repeats
+    freqValue <- rowMeans(abs(sign(lassoOut[[seaName]]$coefMat)))
+    
+    for(nam in names(barValue)){
+      #add NA if coefficient value is below thresholds
+      if(abs(barValue[nam]) < coefCut | freqValue[nam] < freqCut) {
+          barValue[nam] <- NA }
+    }  
+    #add set of coefficients to list
+    barValues[[seaName]] <- barValue
+}
+
+#bind coefficients together for all interactions
+coeff.mat <- do.call(rbind,barValues)
+   
+#remove rows where all values are 0
+coeff.mat <- coeff.mat[ rowSums(!is.na(coeff.mat)) > 0,]  
+
+#remove columns where all values are 0
+coeff.mat <- coeff.mat[ ,colSums(!is.na(coeff.mat)) > 0]  
+
+
+```
+
+
+```{r, Fig6A, fig.path=plotDir, dev=c("png", "pdf"), fig.width = 10, fig.height = 18}
+
+coeff.mat[is.na(coeff.mat)] <- 0
+
+  
+#Put matrix into long format for ggplot
+coeff.long.mat <- coeff.mat %>% as.data.frame() %>% tibble::rownames_to_column("int") %>% gather(key = "gene", value = "coeff", -int)
+
+
+order_alt <-
+  coeff.long.mat %>% 
+  filter(coeff!=0) %>% 
+  group_by(gene) %>% 
+  dplyr::count(sort=T) %>% 
+  dplyr::select(gene) %>% 
+  unlist() 
+
+
+  
+#Plot heatmap
+Fig6A <- 
+  coeff.long.mat %>%
+  dplyr::mutate(gene=factor(gene, levels = order_alt)) %>% 
+  
+  ggplot(aes(x=int, y=gene))+
+  geom_tile(aes(fill=coeff),color = "white")+
+  scale_fill_gradientn(colors=c(rep(palblues[1:4],each=2),"white", rep(palreds[5:8], each=2)),  limits=c(-0.8,.8))+
+  t1+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.ticks.x =element_blank(),
+        panel.background = element_rect(color = "black"), 
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        legend.key.height=unit(2, "cm"))+
+  theme(legend.title = element_text(size=16, 
+                                    face='bold',
+                                    hjust = 1),
+                legend.position = c(0.87, 0.6),
+                legend.key = element_blank(),
+                legend.text = element_text(size=16),
+                legend.background = element_rect(color = "black"))+
+  labs(fill = "Coefficient \n Value")+
+  scale_y_discrete(labels=c("KRAS,\nNRAS,\nBRAF"="RAS/RAF")) +
+  coord_flip()
+  
+Fig6A
+
+```
+
+##Fig 6B
+Fludarabine + CpG, stratifiedby IGHV status and Trisomy12 
+```{r Fig6B, fig.path=plotDir, dev=c("png", "pdf"), fig.height=5.5, fig.width=6}
+
+
+Fig6B =  
+  #Filter for data of interest
+  df_patmeta %>% 
+
+  dplyr::filter(treatment_drug=="Fludarabine",
+                treatment_cytokine=="CpG ODN",
+                !is.na(trisomy12),
+                !is.na(IGHV.status)) %>%
+   
+  #Generate plot      
+  ggplot(aes(x = interaction(IGHV.status, trisomy12),
+             y = Viability,
+             color =(trisomy12))) +
+  #add points
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  
+  #Add labels/guides/pvalues
+  geom_hline(yintercept = 0) +
+  guides(color="none", shape="none") +
+  
+  scale_x_discrete(labels=c("M.0"="IGHV M\n non-Tri 12",
+                            "U.0"="IGHV U\n non-Tri 12",
+                            "M.1"="IGHV M\n Tri 12",
+                            "U.1"="IGHV U\n Tri 12")) +
+  
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     comparisons = list( c(1,2), c(3,4), c(1,3)),
+                     size=7) +
+  xlab("") +
+  ylab("Log(Viability)") +
+  ggtitle("Treatment: Fludarabine + CpG ODN") +
+
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+  
+  t2
+
+
+
+Fig6B
+
+
+```
+
+## Fig 6C
+The combined effect of IL4 and TP53 mutations on fludarabine toxicity
+```{r Fig6C, fig.path=plotDir, dev=c("png", "pdf"), fig.height=5.5, fig.width=6}
+
+Fig6C =
+  
+  df_patmeta %>% 
+  dplyr::filter(treatment_drug == "Fludarabine",
+                treatment_cytokine == "IL-4",
+                !is.na(TP53)) %>% 
+
+  #make plot       
+  ggplot(aes(x=TP53,
+             y=Viability,
+             color=(TP53)))+
+  
+  #add boxplots and poinnts
+  geom_boxplot() +
+  geom_beeswarm(cex=1.5) +
+  
+  #add guides / p values etc
+  guides(color="none", shape="none")+
+  geom_hline(yintercept = 0) +
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     comparisons = list(c(1,2)),
+                     size=7)+
+  xlab("") +
+  ylab("Log(Viability)") +
+  ggtitle("Treatment: Fludarabine + IL4") +
+  scale_x_discrete(labels = c("1" = "TP53", "0" = "WT")) +
+
+  #Aesthetics
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+  t2
+
+
+
+
+Fig6C
+
+
+```
+
+
+
+
+
+
+
+
+
+## Fig6D
+Ibrutinib toxicity depends onn IGHV status and trisomy 12, but is irrelevant in the context of IL4 
+
+```{r Fig6D, fig.path=plotDir, dev=c("png", "pdf"), fig.height=5.5, fig.width=6}
+
+
+Fig6D =  
+  #Filter for data of interest
+  df_patmeta %>% 
+
+  dplyr::filter(treatment_drug=="Ibrutinib",
+                treatment_cytokine=="IL-4",
+                !is.na(trisomy12),
+                !is.na(IGHV.status)) %>%
+   
+  #Generate plot      
+  ggplot(aes(x = interaction(IGHV.status, trisomy12),
+             y = Viability,
+             color =(trisomy12))) +
+  
+  #add points
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  
+  #Add labels/guides/pvalues
+  geom_hline(yintercept = 0) +
+  guides(color="none", shape="none") +
+  
+  scale_x_discrete(labels=c("M.0"="IGHV M\n Non-Tri 12",
+                            "U.0"="IGHV U\n Non-Tri 12",
+                            "M.1"="IGHV M\n Tri 12",
+                            "U.1"="IGHV U\n Tri 12")) +
+  
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     comparisons = list( c(1,2), c(3,4), c(1,3)),
+                     size=7) +
+  xlab("") +
+  ylab("Log(Viability)") +
+  ggtitle("Treatment: Ibrutinib + IL4") +
+
+  #Aesthetics
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+  t2
+
+
+
+Fig6D
+
+
+```
+
+
+
+##Fig6E
+soluble anti-IgM increases Luminespib efficacy and this is dependent on genetic background
+```{r Fig6E, fig.path=plotDir, dev=c("png", "pdf"), fig.height=5.5, fig.width=6}
+
+
+  Fig6E = 
+  df_patmeta %>% 
+  dplyr::filter(treatment_drug=="Luminespib",
+                treatment_cytokine=="soluble anti-IgM",
+                !is.na(TP53),
+                !is.na(IGHV.status)) %>%
+  
+  
+
+
+  ggplot(aes(x = interaction(TP53,IGHV.status),
+             y = Viability,
+             color=(TP53))) +
+  
+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  
+  
+  guides(color="none", shape="none")+
+  scale_x_discrete(labels=c("0.M"="IGHV M\n WT",
+                            "0.U"="IGHV U\n WT",
+                            "1.M"="IGHV M\n TP53",
+                            "1.U"="IGHV U\n TP53"))+
+  
+  geom_hline(yintercept = 0) +
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     comparisons = list( c(1,2), c(3,4), c(1,3),c(2,4)),
+                     size=7)+
+  xlab("") +
+  ylab("Log(Viability)") +
+  
+  ggtitle("Treatment: Luminespib + soluble anti-IgM") +
+
+  #Aesthetics
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+  t2
+
+
+Fig6E
+
+
+```
+
+
+##Supplement
+To supplement Fig6B:  
+###Supp.1
+Fludarabine only 
+```{r Supp.1, fig.path=plotDir, dev=c("png", "pdf"), fig.height=5.5, fig.width=6}
+
+
+Supp.1 =  
+  
+  #Filter for data of interest
+  df_patmeta %>% 
+
+  dplyr::filter(treatment_drug=="Fludarabine",
+                treatment_cytokine=="No Cytokine",
+                !is.na(trisomy12),
+                !is.na(IGHV.status)) %>%
+   
+  #Generate plot      
+  ggplot(aes(x = interaction(IGHV.status, trisomy12),
+             y = Viability,
+             color =(trisomy12))) +
+  #add points
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  
+  #Add labels/guides/pvalues
+  geom_hline(yintercept = 0) +
+  guides(color="none", shape="none") +
+  
+  scale_x_discrete(labels=c("M.0"="IGHV M\n non-Tri 12",
+                            "U.0"="IGHV U\n non-Tri 12",
+                            "M.1"="IGHV M\n Tri 12",
+                            "U.1"="IGHV U\n Tri 12")) +
+  
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     comparisons = list( c(1,2), c(3,4), c(1,3)),
+                     size=7) +
+  xlab("") +
+  ylab("Log(Viability)") +
+  ggtitle("Treatment: Fludarabine Only") +
+
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+  
+  t2
+
+
+
+Supp.1
+
+
+```
+
+###Supp.2
+Comparing Fludarabine and Fludarabine + CpG in different genetic backgrounds
+``` {r Supp.2, fig.height = 7, fig.width = 5}
+
+#set facet labels 
+tri12.labs <- c("0" = "non-Tri12", "1" = "Tri12")
+ighv.labs <- c("U" = "IGHV-U", "M" =  "IGHV-M")
+
+
+
+
+Supp.2 <- 
+  
+  df_patmeta %>% 
+  dplyr::filter(DCK%in%c("DMSO:CpG ODN",
+                         "Fludarabine:CpG ODN",
+                         "Fludarabine:No Cytokine"),
+    
+                !is.na(trisomy12),
+                !is.na(IGHV.status)) %>%
+  
+  
+  ggplot(aes(x=DCK,y=Viability,color= DCK))+
+  facet_grid(vars(trisomy12), vars(IGHV.status),labeller = labeller(trisomy12 = tri12.labs, IGHV.status = ighv.labs))+
+  
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  
+  guides(color="none", shape="none")+
+    
+  geom_hline(yintercept = 0)+
+  
+  
+  stat_compare_means(method = "t.test",
+                     label.y.npc = 0.8, 
+                     paired = TRUE, 
+                     comparisons = list(c(1,2), c(2,3)))+
+  
+  xlab("") +
+  ylab("Log(Viability)") +
+  
+  scale_x_discrete(labels=c("DMSO:CpG ODN"="CpG",
+                            "Fludarabine:No Cytokine"="Fludarabine",
+                            "Fludarabine:CpG ODN"="Fludarabine \n+CpG "))+  
+    
+  ggtitle("Fludarabine + CpG ODN Responses") +
+  scale_color_manual(values=c(colors[4], colors[3],colors[5])) + 
+  
+  t2 +theme(strip.background =element_rect(fill=colors[7]))
+  
+
+Supp.2
+```
+###Supp.3
+To supplement Fig6C:   
+c) Effect of TP53 on Fludarabine alone
+```{r Supp.3, fig.path=plotDir, dev=c("png", "pdf"), fig.height=5.5, fig.width=6}
+
+
+
+Supp.3 =
+  
+  df_patmeta %>% 
+  dplyr::filter(treatment_drug=="Fludarabine",
+                treatment_cytokine=="No Cytokine",
+                !is.na(TP53)) %>%
+         
+  ggplot(aes(x=TP53,
+             y=Viability,
+             color=(TP53))) +
+  
+  
+  geom_hline(yintercept = 0) +
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  scale_x_discrete(labels=c("0"="WT",
+                            "1"="TP53"))+
+                        
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     
+                     size=7)+
+  xlab("") +
+  ylab("Log(Viability)") +
+  ggtitle(expression("Treatment: Fludarabine")) +
+
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+  
+  t2
+
+
+Supp.3
+
+
+```
+###Supp.4
+d) The combined inmpact of IL4 and TP53 on Fludarabine efficacy 
+``` {r Supp.4, fig.height = 7, fig.width = 5}
+
+#set facet labels 
+TP53.labs <- c("0" = "WT", "1" = "TP53 Mutated")
+
+
+Supp.4 <- 
+  
+  df_patmeta %>% 
+  dplyr::filter(DCK%in%c("DMSO:IL-4",
+                         "Fludarabine:IL-4",
+                         "Fludarabine:No Cytokine"),
+    
+                !is.na(TP53)) %>%
+  
+  
+  ggplot(aes(x=DCK, y=Viability, color= DCK))+
+  facet_wrap(vars(TP53),labeller = labeller(TP53 = TP53.labs))+
+  
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  
+  guides(color="none", shape="none")+
+    
+  geom_hline(yintercept = 0)+
+  
+  
+  stat_compare_means(method = "t.test",
+                     label.y.npc = 0.8, 
+                     paired = TRUE, 
+                     comparisons = list(c(1,2),c(2,3)))+
+  
+  xlab("") +
+  ylab("Log(Viability)") +
+  
+  scale_x_discrete(labels=c("DMSO:IL-4"="IL4",
+                            "Fludarabine:No Cytokine"="Fludarabine",
+                            "Fludarabine:IL-4"="Fludarabine \n+IL4"))+  
+    
+  ggtitle("Fludarabine + IL4 Responses") +
+  scale_color_manual(values=c(colors[4], colors[3],colors[5])) + 
+  
+  t2 +theme(strip.background =element_rect(fill=colors[7]))
+  
+
+Supp.4
+```
+###Supp.5
+To supplement Figure6D: 
+e) Ibrutinib alone is affected by both trisomy 12 and ighv status:   
+```{r Supp.5, fig.path=plotDir, dev=c("png", "pdf"), fig.height=5.5, fig.width=6}
+
+Supp.5 =  
+  #Filter for data ofinterest
+  df_patmeta %>% 
+
+  dplyr::filter(treatment_drug=="Ibrutinib",
+                treatment_cytokine=="No Cytokine",
+                !is.na(trisomy12),
+                !is.na(IGHV.status)) %>%
+   
+  #Generate plot      
+  ggplot(aes(x = interaction(IGHV.status, trisomy12),
+             y =Viability,
+             color =(trisomy12))) +
+  #add points
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  
+  #Add labels/guides/pvalues
+  geom_hline(yintercept = 0) +
+  guides(color="none", shape="none") +
+  
+  scale_x_discrete(labels=c("M.0"="IGHV M\n non-Trisomy12",
+                            "U.0"="IGHV U\n non-Trisomy12",
+                            "M.1"="IGHV M\n Trisomy 12",
+                            "U.1"="IGHV U\n Trisomy 12")) +
+  
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     comparisons = list( c(1,2), c(3,4), c(1,3)),
+                     size=7) +
+  xlab("") +
+  ylab("Log(Viability)") +
+  ggtitle(expression("Treatment: Ibrutinib")) +
+
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+  
+  t2
+
+
+
+Supp.5
+
+
+```
+
+
+###Supp.6
+Ibrutinib and IL4, indiviudal and combined treatments in different backgrounds
+``` {r Supp.6, fig.height = 7, fig.width = 5}
+
+#set facet labels 
+tri12.labs <- c("0" = "non-Tri12", "1" = "Tri12")
+ighv.labs <- c("U" = "IGHV-U", "M" =  "IGHV-M")
+
+
+Supp.6 <- 
+  
+  df_patmeta %>% 
+  dplyr::filter(DCK%in%c("DMSO:IL-4",
+                         "Ibrutinib:IL-4",
+                         "Ibrutinib:No Cytokine"),
+    
+                !is.na(trisomy12),
+                !is.na(IGHV.status)) %>%
+  
+  
+  ggplot(aes(x=DCK,y=Viability,color= DCK))+
+  facet_grid(vars(trisomy12), vars(IGHV.status),
+             labeller = labeller(trisomy12 = tri12.labs, 
+                                 IGHV.status = ighv.labs))+
+  
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  
+  guides(color="none", shape="none")+
+    
+  geom_hline(yintercept = 0)+
+  
+  
+  stat_compare_means(method = "t.test",
+                     label.y.npc = 0.8, 
+                     paired = TRUE, 
+                     comparisons = list(c(1,2), c(2,3)))+
+  
+  xlab("") +
+  ylab("Log(Viability)") +
+  
+  scale_x_discrete(labels=c("DMSO:IL-4"="IL4",
+                            "Ibrutinib:No Cytokine"="Ibrutinib",
+                            "Ibrutinib:IL4"="Ibutinib \n+IL4"))+  
+    
+  ggtitle("Ibrutinib + IL4 Responses") +
+  scale_color_manual(values=c(colors[4], colors[3],colors[5])) + 
+  
+  t2 +theme(strip.background =element_rect(fill=colors[7]))
+  
+
+Supp.6
+```
+###Supp.7
+To supplement Figure 6E:
+f) Luminespib stratified by TP53 and IGHV has little difference of luminespib toxicity
+
+```{r Supp.7, fig.path=plotDir, dev=c("png", "pdf"), fig.height=5.5, fig.width=6}
+Supp.7 =  
+  
+  
+  df_patmeta %>% 
+  dplyr::filter(treatment_drug=="Luminespib",
+                treatment_cytokine=="No Cytokine",
+                !is.na(TP53),
+                !is.na(IGHV.status)) %>%
+         
+  ggplot(aes(x=interaction(TP53, IGHV.status),
+                    y=Viability,
+                    color=(TP53))) +
+  
+  
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  
+  scale_x_discrete(labels=c("0.M"="IGHV M\n WT",
+                            "0.U"="IGHV U\n WT",
+                            "1.M"="IGHV M\n TP53",
+                            "1.U"="IGHV U\n TP53"))+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     comparisons = list( c(1,2), c(3,4), c(1,3),c(2,4)),
+                     size=7)+
+  xlab("") +
+  ylab("Log(Viability)") +
+  ggtitle("Treatment: Luminespib only") +
+ 
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+  
+  t2
+
+
+
+Supp.7
+
+
+```
+###Supp.8
+``` {r Supp.8, fig.height = 7, fig.width = 5}
+
+#set facet labels 
+tp53.labs <- c("0" = "WT", "1" = "TP53 Mutated")
+ighv.labs <- c("U" = "IGHV-U", "M" =  "IGHV-M")
+
+
+Supp.8 <- 
+  
+  df_patmeta %>% 
+  dplyr::filter(DCK%in%c("DMSO:soluble anti-IgM",
+                         "Luminespib:soluble anti-IgM",
+                         "Luminespib:No Cytokine"),
+    
+                !is.na(TP53),
+                !is.na(IGHV.status)) %>%
+  
+  
+  ggplot(aes(x=DCK,y=Viability,color= DCK))+
+  facet_grid(vars(TP53), vars(IGHV.status),
+             labeller = labeller(TP53 = tp53.labs, 
+                                 IGHV.status = ighv.labs))+
+  
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  
+  guides(color="none", shape="none")+
+    
+  geom_hline(yintercept = 0)+
+  
+  
+  stat_compare_means(method = "t.test",
+                     label.y.npc = 0.8, 
+                     paired = TRUE, 
+                     comparisons = list(c(1,2), c(2,3)))+
+  
+  xlab("") +
+  ylab("Log(Viability)") +
+  
+  scale_x_discrete(labels=c("DMSO:soluble anti-IgM"="anti-\nIgM",
+                            "Luminespib:No Cytokine"="Luminespib",
+                            "Luminespib:soluble anti-IgM"="Luminespib \n+anti-IgM"))+  
+    
+  ggtitle("Luminespib + anti-IgM Responses") +
+  scale_color_manual(values=c(colors[4], colors[3],colors[5])) + 
+  
+  t2 +theme(strip.background =element_rect(fill=colors[7]))
+  
+
+Supp.8
+```
+
+
+# Assemble Figure
+```{r, Fig6, fig.path=plotDir, dev=c("png", "pdf"), fig.height = 27, fig.width = 18 , cache=FALSE}
+
+
+#Design
+design1<-"
+  AB
+  AC
+  AD
+  AE
+"
+
+#Tag Theme
+tp <- theme(plot.tag=element_text(size = 30))
+
+
+
+png(filename= "Fig6.png",height = 27, width = 18,units = "in", res=100)
+# Plot
+Fig6A + tp +
+  
+Fig6B + tp +
+  
+Fig6C + tp +
+
+Fig6D + tp +
+  
+Fig6E + tp +
+  
+
+plot_annotation(tag_levels = "A") + 
+
+plot_layout(design=design1, heights = c(2, 2, 2, 2), widths = c(1.5,1))
+
+dev.off()
+
+```
+# Arrange Supplementary Figure
+```{R SuppA,fig.path=plotDir, dev=c("png", "pdf"), fig.height = 27, fig.width = 18}
+
+
+#Design
+design1<-"
+  AB
+  CD
+"
+
+#Tag Theme
+tp <- theme(plot.tag=element_text(size = 30))
+
+
+
+png(filename= "Fig6_SupplementA.png",height = 13.5, width = 22,units = "in", res=100)
+# Plot
+
+Supp.2 + tp +
+  
+Supp.4 + tp +
+
+Supp.6 + tp +
+  
+Supp.8 + tp +
+  
+plot_annotation(tag_levels = "A") + 
+
+plot_layout(design=design1, heights = c(1, 1, 2, 2), widths = c(1,1))
+
+dev.off()
+
+
+
+```
+
+
+```{R SuppB,fig.path=plotDir, dev=c("png", "pdf"), fig.height = 27, fig.width = 18}
+
+
+#Design
+design1<-"
+  AB
+  CD
+"
+
+#Tag Theme
+tp <- theme(plot.tag=element_text(size = 30))
+
+
+
+png(filename= "Fig6_SupplementB.png",height = 14, width = 22,units = "in", res=100)
+# Plot
+Supp.1 + tp +
+  
+Supp.3 + tp +
+  
+Supp.5 + tp +
+
+Supp.7 + tp +
+
+  
+plot_annotation(tag_levels = "A") + 
+
+plot_layout(design=design1, heights = c(1, 1), widths = c(1,1))
+
+dev.off()
+
+
+
+```
+
+
+# Appendix
+```{r}
+Sys.info()
+sessionInfo()
+```

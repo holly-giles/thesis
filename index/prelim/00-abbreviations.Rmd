@@ -1,0 +1,42 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# List of Abbreviations {-}
+
+\begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
+    AKT & & Protein kinase B \\
+    BCR & & B-cell receptor \\
+    BTK & & Bruton’s tyrosine kinase \\
+    CDF & & Cumulative Distribution Function \\
+    CLL & & Chronic lymphocytic leukemia \\
+    CNV & & Copy number variation \\
+    CpG ODN & & CpG oligodeoxynucleotides \\
+    ERK/MAPK signalling & & Mitogen-activated protein kinase signalling \\
+    FBS & & Fetal bovine serum \\
+    FDR & & False discovery rate \\
+    GSEA & & Gene set enrichment analysis  \\
+    Ig & & Immunoglobulin \\
+    IGHV & & Immunoglobulin heavy chain variable region \\
+    IL & & Interleukin \\
+    JAK & & Janus kinase \\
+    M-CLL & & CLL with somatic hypermutations in IGHV loci \\
+    NF$\kappa$B & & Nuclear factor kappa-light-chain-enhancer of activated B cells \\
+    NOTCH & & Neurogenic locus notch  \\
+    OS & & Overall survival \\
+    PBMC & & Peripheral blood mononuclear cells \\
+    PCA & & Principal component analysis \\
+    PI3K & & Phosphoinositide 3-kinase \\
+    U-CLL & & CLL without somatic hypermutations in IGHV loci \\
+    TGF$\beta$ & & Transforming growth factor $\beta$ \\
+    TLR & & Toll-like receptor \\ 
+    TTT & & Time to next treatment \\
+    SF3B1 & & Splicing factor 3B subunit 1 \\
+    STAT & & Signal transducer and activator of transcription \\
+    SYK & & Spleen tyrosine kinase \\
+    ZAP70 & & Tyrosine-protein kinase ZAP-70 \\
+
+    
+   
+\end{tabular}

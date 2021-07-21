@@ -1,0 +1,1151 @@
+This is LuaHBTeX, Version 1.13.0 (TeX Live 2021)  (format=lualatex 2021.6.3)  9 JUL 2021 12:18
+ restricted system commands enabled.
+**thesis.tex
+(./thesis.tex
+LaTeX2e <2020-10-01> patch level 4
+Lua module: luaotfload 2021-01-08 3.17 Lua based OpenType font support
+Lua module: lualibs 2020-12-30 2.73 ConTeXt Lua standard libraries.
+Lua module: lualibs-extended 2020-12-30 2.73 ConTeXt Lua libraries -- extended c
+ollection.
+luaotfload | conf : Root cache directory is "/Users/holly/Library/texlive/2021/t
+exmf-var/luatex-cache/generic/names".
+luaotfload | init : Loading fontloader "fontloader-2021-01-07.lua" from kpse-res
+olved path "/usr/local/texlive/2021/texmf-dist/tex/luatex/luaotfload/fontloader-
+2021-01-07.lua".
+Lua-only attribute luaotfload@noligature = 1
+Lua-only attribute luaotfload@syllabe = 2
+luaotfload | init : Context OpenType loader version 0x1.8e76c8b439581p+1
+Inserting `luaotfload.node_processor' at position 1 in `pre_linebreak_filter'.
+Inserting `luaotfload.node_processor' at position 1 in `hpack_filter'.
+Inserting `luaotfload.glyph_stream' at position 1 in `glyph_stream_provider'.
+Inserting `luaotfload.define_font' at position 1 in `define_font'.
+Lua-only attribute luaotfload_color_attribute = 3
+luaotfload | conf : Root cache directory is "/Users/holly/Library/texlive/2021/t
+exmf-var/luatex-cache/generic/names".
+Inserting `luaotfload.harf.strip_prefix' at position 1 in `find_opentype_file'.
+Inserting `luaotfload.harf.strip_prefix' at position 1 in `find_truetype_file'.
+Inserting `luaotfload.harf.finalize_vlist' at position 1 in `post_linebreak_filt
+er'.
+Inserting `luaotfload.harf.finalize_hlist' at position 2 in `hpack_filter'.
+Inserting `luaotfload.cleanup_files' at position 1 in `wrapup_run'.
+Inserting `luaotfload.harf.finalize_unicode' at position 1 in `finish_pdffile'.
+Inserting `luaotfload.glyphinfo' at position 1 in `glyph_info'.
+Inserting `luaotfload.aux.set_sscale_dimens' at position 1 in `luaotfload.patch_
+font'.
+Inserting `luaotfload.aux.set_font_index' at position 2 in `luaotfload.patch_fon
+t'.
+Inserting `luaotfload.aux.patch_cambria_domh' at position 3 in `luaotfload.patch
+_font'.
+Inserting `luaotfload.aux.fixup_fontdata' at position 1 in `luaotfload.patch_fon
+t_unsafe'.
+Inserting `luaotfload.aux.set_capheight' at position 4 in `luaotfload.patch_font
+'.
+Inserting `luaotfload.aux.set_xheight' at position 5 in `luaotfload.patch_font'.
+Inserting `luaotfload.rewrite_fontname' at position 6 in `luaotfload.patch_font'
+. L3 programming layer <2021-02-18> (/usr/local/texlive/2021/texmf-dist/tex/lat
+ex/base/book.cls
+Document Class: book 2020/04/10 v1.4m Standard LaTeX document class
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/bk11.clo
+File: bk11.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+luaotfload | db : Font names database loaded from /Users/holly/Library/texlive/2
+021/texmf-var/luatex-cache/generic/names/luaotfload-names.luc)
+\c@part=\count175
+\c@chapter=\count176
+\c@section=\count177
+\c@subsection=\count178
+\c@subsubsection=\count179
+\c@paragraph=\count180
+\c@subparagraph=\count181
+\c@figure=\count182
+\c@table=\count183
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+(/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count184
+\Gm@cntv=\count185
+\c@Gm@tempcnt=\count186
+\Gm@bindingoffset=\dimen139
+\Gm@wd@mp=\dimen140
+\Gm@odd@mp=\dimen141
+\Gm@even@mp=\dimen142
+\Gm@layoutwidth=\dimen143
+\Gm@layoutheight=\dimen144
+\Gm@layouthoffset=\dimen145
+\Gm@layoutvoffset=\dimen146
+\Gm@dimlist=\toks16
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2020/09/23 v2.17i AMS math features
+\@mathmargin=\skip49
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks17
+\ex@=\dimen147
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen148
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count187
+LaTeX Info: Redefining \frac on input line 236.
+\uproot@=\count188
+\leftroot@=\count189
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count190
+\DOTSCASE@=\count191
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box47
+\strutbox@=\box48
+\big@size=\dimen149
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count192
+\c@MaxMatrixCols=\count193
+\dotsspace@=\muskip16
+\c@parentequation=\count194
+\dspbrk@lvl=\count195
+\tag@help=\toks18
+\row@=\count196
+\column@=\count197
+\maxfields@=\count198
+\andhelp@=\toks19
+\eqnshift@=\dimen150
+\alignsep@=\dimen151
+\tagshift@=\dimen152
+\tagwidth@=\dimen153
+\totwidth@=\dimen154
+\lineht@=\dimen155
+\@envbody=\toks20
+\multlinegap=\skip50
+\multlinetaggap=\skip51
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2923.
+LaTeX Info: Redefining \] on input line 2924.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks22
+\thm@bodyfont=\toks23
+\thm@headfont=\toks24
+\thm@notefont=\toks25
+\thm@headpunct=\toks26
+\thm@preskip=\skip52
+\thm@postskip=\skip53
+\thm@headsep=\skip54
+\dth@everypar=\toks27
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: luatex.def on input line 105.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-def/luatex.def
+File: luatex.def 2020/10/05 v1.2a Graphics/color driver for luatex
+))
+\Gin@req@height=\dimen156
+\Gin@req@width=\dimen157
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip55
+\bibsep=\skip56
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count199
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen158
+\captionmargin@=\dimen159
+\captionwidth=\dimen160
+\caption@tempdima=\dimen161
+\caption@indent=\dimen162
+\caption@parindent=\dimen163
+\caption@hangindent=\dimen164
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count266
+\c@continuedfloat=\count267
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/floatrow/floatrow.sty
+Package: floatrow 2008/08/02 v0.3b floatrow: float package extension
+\c@float@type=\count268
+\float@exts=\toks28
+\float@box=\box49
+\@floatcapt=\box50
+Package floatrow Info: Modified float package code loaded on input line 455.
+Package floatrow Info: Modified rotfloat package code loaded on input line 473.
+
+\FR@everyfloat=\toks29
+\flrow@foot=\insert252
+\FB@wd=\dimen165
+\FBo@wd=\dimen166
+\FBc@wd=\dimen167
+\FBo@ht=\skip57
+\FBc@ht=\skip58
+\FBf@ht=\skip59
+\FBo@max=\skip60
+\FBc@max=\skip61
+\FBf@max=\skip62
+\c@FBl@b=\count269
+\floatbox@depth=\count270
+\c@FRobj=\count271
+\c@FRsobj=\count272
+\Xhsize=\skip63
+\sXhsize=\skip64
+\Zhsize=\skip65
+\sZhsize=\skip66
+\flrow@rowbox=\box51
+\FR@Zunitlength=\dimen168
+\c@FBcnt=\count273
+\FPOScnt=\count274
+\LTleft=\skip67
+\LTright=\skip68
+\LTleft=\skip69
+\LTright=\skip70
+\flrow@types=\toks30
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen169
+\lightrulewidth=\dimen170
+\cmidrulewidth=\dimen171
+\belowrulesep=\dimen172
+\belowbottomsep=\dimen173
+\aboverulesep=\dimen174
+\abovetopsep=\dimen175
+\cmidrulesep=\dimen176
+\cmidrulekern=\dimen177
+\defaultaddspace=\dimen178
+\@cmidla=\count275
+\@cmidlb=\count276
+\@aboverulesep=\dimen179
+\@belowrulesep=\dimen180
+\@thisruleclass=\count277
+\@lastruleclass=\count278
+\@thisrulewidth=\dimen181
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/footmisc/footmisc.sty
+Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
+\FN@temptoken=\toks31
+\footnotemargin=\dimen182
+\c@pp@next@reset=\count279
+Package footmisc Info: Declaring symbol style bringhurst on input line 855.
+Package footmisc Info: Declaring symbol style chicago on input line 863.
+Package footmisc Info: Declaring symbol style wiley on input line 872.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 883.
+
+Package footmisc Info: Declaring symbol style lamport* on input line 903.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
+.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
+(/usr/local/texlive/2021/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+(/usr/local/texlive/2021/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+\pdftexcmds@toks=\toks32
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+)
+\@linkdim=\dimen183
+\Hy@linkcounter=\count280
+\Hy@pagecounter=\count281
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2021-02-27 v7.00k Hyperref: PDFDocEncoding definition (HO)
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/hyperref-langpatches.def
+File: hyperref-langpatches.def 2021-02-27 v7.00k Hyperref: patches for babel la
+nguages
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count282
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count283
+(/usr/local/texlive/2021/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen184
+(/usr/local/texlive/2021/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+(/usr/local/texlive/2021/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count284
+\Field@Width=\dimen185
+\Fld@charsize=\dimen186
+Package hyperref Info: Hyper figures OFF on input line 6075.
+Package hyperref Info: Link nesting OFF on input line 6080.
+Package hyperref Info: Hyper index ON on input line 6083.
+Package hyperref Info: backreferencing OFF on input line 6090.
+Package hyperref Info: Link coloring OFF on input line 6095.
+Package hyperref Info: Link coloring with OCG OFF on input line 6100.
+Package hyperref Info: PDF/A mode OFF on input line 6105.
+LaTeX Info: Redefining \ref on input line 6145.
+LaTeX Info: Redefining \pageref on input line 6149.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
+ge
+with kernel methods
+)
+\Hy@abspage=\count285
+\c@Item=\count286
+\c@Hfootnote=\count287
+)
+Package hyperref Info: Driver (autodetected): hluatex.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/hluatex.def
+File: hluatex.def 2021-02-27 v7.00k Hyperref driver for luaTeX
+(/usr/local/texlive/2021/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
+e
+with kernel methods
+)
+\Fld@listcount=\count288
+\c@bookmark@seq@number=\count289
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(/usr/local/texlive/2021/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip71
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/footnotebackref/footnotebackref.s
+ty
+Package: footnotebackref 2012/07/01 v1.0 Backreferences for footnotes (Holger L
+ange)
+\c@BackrefHyperFootnoteCounter=\count290
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2020/08/01 v1.3d Input encoding file
+\inpenc@prehook=\toks33
+\inpenc@posthook=\toks34
+
+Package inputenc Warning: inputenc package ignored with utf8 based engines.
+
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
+2.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/tools/array.sty
+Package: array 2020/10/01 v2.5c Tabular extension package (FMi)
+\col@sep=\dimen187
+\ar@mcellbox=\box52
+\extrarowheight=\dimen188
+\NC@list=\toks35
+\extratabsurround=\skip72
+\backup@length=\skip73
+\ar@cellbox=\box53
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2020/02/24 v1.2b Standard LaTeX Color (DPC)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: luatex.def on input line 147.
+)
+\everycr=\toks36
+\minrowclearance=\skip74
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
+\LTleft=\skip75
+\LTright=\skip76
+\LTpre=\skip77
+\LTpost=\skip78
+\LTchunksize=\count291
+\LTcapwidth=\dimen189
+\LT@head=\box54
+\LT@firsthead=\box55
+\LT@foot=\box56
+\LT@lastfoot=\box57
+\LT@cols=\count292
+\LT@rows=\count293
+\c@LT@tables=\count294
+\c@LT@chunks=\count295
+\LT@p@ftn=\toks37
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip79
+\multirow@cntb=\count296
+\multirow@dima=\skip80
+\bigstrutjot=\dimen190
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen191
+\WF@size=\dimen192
+\c@WF@wrappedlines=\count297
+\WF@box=\box58
+\WF@everypar=\toks38
+Package: wrapfig 2003/01/31  v 3.6
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/tabu/tabu.sty
+Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box59
+\sift@deathcycles=\count298
+\@vwid@loff=\dimen193
+\@vwid@roff=\dimen194
+)
+\c@taburow=\count299
+\tabu@nbcols=\count300
+\tabu@cnt=\count301
+\tabu@Xcol=\count302
+\tabu@alloc=\count303
+\tabu@nested=\count304
+\tabu@target=\dimen195
+\tabu@spreadtarget=\dimen196
+\tabu@naturalX=\dimen197
+\tabucolX=\dimen198
+\tabu@Xsum=\dimen199
+\extrarowdepth=\dimen256
+\abovetabulinesep=\dimen257
+\belowtabulinesep=\dimen258
+\tabustrutrule=\dimen259
+\tabu@thebody=\toks39
+\tabu@footnotes=\toks40
+\tabu@box=\box60
+\tabu@arstrutbox=\box61
+\tabu@hleads=\box62
+\tabu@vleads=\box63
+\tabu@cellskip=\skip81
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box64
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/threeparttablex/threeparttablex.s
+ty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+(/usr/local/texlive/2021/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(/usr/local/texlive/2021/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip82
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box65
+\UL@hyphenbox=\box66
+\UL@skip=\skip83
+\UL@hook=\toks41
+\UL@height=\dimen260
+\UL@pe=\count305
+\UL@pixel=\dimen261
+\ULC@box=\box67
+Package: ulem 2019/11/18
+\ULdepth=\dimen262
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/makecell/makecell.sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen263
+\c@nlinenum=\count306
+\TeXr@lab=\toks42
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: luatex.def on input line 225.
+LaTeX Info: Redefining \color on input line 709.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2021/01/20 v3.7 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count307
+\FV@InFile=\read2
+\FV@TabBox=\box68
+\c@FancyVerbLine=\count308
+\FV@StepNumber=\count309
+\FV@OutFile=\write3
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/framed/framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip84
+\fb@frw=\dimen264
+\fb@frh=\dimen265
+\FrameRule=\dimen266
+\FrameSep=\dimen267
+)
+\cslhangindent=\skip85
+(/usr/local/texlive/2021/texmf-dist/tex/latex/parskip/parskip.sty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+(/usr/local/texlive/2021/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count310
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-luatex.def
+File: l3backend-luatex.def 2021-03-18 L3 backend support: PDF output (LuaTeX)
+\l__color_backend_stack_int=\count311
+\l__pdf_internal_box=\box69
+)
+
+LaTeX Warning: Unused global option(s):
+    [twosided].
+
+(./thesis.aux
+
+LaTeX Warning: Label `eq:SpecDens' multiply defined.
+
+
+LaTeX Warning: Label `eq:SpecDens' multiply defined.
+
+)
+\openout1 = thesis.aux
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 141.
+LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 141.
+LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 141.
+LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 141.
+LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 141.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
+41.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 141.
+LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 141.
+LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 141.
+LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 141.
+LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 141.
+LaTeX Font Info:    ... okay on input line 141.
+*geometry* driver: auto-detecting
+*geometry* detected driver: luatex
+*geometry* verbose mode - [ preamble ] result:
+* driver: luatex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* hratio: 1:1
+* modes: twoside 
+* h-part:(L,W,R)=(89.62709pt, 418.25368pt, 89.6271pt)
+* v-part:(T,H,B)=(101.40665pt, 591.5302pt, 152.11pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=418.25368pt
+* \textheight=591.5302pt
+* \oddsidemargin=17.3571pt
+* \evensidemargin=17.35712pt
+* \topmargin=-2.73714pt
+* \headheight=12.0pt
+* \headsep=19.8738pt
+* \topskip=11.0pt
+* \footskip=27.46295pt
+* \marginparwidth=106.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count312
+\scratchdimen=\dimen268
+\scratchbox=\box70
+\nofMPsegments=\count313
+\nofMParguments=\count314
+\everyMPshowfont=\toks43
+\MPscratchCnt=\count315
+\MPscratchDim=\dimen269
+\MPnumerator=\count316
+\makeMPintoPDFobject=\count317
+\everyMPtoPDFconversion=\toks44
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: floatrow package is loaded.
+Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
+)
+Package caption Info: Fixing longtable code of `floatrow' package.
+Package caption Info: threeparttable package is loaded.
+Package caption Info: wrapfig package is loaded.
+Package caption Info: End \AtBeginDocument code.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/floatrow/fr-longtable.sty
+Package: fr-longtable 2007/11/28 v0.1b (beta) floatrow: additions for longtable
+
+\flrow@LT@lasthead=\box71
+\flrow@LT@prelastfoot=\box72
+\c@FBLTpage=\count318
+)
+Package hyperref Info: Link coloring OFF on input line 141.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+(/usr/local/texlive/2021/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/usr/local/texlive/2021/texmf-dist/tex/generic/gettitlestring/gettitlestring.s
+ty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count319
+)
+LaTeX Info: Redefining \ref on input line 141.
+LaTeX Info: Redefining \pageref on input line 141.
+LaTeX Info: Redefining \nameref on input line 141.
+(./thesis.out) (./thesis.out)
+\@outlinefile=\write4
+
+\openout4 = thesis.out
+[1
+
+{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+LaTeX Font Info:    Trying to load font information for U+msa on input line 174
+.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 174
+.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [3] [4] [5] [6] [1
+
+] [2]
+Overfull \hbox (3.30815pt too wide) in paragraph at lines 262--263
+\T1/lmr/m/n/10.95 "Quan-tifi-ca-tion Of Dif-fer-en-tial Tran-scrip-tion Fac-tor Ac-tiv-ity And Multiomics-Based
+ []
+
+
+Overfull \hbox (14.12132pt too wide) in paragraph at lines 264--265
+\T1/lmr/m/n/10.95 Re-veals Clin-i-cally Rel-e-vant Pro-lif-er-a-tive Drive As-so
+-ci-ated With Mtor-MYC-OXPHOS
+ []
+
+
+Overfull \hbox (8.32748pt too wide) in paragraph at lines 264--265
+\T1/lmr/m/n/10.95 Ac-tiv-ity In Chronic Lym-pho-cytic Leukemia". \T1/lmr/bx/it/
+10.95 Na-ture Can-cer\T1/lmr/m/n/10.95 . doi:10.1038/s43018-
+ []
+
+[3
+
+] [4] [5] [6
+
+] [7] [8] [9
+
+] [10] (./thesis.toc
+Overfull \hbox (0.66957pt too wide) detected at line 9
+ []\T1/lmr/m/n/10.95 xvii
+ []
+
+[11
+
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[12])
+\tf@toc=\write5
+
+\openout5 = thesis.toc
+[13] [14
+
+
+]
+Overfull \hbox (61.84158pt too wide) in paragraph at lines 304--342
+[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[15]
+Overfull \vbox (175.56963pt too high) has occurred while \output is active []
+
+[16
+Missing character: There is no ’ (U+2019) in font ec-lmr10!
+] (./thesis.lof
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[17
+
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[18]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
+0.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Overfull \hbox (4.8123pt too wide) in paragraph at lines 20--20
+ \T1/lmr/m/n/10.95 ([]Love, Hu-ber, and An-ders 2014[]), y axis gives cor-re-spo
+nd-ing -log10(adjusted 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[19])
+\tf@lof=\write6
+
+\openout6 = thesis.lof
+[20] (./thesis.lot)
+\tf@lot=\write7
+
+\openout7 = thesis.lot
+[21
+
+]
+Chapter 1.
+
+LaTeX Warning: Reference `fig:microenvironmentOverview' on page 1 undefined on 
+input line 380.
+
+
+warning  (pdf backend): ignoring duplicate destination with the name 'page.1'
+[1
+
+]
+warning  (pdf backend): ignoring duplicate destination with the name 'page.2'
+[2
+
+]
+Chapter 2.
+
+warning  (pdf backend): ignoring duplicate destination with the name 'page.3'
+[3]
+warning  (pdf backend): ignoring duplicate destination with the name 'page.4'
+[4]
+warning  (pdf backend): ignoring duplicate destination with the name 'page.5'
+[5]
+warning  (pdf backend): ignoring duplicate destination with the name 'page.6'
+[6
+
+]
+Chapter 3.
+
+Overfull \hbox (41.645pt too wide) in paragraph at lines 488--488
+[]\T1/lmtt/m/n/10.95 -- Attaching packages -------------------------------------
+-- tidyverse 1.3.1 --[] 
+ []
+
+
+Overfull \hbox (41.645pt too wide) in paragraph at lines 499--499
+[]\T1/lmtt/m/n/10.95 -- Conflicts ------------------------------------------ tid
+yverse_conflicts() --[] 
+ []
+
+[7]
+Package epstopdf Info: Source file: <figures/studyOverview.eps>
+(epstopdf)                    date: 2021-06-08 14:43:21
+(epstopdf)                    size: 2512258 bytes
+(epstopdf)             Output file: <figures/studyOverview-eps-converted-to.pdf
+>
+(epstopdf)                    date: 2021-06-10 12:42:40
+(epstopdf)                    size: 76951 bytes
+(epstopdf)             Command: <repstopdf --outfile=figures/studyOverview-eps-
+converted-to.pdf figures/studyOverview.eps>
+(epstopdf)             \includegraphics on input line 518.
+Package epstopdf Info: Output file is already uptodate.
+<figures/studyOverview-eps-converted-to.pdf, id=557, 534.99875pt x 459.7175pt>
+File: figures/studyOverview-eps-converted-to.pdf Graphic file (type pdf)
+<use figures/studyOverview-eps-converted-to.pdf>
+Package luatex.def Info: figures/studyOverview-eps-converted-to.pdf  used on in
+put line 518.
+(luatex.def)             Requested size: 0.7026pt x 0.60326pt.
+Package epstopdf Info: Source file: <figures/studyOverview.eps>
+(epstopdf)                    date: 2021-06-08 14:43:21
+(epstopdf)                    size: 2512258 bytes
+(epstopdf)             Output file: <figures/studyOverview-eps-converted-to.pdf
+>
+(epstopdf)                    date: 2021-06-10 12:42:40
+(epstopdf)                    size: 76951 bytes
+(epstopdf)             Command: <repstopdf --outfile=figures/studyOverview-eps-
+converted-to.pdf figures/studyOverview.eps>
+(epstopdf)             \includegraphics on input line 532.
+Package epstopdf Info: Output file is already uptodate.
+File: figures/studyOverview-eps-converted-to.pdf Graphic file (type pdf)
+<use figures/studyOverview-eps-converted-to.pdf>
+Package luatex.def Info: figures/studyOverview-eps-converted-to.pdf  used on in
+put line 532.
+(luatex.def)             Requested size: 0.7026pt x 0.60326pt.
+<thesis_files/figure-latex/drugCategories-1.pdf, id=560, 459.7175pt x 299.1175p
+t>
+File: thesis_files/figure-latex/drugCategories-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/drugCategories-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/drugCategories-1.pdf  used o
+n input line 549.
+(luatex.def)             Requested size: 1.00374pt x 0.65266pt.
+<thesis_files/figure-latex/drugResponses-1.pdf, id=562, 459.7175pt x 297.11pt>
+File: thesis_files/figure-latex/drugResponses-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/drugResponses-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/drugResponses-1.pdf  used on
+ input line 563.
+(luatex.def)             Requested size: 0.50186pt x 0.32187pt.
+[8<./figures/studyOverview-eps-converted-to.pdf><./thesis_files/figure-latex/dru
+gCategories-1.pdf>]
+Overfull \hbox (9.68007pt too wide) in paragraph at lines 585--585
+[]\T1/lmr/bx/n/14.4 Char-ac-ter-is-tics of pa-tient sam-ples used in the screen 
+ []
+
+
+Package hyperref Warning: No autoref name for `BackrefHyperFootnoteCounter' on 
+input line 607.
+
+[9<./thesis_files/figure-latex/drugResponses-1.pdf>] [10]
+Chapter 4.
+[11
+
+]
+<thesis_files/figure-latex/stimuliCorrelations-1.pdf, id=638, 336.25626pt x 247
+.92625pt>
+File: thesis_files/figure-latex/stimuliCorrelations-1.pdf Graphic file (type pd
+f)
+<use thesis_files/figure-latex/stimuliCorrelations-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/stimuliCorrelations-1.pdf  u
+sed on input line 629.
+(luatex.def)             Requested size: 250.95476pt x 185.03252pt.
+[12<./thesis_files/figure-latex/stimuliCorrelations-1.pdf>]
+<thesis_files/figure-latex/correlationsScatter-1.pdf, id=667, 335.2525pt x 188.
+705pt>
+File: thesis_files/figure-latex/correlationsScatter-1.pdf Graphic file (type pd
+f)
+<use thesis_files/figure-latex/correlationsScatter-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/correlationsScatter-1.pdf  u
+sed on input line 644.
+(luatex.def)             Requested size: 335.25168pt x 188.70453pt.
+<thesis_files/figure-latex/stimuliBeeswarms-1.png, id=669, 706.64pt x 261.97874
+pt>
+File: thesis_files/figure-latex/stimuliBeeswarms-1.png Graphic file (type png)
+<use thesis_files/figure-latex/stimuliBeeswarms-1.png>
+Package luatex.def Info: thesis_files/figure-latex/stimuliBeeswarms-1.png  used
+ on input line 655.
+(luatex.def)             Requested size: 418.25368pt x 155.0618pt.
+[13<./thesis_files/figure-latex/correlationsScatter-1.pdf>]
+<thesis_files/figure-latex/stimuliHeatmap-1.pdf, id=684, 1073.00874pt x 529.98p
+t>
+File: thesis_files/figure-latex/stimuliHeatmap-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/stimuliHeatmap-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/stimuliHeatmap-1.pdf  used o
+n input line 673.
+(luatex.def)             Requested size: 418.25368pt x 206.57814pt.
+[14<./thesis_files/figure-latex/stimuliBeeswarms-1.png>] [15<./thesis_files/figu
+re-latex/stimuliHeatmap-1.pdf>]
+<figures/consensus008.png, id=722, 481.8pt x 481.8pt>
+File: figures/consensus008.png Graphic file (type png)
+<use figures/consensus008.png>
+Package luatex.def Info: figures/consensus008.png  used on input line 690.
+(luatex.def)             Requested size: 188.21288pt x 188.21pt.
+<figures/consensus009.png, id=723, 481.8pt x 481.8pt>
+File: figures/consensus009.png Graphic file (type png)
+<use figures/consensus009.png>
+Package luatex.def Info: figures/consensus009.png  used on input line 690.
+(luatex.def)             Requested size: 188.21288pt x 188.21pt.
+[16<./figures/consensus008.png><./figures/consensus009.png>]
+<figures/consensus010.png, id=734, 481.8pt x 481.8pt>
+File: figures/consensus010.png Graphic file (type png)
+<use figures/consensus010.png>
+Package luatex.def Info: figures/consensus010.png  used on input line 701.
+(luatex.def)             Requested size: 188.21288pt x 188.21pt.
+[17<./figures/consensus010.png>]
+<thesis_files/figure-latex/clusterStimuliResponse-1.pdf, id=747, 423.5825pt x 4
+92.84125pt>
+File: thesis_files/figure-latex/clusterStimuliResponse-1.pdf Graphic file (type
+ pdf)
+<use thesis_files/figure-latex/clusterStimuliResponse-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/clusterStimuliResponse-1.pdf
+  used on input line 720.
+(luatex.def)             Requested size: 418.25368pt x 486.65846pt.
+<thesis_files/figure-latex/clusterLDTTTT-1.pdf, id=750, 551.05875pt x 336.25626
+pt>
+File: thesis_files/figure-latex/clusterLDTTTT-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/clusterLDTTTT-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/clusterLDTTTT-1.pdf  used on
+ input line 738.
+(luatex.def)             Requested size: 418.25368pt x 255.22903pt.
+[18]
+<thesis_files/figure-latex/clusterDrugResponse-1.pdf, id=760, 423.5825pt x 492.
+84125pt>
+File: thesis_files/figure-latex/clusterDrugResponse-1.pdf Graphic file (type pd
+f)
+<use thesis_files/figure-latex/clusterDrugResponse-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/clusterDrugResponse-1.pdf  u
+sed on input line 783.
+(luatex.def)             Requested size: 418.25368pt x 486.65846pt.
+
+Underfull \vbox (badness 1377) has occurred while \output is active []
+
+[19]
+<thesis_files/figure-latex/clusterMatrix-1.pdf, id=767, 407.5225pt x 252.945pt>
+
+File: thesis_files/figure-latex/clusterMatrix-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/clusterMatrix-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/clusterMatrix-1.pdf  used on
+ input line 797.
+(luatex.def)             Requested size: 418.25368pt x 259.61766pt.
+<thesis_files/figure-latex/clusterEnrichment-1.pdf, id=769, 428.60126pt x 244.9
+15pt>
+File: thesis_files/figure-latex/clusterEnrichment-1.pdf Graphic file (type pdf)
+
+<use thesis_files/figure-latex/clusterEnrichment-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/clusterEnrichment-1.pdf  use
+d on input line 810.
+(luatex.def)             Requested size: 418.25368pt x 239.00229pt.
+[20]
+<thesis_files/figure-latex/clusterDE-1.pdf, id=778, 464.73625pt x 315.1775pt>
+File: thesis_files/figure-latex/clusterDE-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/clusterDE-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/clusterDE-1.pdf  used on inp
+ut line 830.
+(luatex.def)             Requested size: 418.25368pt x 283.66193pt.
+<thesis_files/figure-latex/clusterGSEA-1.pdf, id=783, 464.73625pt x 312.16624pt
+>
+File: thesis_files/figure-latex/clusterGSEA-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/clusterGSEA-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/clusterGSEA-1.pdf  used on i
+nput line 843.
+(luatex.def)             Requested size: 418.25368pt x 280.95178pt.
+<thesis_files/figure-latex/GSEApathways-1.pdf, id=785, 442.65375pt x 295.1025pt
+>
+File: thesis_files/figure-latex/GSEApathways-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/GSEApathways-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/GSEApathways-1.pdf  used on 
+input line 854.
+(luatex.def)             Requested size: 442.65265pt x 295.10176pt.
+
+Overfull \hbox (24.39897pt too wide) in paragraph at lines 854--855
+ [][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[21] [22] [23<./thesis_files/figure-latex/clusterStimuliResponse-1.pdf>] [24<./t
+hesis_files/figure-latex/clusterLDTTTT-1.pdf>] [25<./thesis_files/figure-latex/c
+lusterDrugResponse-1.pdf>] [26<./thesis_files/figure-latex/clusterMatrix-1.pdf>] [27<./thesis_files/figure-latex/clusterEnrichment-1.pdf>] [28<./thesis_files/figure-latex/clusterDE-1.pdf>] [29<./thesis_files/figure-latex/clusterGSEA-1.pdf>] [30<./thesis_files/figure-latex/GSEApathways-1.pdf>]
+Chapter 5.
+
+LaTeX Warning: Reference `fig:graph' on page 31 undefined on input line 894.
+
+[31
+
+] [32]
+Chapter 6.
+
+LaTeX Warning: Reference `fig:graph' on page 33 undefined on input line 953.
+
+Package epstopdf Info: Source file: <figures/graph.eps>
+(epstopdf)                    date: 2021-06-03 12:02:06
+(epstopdf)                    size: 43610 bytes
+(epstopdf)             Output file: <figures/graph-eps-converted-to.pdf>
+(epstopdf)                    date: 2021-06-03 12:14:52
+(epstopdf)                    size: 7680 bytes
+(epstopdf)             Command: <repstopdf --outfile=figures/graph-eps-converte
+d-to.pdf figures/graph.eps>
+(epstopdf)             \includegraphics on input line 961.
+Package epstopdf Info: Output file is already uptodate.
+<figures/graph-eps-converted-to.pdf, id=931, 361.35pt x 303.1325pt>
+File: figures/graph-eps-converted-to.pdf Graphic file (type pdf)
+<use figures/graph-eps-converted-to.pdf>
+Package luatex.def Info: figures/graph-eps-converted-to.pdf  used on input line
+ 961.
+(luatex.def)             Requested size: 209.12683pt x 175.43306pt.
+
+Underfull \vbox (badness 2057) has occurred while \output is active []
+
+[33
+
+] [34<./figures/graph-eps-converted-to.pdf>]
+Chapter 7.
+
+LaTeX Warning: Reference `fig:graph' on page 35 undefined on input line 1022.
+
+Package epstopdf Info: Source file: <figures/graph.eps>
+(epstopdf)                    date: 2021-06-03 12:02:06
+(epstopdf)                    size: 43610 bytes
+(epstopdf)             Output file: <figures/graph-eps-converted-to.pdf>
+(epstopdf)                    date: 2021-06-03 12:14:52
+(epstopdf)                    size: 7680 bytes
+(epstopdf)             Command: <repstopdf --outfile=figures/graph-eps-converte
+d-to.pdf figures/graph.eps>
+(epstopdf)             \includegraphics on input line 1030.
+Package epstopdf Info: Output file is already uptodate.
+File: figures/graph-eps-converted-to.pdf Graphic file (type pdf)
+<use figures/graph-eps-converted-to.pdf>
+Package luatex.def Info: figures/graph-eps-converted-to.pdf  used on input line
+ 1030.
+(luatex.def)             Requested size: 209.12683pt x 175.43306pt.
+
+Underfull \vbox (badness 2057) has occurred while \output is active []
+
+[35
+
+] [36]
+Chapter 8.
+[37
+
+] [38
+
+]
+Overfull \hbox (19.37411pt too wide) in paragraph at lines 1115--1117
+ \T1/lmr/m/it/10.95 Eng-land) \T1/lmr/m/n/10.95 26 (12): 1572--73. []$\T1/lmtt/
+m/n/10.95 https://doi.org/10.1093/bioinformatics/btq170$[]\T1/lmr/m/n/10.95 . 
+ []
+
+[39
+Missing character: There is no ‐ (U+2010) in font ec-lmr10!
+Missing character: There is no ł (U+0142) in font ec-lmr10!
+Missing character: There is no ś (U+015B) in font ec-lmr10!
+]
+Package epstopdf Info: Source file: <figures/graph.eps>
+(epstopdf)                    date: 2021-06-03 12:02:06
+(epstopdf)                    size: 43610 bytes
+(epstopdf)             Output file: <figures/graph-eps-converted-to.pdf>
+(epstopdf)                    date: 2021-06-03 12:14:52
+(epstopdf)                    size: 7680 bytes
+(epstopdf)             Command: <repstopdf --outfile=figures/graph-eps-converte
+d-to.pdf figures/graph.eps>
+(epstopdf)             \includegraphics on input line 1137.
+Package epstopdf Info: Output file is already uptodate.
+File: figures/graph-eps-converted-to.pdf Graphic file (type pdf)
+<use figures/graph-eps-converted-to.pdf>
+Package luatex.def Info: figures/graph-eps-converted-to.pdf  used on input line
+ 1137.
+(luatex.def)             Requested size: 209.12683pt x 175.43306pt.
+[40] (./thesis.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package rerunfilecheck Info: File `thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 70EFCE043B1C8D1F398DFA0F2266F26A;9871.
+)
+
+Here is how much of LuaTeX's memory you used:
+ 16368 strings out of 478531
+ 125081,662416 words of node,token memory allocated
+ 828 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 glyph, 38 attribute, 65 glue_spec
+, 38 attribute_list, 1 write, 24 pdf_action nodes
+   avail lists: 2:678,3:264,4:278,5:440,6:50,7:8095,8:60,9:812,10:23,11:663
+ 35040 multiletter control sequences out of 65536+600000
+ 91 fonts using 7218111 bytes
+ 71i,10n,71p,1988b,547s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/tex
+live/2021/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</usr/local/texlive/2021/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/
+public/lm/lmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/l
+mbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb>
+</usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/
+texlive/2021/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2021
+/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2021/texmf-dist/f
+onts/type1/public/lm/lmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/pu
+blic/lm/lmr9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmri1
+0.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr
+/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
+Output written on thesis.pdf (67 pages, 1988165 bytes).
+
+PDF statistics: 1059 PDF objects out of 1200 (max. 8388607)
+ 893 compressed objects within 9 object streams
+ 197 named destinations out of 1000 (max. 131072)
+ 385 words of extra memory for PDF output out of 10000 (max. 100000000)
+

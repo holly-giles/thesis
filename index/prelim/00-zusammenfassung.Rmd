@@ -1,0 +1,9 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Zusammenfassung {-}
+
+Abstract in German 
+Aktuelle Entwicklungen im Bereich der “omik”-Technologien tragen wesentlich zurBeschleunigung des Fortschritts in der Krebsforschung bei etc

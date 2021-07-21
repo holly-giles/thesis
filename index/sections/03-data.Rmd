@@ -1,0 +1,156 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Data
+
+
+```{r setup02, echo = FALSE}
+#libraries
+library(ggplot2)
+library(tidyverse)
+library(ggbeeswarm)
+
+
+#Data
+load("data/drugs.RData")
+load("data/df.RData")
+
+#R code
+source("R/themes_colors.R")
+source("R/plotPathways.R")
+
+```
+
+
+>"C'est ne pas un pipe."
+>
+> Descartes
+
+Characterisation of primary CLL samples by high-throughput combinatorial screening and multi-omic profiling. An introduction to the dataset that my PhD is based on. 
+
+## Drug screens and experiments 
+### High-throughput combinatorial pertubation assay
+We measured the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples and combined each one with 12 drugs to investigate the influence on spontaneous and drug-induced apoptosis (Figure \@ref(fig:studyOverview)). Viability was assessed by ATP measurement via CellTiterGlo after 48 h of culture and normalised to untreated controls8. 
+
+(ref:studyOverviewCap) Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n=192). Integrating functional drug-stimulus response profiling with four additional omics layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment reponses, and drug-stimulus interactions in CLL.
+
+```{r studyOverview, out.width = 0.7, fig.cap='(ref:studyOverviewCap)', echo = FALSE}
+
+knitr::include_graphics("figures/studyOverview.eps")
+
+```
+
+### Validation experiments
+In addition to the screen, we acquired the following validatory data (Figure \@ref(fig:additionalData)). 
+
+
+(ref:additionalDataCap) Schematic of validatory data. 
+
+
+```{r additionalData, out.width = 0.7, fig.cap='(ref:additionalDataCap)', echo = FALSE}
+
+knitr::include_graphics("figures/studyOverview.eps")
+
+```
+
+## Characteristics of drugs used in the screen
+### Drug pathways
+We screened 17 different drugs (Figure \@ref(fig:drugCategories)). 
+
+
+(ref:drugCategoriesCap) Bar plot of the drugs used in screen.  
+
+```{r  echo = FALSE}
+#add row names to drugs
+rownames(drugs) <- drugs$ID
+
+# Categorise the drug into FDA approved / clinical development
+drugs$target_category = as.character(drugs$target_category)
+drugs$group = NA
+drugs$group[which(drugs$approved_012020==1)] = "FDA approved"
+drugs$group[which(drugs$devel_012020==1)] = "Clinical development/\ntool compound"
+
+```
+
+```{r drugCategories, fig.cap='(ref:drugCategoriesCap)', out.width=1, echo = FALSE}
+
+drugCategories <- plotPathways(dat=drugs) 
+drugCategories
+
+```
+
+
+### Drug responses
+The drug responses were as follows (Figure \@ref(fig:drugResponses)). 
+
+(ref:drugResponsesCap) Log transformed viability values for all drugs that were included in the screen after qulaity control. p values from student's t test. 
+
+```{r drugResponses, fig.cap='(ref:drugResponsesCap)', out.width=0.5, echo = FALSE}
+
+
+orderDrug <-
+  df %>%
+  dplyr::filter(Drug_Concentration =="High", Cytokine == "No Cytokine") %>%
+  group_by(Drug) %>%
+  dplyr::summarise(Log = median(Log), .groups="keep") %>%
+  arrange(Log) 
+
+orderDrug <- as.character(orderDrug$Drug)
+
+df$Drug <- factor(df$Drug, levels=orderDrug)
+
+  df %>%
+  dplyr::filter(Drug_Concentration =="High", Cytokine == "No Cytokine") %>%
+  ggplot(aes(x = Drug,
+             y = Log)) +
+  geom_hline(yintercept = 0) +
+  geom_beeswarm(cex=0.4, alpha=0.7, size=2, aes(x = Drug,y = Log, colour = Log>0)) +
+  scale_colour_manual(name = 'Viability > 0', values = setNames(c(palreds[8], palblues[1]), c(T, F)))+
+  t2 +
+  guides(size="none", color = "none")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), text = element_text(size=20))+
+  ylab("Log transformed viability") +
+  xlab("")
+
+
+
+
+
+```
+
+### Genetic predictors of drug responses
+
+### Drug - Drug Correlations
+
+
+
+## Characteristics of stimuli used in the screen
+### Stimulus responses
+
+### Stimulus - Stimulus Correlations
+
+## Characteristics of patient samples used in the screen
+###Genetic Data available for each patient
+WES, CNVs, Methylation, Transcriptomic, ATACseq, LDT, survT, IHC
+PLus Ibrutinib + IBET + IL4 treated samples - ATACseq, RNAseq, proteomics 
+
+## Processing of raw values obtained from cell viability assay 
+### Data normalization and quality control
+
+
+## Generation of public resource
+###Shiny app
+
+###Package 
+
+
+
+
+
+* Present the underlying economic model/theory and give reasons why it is
+  suitable to answer the given problem[^1].
+
+
+[^1]: Here is an example of a footnote.

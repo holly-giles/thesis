@@ -1,0 +1,1168 @@
+\documentclass[11pt, a4paper, twosided]{book}
+\usepackage[hmarginratio=1:1]{geometry} % equal right and left raitios
+\usepackage{amsmath,amssymb,amsfonts,amsthm}    % Typical maths resource packages
+\usepackage{graphicx}                           % Packages to allow inclusion of graphics
+\usepackage[authoryear]{natbib}                 % literature reference style
+\usepackage[bf]{caption}
+\usepackage{textcomp}                           % For single quotes
+\usepackage{floatrow}                           % For image and table position
+\usepackage{booktabs}                           % For tables
+% \usepackage[colorlinks=true]{hyperref}
+% \usepackage[bottom]{footmisc}
+\usepackage[bottom, flushmargin]{footmisc}                   % For footnotes
+\usepackage[citebordercolor={0 1 0}]{hyperref}  % For creating hyperlinks in cross references
+\usepackage{footnotebackref}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% i have added the below, so that kable works
+\usepackage{colortbl}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+       % For being able to set `echo = TRUE` in code chunk options, and thus in-line representation of code
+
+%--------------------------------------------
+% define line spacing = 1.5
+\renewcommand{\baselinestretch}{1.5}
+
+% define position of graphics
+\floatsetup[figure]{capposition=bottom}
+\floatsetup[table]{capposition=top}
+\floatplacement{figure}{ht}
+\floatplacement{table}{ht}
+
+% define CSL references (required)
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{CSLReferences}%
+  {}%
+  {\par}
+
+% save thesis parameters for later
+\newcommand{\thesistype}{Dissertation}
+\newcommand{\thesisauthor}{Holly Amelia Rebecca Giles}
+\newcommand{\thesisdate}{Oct 01, 2021?}
+
+% Added by CII (Thanks, Hadley!)
+% Use ref for internal links
+\renewcommand{\hyperref}[2][???]{\autoref{#1}}
+\def\chapterautorefname{Chapter}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Subsection}
+% End of CII addition
+
+% Added by CII
+\usepackage{caption}
+\captionsetup{width=5in}
+% End of CII addition
+
+% Added by CII
+%%% Copied from knitr
+%% maxwidth is the original width if it's less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\renewcommand{\contentsname}{Table of Contents}
+% End of CII addition
+
+\setlength{\parskip}{0pt}
+
+% Added by CII
+  %\setlength{\parskip}{\baselineskip}
+  \usepackage[parfill]{parskip}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+	\usepackage{float}
+% End of CII addition
+%%
+%% End Preamble
+%%
+%
+\begin{document}
+
+% ------------------------------------
+% ---- frontmatter: First Page -------
+% ------------------------------------
+
+\thispagestyle{empty}
+  \begin{center}
+  {\Large{Dissertation\\
+    submitted to the\\
+    Combined Faculty of Natural Sciences and Mathematics\\
+    of the Ruperto Carola University Heidelberg, Germany\\
+    for the degree of\\
+    Doctor of Natural Sciences\\}} \vspace*{\fill}
+
+  \Large{Presented by} \\\vspace{0.5cm}
+  \Large{M.A. Holly Amelia Rebecca Giles} \\
+  \Large{born in Portsmouth} \\
+  \Large{Oral examination: Dec 15, 2021?}
+
+\end{center}
+\newpage\null\thispagestyle{empty}\newpage
+
+% ------------------------------------
+% --- frontmatter: Secound Page ------
+% ------------------------------------
+
+\pagebreak
+\thispagestyle{empty}
+\null
+\begin{center}
+\Large{Drug - microenvironment - gene interplay in chronic lymphocytic leukemia} \\
+\vspace*{\fill}
+\begin{tabular}{ c c }
+Referees: & Dr.~Judith Zaugg \\
+          & Prof.~Dr.~Michael Boutros
+\end{tabular}
+\end{center}
+\newpage\null\thispagestyle{empty}\newpage
+
+% --------------------------------------------
+% -------- Declaration of Authorship ---------
+% --------------------------------------------
+
+\newpage
+\thispagestyle{empty}
+% \hypertarget{declaration-of-authorship}{%
+% \section*{Declaration of Authorship}\label{declaration-of-authorship}}
+%
+% I hereby confirm that I have authored this Dissertation independently and
+% without the use of others sources than the ones indicated. I have not yet
+% presented this thesis or parts thereof to a university as part of an
+% examination or degree. This work was carried out in the Genome Biology at
+% the European Molecular Biology Laboratory (EMBL) in the group of Dr.~Wolfgang Huber and Dr.~Sascha Dietrich.
+% \vspace{1cm}
+%
+% \noindent Heidelberg, \thesisdate{}
+% \vspace{3cm}
+%
+% \noindent . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+% \vspace{0.1cm}
+%
+% \noindent \thesisauthor{}
+% \newpage
+% \thispagestyle{empty}
+% \vspace*{\fill}
+% Holly Amelia Rebecca Giles, \textit{Drug - microenvironment - gene interplay in chronic lymphocytic leukemia}, \textcopyright\, \thesisdate{}
+% \newpage
+
+%\frontmatter % this stuff will be roman-numbered
+\pagestyle{empty} % this removes page numbers from the frontmatter
+
+
+
+% edit style below this point? 
+
+
+% --------------------------------------------
+% --------------- Dedication -----------------
+% --------------------------------------------
+\vspace*{\fill}
+\begin{center}
+\textit{To \ldots{}}
+\end{center}
+\vspace*{\fill}
+\newpage\null\thispagestyle{empty}\newpage
+
+% ------------------------------------
+% --- frontmatter: Acknowledgement ---
+% ------------------------------------
+\pagestyle{plain}
+\pagenumbering{roman}   %  define page number in roman style
+\setcounter{page}{1}    % start page numbering anew
+\newpage
+\hypertarget{acknowledgements}{%
+\chapter*{Acknowledgements}\label{acknowledgements}}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+I want to thank a few people.
+\newpage\null\newpage
+
+
+% --------------------------------------------
+% ---------- List of publications ------------
+% --------------------------------------------
+    \hypertarget{list-of-publications}{%
+    \chapter*{List of publications}\label{list-of-publications}}
+    \addcontentsline{toc}{chapter}{List of publications}
+
+    \hypertarget{thesis-related}{%
+    \subsubsection*{Thesis related}\label{thesis-related}}
+    \addcontentsline{toc}{subsubsection}{Thesis related}
+    \begin{itemize}
+        \item  Peter-Martin Bruch\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Mueller-Tidow, Thorsten Zenz, Wolfgang Huber, Sascha Dietrich et al. \textit{in preparation.}  "Mapping drug-microenvironment-genetic interplay in CLL reveals trisomy 12 as a modulator of microenvironment."\textbf{\textit{Journal}} \textbf{\textit{bioRxiv}}. doi:
+    \end{itemize}
+    \hypertarget{other-contributions}{%
+    \subsubsection*{Other contributions}\label{other-contributions}}
+    \addcontentsline{toc}{subsubsection}{Other contributions}
+
+    The author of this thesis also contributed to a number of other projects throughout the PhD. The following have been published:
+    \begin{itemize}
+        \item Berest, Ivan\ast, Christian Arnold\ast, Armando Reyes-Palomares, Giovanni Palla, Kasper Dindler Rasmussen, \textbf{\underline{Holly Giles}}, and Peter-Martin Bruch et al. 2019. "Quantification Of Differential Transcription Factor Activity And Multiomics-Based Classification Into Activators And Repressors: DiffTF". \textit{Cell Reports} 29 (10): 3147-3159.e12. doi:10.1016/j.celrep.2019.10.106.
+        
+      \item Lu, Junyan\ast, Ester Cannizzaro\ast, Fabienne Meier-Abt, Sebastian Scheinost, Peter-Martin Bruch, \textbf{\underline{Holly A. R. Giles}}, and Almut Lütge et al. 2021. "Multi-Omics Reveals Clinically Relevant Proliferative Drive Associated With Mtor-MYC-OXPHOS Activity In Chronic Lymphocytic Leukemia". \textbf{\textit{Nature Cancer}}. doi:10.1038/s43018-021-00216-6.
+    \end{itemize}
+\newpage\null\newpage
+
+% -------------------------------------
+% --- frontmatter: Zusammendfassung ---
+% -------------------------------------
+    \hypertarget{zusammenfassung}{%
+    \chapter*{Zusammenfassung}\label{zusammenfassung}}
+    \addcontentsline{toc}{chapter}{Zusammenfassung}
+
+    Abstract in German
+    Aktuelle Entwicklungen im Bereich der ``omik''-Technologien tragen wesentlich zurBeschleunigung des Fortschritts in der Krebsforschung bei etc
+\newpage\null\newpage
+
+% -----------------------------
+% --- frontmatter: Abstract ---
+% -----------------------------
+
+    \hypertarget{abstract}{%
+    \chapter*{Abstract}\label{abstract}}
+    \addcontentsline{toc}{chapter}{Abstract}
+
+    The tumour microenvironment and genetic alterations collectively influence disease biology and drug resistance in Chronic Lymphocytic Leukaemia (CLL). To establish an integrative understanding of these factors in CLL biology, we performed a combinatorial assay using 12 drugs individually co-applied with each of 17 microenvironmental stimuli on 192 samples of CLL peripheral blood mononucleated cells. We examined microenvironment response across a heterogeneous patient cohort and identified four distinct CLL subgroups that differed in their response landscapes and in patient outcomes. By combining our data with whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data of the same tumours, we systematically searched for molecular determinants of stimulus response and found trisomy 12 as a key modulator. Our data suggest that the amplifying effect of trisomy 12 on the response to environmental signals is mediated by the transcription factors Spi-B and PU.1. We generated a comprehensive map of drug-microenvironment interactions in CLL, and profiled the modulating impact of genetic features on these antagonistic and synergistic effects. Interleukin (IL) 4 and Toll-Like Receptor (TLR) 7/8/9 stimuli showed the most interactions. Both pathways were more active in CLL-infiltrated lymph nodes than in healthy samples (p\textless0.001), and high IL4 activity in lymph nodes correlated with shorter survival (p=0.038). We provide a multi-layered resource to investigate microenvironmental and drug interplay in CLL (\href{https://git.embl.de/giles/cllcytokinescreen2021}{Repository} \& \href{https://www.google.com/url?q=https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/\&sa=D\&source=editors\&ust=1625764640786000\&usg=AOvVaw01HOFP7k2BJRLTteCXa8qy}{Shiny}). Our results highlight the importance of cell-extrinsic influences on drug response and disease progression, and how these further depend on molecular features.
+\newpage\null\newpage
+
+% -----------------------------
+% --- frontmatter: Contents ---
+% -----------------------------
+\newpage
+\tableofcontents
+\clearpage
+
+% ----------------------------------------------------------
+% --- frontmatter: List of Abbreviations (not mandatory) ---
+% ----------------------------------------------------------
+\newpage
+\hypertarget{list-of-abbreviations}{%
+\chapter*{List of Abbreviations}\label{list-of-abbreviations}}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+\begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
+    AKT & & Protein kinase B \\
+    BCR & & B-cell receptor \\
+    BTK & & Bruton’s tyrosine kinase \\
+    CDF & & Cumulative Distribution Function \\
+    CLL & & Chronic lymphocytic leukemia \\
+    CNV & & Copy number variation \\
+    CpG ODN & & CpG oligodeoxynucleotides \\
+    ERK/MAPK signalling & & Mitogen-activated protein kinase signalling \\
+    FBS & & Fetal bovine serum \\
+    FDR & & False discovery rate \\
+    GSEA & & Gene set enrichment analysis  \\
+    Ig & & Immunoglobulin \\
+    IGHV & & Immunoglobulin heavy chain variable region \\
+    IL & & Interleukin \\
+    JAK & & Janus kinase \\
+    M-CLL & & CLL with somatic hypermutations in IGHV loci \\
+    NF$\kappa$B & & Nuclear factor kappa-light-chain-enhancer of activated B cells \\
+    NOTCH & & Neurogenic locus notch  \\
+    OS & & Overall survival \\
+    PBMC & & Peripheral blood mononuclear cells \\
+    PCA & & Principal component analysis \\
+    PI3K & & Phosphoinositide 3-kinase \\
+    U-CLL & & CLL without somatic hypermutations in IGHV loci \\
+    TGF$\beta$ & & Transforming growth factor $\beta$ \\
+    TLR & & Toll-like receptor \\ 
+    TTT & & Time to next treatment \\
+    SF3B1 & & Splicing factor 3B subunit 1 \\
+    STAT & & Signal transducer and activator of transcription \\
+    SYK & & Spleen tyrosine kinase \\
+    ZAP70 & & Tyrosine-protein kinase ZAP-70 \\
+
+    
+   
+\end{tabular}
+% ----------------------------------------------------
+% --- frontmatter: List of Figures (not mandatory) ---
+% ----------------------------------------------------
+\newpage
+\listoffigures
+\addcontentsline{toc}{section}{List of Figures}
+
+% ---------------------------------------------------
+% --- frontmatter: List of Tables (not mandatory) ---
+% ---------------------------------------------------
+\newpage
+\listoftables
+\addcontentsline{toc}{section}{List of Tables}
+
+% edit here to affect style of main document 
+%\mainmatter % here the regular arabic numbering starts
+\newpage
+\pagestyle{plain}
+\setcounter{page}{1}    % start page numbering anew
+\pagenumbering{arabic}  % page numbers in arabic style
+
+\hypertarget{introduction}{%
+\chapter{Introduction}\label{introduction}}
+
+Brief:
+Referencing:
+* What do we already know about the subject (literature review)? Use citations:
+\protect\hyperlink{ref-JCIpaper}{Dietrich et al.} (\protect\hyperlink{ref-JCIpaper}{2017}) shows that\ldots{} Alternative Forms of the Wald test are
+considered (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}).
+\begin{itemize}
+\item
+  Provide an overview of your results.
+\item
+  Outline of the paper:\\
+  \emph{The thesis is organized as follows. The next section describes the model
+  under investigation. Section ``\protect\hyperlink{data}{Data}'' describes the data set
+  and Section ``\protect\hyperlink{results-2}{Results}'' presents the results. Finally, Section
+  ``\protect\hyperlink{conclusion}{Conclusion}'' concludes.}
+\item
+  The introduction should be around 8 pages.
+\end{itemize}
+The microenvironment in CLL constitutes cross talk via soluble factors and cell-cell contacts, in the blood, bone marrow and lymph nodes. \ref{fig:microenvironmentOverview}
+
+\hypertarget{methods}{%
+\chapter{Methods}\label{methods}}
+\begin{itemize}
+\item
+  Describe the data and its quality.
+\item
+  How was the data sample selected?
+\item
+  Provide descriptive statistics such as:
+  \begin{itemize}
+  \item
+    time period,
+  \item
+    item number of observations, data frequency,
+  \item
+    item mean, median,
+  \item
+    item min, max, standard deviation,
+  \item
+    item skewness, kurtosis, Jarque--Bera statistic,
+  \item
+    item time series plots, histogram.
+  \end{itemize}
+\item
+  For example (you can decide whether you want to display the code below or
+  not by setting \texttt{echo=TRUE} or \texttt{echo=FALSE}, respectively, in the code
+  chunk header):
+\end{itemize}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{col\_names }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"3m"}\NormalTok{, }\StringTok{"6m"}\NormalTok{, }\StringTok{"1yr"}\NormalTok{, }\StringTok{"2yr"}\NormalTok{, }\StringTok{"3yr"}\NormalTok{, }\StringTok{"5yr"}\NormalTok{, }\StringTok{"7yr"}\NormalTok{, }\StringTok{"10yr"}\NormalTok{, }\StringTok{"12yr"}\NormalTok{, }\StringTok{"15yr"}
+\NormalTok{)}
+\NormalTok{means     }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \FloatTok{3.138}\NormalTok{, }\FloatTok{3.191}\NormalTok{, }\FloatTok{3.307}\NormalTok{, }\FloatTok{3.544}\NormalTok{, }\FloatTok{3.756}\NormalTok{, }\FloatTok{4.093}\NormalTok{, }\FloatTok{4.354}\NormalTok{, }\FloatTok{4.621}\NormalTok{, }\FloatTok{4.741}\NormalTok{, }\FloatTok{4.878}
+\NormalTok{)}
+\NormalTok{stddev    }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \FloatTok{0.915}\NormalTok{, }\FloatTok{0.919}\NormalTok{, }\FloatTok{0.935}\NormalTok{, }\FloatTok{0.910}\NormalTok{, }\FloatTok{0.876}\NormalTok{, }\FloatTok{0.825}\NormalTok{, }\FloatTok{0.803}\NormalTok{, }\FloatTok{0.776}\NormalTok{, }\FloatTok{0.768}\NormalTok{, }\FloatTok{0.762}
+\NormalTok{)}
+\NormalTok{row\_names }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Mean"}\NormalTok{, }\StringTok{"StD"}\NormalTok{)}
+
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data =} \FunctionTok{c}\NormalTok{(means, stddev), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{byrow =}\NormalTok{ T)}
+\FunctionTok{rownames}\NormalTok{(df) }\OtherTok{\textless{}{-}}\NormalTok{ row\_names}
+\FunctionTok{colnames}\NormalTok{(df) }\OtherTok{\textless{}{-}}\NormalTok{ col\_names}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(df)}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}
+\NormalTok{  df,}
+  \AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{,}
+  \AttributeTok{caption =} \StringTok{"Detailed descriptive statistics of location and dispersion for 2100 observed swap rates for the period from February 15, 1999 to March 2, 2007. Swap rates measured as 3.12 (instead of 0.0312)."}\NormalTok{,}
+  \AttributeTok{col.names =}\NormalTok{ col\_names, }
+  \AttributeTok{escape =} \ConstantTok{FALSE}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"HOLD\_position"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{row\_spec}\NormalTok{(}\DecValTok{2}\NormalTok{, }\AttributeTok{hline\_after =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+\begin{table}[H]
+
+\caption{\label{tab:table1}Detailed descriptive statistics of location and dispersion for 2100 observed swap rates for the period from February 15, 1999 to March 2, 2007. Swap rates measured as 3.12 (instead of 0.0312).}
+\centering
+\begin{tabular}[t]{lrrrrrrrrrr}
+\toprule
+  & 3m & 6m & 1yr & 2yr & 3yr & 5yr & 7yr & 10yr & 12yr & 15yr\\
+\midrule
+Mean & 3.138 & 3.191 & 3.307 & 3.544 & 3.756 & 4.093 & 4.354 & 4.621 & 4.741 & 4.878\\
+StD & 0.915 & 0.919 & 0.935 & 0.910 & 0.876 & 0.825 & 0.803 & 0.776 & 0.768 & 0.762\\
+\midrule
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{itemize}
+\item
+  Allows the reader to judge whether the sample is biased or to evaluate
+  possible impacts of outliers, for example.
+\item
+  Here tables can be easily integrated using the \texttt{kable()} function in the
+  \texttt{knitr} package (with perhaps some additional help from the \texttt{kableExtra}
+  package). \texttt{kable()} will automatically generate a label for the table
+  environment. That way you don't have to manually enter in the table in LaTex,
+  you can embed tables from R code.
+\item
+  Tables can be referenced using \texttt{\textbackslash{}@ref(label)}, where \texttt{label} is \texttt{tab:\textless{}name\textgreater{}},
+  where \texttt{\textless{}name\textgreater{}} is the code chunk label.
+\item
+  The appearance may look different to tables directly typed with LaTex, due to
+  limitations in \texttt{kable()}. To compare:
+  \begin{table}[ht]
+    \begin{center}
+        {\footnotesize
+        \begin{tabular}{l|cccccccccc}
+            \hline \hline
+                      & 3m    & 6m    & 1yr   & 2yr   & 3yr   & 5yr   & 7yr   & 10yr  & 12yr  & 15yr   \\
+            \hline
+                Mean   & 3.138 & 3.191 & 3.307 & 3.544 & 3.756 & 4.093 & 4.354 & 4.621 & 4.741 & 4.878  \\
+                StD    & 0.915 & 0.919 & 0.935 & 0.910 & 0.876 & 0.825 & 0.803 & 0.776 & 0.768 & 0.762  \\
+            \hline \hline
+        \end{tabular}}
+    \end{center}
+    \caption{This table was handwritten with LaTeX.}
+    \label{tab:table2}
+    \end{table}
+\end{itemize}
+\hypertarget{data}{%
+\chapter{Data}\label{data}}
+\begin{verbatim}
+-- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+\end{verbatim}
+\begin{verbatim}
+v tibble  3.1.2     v purrr   0.3.4
+v tidyr   1.1.3     v stringr 1.4.0
+v readr   1.4.0     v forcats 0.5.1
+\end{verbatim}
+\begin{verbatim}
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter()          masks stats::filter()
+x kableExtra::group_rows() masks dplyr::group_rows()
+x dplyr::lag()             masks stats::lag()
+\end{verbatim}
+\begin{quote}
+``C'est ne pas un pipe.''
+
+Descartes
+\end{quote}
+Characterisation of primary CLL samples by high-throughput combinatorial screening and multi-omic profiling. An introduction to the dataset that my PhD is based on.
+
+\hypertarget{drug-screens-and-experiments}{%
+\section{Drug screens and experiments}\label{drug-screens-and-experiments}}
+
+\hypertarget{high-throughput-combinatorial-pertubation-assay}{%
+\subsection{High-throughput combinatorial pertubation assay}\label{high-throughput-combinatorial-pertubation-assay}}
+
+We measured the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples and combined each one with 12 drugs to investigate the influence on spontaneous and drug-induced apoptosis (Figure \ref{fig:studyOverview}). Viability was assessed by ATP measurement via CellTiterGlo after 48 h of culture and normalised to untreated controls8.
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7px]{figures/studyOverview} 
+
+}
+
+\caption{Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n=192). Integrating functional drug-stimulus response profiling with four additional omics layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment reponses, and drug-stimulus interactions in CLL.}\label{fig:studyOverview}
+\end{figure}
+\hypertarget{validation-experiments}{%
+\subsection{Validation experiments}\label{validation-experiments}}
+
+In addition to the screen, we acquired the following validatory data (Figure \ref{fig:additionalData}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7px]{figures/studyOverview} 
+
+}
+
+\caption{Schematic of validatory data.}\label{fig:additionalData}
+\end{figure}
+\hypertarget{characteristics-of-drugs-used-in-the-screen}{%
+\section{Characteristics of drugs used in the screen}\label{characteristics-of-drugs-used-in-the-screen}}
+
+\hypertarget{drug-pathways}{%
+\subsection{Drug pathways}\label{drug-pathways}}
+
+We screened 17 different drugs (Figure \ref{fig:drugCategories}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1px]{thesis_files/figure-latex/drugCategories-1} 
+
+}
+
+\caption{Bar plot of the drugs used in screen.}\label{fig:drugCategories}
+\end{figure}
+\hypertarget{drug-responses}{%
+\subsection{Drug responses}\label{drug-responses}}
+
+The drug responses were as follows (Figure \ref{fig:drugResponses}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5px]{thesis_files/figure-latex/drugResponses-1} 
+
+}
+
+\caption{Log transformed viability values for all drugs that were included in the screen after qulaity control. p values from student's t test.}\label{fig:drugResponses}
+\end{figure}
+\hypertarget{genetic-predictors-of-drug-responses}{%
+\subsection{Genetic predictors of drug responses}\label{genetic-predictors-of-drug-responses}}
+
+\hypertarget{drug---drug-correlations}{%
+\subsection{Drug - Drug Correlations}\label{drug---drug-correlations}}
+
+\hypertarget{characteristics-of-stimuli-used-in-the-screen}{%
+\section{Characteristics of stimuli used in the screen}\label{characteristics-of-stimuli-used-in-the-screen}}
+
+\hypertarget{stimulus-responses}{%
+\subsection{Stimulus responses}\label{stimulus-responses}}
+
+\hypertarget{stimulus---stimulus-correlations}{%
+\subsection{Stimulus - Stimulus Correlations}\label{stimulus---stimulus-correlations}}
+
+\hypertarget{characteristics-of-patient-samples-used-in-the-screen}{%
+\section{Characteristics of patient samples used in the screen}\label{characteristics-of-patient-samples-used-in-the-screen}}
+
+\#\#\#Genetic Data available for each patient
+WES, CNVs, Methylation, Transcriptomic, ATACseq, LDT, survT, IHC
+PLus Ibrutinib + IBET + IL4 treated samples - ATACseq, RNAseq, proteomics
+
+\hypertarget{processing-of-raw-values-obtained-from-cell-viability-assay}{%
+\section{Processing of raw values obtained from cell viability assay}\label{processing-of-raw-values-obtained-from-cell-viability-assay}}
+
+\hypertarget{data-normalization-and-quality-control}{%
+\subsection{Data normalization and quality control}\label{data-normalization-and-quality-control}}
+
+\hypertarget{generation-of-public-resource}{%
+\section{Generation of public resource}\label{generation-of-public-resource}}
+
+\#\#\#Shiny app
+
+\#\#\#Package
+\begin{itemize}
+\tightlist
+\item
+  Present the underlying economic model/theory and give reasons why it is
+  suitable to answer the given problem\footnote{Here is an example of a footnote.}.
+\end{itemize}
+\hypertarget{ex-vivo-sensitivity-to-microenvironmental-stimulation-in-primary-cll-cells}{%
+\chapter{Ex-vivo sensitivity to microenvironmental stimulation in primary CLL cells}\label{ex-vivo-sensitivity-to-microenvironmental-stimulation-in-primary-cll-cells}}
+
+The screen included 17 cytokines and microenvironmental stimuli, which were selected based on evidence in the literature that each stimulus had been shown to impact on CLL viability \emph{in vitro}. We attempted to put together the largest panel of stimuli for an assay of this kind in CLL, aiming to minimise redundancy among the compounds (Bruch \& Giles et al.~2021).
+
+CLL cells do not proliferate \emph{in vitro}, but rather undergo spontaneous apoptosis in the absence of stimulation (\protect\hyperlink{ref-Collins1989}{Collins et al. 1989}). The effect of each stimuli on CLL viability was thus quantified by comparing ATP counts in treated primary samples, compared with those in DMSO wells where a positive value indicates that the sample viability was increased relative to control.
+
+The assay represents a reductionist model of microenvironmental signalling, making it possible to dissect the effect of individual stimuli on baseline viability. The large patient cohort also enabled us to study the differential impact of these stimuli across heterogeneous samples, and identify distinct subgroups of patients whose samples show similar response profiles to the panel of stimuli.
+
+\hypertarget{prolifing-responses-to-the-panel-of-stimuli}{%
+\section{Prolifing responses to the panel of stimuli}\label{prolifing-responses-to-the-panel-of-stimuli}}
+
+\hypertarget{ex-vivo-assay-demonstrated-functional-diversity-of-cytokines-and-microenvironmental-stimuli}{%
+\subsection{\texorpdfstring{\emph{ex vivo} assay demonstrated functional diversity of cytokines and microenvironmental stimuli}{ex vivo assay demonstrated functional diversity of cytokines and microenvironmental stimuli}}\label{ex-vivo-assay-demonstrated-functional-diversity-of-cytokines-and-microenvironmental-stimuli}}
+
+To investigate heterogeneity amongst responses to the stimuli, I calculated Pearson correlation coefficients for each stimulus pair, using the log-transformed normalised viabilities (Bruch \& Giles et al.~2021). The resulting coefficients were ordered using hierarchical clustering and visualised in a symmetrical heatmap (Figure \ref{fig:stimuliCorrelations}). The hierarchical clustering distinguished clusters of stimuli, including a larger group corresponding to agonists of TLR and Nf\(\kappa\)B pathways and a smaller group encompassing IL4 and TLR stimuli.
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/stimuliCorrelations-1} 
+
+}
+
+\caption{Heatmap of Pearson correlation coefficients. Coefficients for each pair of stimuli were calculated using log transformed viability values normalised to untreated control, and ordered according to hierarchical clustering. Figure adapted from Bruch \& Giles et al.~2021.}\label{fig:stimuliCorrelations}
+\end{figure}
+98.5\% of stimulus pairs showed little correlation (R \textless{} 0.6), including those that targeted similar downstream pathways, indicating a high degree of functional diversity amongst microenvironmental signals. For example, JAK-STAT agonists such as IL4 and IL6 showed little correlation (Figure \ref{fig:correlationsScatter}A).
+
+Only two stimulus pairs showed correlations where R \textgreater{} 0.6, and in both cases these targeted near identical receptors or downstream pathways. These included CpG ODN (TLR 9) and Resiquimod (TLR 7 and 8) (Figure \ref{fig:correlationsScatter}B), and IL4 and IL4 + CD40L which primarily target JAK3 - STAT6.
+
+Repeating the analysis to correlate drug - drug pairs demonstrated that drugs targeting components of the same pathway were highly correlated. For quality control purposes, this indicated that our data sensitively and specifically reflect inter-individual differences in pathway dependencies (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}).
+
+
+\begin{figure}
+
+{\centering \includegraphics{thesis_files/figure-latex/correlationsScatter-1} 
+
+}
+
+\caption{Scatter plot of log-transformed viability values, normalised to DMSO controls, for (A) treatment with JAK-STAT agonists IL4 and IL6 and (B) treatment with TLR agonists CpG ODN and Resiquimod.}\label{fig:correlationsScatter}
+\end{figure}
+Microenvironmental stimulation induced diverse phenotypes between patient samples, and across different stimuli. To gain a global overview of these phenotypes, I visualised log-transformed viability values normalised to DMSO controls for all patient samples and all stimuli (Figure \ref{fig:stimuliBeeswarms} (Bruch \& Giles et al.~2021).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/stimuliBeeswarms-1} 
+
+}
+
+\caption{Log transformed viabilities after treatment with each stimulus. Where stimuli decreased viability relative to control, points are shown in blue, whilst increased viability is shown in red. Figure adapted from Bruch \& Giles et al.~2021.}\label{fig:stimuliBeeswarms}
+\end{figure}
+The majority of the stimuli increased viability, underlining the supportive nature of the microenvironment in CLL. However, three out of 17 reduced CLL viability relative to control, namely IL6, TGF\(\beta\) and TLR 7/8/9 agonists in IGHV-mutated (IGHV-M) samples.
+
+IL4 and TLR7/8/9 agonists Resiquimod and CpG ODN induced the strongest responses, an indication of their potency in modulating CLL cell survival. Notably, TLR agonists increased viability in certain samples, in most cases IGHV-U, and decreased viability in others, mostly IGHV-M. Both IL4 and TLR7/8/9 emerged as the key pathways in the screen, and play an important role throughout the results of this thesis.
+
+\hypertarget{microenvironmental-response-profiling-identifies-discrete-patient-subgroups}{%
+\subsection{Microenvironmental response profiling identifies discrete patient subgroups}\label{microenvironmental-response-profiling-identifies-discrete-patient-subgroups}}
+
+To further investigate the variability in responses across the cohort, we visualised z scores of the log-transformed viabilities and performed consensus clustering on the resulting matrix to generate a heatmap of all stimuli responses across all samples (Figure \ref{fig:stimuliHeatmap}.
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/stimuliHeatmap-1} 
+
+}
+
+\caption{The heatmap matrix shows the viability measurements for 192 samples (columns) and 17 stimuli (rows). Viability was measured via ATP-based assay after 48h stimulation. The data are shown normalised to DMSO-treated controls, and scaled within each row according to the Median Absolute Deviation (MAD). Limits were applied to scaling factor for optimal visualisation. The colour bars to the right show sample annotations. Consensus Clustering was used to define column tree layout, using hierarchical clustering with the Euclidean metric. Figure from Bruch \& Giles et al.~2021.}\label{fig:stimuliHeatmap}
+\end{figure}
+The heatmap reflects heterogeneity in responses across samples and stimuli, once again underlining the potency of IL4 in increasing sample viability across diverse genetic backgrounds and the diversity in responses to TLR stimulation by Resiquimod and CpG ODN.
+
+To generate the column-wise clustering, consensus clustering was performed on the matrix of z scores. Consensus clustering allows the user to subsample from the matrix of values, to generate hierarchical clustering for a given number of clusters, k. From this, it is possible to calculate a consensus matrix for each value of k, indicating for each pair of values the proportion of time they occupy the same cluster when subsampled together.
+
+I visualised the clustered heatmap in Figure \ref{fig:stimuliHeatmap} for different values of k, and concluded on the existence of four robust clusters within the cohort (add these to appendix?). Each cluster shows a unique response profile to the panel of stimuli. We termed the clusters C1 to C4: C1 and C2 were enriched for IGHV-U whilst the samples in C3 and C4 were mostly IGHV-M.
+
+To validate the choice of four clusters, I visualised the summaries of the consensus matrix, using the \texttt{ConsensusClusterPlus} package (\protect\hyperlink{ref-ConsensusClusterPlus}{Wilkerson and Hayes 2010}), to quantify the degree of confidence in the clusters for different values of k.
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.45\linewidth]{figures/consensus008} \includegraphics[width=0.45\linewidth]{figures/consensus009} 
+
+}
+
+\caption{Summaries of the CDFs of the consensus matrices. Consensus CDF graphic showing the CDFs of the consensus matrix for k = 2 - 7, as indicated in the legend, estimated using 100 bin histogram (left). Relative change in area under the CDF curve, for k = 2 - 7, to compare k with k - 1. In the case of k = 2, there is no k - 1, so the total area is plotted. Line shows relative increase in consensus between each value of k (right).}\label{fig:consensusClusteringA}
+\end{figure}
+The graph of the CDFs of the consensus matrix for each k indicated that the CDF reaches a maximum and cluster confidence is maximised at k = 7 , though above k = 4 there is little appreciable increase. Figure \ref{fig:consensusClusteringA}. This is confirmed in the graph showing relative change in the area under the CDF curve, showing there is only a small increase in consensus between k = 4 and k =5, supporting the choice of k = 4. The cluster tracking plot depicts how each patient sample is assigned for each value of k. For k = 4, the plot indicates that C3 and 4 in particular are highly stable (Figure \ref{fig:consensusClusteringB}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.45\linewidth]{figures/consensus010} 
+
+}
+
+\caption{Assignment of patient samples (columns), to each cluster, for k = 1 - 7 (rows) to demonstrate stability of cluster membership. Cluster colour for k = 4 match those in heatmap in \ref{fig:stimuliHeatmap}.}\label{fig:consensusClusteringB}
+\end{figure}
+\hypertarget{functional-characterisation-of-patient-clusters}{%
+\section{Functional characterisation of patient clusters}\label{functional-characterisation-of-patient-clusters}}
+
+\hypertarget{c1---c4-showed-distinct-response-profiles-with-the-panel-of-stimuli}{%
+\subsection{C1 - C4 showed distinct response profiles with the panel of stimuli}\label{c1---c4-showed-distinct-response-profiles-with-the-panel-of-stimuli}}
+
+The heatmap in Figure \ref{fig:stimuliHeatmap} demonstrated that each cluster responded differently to the panel of stimuli.
+
+Amongst the IGHV-U enriched C1 and C2, both showed strong, positive responses to IL4 and TLR7/8/9 stimulation. C2 could be distinguished by stronger responses to the stimuli overall, in particular to NF\(\kappa\)B agonists IL1\(\beta\), anti-IgM, BAFF and sCD40L. Amongst the IGHV-M enriched clusters, C3 showed weaker responses to the majority of stimuli, and C4 was defined by a negative response to TLR7/8/9 stimulation (Bruch \& Giles et al.~2021). Figure \ref{fig:clusterStimuliResponse} summarises these findings in more detail, showing responses stratified by cluster for a subset of the stimuli.
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/clusterStimuliResponse-1} 
+
+}
+
+\caption{Log-transformed normalised viability values, stratified by cluster, for each stimulus. Stimuli activating the same pathway are grouped together. P-values from Student't t-test. Figure adapted from (Bruch \& Giles et al.~2021).}\label{fig:clusterStimuliResponse}
+\end{figure}
+\hypertarget{the-clusters-show-differences-in-disease-dynamics}{%
+\subsection{The clusters show differences in disease dynamics}\label{the-clusters-show-differences-in-disease-dynamics}}
+
+To validate the potential biological significance of these four clusters, we investigated whether the groups showed differential \emph{in vivo} disease progression (Bruch \& Giles et al.~2021). The study design was such that not all patients in the cohort were treatment - free, which confounded the analysis. For that reason, lymphocyte doubling time (LDT) and time to next treatment (TTT) were used to quantify CLL proliferative capacity, independently of treatment.
+
+C1 and C2 showed a shorter LDT than C3 and C4, which is expected due to the differential proportions of IGHV-U and M patient samples in these groups (Figure \ref{fig:clusterLDTTTT}A). Notably, within the IGHV-M enriched clusters C3 and C4, samples in C3 showed a significantly shorter LDT (Student's t-test, p-value = 0.025).
+
+To further validate this, we observed that TTT in the IGHV-M enriched C3 was significantly shorter than C4 and comparable to the progression dynamics of IGHV-U enriched C1 and 2 (Figure \ref{fig:clusterLDTTTT}B).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/clusterLDTTTT-1} 
+
+}
+
+\caption{(A) Lymphocyte doubling time (LDT) stratified by cluster, p-values from Student's t-test. (B) Kaplan-Meier curves to show TTT for each cluster. p-values from univariate Cox proportional hazard models comparing IGHV-U enriched C1 with C2, and IGHV-M enriched C3 with C4. Figure from Bruch \& Giles et al.~2021.}\label{fig:clusterLDTTTT}
+\end{figure}
+The difference in disease progression between the clusters indicated that microenvironmental response represents an additional biological layer, holding information relevant to disease dynamics. To validate that these clusters were not simply an indication of any underlying genetic features, we checked whether the observed differences in progression dynamics could be explained by other prognostic markers (Bruch \& Giles et al.~2021).
+
+A multivariate Cox proportional hazard model accounting for IGHV status, trisomy 12 and TP53 in addition to the cluster assignment indicated an independent prognostic value for cluster assignment between C3 and C4 (p= 0.039, Table \ref{tab:clusterCox}).
+
+
+\begin{table}
+
+\caption{\label{tab:clusterCox}Table depicting results of Multivariate Cox Proportional Hazard Model to test prognostic value of key genetic features and clusters using Time to Next Treatment and C3 as reference. }
+\centering
+\begin{tabular}[t]{l|r|r|r|r|l}
+\hline
+Factor & coef & exp(coef) & se(coef) & z & p.value\\
+\hline
+\cellcolor[HTML]{E2E868}{Cluster 3 vs Cluster 1} & \cellcolor[HTML]{E2E868}{-0.03979} & \cellcolor[HTML]{E2E868}{0.96099} & \cellcolor[HTML]{E2E868}{0.29813} & \cellcolor[HTML]{E2E868}{-0.13347} & \cellcolor[HTML]{E2E868}{0.89382}\\
+\hline
+Cluster 3 vs Cluster 2 & 0.51595 & 1.67522 & 0.37741 & 1.36708 & 0.1716\\
+\hline
+\cellcolor[HTML]{E2E868}{Cluster 3 vs Cluster 4} & \cellcolor[HTML]{E2E868}{-0.82011} & \cellcolor[HTML]{E2E868}{0.44038} & \cellcolor[HTML]{E2E868}{0.39760} & \cellcolor[HTML]{E2E868}{-2.06267} & \cellcolor[HTML]{E2E868}{0.03914}\\
+\hline
+IGHV.status & 0.55192 & 1.73658 & 0.27253 & 2.02513 & 0.04285\\
+\hline
+\cellcolor[HTML]{E2E868}{trisomy 12} & \cellcolor[HTML]{E2E868}{-0.13357} & \cellcolor[HTML]{E2E868}{0.87496} & \cellcolor[HTML]{E2E868}{0.35617} & \cellcolor[HTML]{E2E868}{-0.37503} & \cellcolor[HTML]{E2E868}{0.70764}\\
+\hline
+TP53 & 1.38977 & 4.01395 & 0.26072 & 5.33058 & <0.0001\\
+\hline
+\end{tabular}
+\end{table}
+\hypertarget{the-clusters-showed-differential-responses-to-drugs-in-vitro}{%
+\subsection{\texorpdfstring{The clusters showed differential responses to drugs \emph{in vitro}}{The clusters showed differential responses to drugs in vitro}}\label{the-clusters-showed-differential-responses-to-drugs-in-vitro}}
+
+The potential clinical relevance of the clusters was underlined by my observation that the samples within each group showed differential responses to drugs \emph{in vitro} (Figure \ref{fig:clusterDrugResponse}).
+
+As expected, the IGHV-U enriched clusters C1 and 2 were more sensitive to BCR inhibition by ibrutinib, idelalisib and PRT062607, than C3 and 4. Between C1 and C2, C2 was more sensitive to a number of the drugs, including idelalisib (SYK) (p-value = 0.012), everolimus (mTOR) (p-value = 0.02) and the chemotherapeutics fludarabine (p-value = 0.031) and nutlin-3a (p-value = 0.042). Amongst C3 and C4, C3 showed lower sensitivity to everolimus (p-value = 0.051) and to fludarabine (p-value \textless{} 0.001) and nutlin-3a (p-value = 0.01). This aligns with the observation that patients in C3 have a poorer prognosis, despite most of these samples annotated as IGHV-M. C4 also showed a positive repsonse to Nf\(\kappa\)B inhibition by BAY-11-7085, and p38 MAPK inhibition by Ralimetinib.
+
+Such differential drug response patterns suggests that microenvironmental response may reflect disease-specific CLL biology, in the same way as molecular profiling, and thus may have the potential to guide therapy decisions in future.
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/clusterDrugResponse-1} 
+
+}
+
+\caption{Log-transformed normalised viability values, stratified by cluster, for each drug. Drugs targeting the same pathway are grouped together. P-values from Student't t-test.}\label{fig:clusterDrugResponse}
+\end{figure}
+\hypertarget{the-clusters-are-enriched-for-different-genetic-features}{%
+\subsection{The clusters are enriched for different genetic features}\label{the-clusters-are-enriched-for-different-genetic-features}}
+
+Next we assessed differences in the molecular profiles of samples within each cluster. Visually, it appeared that certain clusters were enriched or depleted for various genetic features recurrent in CLL (Figure \ref{fig:clusterMatrix}.
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/clusterMatrix-1} 
+
+}
+
+\caption{Distribution of selected genetic features (rows) within each cluster for all patient samples (columns). Where a patient sample is not annotated for a feature, this is marked in white.}\label{fig:clusterMatrix}
+\end{figure}
+To quantify this, I ran a multinomial model, with lasso regularisation, to predict cluster membership (C1 -4) based on the matrix of genetic features for all the patient samples (Bruch \& Giles et al 2021). The model assigned coefficients to genetic features, where a positive coefficient indicated that this feature was enriched in the cluster, and a negative coefficient indicated it was depleted.
+
+The approach used 3-fold cross validation, selecting the optimal model using lamda min. To ensure that the resulting coefficients were robust, we selected coefficients that satisfied certain cut-offs. Coefficients were selected if they were assigned in \textgreater{} 60\% of 50 bootstrapped repeats, and were larger than 0.35. Figure \ref{fig:clusterEnrichment} shows the mean coefficients and associated standard deviation, for each genetic feature that met these criteria in each cluster.
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/clusterEnrichment-1} 
+
+}
+
+\caption{Multinomial regression with lasso penalisation to identify enrichment or depletion of genetic features within each cluster. Matrix of genetic features (p=39), and IGHV status (encoded as M = 1 and U = 0) were used to identify multivariate predictors of cluster assignment. x axis shows genetic predictors, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and error bars represent the mean ± standard deviation. Genetic features with \textgreater20\% missing values were excluded, and only patients with complete annotation were included in the model (n=137). Figure from Bruch \& Giles et al 2021.}\label{fig:clusterEnrichment}
+\end{figure}
+As we expected, IGHV status was the main feature that predicted cluster membership. Beyond IGHV status, trisomy 12 and \emph{SF3B1} mutations were enriched in C2, which showed enhanced responses to many stimuli. C4, which was associated with slow in-vivo progression, showed depletion of \emph{TP53}, \emph{ATM}, RAS/RAF mutations and gain8q.
+
+\hypertarget{gsea-of-de-genes-between-subgroups}{%
+\subsection{GSEA of DE genes between subgroups}\label{gsea-of-de-genes-between-subgroups}}
+
+In addition to genetic features, I investigated differential expression of genes within each cluster. For n = 49 samples, RNAseq data was available for matched PBMC samples. I focused on the difference between clusters 3 and 4, for which 21 RNAseq samples were available (Bruch \& Giles et al.~2021).
+
+To quantify differential gene expression, I began by filtering out immunoglobulin genes, including genes at the heavy, light and kappa loci that encode the antigen receptor of B cells. The clusters each show differential enrichment of IGHV-M and U samples, and thus the differential expression analysis would otherwise be dominated by immunoglobulin genes that are well known to affected by this biomarker.
+
+I followed the Deseq2 protocol using a design formula to quantify the difference between clusters, and accounting for the confounding effect of IGHV status. 87 genes were differentially expressed (adjusted p \textless{} 0.05) between C3 and 4 (Figure \ref{fig:clusterDE}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/clusterDE-1} 
+
+}
+
+\caption{Volcano plot of differentially expressed genes between C3 and C4. X axis indicates log2 fold change values, calculated using the \texttt{DESeq2} package (\protect\hyperlink{ref-Deseq2}{Love, Huber, and Anders 2014}), y axis gives corresponding -log10(adjusted p value). P values adjusted using BH method. Genes are labeled where ajdusted p \textless{} 0.05. Figure from Bruch \& Giles et al.~2021.}\label{fig:clusterDE}
+\end{figure}
+To assign biological meaning to the differentially expressed genes, I quantified the enrichment of Hallmark pathways amongst the genes. I ranked the genes based on the Wald statistic, and then ran GSEA was using the fgsea algorithm (Figure \ref{fig:clusterGSEA}) (Bruch \& Giles et al.~2021).
+
+Several pathways were upregulated amongst samples in C3, compared to C4, indicating that these pathways may relate in some way to the shorter TTT and LDT of patients within this cluster. Pathways associated with higher disease aggression were regulated in C3 including genesets relating to stress response (Unfolded Protein Response, UV Response Up, P53 Pathway), metabolism (Oxidative Phosphorylation) and proliferation (G2M Checkpoint, MYC Targets V1, MTORC1 Signaling, E2F Targets) (Figure \ref{fig:GSEApathways}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/clusterGSEA-1} 
+
+}
+
+\caption{Gene set enrichment analysis (GSEA) to compare expression of genes in samples from C3 and C4 reveals upregulation of Hallmark pathways involved in microenvironmental signalling, stress response, metabolism and proliferation in C3. Normalised enrichment scores (NES) are shown for top 10 most significant pathways upregulated in C3 versus C4. Bars coloured according to adjusted p-value. Genes are ranked based on Wald statistic, calculated using the Deseq2 package and GSEA performed using the fgsea algorithm. Figure from Bruch \& Giles et al.~2021.}\label{fig:clusterGSEA}
+\end{figure}
+In addition, C3 showed upregulation of microenvironmental signalling pathways relative to C4, including TNFa Signalling via NFKB and Interferon Gamma Response (Figure \ref{fig:GSEApathways}) (Bruch \& Giles et al.~2021). This finding underlines our hypothesis that differential activity of microenvironmental signalling, both \emph{in vivo} and \emph{ex vivo} may be relevant to disease prognosis.
+
+
+\begin{figure}
+
+{\centering \includegraphics{thesis_files/figure-latex/GSEApathways-1} 
+
+}
+
+\caption{Enrichment plots of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes. The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software. Figure from Bruch \& Giles et al.~2021}\label{fig:GSEApathways}
+\end{figure}
+\hypertarget{additional-analysis}{%
+\section{Additional Analysis}\label{additional-analysis}}
+
+Can microenvironmental response aid prognostic models? Run a Multivariate model to predict survival/drug response with genetic matrix and stimuli response matrix?
+
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
+The screen represents an attempt to comprehensively dissect the impact of individual microenvironmental pathways on CLL viability. Our assay has enabled us to highlight key, broad spectrum signals such as IL4. Our heterogeneous cohort also reveals pathways that operate in subsets of patients, such as TLR. IL4 and TLR represent the key pathways that we focus on throughout the rest of this thesis.
+
+In addition, this approach enables us to use microenvironmental response profiles, as an alternative to molecular profiling, to look for the existence of subgroups.
+
+We uncovered four such subgroup with distinct response profiles and molecular properties and clinical outcomes, suggesting that microenvironmental response holds biologically significant information that may be relevant to prognosis and treatment decision making.
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+Gosia suggested discussing each results section individually?
+
+\hypertarget{results}{%
+\chapter{Results}\label{results}}
+\begin{itemize}
+\item
+  Organize material and present results.
+\item
+  Use tables, figures (but prefer visual presentation):
+  \begin{itemize}
+  \item
+    Tables and figures should supplement (and not duplicate) the text.
+  \item
+    Tables and figures should be provided with legends.
+  \item
+    \emph{Figure \ref{fig:graph} shows how to include and reference graphics.
+    The graphic must be labelled before. Files must be in \textbf{.eps} format. You
+    can do this really easily in R Markdown with \texttt{knitr::include\_graphics()}}!
+  \item
+    Figures can be referenced with \texttt{\textbackslash{}@ref(fig:\textless{}name\textgreater{})}, where \texttt{\textless{}name\textgreater{}} is the
+    name of the code chunk.
+  \item
+    Tables and graphics may appear in the text or in the appendix, especially if
+    there are many simulation results tabulated, but is also depends on the study
+    and number of tables resp. figures. The key graphs and tables must appear in
+    the text!
+  \end{itemize}
+\item
+  R Markdown can also supports math equations just like \emph{LaTeX}!
+  \begin{itemize}
+  \item
+    \emph{Equation \eqref{eq:SpecDens} represents the ACs of a stationary
+    stochastic process:}
+    \begin{equation}
+            f_y(\lambda) = (2\pi)^{-1} \sum_{j=-\infty}^{\infty}
+                           \gamma_j e^{-i\lambda j}
+                         =(2\pi)^{-1}\left(\gamma_0 + 2 \sum_{j=1}^{\infty}
+        \gamma_j \cos(\lambda j)\right)
+                                       \label{eq:SpecDens}
+    \end{equation}
+    \emph{where \(i=\sqrt{-1}\) is the imaginary unit, \(\lambda \in [-\pi, \pi]\) is the
+    frequency and the \(\gamma_j\) are the autocovariances of \(y_t\).}
+  \item
+    Equations can be referenced with \texttt{\textbackslash{}@ref(eq:\textless{}name\textgreater{})}, where name is defined
+    by adding \texttt{(\textbackslash{}\#eq:\textless{}name\textgreater{})} in the line immediately before \texttt{\textbackslash{}end\{equation\}}.
+  \end{itemize}
+\end{itemize}
+\hypertarget{review-of-results}{%
+\section{Review of Results}\label{review-of-results}}
+\begin{itemize}
+\item
+  Do the results support or do they contradict economic theory ?
+\item
+  What does the reader learn from the results?
+\item
+  Try to give an intuition for your results.
+\item
+  Provide robustness checks.
+\item
+  Compare to previous research.
+\end{itemize}
+\hypertarget{results-1}{%
+\chapter{Results}\label{results-1}}
+\begin{itemize}
+\item
+  Organize material and present results.
+\item
+  Use tables, figures (but prefer visual presentation):
+  \begin{itemize}
+  \item
+    Tables and figures should supplement (and not duplicate) the text.
+  \item
+    Tables and figures should be provided with legends.
+  \item
+    \emph{Figure \ref{fig:graph} shows how to include and reference graphics.
+    The graphic must be labelled before. Files must be in \textbf{.eps} format. You
+    can do this really easily in R Markdown with \texttt{knitr::include\_graphics()}}!
+  \item
+    Figures can be referenced with \texttt{\textbackslash{}@ref(fig:\textless{}name\textgreater{})}, where \texttt{\textless{}name\textgreater{}} is the
+    name of the code chunk.
+  \end{itemize}
+\end{itemize}
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{figures/graph} 
+
+}
+
+\caption{Estimated residuals from model XXX3. ...}\label{fig:graph3}
+\end{figure}
+\begin{itemize}
+\item
+  Tables and graphics may appear in the text or in the appendix, especially if
+  there are many simulation results tabulated, but is also depends on the study
+  and number of tables resp. figures. The key graphs and tables must appear in
+  the text!
+\item
+  R Markdown can also supports math equations just like \emph{LaTeX}!
+  \begin{itemize}
+  \item
+    \emph{Equation \eqref{eq:SpecDens} represents the ACs of a stationary
+    stochastic process:}
+    \begin{equation}
+            f_y(\lambda) = (2\pi)^{-1} \sum_{j=-\infty}^{\infty}
+                           \gamma_j e^{-i\lambda j}
+                         =(2\pi)^{-1}\left(\gamma_0 + 2 \sum_{j=1}^{\infty}
+        \gamma_j \cos(\lambda j)\right)
+                                       \label{eq:SpecDens}
+    \end{equation}
+    \emph{where \(i=\sqrt{-1}\) is the imaginary unit, \(\lambda \in [-\pi, \pi]\) is the
+    frequency and the \(\gamma_j\) are the autocovariances of \(y_t\).}
+  \item
+    Equations can be referenced with \texttt{\textbackslash{}@ref(eq:\textless{}name\textgreater{})}, where name is defined
+    by adding \texttt{(\textbackslash{}\#eq:\textless{}name\textgreater{})} in the line immediately before \texttt{\textbackslash{}end\{equation\}}.
+  \end{itemize}
+\end{itemize}
+\hypertarget{review-of-results-1}{%
+\section{Review of Results}\label{review-of-results-1}}
+\begin{itemize}
+\item
+  Do the results support or do they contradict economic theory ?
+\item
+  What does the reader learn from the results?
+\item
+  Try to give an intuition for your results.
+\item
+  Provide robustness checks.
+\item
+  Compare to previous research.
+\end{itemize}
+\hypertarget{results-2}{%
+\chapter{Results}\label{results-2}}
+\begin{itemize}
+\item
+  Organize material and present results.
+\item
+  Use tables, figures (but prefer visual presentation):
+  \begin{itemize}
+  \item
+    Tables and figures should supplement (and not duplicate) the text.
+  \item
+    Tables and figures should be provided with legends.
+  \item
+    \emph{Figure \ref{fig:graph} shows how to include and reference graphics.
+    The graphic must be labelled before. Files must be in \textbf{.eps} format. You
+    can do this really easily in R Markdown with \texttt{knitr::include\_graphics()}}!
+  \item
+    Figures can be referenced with \texttt{\textbackslash{}@ref(fig:\textless{}name\textgreater{})}, where \texttt{\textless{}name\textgreater{}} is the
+    name of the code chunk.
+  \end{itemize}
+\end{itemize}
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{figures/graph} 
+
+}
+
+\caption{Estimated residuals from model XXX4. ...}\label{fig:graph4}
+\end{figure}
+\begin{itemize}
+\item
+  Tables and graphics may appear in the text or in the appendix, especially if
+  there are many simulation results tabulated, but is also depends on the study
+  and number of tables resp. figures. The key graphs and tables must appear in
+  the text!
+\item
+  R Markdown can also supports math equations just like \emph{LaTeX}!
+  \begin{itemize}
+  \item
+    \emph{Equation \eqref{eq:SpecDens} represents the ACs of a stationary
+    stochastic process:}
+    \begin{equation}
+            f_y(\lambda) = (2\pi)^{-1} \sum_{j=-\infty}^{\infty}
+                           \gamma_j e^{-i\lambda j}
+                         =(2\pi)^{-1}\left(\gamma_0 + 2 \sum_{j=1}^{\infty}
+        \gamma_j \cos(\lambda j)\right)
+                                       \label{eq:SpecDens}
+    \end{equation}
+    \emph{where \(i=\sqrt{-1}\) is the imaginary unit, \(\lambda \in [-\pi, \pi]\) is the
+    frequency and the \(\gamma_j\) are the autocovariances of \(y_t\).}
+  \item
+    Equations can be referenced with \texttt{\textbackslash{}@ref(eq:\textless{}name\textgreater{})}, where name is defined
+    by adding \texttt{(\textbackslash{}\#eq:\textless{}name\textgreater{})} in the line immediately before \texttt{\textbackslash{}end\{equation\}}.
+  \end{itemize}
+\end{itemize}
+\hypertarget{review-of-results-2}{%
+\section{Review of Results}\label{review-of-results-2}}
+\begin{itemize}
+\item
+  Do the results support or do they contradict economic theory ?
+\item
+  What does the reader learn from the results?
+\item
+  Try to give an intuition for your results.
+\item
+  Provide robustness checks.
+\item
+  Compare to previous research.
+\end{itemize}
+\hypertarget{conclusion}{%
+\chapter{Conclusion}\label{conclusion}}
+\begin{itemize}
+\item
+  Give a short summary of what has been done and what has been found.
+\item
+  Expose results concisely.
+\item
+  Draw conclusions about the problem studied. What are the implications of your
+  findings?
+\item
+  Point out some limitations of study (assist reader in judging validity of
+  findings).
+\item
+  Suggest issues for future research.
+\end{itemize}
+\newpage
+
+\hypertarget{references}{%
+\chapter*{References}\label{references}}
+\addcontentsline{toc}{chapter}{References}
+
+\noindent
+
+\setlength{\parindent}{-0.5cm}
+\setlength{\leftskip}{0.5cm}
+\setlength{\parskip}{8pt}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-Collins1989}{}}%
+Collins, Russell J., Louise A. Verschuer, Brian V. Harmon, Roger L. Prentice, John H. Pope, and John F. R. Kerr. 1989. {``{Spontaneous programmed death (apoptosis) of B‐chronic lymphocytic leukaemia cells following their culture in vitro}.''} \emph{British Journal of Haematology} 71 (3): 343--50. \url{https://doi.org/10.1111/j.1365-2141.1989.tb04290.x}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-JCIpaper}{}}%
+Dietrich, Sascha, Małgorzata Oleś, Junyan Lu, Leopold Sellner, Simon Anders, Britta Velten, Bian Wu, et al. 2017. {``{Drug-perturbation-based stratification of blood cancer}.''} \emph{Journal of Clinical Investigation} 128 (1): 427--45. \url{https://doi.org/10.1172/JCI93801}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Deseq2}{}}%
+Love, Michael I, Wolfgang Huber, and Simon Anders. 2014. {``{Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2}.''} \emph{Genome Biology} 15 (12): 550. \url{https://doi.org/10.1186/s13059-014-0550-8}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ConsensusClusterPlus}{}}%
+Wilkerson, Matthew D, and D Neil Hayes. 2010. {``{ConsensusClusterPlus: a class discovery tool with confidence assessments and item tracking.}''} \emph{Bioinformatics (Oxford, England)} 26 (12): 1572--73. \url{https://doi.org/10.1093/bioinformatics/btq170}.
+
+\end{CSLReferences}
+\indent
+\setlength{\parindent}{17pt}
+\setlength{\leftskip}{0pt}
+\setlength{\parskip}{0pt}
+
+\newpage
+
+\hypertarget{appendix-appendix}{%
+\appendix}
+
+
+Here goes the appendix!
+
+\hypertarget{figures}{%
+\section*{Figures}\label{figures}}
+\addcontentsline{toc}{section}{Figures}
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth,]{figures/graph} 
+
+}
+
+\caption{Estimated residuals (2) from model XXX. ...}\label{fig:graph2}
+\end{figure}
+\hypertarget{tables}{%
+\section*{Tables}\label{tables}}
+\addcontentsline{toc}{section}{Tables}
+\begin{table}[ht]
+    \begin{center}
+        {\footnotesize
+        \begin{tabular}{l|cccccccccc}
+        \hline \hline
+                        & 3m    & 6m    & 1yr   & 2yr   & 3yr   & 5yr   & 7yr   & 10yr  & 12yr  & 15yr   \\
+            \hline
+                Mean   & 3.138 & 3.191 & 3.307 & 3.544 & 3.756 & 4.093 & 4.354 & 4.621 & 4.741 & 4.878  \\
+                Median & 3.013 & 3.109 & 3.228 & 3.490 & 3.680 & 3.906 & 4.117 & 4.420 & 4.575 & 4.759  \\
+                Min    & 1.984 & 1.950 & 1.956 & 2.010 & 2.240 & 2.615 & 2.850 & 3.120 & 3.250 & 3.395  \\
+                Max    & 5.211 & 5.274 & 5.415 & 5.583 & 5.698 & 5.805 & 5.900 & 6.031 & 6.150 & 6.295  \\
+                StD    & 0.915 & 0.919 & 0.935 & 0.910 & 0.876 & 0.825 & 0.803 & 0.776 & 0.768 & 0.762  \\
+            \hline \hline
+        \end{tabular}}
+    \end{center}
+    \caption{Detailed descriptive statistics of location and dispersion for
+    2100 observed swap rates for the period from
+    February 15, 1999 to March 2, 2007. Swap rates measured as 3.12 (instead of 0.0312).}
+    \label{tab:apptable}
+\end{table}
+\newpage
+
+\end{document}

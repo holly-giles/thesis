@@ -1,0 +1,85 @@
+---
+#
+# Required Information --------------------------------------------------------
+# change lines 5 - 15
+title: "Drug - microenvironment - gene interplay in chronic lymphocytic leukemia"
+type: "Dissertation"
+author: "Holly Amelia Rebecca Giles"
+authordegree: "M.A."
+birthplace: "Portsmouth"
+date: "Oct 01, 2021?"
+examdate: "Dec 15, 2021?"
+university: "Ruperto Carola University Heidelberg"
+institute: "European Molecular Biology Laboratory"
+instituteshort: "(EMBL)"
+department: "Genome Biology"
+supervisor: "Dr. Wolfgang Huber and Dr. Sascha Dietrich"
+referee1: "Dr. Judith Zaugg"
+referee2: "Prof. Dr. Michael Boutros" 
+dedication: "To ..."
+#
+# Optional Information --------------------------------------------------------
+# comment out if unnecessary
+abstract: |  
+  `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-abstract.Rmd"), collapse = '\n  ')`
+zusammenfassung: |
+  `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-zusammenfassung.Rmd"), collapse = '\n  ')`
+list-of-publications: |  
+  `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-list-of-publications.Rmd"), collapse = '\n  ')`
+acknowledge: |  
+  `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-acknowledge.Rmd"), collapse = '\n  ')`
+abbreviations: |  
+  `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-abbreviations.Rmd"), collapse = '\n  ')`
+lot: true                               # list of tables
+lof: true                              # list of figures
+link-citations: true                  #can click link to go to ref sectin
+bibliography: bib/references.bib       # bibliography file, can also add biblio-style: 
+#
+# Rendering Options -----------------------------------------------------------
+#
+knit: "bookdown::render_book"
+output: 
+  heididown::thesis_pdf:
+    latex_engine: lualatex
+    extra_dependencies: ["float"]
+space_between_paragraphs: true       # if you want spaces bt paragraph
+# header-includes:     # if including additional latex packages or commands
+  # - \setlength{\parindent}{17pt}
+---
+
+<!--
+Above is the YAML (YAML Ain't Markup Language) header that includes a lot of
+metadata used to produce the document.  Be careful with spacing in this header!
+If you'd like to include a comment that won't be produced in your resulting file
+enclose it in a block like this.
+-->
+
+<!--
+If you receive a duplicate label error after knitting, make sure to delete the
+index.Rmd file and then knit again.
+-->
+
+```{r include_packages, include = FALSE}
+# This chunk ensures that the `huwiwidown` package is installed and loaded. This
+# package includes the template files for the thesis.
+if (!require(devtools)) {
+  install.packages("devtools", repos = "http://cran.rstudio.com")
+}
+if (!require(heididown)) {
+  devtools::install_github("nkurzaw/heididown")
+  library(heididown)
+}
+
+
+```
+
+<!-- 
+The {.unnumbered} option here means that the introduction will be "Section  0."
+You can also use {-} for no numbers on section. 
+-->
+
+<!--
+The body of the thesis starts underneath the text below. Feel free to delete
+everything below this.
+-->
+

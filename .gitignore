@@ -1,0 +1,15 @@
+#MacOS files
+.DS_Store
+
+#Rmd Cache
+**/*_cache/
+**/*_files/
+
+#Specific Folders
+index/_bookdown_files
+index/figures
+index/thesis-examples
+index/thesis-output/archive
+
+#Specific Files
+

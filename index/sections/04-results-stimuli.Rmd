@@ -1,0 +1,2296 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Ex-vivo sensitivity to microenvironmental stimulation in primary CLL cells
+
+```{r, echo = FALSE}
+
+knitr::opts_chunk$set(
+   echo = FALSE, 
+   message = FALSE, 
+   warning = FALSE,
+   fig.align="center"
+)
+
+```
+
+```{r setup04, echo = FALSE}
+
+#libraries
+library(RColorBrewer)
+library(ggrepel)
+library(patchwork)
+library(ggplot2)
+library(tidyr)
+library(ggbeeswarm)
+library(magrittr)
+library(pheatmap)
+library(ggfortify)
+library(gridExtra)
+library(DESeq2)
+library(survival)
+library(survminer)
+library(glmnet)
+library(ConsensusClusterPlus)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(msigdbr)
+library(dplyr)
+library(tidyverse)
+library(fgsea)
+library(kableExtra)
+library(ggplotify)
+library(reshape2)
+library(grid)
+library(ggh4x)
+#library(hgthesis)
+
+```
+
+```{r loadData04, eval = TRUE}
+
+#data("df", "patMeta", "LDT", "survT", "dds_smp")
+#df_complete <- df
+
+
+#Data
+#df: tibble containing all screening viability data
+load( "data/df.RData")
+df_complete <- df
+
+#patMeta: tibble containing all patient genetic data
+load("data/patMeta.RData")
+
+#LDT: tibble containing Lymphocyte Doubling Times for patients in screen
+load("data/LDT.RData")
+
+#survT: tibble containing disease progression data for patients in screen 
+load("data/survT.RData")
+
+#dds_smp: DESeqDataSet containing RNA counts and assosciated meta data for matched samples to those in screen 
+load("data/dds_smp.RData")
+
+```
+
+```{r echo = FALSE, eval = TRUE}
+#REMOVE ONCE I HAVE PACKAGE - MAKE SURE THEMES ARE UPDATED 
+### ggplot themes
+
+fontsize = 11
+
+## theme for ggplots
+t1 <- 
+  theme(                              
+  plot.background = element_blank(), 
+  panel.grid.major = element_line(),
+  panel.grid.major.x = element_line(linetype = "dotted", colour = "grey"),
+  panel.grid.minor = element_blank(), 
+  panel.border = element_blank(), 
+  panel.background = element_blank(),
+  axis.line = element_line(size=.4),
+  axis.line.x = element_line(),
+  axis.line.y = element_line(),
+  axis.text.x  = element_text(angle=90, size=11, hjust = 1, vjust = 0.4),
+  axis.text.y = element_text(size = 11),
+ # axis.ticks.x = element_line(linetype = "dotted"),
+  axis.ticks.length = unit(0.3,"cm"),
+  axis.title.x = element_text(face="bold", size=13), 
+  axis.title.y = element_text(face="bold", size=13),
+  plot.title = element_text(face="bold", size=14, hjust = 0.5),
+  strip.text = element_text(size = fontsize)
+)
+
+t2 <- t1+
+  theme( axis.text.x  = element_text(angle=0, size=11, hjust = 0.5, vjust = 1))
+
+## theme for legends
+t.leg <-  theme(legend.title = element_text(face='bold', 
+                                            hjust = 1, size=11),
+                legend.key = element_blank(),
+                legend.text = element_text(size=11),
+                legend.background = element_rect(color = "black"))
+
+
+
+### Set colour palettes
+
+#For Categorical: 
+colors <- c("#A1BE1F", #green
+            "#F4C61F", #yellow
+            "#734595", #purple
+            "#D41645", #red
+            "#3B6FB6", #blue
+            "#B65417", #orange
+            "#E2E868", #light green
+            "#CBA3D8", #light purple
+            "#E58F9E", #light purple
+            "#8BB8E8", #light blue
+            "#F49E17", #light orange
+            "#303030", #black
+            "#A8A99E", #grey
+            "#007B53") #dark green
+
+
+
+#For Divergent: 
+Divergent <- c("#003DA5", "#2055B0", "#406EBC", "#6086C7", "#809ED2", "#9FB6DD", "#BFCFE9", "#DFE7F4", "white", "white", "white","#F4E0E7", "#E9C2CF", "#DEA3B6", "#D3849E", "#C76586", "#BC476E", "#B12855", "#A6093D")
+
+#for negatives only: 
+palblues <- c("#003DA5", "#2055B0", "#406EBC", "#6086C7", "#809ED2", "#9FB6DD", "#BFCFE9", "#DFE7F4")
+
+#for positives only:
+palreds <- c("#F4E0E7", "#E9C2CF", "#DEA3B6", "#D3849E", "#C76586", "#BC476E", "#B12855", "#A6093D")
+
+#For mutations: 
+Mutant <- c("#b5b5b5","#373A36")
+Sex <- c("#707372","#D0D0CE")
+IGHV <- c("#373A36","#D0D0CE")
+Methylation_cluster <- c("#373A36","#A8A99E","#D0D0CE")
+
+#For drugs: 
+drugpal <- c("#734595", "#CBA3D8") #purples
+
+#For cytokines: 
+cytpal <- c("#F49E17", "#EFC06E") #yellows
+
+
+#neutral
+offwhite <- "#f8f8ff"
+lightergrey <- "#D0D0CE"
+darkergrey <- "#707372"
+
+
+na_color="#f0f0f0"
+
+
+
+
+#*Sum coefficients:* to drop all features from multinomial regression that don't meet specified cut off criteria, and gather coefficients for all remaining other features, for all repeats of the regression. Accepts a matrix `coefMat`, plus numeric values for `coefCut`, the minimum value of that the average coefficient should be, and `freqCut`, the minimum proportion of repeats that a coefficient should be significant.  
+
+sumCoef <- function(coefMat, coefCut = 0, freqCut =1) {
+  meanCoef <- rowMeans(abs(coefMat))
+  freqCoef <- rowMeans(coefMat != 0)
+  subMat <- coefMat[meanCoef > coefCut & freqCoef >= freqCut,,drop=FALSE]
+  eachTab <- data.frame(subMat) %>%
+     rownames_to_column("feature") %>% gather(key = "rep",value = "coef",-feature) %>%
+     mutate(rep = gsub("X","",rep))
+  return(eachTab)
+} 
+
+
+
+#*scaleCytResp function:*  to apply `medianCenter_MadScale` row wise to viability matrix. Accepts `x`, a matrix of log(viability) values. 
+
+scaleCytResp  <- function(x) t(apply(x, 1, medianCenter_MadScale)) 
+
+
+
+
+#*Function for multinomial regression*: To perform multinomial regression to identify genetic features that are predictors of cluster assignment. Provide a feature matrix `X` and a response matrix `y`, and specify `method` (regression method), `repeats` (number of repeats of the regression) and `folds` (number of folds to split the data into for cross validation). 
+
+runGlm_multiCluster <- 
+  function(X, y, method = "ridge", repeats=20, folds = 3) {
+    modelList <- list()
+    lambdaList <- c()
+    
+    coefMat <- 
+      lapply(unique(y), function(n) {
+        mat <- matrix(NA, ncol(X), repeats)
+        rownames(mat) <- colnames(X)
+        mat
+      })
+    
+    names(coefMat) <- unique(y)
+    
+    alpha = switch(method, lasso = 1, ridge = 0, stop("Please provide a valid method: lasso or ridge"))
+    
+    
+    for (i in seq(repeats)) {
+      
+      #balanced sampling
+      vecFold <- mltools::folds(y, nfolds = folds, stratified = TRUE, seed = i*1996)
+      res <- cv.glmnet(X, y, type.measure = "class",
+                       foldid = vecFold, alpha = alpha, standardize = FALSE,
+                       intercept = TRUE, family = "multinomial")
+      lambdaList <- c(lambdaList, res$lambda.min)
+      modelList[[i]] <- res
+      
+      coefModel <- coef(res, s = "lambda.min")
+      for (n in names(coefModel)) {
+        coefMat[[n]][,i] <- coefModel[[n]][-1]
+      }
+    }
+    list(modelList = modelList, lambdaList = lambdaList, coefMat = coefMat)
+  }
+
+
+
+
+plotPathways <-function(dat) 
+{
+  #Set pathway, number of drugs and group
+  Pathway = NULL
+  No = NULL
+  Group = NULL
+  #set ordering of drug cateogries (FDA Approved and  Clinical development/tool compound)
+  ordM = sort(table(dat$group), decreasing = TRUE)
+  
+  #set ordering of pathways within categories
+  ordS = tapply(dat$target_category, dat$group, function(pth) {
+    sort(table(pth), decreasing = TRUE)
+  })
+  
+  #set overall ordering
+  ocur = ordS[names(ordM)]
+  
+  #get a dataframe of number of drugs for each pathway, split by category
+  tmp = do.call(rbind, lapply(names(ocur), function(pathgroup) {
+    data.frame(Group = pathgroup, Pathway = names(ocur[[pathgroup]]), 
+               No = as.vector(unname(ocur[[pathgroup]])))
+  }))
+  
+  #relevel categories
+  tmp$Group = factor(tmp$Group, levels = rev(names(ocur)))
+  
+  #set plotting order
+  lev = sort(tapply(tmp$No, tmp$Pathway, function(x) sum(x)), 
+             decreasing = TRUE)
+  
+  #relevel pathways
+  tmp$Pathway = factor(tmp$Pathway, levels = names(lev))
+  
+  #set height of y axis scale
+  widthmax = max(lev) + 1
+  
+  #make plot
+  g = ggplot(tmp, aes(x = Pathway, y = No, fill = Group)) + 
+    geom_bar(width = 0.6, stat = "identity") + theme_bw() + 
+    scale_fill_manual(values = c(drugpal[1], drugpal[2]), name = "Drug type") + 
+    scale_y_continuous(breaks = seq(0, 20, 2), 
+                       expand = c(0,0), limits = c(0, widthmax)) + 
+    xlab("") + 
+    ylab("No. of drugs") + 
+    t1 + 
+    theme(legend.position = c(0.7, 0.65))
+  
+}
+
+
+
+
+#*Euclidean Distance function:* To provide distance function for running `ConsensusClusterPlus`. Calculates Euclidean distances for matrix `x`.
+
+
+myDistFunc = function(x){ dist(x, method="euclidean")}
+
+
+
+#*Hierarchical clustering function:* To provide cluster function for running `ConsensusClusterPlus`. Accepts `this_dist`, a dissimilarity structure as produced by `dist` and `k`, the number of clusters to assign. 
+
+
+myclusterfunction = function(this_dist, k){
+  #run hierarchical cluster analysis on dissimilarity structure this_dist  
+  hc = hclust(this_dist)
+  #cut cut tree into k groups 
+  assignment = cutree(hc, k)
+  return(assignment)
+}
+
+
+#*medianCenter_MadScale function:*  to scale viability values according to MAD and then center values at zero. Maximum/minimum size of scaling factor set with deckel (above). Accepts a vector `x` to scale.
+
+
+medianCenter_MadScale <- function(x) {
+  s=0
+  (x - s) / deckel(mad(x, center = s), lower = 0.05, upper = 0.2)
+}
+
+
+
+
+#*Factor2Ind*: To generate indicator matrix from a factor. Given a factor  `x`, create an indicator matrix of dimension `length(x)` multiplied by `nlevels(x)-1`, dropping the column corresponding to the baseline level (by default the first level is used as baseline).
+
+factor2ind <- function(x, baseline)
+{
+  
+  xname <- deparse(substitute(x))
+  n <- length(x)
+  x <- as.factor(x)
+  if(!missing(baseline)) x <- relevel(x, baseline)
+  X <- matrix(0, n, length(levels(x)))
+  X[(1:n) + n*(unclass(x)-1)] <- 1
+  X[is.na(x),] <- NA
+  dimnames(X) <- list(names(x), paste(xname, levels(x), sep = ":"))
+  return(X[,-1,drop=FALSE])
+}
+
+enrichmentPlot <- 
+  function (pathway, stats, gseaParam = 1, ticksSize = 0.2)
+  {   rnk <- rank(-stats)
+  ord <- order(rnk)
+  statsAdj <- stats[ord]
+  statsAdj <- sign(statsAdj) * (abs(statsAdj)^gseaParam)
+  statsAdj <- statsAdj/max(abs(statsAdj))
+  pathway <- unname(as.vector(na.omit(match(pathway, names(statsAdj)))))
+  pathway <- sort(pathway)
+  gseaRes <- calcGseaStat(statsAdj, selectedStats = pathway, returnAllExtremes = TRUE)
+  bottoms <- gseaRes$bottoms
+  tops <- gseaRes$tops
+  n <- length(statsAdj)
+  xs <- as.vector(rbind(pathway - 1, pathway))
+  ys <- as.vector(rbind(bottoms, tops))
+  toPlot <- data.frame(x = c(0, xs, n + 1), y = c(0, ys, 0))
+  diff <- (max(tops) - min(bottoms))/8
+  x = y = NULL
+  g <- ggplot(toPlot, aes(x = x, y = y)) +
+    geom_point(color = colors[1], size = 0.1) +
+    geom_hline(yintercept = max(tops), colour = palreds[7], linetype = "dashed") +
+    geom_hline(yintercept = min(bottoms), colour = palreds[7], linetype = "dashed") +
+    geom_hline(yintercept = 0, colour = "black") +
+    geom_line(color = colors[1]) +
+    geom_segment(data = data.frame(x = pathway), mapping = aes(x = x, y = -diff/2, xend = x, yend = diff/2), 
+                 size = ticksSize) +
+    t2 +
+    labs(x = "Rank", y = "Enrich. score")
+  g}
+
+
+#*deckel function:*  to  set limits of scaling factor. Accepts a number `x`, and two numeric limits, `lower` and `upper`.
+
+deckel <- function(x, lower = -Inf, upper = +Inf) ifelse(x<lower, lower, ifelse(x>upper, upper, x))
+
+#My consensus CLuster function 
+
+HGConsensusClusterPlus <- function( d=NULL,
+                                  maxK = 3,
+                                  reps=10,
+                                  pItem=0.8,
+                                  pFeature=1,
+                                  clusterAlg="hc",
+                                  title="untitled_consensus_cluster",
+                                  innerLinkage="average",
+                                  finalLinkage="average",
+                                  distance="pearson",
+                                  ml=NULL,
+                                  tmyPal=NULL,
+                                  seed=NULL,
+                                  plot=NULL,
+                                  writeTable=FALSE,
+                                  weightsItem=NULL,
+                                  weightsFeature=NULL,
+                                  verbose=F,
+                                  corUse="everything" ) {
+  
+  #Define colors 
+  mycolors <- c("#A1BE1F", #green
+              "#D41645", #red
+              "#734595", #purple
+              "#F4C61F", #yellow
+              "#3B6FB6", #blue
+              "#B65417", #orange
+              "#E2E868", #light green
+              "#CBA3D8", #light purple
+              "#E58F9E", #light purple
+              "#8BB8E8", #light blue
+              "#F49E17", #light orange
+              "#303030", #black
+              "#A8A99E", #grey
+              "#007B53") #dark green
+  
+  
+  ##description: runs consensus subsamples 
+  if(is.null(seed)==TRUE){
+    seed=timeSeed = as.numeric(Sys.time())
+  }
+  set.seed(seed)
+  
+  #distance=ifelse( inherits(d,"dist"), attr( d, "method" ), "pearson" )
+  
+  
+  if(is.null(ml)==TRUE){
+    
+    if ( ! any(class( d ) %in% c( "dist", "matrix", "ExpressionSet" )) ) {
+      stop("d must be a matrix, distance object or ExpressionSet (eset object)")
+    }
+    
+    if ( inherits( d, "dist" ) ) {
+      ## if d is a distance matrix, fix a few things so that they don't cause problems with the analysis
+      ##  Note, assumption is that if d is a distance matrix, the user doesn't want to sample over the row features
+      if ( is.null( attr( d, "method" ) ) ) {
+        attr( d, "method" ) <- distance <- "unknown - user-specified"
+      }
+      if ( is.null( distance ) || ( distance != attr( d, "method" ) ) ) {
+        distance <- attr( d, "method" ) 
+      }
+      
+      if ( ( ! is.null( pFeature ) ) && ( pFeature < 1 ) ) {
+        message( "Cannot use the pFeatures parameter when specifying a distance matrix as the data object, setting pFeature to 1.\n" )
+        pFeature <- 1
+      }
+      if ( ! is.null( weightsFeature ) ) {
+        message( "Cannot use the weightsFeature parameter when specifying a distance matrix as the data object\n" )
+        weightsFeature <- NULL
+      }
+      
+    } else {
+      if ( is.null( distance ) ) {
+        ## we should never get here, but just in case
+        message("no specified distance, setting distance to Pearson");
+        distance <- "pearson"
+      }
+    }
+    
+    if ( ( clusterAlg == "km" ) && inherits( distance, "character" ) && ( distance != "euclidean" ) ) {
+      message( "Note: The km (kmeans) option only supports a euclidean distance metric when supplying a data matrix.  If you want to cluster a distance matrix, use a different algorithm such as 'hc' or 'pam'.  Changing distance to euclidean")
+      distance <- 'euclidean'
+    }
+    
+    
+    if ( inherits( d,"ExpressionSet" ) ) {
+      d <- exprs(d)
+    }
+    
+    ml <- ccRun( d=d,
+                 maxK=maxK,
+                 repCount=reps,
+                 diss=inherits(d,"dist"),
+                 pItem=pItem,
+                 pFeature=pFeature,
+                 innerLinkage=innerLinkage,
+                 clusterAlg=clusterAlg,
+                 weightsFeature=weightsFeature,
+                 weightsItem=weightsItem,
+                 distance=distance,
+                 verbose=verbose,
+                 corUse=corUse)
+  }
+  res=list();
+  
+  ##make results directory
+  if((is.null(plot)==FALSE | writeTable) & !file.exists(paste(title,sep=""))){
+    dir.create(paste(title,sep=""))
+  }
+  
+  ##write log file
+  log <- matrix( ncol=2,
+                 byrow=T,
+                 c("title",title,
+                   "maxK",maxK,
+                   "input matrix rows",ifelse ( inherits( d, "matrix" ), nrow(d), "dist-mat" ), 
+                   "input matrix columns",ifelse ( inherits( d, "matrix" ), ncol(d), ncol( as.matrix(d) ) ), 
+                   "number of bootstraps",reps,
+                   "item subsampling proportion",pItem,
+                   "feature subsampling proportion",ifelse( is.null(pFeature), 1, pFeature ),
+                   "cluster algorithm",clusterAlg,
+                   "inner linkage type",innerLinkage,
+                   "final linkage type",finalLinkage,
+                   "correlation method",distance,
+                   "plot",if(is.null(plot)) NA else plot,
+                   "seed",if(is.null(seed)) NA else seed))
+  colnames(log) = c("argument","value")
+  if(writeTable){
+    write.csv(file=paste(title,"/",title,".log.csv",sep=""), log,row.names=F)
+  }
+  if(is.null(plot)){
+    ##nothing
+  }else if(plot=="pngBMP"){
+    bitmap(paste(title,"/","consensus%03d.png",sep=""))
+  }else if(plot=="png"){
+    png(paste(title,"/","consensus%03d.png",sep=""))
+    
+  }else if (plot=="pdf"){
+    pdf(onefile=TRUE, paste(title,"/","consensus.pdf",sep=""))
+  }else if (plot=="ps"){
+    postscript(onefile=TRUE, paste(title,"/","consensus.ps",sep=""))
+  }	
+  
+  colorList=list()
+  colorM = rbind() #matrix of colors.
+  
+  #18 colors for marking different clusters
+  thisPal <- c(mycolors,
+               "#076f25", #dark green
+               "#93cd7f",#lime green
+               "#4d0776", #dark purple
+               "#ffffff" #white
+  )
+  
+  ##plot scale
+  colBreaks=NA
+  if(is.null(tmyPal)==TRUE){
+    colBreaks=10
+    tmyPal = myPal(colBreaks)
+  }else{
+    colBreaks=length(tmyPal)
+  }
+  sc = cbind(seq(0,1,by=1/( colBreaks) )); rownames(sc) = sc[,1]
+  sc = cbind(sc,sc)
+  heatmap(sc, Colv=NA, Rowv=NA, symm=FALSE, scale='none', col=tmyPal, na.rm=TRUE,labRow=rownames(sc),labCol=F,main="consensus matrix legend")
+  
+  for (tk in 2:maxK){
+    if(verbose){
+      message(paste("consensus ",tk))
+    }
+    fm = ml[[tk]]
+    hc=hclust( as.dist( 1 - fm ), method=finalLinkage);
+    message("clustered")	
+    ct = cutree(hc,tk)
+    names(ct) = colnames(d)
+    if(any(class(d)=="dist")){
+      names(ct) = colnames(as.matrix(d))
+    }
+    c = fm
+    
+    colorList = setClusterColors(res[[tk-1]][[3]],ct,thisPal,colorList)
+    pc = c
+    pc=pc[hc$order,] #pc is matrix for plotting, same as c but is row-ordered and has names and extra row of zeros.
+    
+    
+    
+    if(!is.null(plot) && plot=="pngBMP"){
+      pc = pc[,hc$order ] #mod for no tree
+      pc = rbind(pc,0)
+      #no dendrogram if pngBMP
+      oc = colorList[[1]][hc$order] #mod for no tree
+      heatmap(pc, Colv = NA, Rowv = NA, symm = FALSE, scale = "none", col = tmyPal, na.rm = TRUE, labRow = F, labCol = F, mar = c(5, 5), main = paste("consensus matrix k=", 
+                                                                                                                                                      tk, sep = ""), ColSideCol = oc)
+    }else{
+      pc = rbind(pc,0)
+      #former with tree:
+      heatmap(pc, Colv=as.dendrogram(hc), Rowv=NA, symm=FALSE, scale='none', col=tmyPal, na.rm=TRUE,labRow=F,labCol=F,mar=c(5,5),main=paste("consensus matrix k=",tk,sep="") , ColSideCol=colorList[[1]])
+    }
+    
+    legend("topright",legend=unique(ct),fill=unique(colorList[[1]]),horiz=FALSE )
+    
+    res[[tk]] = list(consensusMatrix=c,consensusTree=hc,consensusClass=ct,ml=ml[[tk]],clrs=colorList)
+    colorM = rbind(colorM,colorList[[1]]) 
+  }
+  CDF(ml)
+  clusterTrackingPlot(colorM[,res[[length(res)]]$consensusTree$order])
+  if(is.null(plot)==FALSE){
+    dev.off();
+  }
+  res[[1]] = colorM
+  if(writeTable){
+    for(i in 2:length(res)){
+      write.csv(file=paste(title,"/",title,".k=",i,".consensusMatrix.csv",sep=""), res[[i]]$consensusMatrix)
+      write.table(file=paste(title,"/",title,".k=",i,".consensusClass.csv",sep=""), res[[i]]$consensusClass,col.names = F,sep=",")
+    }
+  }
+  return(res)
+}
+
+
+calcICL = function(res,title="untitled_consensus_cluster",plot=NULL,writeTable=FALSE){
+  #calculates and plots cluster consensus and item consensus
+  cc=rbind()
+  cci = rbind()
+  sumRes=list()
+  colorsArr=c()
+  
+  #make results directory
+  if((is.null(plot)==FALSE | writeTable) & !file.exists(paste(title,sep=""))){
+    dir.create(paste(title,sep=""))
+  }
+  if(is.null(plot)){
+    #to screen
+  }else if(plot=="pdf"){
+    pdf(onefile=TRUE, paste(title,"/","icl.pdf",sep=""))
+  }else if(plot=="ps"){
+    postscript(onefile=TRUE, paste(title,"/","icl.ps",sep=""))
+  }else if (plot=="png"){
+    png(paste(title,"/","icl%03d.png",sep=""))
+  }else if (plot=="pngBMP"){
+    bitmap(paste(title,"/","icl%03d.png",sep=""))
+  }
+  
+  par(mfrow=c(3,1),mar=c(4,3,2,0))
+  
+  for (k in 2:length(res)){ #each k
+    eiCols = c();
+    o = res[[k]]
+    m = o$consensusMatrix
+    m = triangle(m,mode=2)
+    for (ci in sort(unique(o$consensusClass))){ #each cluster in k
+      items = which(o$consensusClass==ci)
+      nk = length(items)
+      mk = sum( m[items,items], na.rm=T)/((nk*(nk-1))/2)
+      cc=rbind(cc,c(k,ci,mk)) #cluster-consensus
+      
+      for (ei in rev(res[[2]]$consensusTree$order) ){
+        denom = if (ei %in% items) { nk - 1} else { nk }
+        mei = sum( c(m[ei,items],m[items,ei]), na.rm=T)/denom  # mean item consensus to a cluster.
+        cci = rbind(cci,c(k,ci,ei,mei)) #cluster, cluster index, item index, item-consensus
+      }
+      eiCols = c(eiCols, rep(ci,length(o$consensusClass)) )
+    }
+    
+    cck = cci[which(cci[,1]==k),] #only plot the new k data.
+    
+    #group by item, order by cluster i
+    w=lapply(split(cck,cck[,3]), function(x) { y=matrix(unlist(x),ncol=4); y[order(y[,2]),4] }) 
+    q = matrix(as.numeric(unlist(w)),ncol=length(w),byrow=F)
+    q = q[,res[[2]]$consensusTree$order] #order by leave order of k=2
+    #q is a matrix of k rows and sample columns, values are item consensus of sample to the cluster.
+    
+    thisColors = unique(cbind(res[[k]]$consensusClass,res[[k]]$clrs[[1]]))
+    thisColors=thisColors[order(as.numeric(thisColors[,1])),2]
+    colorsArr=c(colorsArr,thisColors)
+    sumRes[[k]] = rankedBarPlot(q,thisColors,cc=res[[k]]$consensusClass[res[[2]]$consensusTree$order],paste("k=",k,sep="") )
+  }
+  
+  ys=cs=lab=c()
+  lastk=cc[1,1]
+  for(i in 1:length(colorsArr)){
+    if(lastk != cc[i,1]){
+      ys=c(ys,0,0)
+      cs=c(cs,NA,NA)
+      lastk=cc[i,1]
+      lab=c(lab,NA,NA)
+    }
+    ys=c(ys,cc[i,3])
+    cs=c(cs,colorsArr[i])
+    lab=c(lab,cc[i,1])
+  }
+  names(ys) = lab
+  par(mfrow=c(3,1),mar=c(4,3,2,0))
+  barplot(ys,col=cs,border=cs,main="cluster-consensus",ylim=c(0,1),las=1)
+  if(is.null(plot)==FALSE){
+    dev.off()
+  }
+  colnames(cc) = c("k","cluster","clusterConsensus")
+  colnames(cci) = c("k","cluster","item","itemConsensus")
+  cci[,"item"] = names(res[[2]]$consensusClass)[ cci[,"item"] ]
+  #type cci
+  cci = data.frame( k=as.numeric(cci[,"k"]), cluster=as.numeric(cci[,"cluster"]), item=cci[,"item"], itemConsensus=as.numeric(cci[,"itemConsensus"])) 
+  
+  #write to file.
+  if(writeTable){
+    write.csv(file=paste(title,"/",title,".summary.cluster.consensus.csv",sep=""),row.names=F, cc)
+    write.csv(file=paste(title,"/",title,".summary.item.consensus.csv",sep=""), row.names=F, cc)
+  }
+  return(list(clusterConsensus=cc,itemConsensus=cci))
+}
+
+
+ccRun <- function( d=d,
+                   maxK=NULL,
+                   repCount=NULL,
+                   diss=inherits( d, "dist" ),
+                   pItem=NULL,
+                   pFeature=NULL,
+                   innerLinkage=NULL,
+                   distance=NULL, #ifelse( inherits(d,"dist"), attr( d, "method" ), "euclidean" ),@@@@@
+                   clusterAlg=NULL,
+                   weightsItem=NULL,
+                   weightsFeature=NULL,
+                   verbose=NULL,
+                   corUse=NULL) {
+  m = vector(mode='list', repCount)
+  ml = vector(mode="list",maxK)
+  n <- ifelse( diss, ncol( as.matrix(d) ), ncol(d) )
+  mCount = mConsist = matrix(c(0),ncol=n,nrow=n)
+  ml[[1]] = c(0);
+  
+  if (is.null( distance ) ) distance <- 'euclidean'  ## necessary if d is a dist object and attr( d, "method" ) == NULL
+  
+  acceptable.distance <- c( "euclidean", "maximum", "manhattan", "canberra", "binary","minkowski",
+                            "pearson", "spearman" )
+  
+  main.dist.obj <- NULL
+  if ( diss ){
+    main.dist.obj <- d
+    ## reset the pFeature & weightsFeature params if they've been set (irrelevant if d is a dist matrix)
+    if ( ( !is.null(pFeature) ) &&
+         ( pFeature < 1 ) ) {
+      message( "user-supplied data is a distance matrix; ignoring user-specified pFeature parameter\n" )
+      pFeature <- 1 # set it to 1 to avoid problems with sampleCols
+    }
+    if ( ! is.null( weightsFeature ) ) {
+      message( "user-supplied data is a distance matrix; ignoring user-specified weightsFeature parameter\n" )
+      weightsFeature <- NULL  # set it to NULL to avoid problems with sampleCols
+    }
+  } else { ## d is a data matrix
+    ## we're not sampling over the features
+    if ( ( clusterAlg != "km" ) &&
+         ( is.null( pFeature ) ||
+           ( ( pFeature == 1 ) && is.null( weightsFeature ) ) ) ) {
+      ## only generate a main.dist.object IFF 1) d is a matrix, 2) we're not sampling the features, and 3) the algorithm isn't 'km'
+      if ( inherits( distance, "character" ) ) {
+        if ( ! distance %in%  acceptable.distance  &  ( class(try(get(distance),silent=T))!="function") ) stop("unsupported distance.")
+        
+        if(distance=="pearson" | distance=="spearman"){
+          main.dist.obj <- as.dist( 1-cor(d,method=distance,use=corUse ))
+        }else if( class(try(get(distance),silent=T))=="function"){
+          main.dist.obj <- get(distance)( t( d )   )
+        }else{
+          main.dist.obj <- dist( t(d), method=distance )
+        }
+        attr( main.dist.obj, "method" ) <- distance  
+      } else stop("unsupported distance specified.")
+    } else {
+      ## pFeature < 1 or a weightsFeature != NULL
+      ## since d is a data matrix, the user wants to sample over the gene features, so main.dist.obj is left as NULL
+    }
+  }
+  
+  
+  for (i in 1:repCount){
+    if(verbose){
+      message(paste("random subsample",i));
+    }
+    ## take expression matrix sample, samples and genes
+    sample_x = sampleCols( d, pItem, pFeature, weightsItem, weightsFeature )
+    
+    this_dist = NA
+    if ( ! is.null( main.dist.obj ) ) {
+      boot.cols <- sample_x$subcols
+      this_dist <- as.matrix( main.dist.obj )[ boot.cols, boot.cols ]
+      if ( clusterAlg != "km" ) {
+        ## if this isn't kmeans, then convert to a distance object
+        this_dist <- as.dist( this_dist )
+        attr( this_dist, "method" ) <- attr( main.dist.obj, "method" )
+      }
+    } else {
+      ## if main.dist.obj is NULL, then d is a data matrix, and either:
+      ##   1) clusterAlg is 'km'
+      ##   2) pFeatures < 1 or weightsFeatures have been specified, or
+      ##   3) both
+      ## so we can't use a main distance object and for every iteration, we will have to re-calculate either
+      ##   1) the distance matrix (because we're also sampling the features as well), or
+      ##   2) the submat (if using km) 
+      
+      if ( clusterAlg != "km" )  {
+        if ( ! distance %in% acceptable.distance &  ( class(try(get(distance),silent=T))!="function")  ) stop("unsupported distance.")
+        if( ( class(try(get(distance),silent=T))=="function") ){
+          this_dist <- get(distance)( t( sample_x$submat ) )
+        }else{
+          if( distance == "pearson" | distance == "spearman"){
+            this_dist <- as.dist( 1-cor(sample_x$submat,use=corUse,method=distance) )
+          }else{
+            this_dist <- dist( t( sample_x$submat ), method= distance  )
+          }
+        }
+        attr( this_dist, "method" ) <- distance  
+      } else {
+        ## if we're not sampling the features, then grab the colslice
+        if ( is.null( pFeature ) ||
+             ( ( pFeature == 1 ) && is.null( weightsFeature ) ) ) {
+          this_dist <- d[, sample_x$subcols ]
+        } else {
+          if ( is.na( sample_x$submat ) ) {
+            stop( "error submat is NA" )
+          }
+          
+          this_dist <- sample_x$submat
+        } 
+      }
+    }
+    
+    ## cluster samples for HC.
+    this_cluster=NA
+    if(clusterAlg=="hc"){
+      this_cluster = hclust( this_dist, method=innerLinkage)
+    }
+    ##mCount is possible number of times that two sample occur in same random sample, independent of k
+    ##mCount stores number of times a sample pair was sampled together.
+    mCount <- connectivityMatrix( rep( 1,length(sample_x[[3]])),
+                                  mCount,
+                                  sample_x[[3]] ) 
+    
+    ##use samples for each k		
+    for (k in 2:maxK){
+      if(verbose){
+        message(paste("  k =",k))
+      }
+      if (i==1){
+        ml[[k]] = mConsist #initialize
+      }
+      this_assignment=NA
+      if(clusterAlg=="hc"){
+        ##prune to k for hc
+        this_assignment = cutree(this_cluster,k)
+        
+        
+      }else if(clusterAlg=="km"){
+        ##this_dist should now be a matrix corresponding to the result from sampleCols
+        this_assignment <- kmeans( t( this_dist ),
+                                   k,
+                                   iter.max = 10,
+                                   nstart = 1,
+                                   algorithm = c("Hartigan-Wong") )$cluster
+      }else if ( clusterAlg == "pam" ) {
+        this_assignment <- pam( x=this_dist,
+                                k,
+                                diss=TRUE,
+                                metric=distance, 
+                                cluster.only=TRUE )
+      } else{
+        ##optional cluterArg Hook.
+        this_assignment <- get(clusterAlg)(this_dist, k)
+      }
+      ##add to tally				
+      ml[[k]] <- connectivityMatrix( this_assignment,
+                                     ml[[k]],
+                                     sample_x[[3]] )
+    }
+  }
+  
+  
+  ##consensus fraction
+  res = vector(mode="list",maxK)
+  for (k in 2:maxK){
+    ##fill in other half of matrix for tally and count.
+    tmp = triangle(ml[[k]],mode=3)
+    tmpCount = triangle(mCount,mode=3)
+    res[[k]] = tmp / tmpCount
+    res[[k]][which(tmpCount==0)] = 0
+  }
+  message("end fraction")
+  return(res)
+}
+
+
+connectivityMatrix <- function( clusterAssignments, m, sampleKey){
+  ##input: named vector of cluster assignments, matrix to add connectivities
+  ##output: connectivity matrix
+  names( clusterAssignments ) <- sampleKey 
+  cls <- lapply( unique( clusterAssignments ), function(i) as.numeric( names( clusterAssignments[ clusterAssignments %in% i ] ) ) )  #list samples by clusterId
+  
+  for ( i in 1:length( cls ) ) {
+    nelts <- 1:ncol( m )
+    cl <- as.numeric( nelts %in% cls[[i]] ) ## produces a binary vector
+    updt <- outer( cl, cl ) #product of arrays with * function; with above indicator (1/0) statement updates all cells to indicate the sample pair was observed int the same cluster;
+    m <- m + updt
+  }
+  return(m)
+}
+
+
+
+sampleCols <- function( d,
+                        pSamp=NULL,
+                        pRow=NULL,
+                        weightsItem=NULL,
+                        weightsFeature=NULL ){
+  ## returns a list with the sample columns, as well as the sub-matrix & sample features (if necessary)
+  ##  if no sampling over the features is performed, the submatrix & sample features are returned as NAs
+  ##  to reduce memory overhead
+  
+  
+  space <- ifelse( inherits( d, "dist" ), ncol( as.matrix(d) ), ncol(d) )
+  sampleN <- floor(space*pSamp)
+  sampCols <- sort( sample(space, sampleN, replace = FALSE, prob = weightsItem) )
+  
+  this_sample <- sampRows <- NA
+  if ( inherits( d, "matrix" ) ) {
+    if ( (! is.null( pRow ) ) &&
+         ( (pRow < 1 ) || (! is.null( weightsFeature ) ) ) ) {
+      ## only sample the rows and generate a sub-matrix if we're sampling over the row/gene/features
+      space = nrow(d)
+      sampleN = floor(space*pRow)
+      sampRows = sort( sample(space, sampleN, replace = FALSE, prob = weightsFeature) )
+      this_sample <- d[sampRows,sampCols]
+      dimnames(this_sample) <- NULL
+    } else {
+      ## do nothing
+    }
+  }
+  return( list( submat=this_sample,
+                subrows=sampRows,
+                subcols=sampCols ) )
+}
+
+CDF=function(ml,breaks=100){
+  #plot CDF distribution
+  plot(c(0),xlim=c(0,1),ylim=c(0,1),col="white",bg="white",xlab="Consensus Index",ylab="CDF",main="Consensus CDF", las=2)
+  k=length(ml)
+  this_colors = rainbow(k-1)
+  areaK = c()
+  for (i in 2:length(ml)){
+    v=triangle(ml[[i]],mode=1)
+    
+    #empirical CDF distribution. default number of breaks is 100    
+    h = hist(v, plot=FALSE, breaks=seq(0,1,by=1/breaks))
+    h$counts = cumsum(h$counts)/sum(h$counts)
+    
+    #calculate area under CDF curve, by histogram method.
+    thisArea=0
+    for (bi in 1:(length(h$breaks)-1)){
+      thisArea = thisArea + h$counts[bi]*(h$breaks[bi+1]-h$breaks[bi]) #increment by height by width
+      bi = bi + 1
+    }
+    areaK = c(areaK,thisArea)
+    lines(h$mids,h$counts,col=this_colors[i-1],lwd=2,type='l')
+  }
+  legend(0.8,0.5,legend=paste(rep("",k-1),seq(2,k,by=1),sep=""),fill=this_colors)
+  
+  #plot area under CDF change.
+  deltaK=areaK[1] #initial auc at k=2
+  for(i in 2:(length(areaK))){
+    #proportional increase relative to prior K.
+    deltaK = c(deltaK,( areaK[i] - areaK[i-1])/areaK[i-1])
+  }
+  plot(1+(1:length(deltaK)),y=deltaK,xlab="Value of k",ylab="Relative change in area under CDF curve",main="",type="b", col = mycolors[10])
+  
+}
+
+
+myPal = function(n=10){
+  #returns n colors
+  seq = rev(seq(0,255,by=255/(n)))
+  palRGB = cbind(seq,seq,255)
+  rgb(palRGB,maxColorValue=255)
+}
+
+setClusterColors = function(past_ct,ct,colorU,colorList){
+  #description: sets common color of clusters between different K
+  newColors = c()
+  if(length(colorList)==0){
+    #k==2
+    newColors = colorU[ct]
+    colori=2
+  }else{
+    newColors = rep(NULL,length(ct))
+    colori = colorList[[2]]
+    mo=table(past_ct,ct)
+    m=mo/apply(mo,1,sum)
+    for(tci in 1:ncol(m)){ # for each cluster
+      maxC = max(m[,tci])
+      pci = which(m[,tci] == maxC)				
+      if( sum(m[,tci]==maxC)==1 & max(m[pci,])==maxC & sum(m[pci,]==maxC)==1  )  {
+        #if new column maximum is unique, same cell is row maximum and is also unique
+        ##Note: the greatest of the prior clusters' members are the greatest in a current cluster's members.
+        newColors[which(ct==tci)] = unique(colorList[[1]][which(past_ct==pci)]) # one value
+      }else{ #add new color.
+        colori=colori+1
+        newColors[which(ct==tci)] = colorU[colori]
+      }
+    }
+  }
+  return(list(newColors,colori,unique(newColors) ))
+}
+
+clusterTrackingPlot = function(m){
+  #description: plots cluster tracking plot
+  #input: m - matrix where rows are k, columns are samples, and values are cluster assignments.
+  plot(NULL,xlim=c(-0.1,1),ylim=c(0,1),axes=FALSE,xlab="Patient CLL samples in each cluster",ylab="Value of k",main="")
+  for(i in 1:nrow(m)){
+    rect(  xleft=seq(0,1-1/ncol(m),by=1/ncol(m)),  ybottom=rep(1-i/nrow(m),ncol(m)) , xright=seq(1/ncol(m),1,by=1/ncol(m)), ytop=rep(1-(i-1)/nrow(m),ncol(m)), col=m[i,],border=NA)   
+  }
+  #hatch lines to indicate samples
+  xl = seq(0,1-1/ncol(m),by=1/ncol(m))
+  segments(  xl, rep(-0.1,ncol(m)) , xl, rep(0,ncol(m)), col="black")    #** alt white and black color?
+  ypos = seq(1,0,by=-1/nrow(m))-1/(2*nrow(m))
+  text(x=-0.1,y=ypos[-length(ypos)],labels=seq(2,nrow(m)+1,by=1))
+}
+
+triangle = function(m,mode=1){
+  #mode=1 for CDF, vector of lower triangle.
+  #mode==3 for full matrix.
+  #mode==2 for calcICL; nonredundant half matrix coun
+  #mode!=1 for summary 
+  n=dim(m)[1]
+  nm = matrix(0,ncol=n,nrow=n)
+  fm = m
+  
+  
+  nm[upper.tri(nm)] = m[upper.tri(m)] #only upper half
+  
+  fm = t(nm)+nm
+  diag(fm) = diag(m)
+  
+  nm=fm
+  nm[upper.tri(nm)] = NA
+  diag(nm) = NA
+  vm = m[lower.tri(nm)]
+  
+  if(mode==1){
+    return(vm) #vector 		
+  }else if(mode==3){
+    return(fm) #return full matrix
+  }else if(mode == 2){
+    return(nm) #returns lower triangle and no diagonal. no double counts.
+  }
+  
+}
+
+
+rankedBarPlot=function(d,myc,cc,title){
+  colors = rbind() #each row is a barplot series
+  byRank = cbind()
+  
+  spaceh = 0.1 #space between bars
+  for(i in 1:ncol(d)){
+    byRank = cbind(byRank,sort(d[,i],na.last=F))
+    colors = rbind(colors,order(d[,i],na.last=F))
+  }
+  maxH = max(c(1.5,apply(byRank,2,sum)),na.rm=T) #maximum height of graph
+  
+  #barplot largest to smallest so that smallest is in front.
+  barp = barplot( apply(byRank,2,sum) ,  col=myc[colors[,1]] ,space=spaceh,ylim=c(0,maxH),main=paste("item-consensus", title),border=NA,las=1  )
+  for(i in 2:nrow(byRank)){
+    barplot( apply(matrix(byRank[i:nrow(byRank),],ncol=ncol(byRank))  ,2,sum), space=spaceh,col=myc[colors[,i]],ylim=c(0,maxH), add=T,border=NA,las=1  )
+  }
+  xr=seq(spaceh,ncol(d)+ncol(d)*spaceh,(ncol(d)+ncol(d)*spaceh)/ncol(d)  )
+  #class labels as asterisks
+  text("*",x=xr+0.5,y=maxH,col=myc[cc],cex=1.4) #rect(xr,1.4,xr+1,1.5,col=myc[cc] )
+}
+
+
+
+
+
+
+```
+
+```{r processData04, echo = FALSE}
+#REMOVE
+#Subset data to Cytokine only treatments, no drugs 
+#Remake dataframe, then can load with this premade in future
+
+df <- dplyr::filter(df, Drug == "DMSO", Cytokine != "No Cytokine") %>% 
+  dplyr::mutate(Cytokine = as.character(Cytokine)) %>%
+  dplyr::mutate(Cytlabel = ifelse(Cytokine == "IL-2", "IL2",
+                            ifelse(Cytokine == "IL-4", "IL4",
+                                   ifelse(Cytokine == "IL-6", "IL6", 
+                                          ifelse(Cytokine == "IL-10", "IL10",
+                                                 ifelse(Cytokine == "IL-10", "IL10",
+                                                        ifelse(Cytokine == "IL-21", "IL21",
+                                                               ifelse(Cytokine == "sCD40L+IL-4","sCD40L + IL4",
+                                                                      ifelse(Cytokine == "IL-15", "IL15",
+                                                                             ifelse(Cytokine == "Interferon gamma","Interferon \u03B3",
+                                                                                    ifelse(Cytokine == "SDF-1a","SDF-1\u03B1",
+                                                                                           ifelse(Cytokine == "IL-1b","IL-1\u03B2",
+                                                                                                  ifelse(Cytokine == "TGF-b1","TGF\u03B2", Cytokine))))))))))))) %>%
+  
+  dplyr::mutate(Cytokine = factor(Cytokine))
+
+
+df_complete <- df_complete %>%
+  dplyr::mutate(Cytokine = as.character(Cytokine)) %>%
+  dplyr::mutate(Cytlabel = ifelse(Cytokine == "IL-2", "IL2",
+                            ifelse(Cytokine == "IL-4", "IL4",
+                                   ifelse(Cytokine == "IL-6", "IL6", 
+                                          ifelse(Cytokine == "IL-10", "IL10",
+                                                 ifelse(Cytokine == "IL-10", "IL10",
+                                                        ifelse(Cytokine == "IL-21", "IL21",
+                                                               ifelse(Cytokine == "sCD40L+IL-4","sCD40L + IL4",
+                                                                      ifelse(Cytokine == "IL-15", "IL15",
+                                                                             ifelse(Cytokine == "Interferon gamma","Interferon \u03B3",
+                                                                                    ifelse(Cytokine == "SDF-1a","SDF-1\u03B1",
+                                                                                           ifelse(Cytokine == "IL-1b","IL-1\u03B2",
+                                                                                                  ifelse(Cytokine == "TGF-b1","TGF\u03B2", Cytokine))))))))))))) %>%
+  
+  dplyr::mutate(Cytokine = factor(Cytokine))
+
+
+
+
+
+```
+
+The screen included 17 cytokines and microenvironmental stimuli, which were selected based on evidence in the literature that each stimulus had been shown to impact on CLL viability *in vitro*. We attempted to put together the largest panel of stimuli for an assay of this kind in CLL, aiming to minimise redundancy among the compounds (Bruch & Giles et al. 2021). 
+
+CLL cells do not proliferate *in vitro*, but rather undergo spontaneous apoptosis in the absence of stimulation [@Collins1989]. The effect of each stimuli on CLL viability was thus quantified by comparing ATP counts in treated primary samples, compared with those in DMSO wells where a positive value indicates that the sample viability was increased relative to control.
+
+The assay represents a reductionist model of microenvironmental signalling, making it possible to dissect the effect of individual stimuli on baseline viability. The large patient cohort also enabled us to study the differential impact of these stimuli across heterogeneous samples, and identify distinct subgroups of patients whose samples show similar response profiles to the panel of stimuli. 
+
+## Prolifing responses to the panel of stimuli
+### *ex vivo* assay demonstrated functional diversity of cytokines and microenvironmental stimuli
+To investigate heterogeneity amongst responses to the stimuli, I calculated Pearson correlation coefficients for each stimulus pair, using the log-transformed normalised viabilities (Bruch & Giles et al. 2021). The resulting coefficients were ordered using hierarchical clustering and visualised in a symmetrical heatmap (Figure \@ref(fig:stimuliCorrelations)). The hierarchical clustering distinguished clusters of stimuli, including a larger group corresponding to agonists of TLR and Nf$\kappa$B pathways and a smaller group encompassing IL4 and TLR stimuli.
+
+(ref:stimuliCorrelations) Heatmap of Pearson correlation coefficients. Coefficients for each pair of stimuli were calculated using log transformed viability values normalised to untreated control, and ordered according to hierarchical clustering. Figure adapted from Bruch & Giles et al. 2021. 
+
+```{r stimuliCorrelations, fig.cap='(ref:stimuliCorrelations)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+#list of cytokines
+thecytokines <- unique(df$Cytokine) %>% setdiff("No Cytokine")
+
+corMat <- df %>% 
+  filter(Cytokine %in% thecytokines) %>%
+  dplyr::select(Log, Cytlabel, PatientID) %>% 
+  spread(key = "Cytlabel", value = "Log") %>%
+  column_to_rownames("PatientID")
+
+#compute correlation coefficients 
+cormat <-  cor(corMat, use="all.obs", method="pearson")
+    
+# Function to get lower triangle of the correlation matrix
+get_lower_tri <- function(cormat){
+  cormat[upper.tri(cormat)] <- NA
+  return(cormat)
+}
+  # Function to get upper triangle of the correlation matrix
+get_upper_tri <- function(cormat){
+  cormat[lower.tri(cormat)]<- NA
+  return(cormat)
+}
+
+# Function to cluster matrix 
+reorder_cormat <- function(cormat){
+# Use correlation between variables as distance
+dd <- as.dist((1-cormat)/2)
+hc <- hclust(dd)
+cormat <-cormat[hc$order, hc$order]
+}
+
+cormat <- reorder_cormat(cormat)  
+upper_tri <- get_upper_tri(cormat)
+melted_cormat <- melt(upper_tri, na.rm = TRUE)
+
+
+ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
+ geom_tile(color = "white")+
+ scale_fill_gradient2(low = palblues[1], high = palreds[7], mid = "white", 
+   midpoint = 0, limit = c(-1,1), space = "Lab", 
+   name="Pearson\nCorrelation") +
+  t1 + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1))+
+  xlab("") +
+  ylab("") +
+ coord_fixed() +
+  theme(
+  panel.grid.major = element_blank(),
+  panel.border = element_blank(),
+  panel.background = element_blank(),
+  axis.ticks = element_blank(),
+  axis.text.x = element_blank(),
+  legend.justification = c(1, 0),
+  legend.position = c(0.4, 0.7),
+  legend.direction = "horizontal")+
+  guides(fill = guide_colorbar(barwidth = 5, barheight = 1,
+                title.position = "top", title.hjust = 0.2))
+
+
+
+```
+
+98.5% of stimulus pairs showed little correlation (R < 0.6), including those that targeted similar downstream pathways, indicating a high degree of functional diversity amongst microenvironmental signals. For example, JAK-STAT agonists such as IL4 and IL6 showed little correlation (Figure \@ref(fig:correlationsScatter)A). 
+
+Only two stimulus pairs showed correlations where R > 0.6, and in both cases these targeted near identical receptors or downstream pathways. These included CpG ODN (TLR 9) and Resiquimod (TLR 7 and 8) (Figure \@ref(fig:correlationsScatter)B), and IL4 and IL4 + CD40L which primarily target JAK3 - STAT6.
+
+Repeating the analysis to correlate drug - drug pairs demonstrated that drugs targeting components of the same  pathway were highly correlated. For quality control purposes, this indicated that our data sensitively and specifically reflect inter-individual differences in pathway dependencies [@JCIpaper].
+ 
+
+(ref:correlationsScatter) Scatter plot of log-transformed viability values, normalised to DMSO controls,  for (A) treatment with JAK-STAT agonists IL4 and IL6 and (B) treatment with TLR agonists CpG ODN and Resiquimod. 
+
+
+```{r correlationsScatter, fig.cap='(ref:correlationsScatter)', message = FALSE,  echo = FALSE, out.wdiht = '100%', fig.height=3, fig.width = 5, fig.align="center"}
+
+tlrData <- filter(df,Cytokine %in% c("Resiquimod", "CpG ODN")) %>%
+  dplyr::select(Cytokine, Log, PatientID) %>%
+  spread(key="Cytokine", value="Log") 
+
+colnames(tlrData) <- c("PatientID", "Resiquimod", "CpG")
+
+tlr <-
+  ggplot(data = tlrData,  aes(x = Resiquimod, y = CpG)) +
+  geom_point(colour="black", size=2) + 
+  geom_smooth(method='lm', se=FALSE, color = "#707372") +
+  #ggtitle("Resiquimod (TLR7) and \nCpG ODN (TLR8/9)") +
+  t2 +
+  annotate(x=-0.60, y=1.9,
+           label = paste("R = ", round(cor(tlrData$Resiquimod, 
+                                           tlrData$CpG, use="all.obs", method="pearson"),2)), 
+           geom="text", size=5)
+
+
+ilData <- filter(df,Cytokine %in% c("IL-4", "IL-6")) %>%
+  dplyr::select(Cytokine, Log, PatientID) %>%
+  spread(key="Cytokine", value="Log") 
+
+colnames(ilData) <- c("PatientID", "IL4", "IL6")
+
+
+il <-
+  ggplot(data = ilData,  aes(x = IL4, y = IL6)) +
+  geom_point(colour="black", size=2) + 
+  geom_smooth(method='lm', se=FALSE, color = "#707372") +
+  #ggtitle("IL4 and IL6 \n (JAK-STAT)") +
+  t2 + xlim(c(0,1.1)) +
+  annotate(x=0.3, y=0.3,
+           label = paste("R = ", round(cor(ilData$IL4, 
+                                           ilData$IL6, use="all.obs", method="pearson"),2)), 
+           geom="text", size=5)
+
+
+
+ wrap_elements(il) + wrap_elements(tlr)  + plot_annotation(tag_levels = c('A'))
+
+```
+Microenvironmental stimulation induced diverse phenotypes between patient samples, and across different stimuli. To gain a global overview of these phenotypes, I visualised log-transformed viability values normalised to DMSO controls for all patient samples and all stimuli (Figure \@ref(fig:stimuliBeeswarms) (Bruch & Giles et al. 2021). 
+
+
+(ref:stimuliBeeswarms) Log transformed viabilities after treatment with each stimulus. Where stimuli decreased viability relative to control, points are shown in blue, whilst increased viability is shown in red. Figure adapted from Bruch & Giles et al. 2021. 
+
+```{r stimuliBeeswarms, fig.cap='(ref:stimuliBeeswarms)',  fig.align="center", fig.width = 10, fig.height = 4,  echo = FALSE, dev = "png", out.width = '100%'}
+
+example_cyt <- c("IL-1b",
+                 "Resiquimod", 
+                 "TGF-b1",
+                 "soluble anti-IgM",  
+                 "sCD40L",  
+                 "BAFF", 
+                 "CpG ODN",
+                 "sCD40L+IL-4",
+                 "IL-6",
+                 "SDF-1a",
+                 "IL-15", 
+                 "IL-4",
+                 "IL-21", 
+                 "Interferon gamma",
+                 "IL-2",
+                 "IL-10")
+
+clusterStimuliTab <- filter(df, Cytokine %in% example_cyt)
+
+clusterStimuliTab <- left_join(clusterStimuliTab,patMeta,  by = "PatientID")
+  clusterStimuliTab$IGHV.status <- as.factor(clusterStimuliTab$IGHV.status)
+
+# add cytokine pathway annotation
+clusterStimuliTab <- 
+  mutate(clusterStimuliTab, 
+         pathway = ifelse(Cytokine ==  "soluble anti-IgM", "BCR",
+                          ifelse(Cytokine %in% c("CpG ODN", "Resiquimod"), "TLR",
+                                 ifelse(Cytokine %in% c("IL-2",
+                                                        "IL-4",
+                                                        "IL-6",
+                                                        "IL-10",
+                                                        "IL-15",
+                                                        "IL-21",
+                                                        "sCD40L+IL-4",
+                                                        "Interferon gamma",
+                                                        "SDF-1a"), "JAK-STAT",
+                                        ifelse(Cytokine %in% c("sCD40L", 
+                                                               "IL-1b",
+                                                               "BAFF"), 
+                                               "NF\u03BAB", 
+                                               "TGF\u03B2")))))
+
+clusterStimuliTab$Cytlabel <- factor(clusterStimuliTab$Cytlabel, levels = c("Resiquimod","CpG ODN", "sCD40L + IL4", "IL4","IL21", "IL2", "Interferon \u03B3", "SDF-1\u03B1", "IL10", "IL15", "IL6", "BAFF", "sCD40L", "IL-1\u03B2",  "soluble anti-IgM", "TGF\u03B2"))
+                                     
+clusterStimuliTab %>% 
+  mutate(pathway=factor(pathway, levels = c("TLR", "JAK-STAT",  "NF\u03BAB","BCR", "TGF\u03B2"))) %>% 
+  filter(!is.na(IGHV.status))%>%
+  ggplot(aes(x=Cytlabel, y=Log, fill = factor(IGHV.status)))+
+  facet_grid(. ~ pathway, scales = "free",  space = "free") +
+  
+  
+  geom_violin(cex=0.4, alpha=0.7, dodge.width = 0.75,
+              aes(x =Cytlabel, y = Log, color = IGHV.status)) +
+  scale_fill_manual(values =c(colors[7], colors[8])) +
+  scale_color_manual(values =c(colors[7], colors[8])) +
+  guides(size="none", color = "none")+
+  ylab("Log(Viability)") +
+  xlab("")+
+  t1 +
+  theme(axis.text.x = element_text(angle = 45, vjust =1)) +
+  theme(strip.background =element_rect(fill=lightergrey))+
+  theme(strip.text = element_text(colour = 'white')) +
+  theme(panel.spacing = unit(1.5, "lines")) +
+  theme(legend.title = element_blank()) 
+  
+
+```
+
+The majority  of the stimuli increased  viability, underlining the supportive nature of the microenvironment in CLL.  However, three out of 17 reduced CLL viability relative to control, namely IL6, TGF$\beta$ and TLR 7/8/9 agonists in IGHV-mutated (IGHV-M) samples. 
+
+IL4 and TLR7/8/9 agonists Resiquimod and CpG ODN induced the strongest responses, an indication of their potency in modulating CLL cell survival. Notably, TLR agonists increased viability in certain samples, in most cases IGHV-U, and decreased viability in others, mostly IGHV-M.  Both IL4 and TLR7/8/9 emerged as the key pathways in the screen, and play an important role throughout the results of this thesis. 
+
+### Microenvironmental response profiling identifies discrete patient subgroups
+To further investigate the variability in responses across the cohort, we visualised z scores of the log-transformed viabilities and performed consensus clustering on the resulting matrix to generate a heatmap of all stimuli responses across all samples (Figure \@ref(fig:stimuliHeatmap). 
+
+(ref:stimuliHeatmap) The heatmap matrix shows the viability measurements for 192 samples (columns) and 17 stimuli (rows). Viability was measured via ATP-based assay after 48h stimulation. The data are shown normalised to DMSO-treated controls, and scaled within each row according to the Median Absolute Deviation (MAD). Limits were applied to scaling factor for optimal visualisation. The colour bars to the right show sample annotations. Consensus Clustering was used to define column tree layout, using hierarchical clustering with the Euclidean metric. Figure from Bruch & Giles et al. 2021. 
+```{r heatmapPrep, echo = FALSE}
+
+########### Viability matrix ################
+#make viability matrix for cytokine treatments for patients
+viab.mat <- dplyr::select(df, 
+                          PatientID, 
+                          Log, 
+                          Cytlabel) %>% 
+            tidyr::spread(Cytlabel, Log) %>%
+  as.data.frame()
+
+#make PatientID the row names
+rownames(viab.mat) <- unlist(viab.mat[,1]) # the first row will be the header
+viab.mat <- dplyr::select(viab.mat,-PatientID) 
+
+#Transform matrix
+viab.mat <- t(viab.mat)
+
+#keep unscaled matrix 
+viab.mat.unscaled <- viab.mat
+
+#run scaleCytResp on viability matrix
+viab.mat <- scaleCytResp(viab.mat)
+
+#apply deckel function to matrix
+#Calculate dendrogram 
+breaks <- c(seq(-3, 3, length.out = 101)) 
+
+viab.mat.lims <- deckel(viab.mat,
+                            lower = dplyr::first(breaks),
+                            upper = dplyr::last(breaks))
+
+```
+
+
+```{r, ConsensusClustering, echo = FALSE}
+#define colors 
+mycolors <- c("#A1BE1F", #green
+              "#D41645", #red
+              "#734595", #purple
+              "#F4C61F", #yellow
+              "#3B6FB6", #blue
+              "#B65417", #orange
+              "#E2E868", #light green
+              "#CBA3D8", #light purple
+              "#E58F9E", #light purple
+              "#8BB8E8", #light blue
+              "#F49E17", #light orange
+              "#303030", #black
+              "#A8A99E", #grey
+              "#007B53") #dark green
+
+#results = HGConsensusClusterPlus(d = viab.mat.lims, 
+#                               maxK = 7, 
+#                               reps = 10000, 
+#                               pItem = 0.8, 
+#                               pFeature = 1,  
+#                               clusterAlg = "myclusterfunction",
+#                               distance = "myDistFunc", 
+#                               seed = 1386,
+#                               plot = 'png',
+#                               innerLinkage = "complete", 
+#                               finalLinkage = "complete")
+
+load("data/consensusclustering.RData")
+
+#Extract consensus clusters for k = 4
+clusters <- 
+  results[[4]][["consensusClass"]] %>%
+  tibble::enframe() %>% 
+  dplyr::rename(PatientID="name", Cluster="value") 
+
+#get table of clusters
+clusters <- 
+  clusters %>% 
+  dplyr::select(PatientID, Cluster)
+
+#get matrix
+cluster_matrix <- as.dist( 1 - results[[4]]$ml )
+
+#add clusters to patMeta
+patMeta_cl <- left_join(clusters, patMeta, by = "PatientID")
+
+
+```
+
+```{r stimuliHeatmap, fig.cap='(ref:stimuliHeatmap)', out.width = '100%', dev = "cairo_pdf", fig.width=16, fig.height=8, echo = FALSE, warning = FALSE}
+
+#Sort heatmap annotations
+#Select annotations from patMeta_cl
+Heatmap_Annotation <- dplyr::select(patMeta_cl, 
+                                    PatientID, 
+                                    IGHV.status, 
+                                    trisomy12,
+                                    TP53,
+                                    ATM,
+                                    treatment, 
+                                    gender, 
+                                    Cluster) %>%
+  
+  #Adjust names/levels for legend
+  mutate(treatment=case_when(treatment==0~"No", 
+                             treatment==1~"Yes")) %>%
+
+  mutate(gender=case_when(gender=="f"~"Female", 
+                          gender=="m"~"Male")) %>%
+  
+  mutate(IGHV.status=case_when(IGHV.status=="U"~"Unmutated", 
+                               IGHV.status=="M"~"Mutated"))
+
+
+#Rename columns for legend
+colnames(Heatmap_Annotation) <- c("PatientID", 
+                                  "IGHV status",
+                                  "Trisomy 12", 
+                                  "TP53", 
+                                  "ATM",
+                                  "Pretreated", 
+                                  "Sex", 
+                                  "Cluster")
+
+#make Pat IDs the rownames
+Heatmap_Annotation <- as.data.frame(Heatmap_Annotation)
+rownames(Heatmap_Annotation) <- unlist(Heatmap_Annotation$PatientID)
+
+#Tidy Up Heatmap Annotation table
+Heatmap_Annotation$Cluster <- as.factor(Heatmap_Annotation$Cluster)
+
+Heatmap_Annotation <- dplyr::select(Heatmap_Annotation,-"PatientID")
+
+
+########### Set Heatmap Aesthetics ###############
+#Generate red-blue divergent palette
+breaks <- c(seq(-3, 3, length.out = 101)) %>% `names<-`(
+     colorRampPalette(c(palblues, 
+                       "white",  "white", "white",
+                         palreds))(101))
+
+#Specify colors of annotations 
+ ann_colors = 
+   list(
+    "IGHV status" = c("Unmutated"=IGHV[1],
+                      "Mutated"=IGHV[2]),
+    "Sex" = c("Female"=Sex[1],
+              "Male"=Sex[2]),
+    "Pretreated" = c("No"=Mutant[1],
+                  "Yes"=Mutant[2]),
+    "Trisomy 12" = c("1"=Mutant[2],
+                     "0"=Mutant[1]),
+    "ATM" = c("1"=Mutant[2],
+              "0"=Mutant[1]),
+    "TP53" = c("1"=Mutant[2],
+               "0"=Mutant[1]),
+    "Cluster" = c("1"=colors[1],
+                  "2"=colors[2],
+                  "3"=colors[3],
+                  "4"=colors[4], 
+                  "5"= colors[5]))
+ 
+stimuliHeatmap <- 
+pheatmap(viab.mat.lims,  
+         scale = "none",
+         clustering_method = "complete", 
+         cluster_cols = TRUE,
+         show_colnames = FALSE,
+         cutree_cols = 4,
+         clustering_distance_cols = cluster_matrix,
+         annotation_col = Heatmap_Annotation,
+         annotation_colors = ann_colors,
+         cellheight = 22,
+         cellwidth = 4,
+         breaks = breaks,
+         color= names(breaks),
+         border_color=NA,
+         fontsize=12,
+         fontsize_row=16,
+         legend_breaks = c(-3,0,3)) 
+
+
+
+        
+        
+
+stimuliHeatmap
+
+
+```
+The heatmap reflects heterogeneity in responses across samples and stimuli, once again underlining the potency of IL4 in increasing sample viability across diverse genetic backgrounds and the diversity in responses to TLR stimulation by Resiquimod and CpG ODN. 
+
+To generate the column-wise clustering, consensus clustering was performed on the matrix of z scores. Consensus clustering allows the user to subsample from the matrix of values, to generate hierarchical clustering for a given number of clusters, k. From this, it is possible to calculate a consensus matrix for each value of k, indicating for each pair of values the proportion of time they occupy the same cluster when subsampled together.
+
+I visualised the clustered heatmap in Figure \@ref(fig:stimuliHeatmap) for different values of k, and concluded on the existence of four robust clusters within the cohort (add these to appendix?). Each cluster shows a  unique response profile to the panel of stimuli. We termed the clusters C1 to C4: C1 and C2 were enriched for IGHV-U whilst the samples in C3 and C4 were mostly IGHV-M.
+
+To validate the choice of four clusters, I visualised the summaries of the consensus matrix, using the `ConsensusClusterPlus` package [@ConsensusClusterPlus], to quantify the degree of confidence in the clusters for different values of k.
+
+(ref:consensusClusteringA) Summaries of the CDFs of the consensus matrices. Consensus CDF graphic showing the CDFs of the consensus matrix for k = 2 - 7, as indicated in the legend, estimated using 100 bin histogram (left). Relative change in area under the CDF curve, for k = 2 - 7, to compare k with k - 1. In the case of k = 2, there is no k - 1, so the total area is plotted. Line shows relative increase in consensus between each value of k (right). 
+
+
+```{r consensusClusteringA, fig.cap='(ref:consensusClusteringA)', fig.show = "hold" , out.width = '45%', echo = FALSE, eval = TRUE}
+
+knitr::include_graphics("figures/consensus008.eps")
+
+knitr::include_graphics("figures/consensus009.eps")
+
+```
+
+
+The graph of the CDFs of the consensus matrix for each k  indicated that the CDF reaches a maximum and cluster confidence is maximised at k = 7 , though above k = 4 there is little appreciable increase. Figure \@ref(fig:consensusClusteringA). This is confirmed in the graph showing relative change in the area under the CDF curve, showing there is only a small increase in consensus between k = 4 and k =5, supporting the choice of k = 4. The cluster tracking plot depicts how each patient sample is assigned for each value of k. For k = 4, the plot indicates that  C3 and 4 in particular are highly stable (Figure \@ref(fig:consensusClusteringB)). 
+
+(ref:consensusClusteringB) Assignment of patient samples (columns), to each cluster, for k = 1 - 7 (rows) to demonstrate stability of cluster membership. Cluster colour for k = 4 match those in heatmap in \@ref(fig:stimuliHeatmap). 
+
+```{r consensusClusteringB, fig.cap='(ref:consensusClusteringB)', fig.align="center", out.width = '45%', echo = FALSE, eval = TRUE}
+
+knitr::include_graphics("figures/consensus010.eps")
+
+```
+
+## Functional characterisation of patient clusters
+###  C1 - C4 showed distinct response profiles with the panel of stimuli
+The heatmap in Figure \@ref(fig:stimuliHeatmap) demonstrated that each cluster responded differently to the panel of stimuli. 
+
+Amongst the IGHV-U enriched  C1 and C2, both showed strong, positive responses to IL4 and TLR7/8/9 stimulation.  C2 could be distinguished by stronger responses to the stimuli overall, in particular to NF$\kappa$B agonists IL1$\beta$,  anti-IgM, BAFF and sCD40L. Amongst the IGHV-M enriched clusters, C3 showed weaker responses to the majority of stimuli, and C4 was defined by a negative response to TLR7/8/9 stimulation (Bruch & Giles et al. 2021). Figure \@ref(fig:clusterStimuliResponse) summarises these findings in  more detail, showing responses stratified by cluster for a subset of the stimuli.
+
+(ref:clusterStimuliResponse) Log-transformed normalised viability values, stratified by cluster, for each stimulus. Stimuli activating the same pathway are grouped together. P-values from Student't t-test. Figure adapted from (Bruch & Giles et al. 2021). 
+
+
+```{r clusterStimuliResponse, fig.cap='(ref:clusterStimuliResponse)', out.width = "100%", fig.height = 5, fig.width = 15, echo = FALSE, dev = "cairo_pdf"}
+
+
+example_cyt <- c("IL-1b","Resiquimod", "TGF-b1","soluble anti-IgM",   "BAFF", "CpG ODN","sCD40L+IL-4","IL-4","IL-21", "Interferon gamma")
+
+clusterProfiling <- 
+df %>%
+  mutate(pathway = ifelse(Cytokine == "soluble anti-IgM", "BCR",
+                                             ifelse(Cytokine %in% c("CpG ODN", "Resiquimod"), "TLR",
+                                                    ifelse(Cytokine %in% c("IL-2", "IL-4", 
+                                                           "IL-6", "IL-10", 
+                                                           "IL-21", "sCD40L+IL-4",
+                                                           "Interferon gamma",
+                                                           "SDF-1a"), "JAK-STAT",
+                                                           ifelse(Cytokine %in% c("sCD40L", "IL-1b","BAFF"), "NF\u03BAB", "TGF\u03B2")))))%>%
+  left_join(clusters, by = "PatientID") %>%
+  dplyr::filter(Cytokine %in% example_cyt,
+                Cluster %in% c(1,2,3,4)) %>%
+  dplyr::mutate(Cluster=factor(Cluster),
+                Cytokine=as.character(Cytokine),
+                pathway = factor(pathway,levels = c("TLR",   "NF\u03BAB","TGF\u03B2", "JAK-STAT","BCR" )))
+  
+  symnum.args <- list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))
+
+clusterProfiling<- mutate(clusterProfiling, Cytokine=factor(Cytokine, levels=example_cyt))
+
+cairo_pdf("/Users/holly/clusterProfiles.pdf", height = 5, width = 15)       
+ggplot(clusterProfiling, aes(x=Cluster, y= Log,color = Cluster)) +
+
+  geom_hline(yintercept = 0)+
+  geom_boxplot(aes(x=Cluster, y= Log, color = Cluster))+
+  geom_beeswarm(aes(x=Cluster, y= Log, color = Cluster))+
+  scale_color_manual(values=colors[1:4])+
+  t2 + theme(strip.background =element_rect(fill=lightergrey))+
+  theme(strip.text = element_text(size = 8)) +
+  guides(color="none")+
+  #facet_nested(. ~ pathway + Cytokine, scales = "free" ) +
+  facet_nested_wrap(. ~ pathway + Cytlabel, scales = "free", nrow = 1) +
+  ylab("Log(Viability)")+
+  coord_cartesian(clip="off") +
+  stat_compare_means(method = "t.test", comparisons = list(c(1,2), c(3,4)), step.increase = c(0), label = "p.signif")
+
+dev.off()
+```
+
+### The clusters show differences in disease dynamics
+To validate the potential biological significance of these four clusters, we investigated whether the groups showed differential *in vivo* disease progression (Bruch & Giles et al. 2021). The study design was such that not all patients in the cohort were treatment - free, which confounded the analysis. For that reason, lymphocyte doubling time (LDT) and time to next treatment (TTT) were used to quantify CLL proliferative capacity, independently of treatment. 
+
+C1 and C2 showed a shorter LDT than C3 and C4, which is expected due to the differential proportions of IGHV-U and M patient samples in these groups (Figure \@ref(fig:clusterLDTTTT)A). Notably, within the IGHV-M enriched clusters  C3 and C4, samples in C3 showed a significantly shorter LDT (Student’s t-test, p-value =  0.025). 
+
+To further validate this, we observed that TTT in the IGHV-M enriched C3 was significantly shorter than C4 and comparable to the progression dynamics of IGHV-U enriched C1 and 2 (Figure \@ref(fig:clusterLDTTTT)B). 
+
+
+(ref:clusterLDTTTT) (A)  Lymphocyte doubling time (LDT) stratified by cluster, p-values from Student's t-test.  (B) Kaplan-Meier curves to show TTT for each cluster. p-values from univariate Cox proportional hazard models comparing IGHV-U enriched C1 with C2, and IGHV-M enriched C3 with C4. Figure from Bruch & Giles et al. 2021.
+
+
+```{r clusterLDT,  echo = FALSE}
+
+#plot LDT stratified by Patient Clusters
+clusterLDT <-
+  patMeta_cl %>%
+  #join patient meta data with clusters, to LDT dataframe
+  left_join(  dplyr::select(LDT, PatientID, doubling.time), by=c("PatientID"="PatientID")) %>%
+  dplyr::filter(!is.na(doubling.time)) %>%
+  dplyr::mutate(Cluster=as.factor(Cluster)) %>%
+  
+  ggplot(aes(x=Cluster, y=doubling.time,  group=Cluster, fill=Cluster)) +
+  geom_boxplot() +
+  geom_beeswarm() +
+  scale_fill_manual(values=colors[1:4]) +
+  scale_y_log10() +
+  guides(fill="none") +
+  ylab("LDT in years") +
+  t2 +
+  stat_compare_means(method="t.test", comparisons = list(c(1,2), c(3,4)), size=4)
+
+
+
+
+```
+
+```{r arrangeSurvivalData, echo = FALSE}
+
+clusters.surv <- left_join(clusters, survT, by = "PatientID")
+
+#Add meta data to heatmap clusters
+clusters.surv <- left_join(clusters.surv, patMeta, by="PatientID")
+
+```
+
+```{r, compare1v2, echo = FALSE }
+
+#Run Univariate Cox Proportional Hazard to compare clusters 1 and 2 to generate p value for TTT KM curve
+coxph_summ <- 
+  clusters.surv %>%
+  mutate(Cluster = factor(Cluster)) %>%
+  coxph(Surv( TTT, treatedAfter) ~  factor2ind(Cluster, 1),  data=.) %>% 
+  summary()
+
+
+C1vsC2_p <- coxph_summ$coefficients[1,5] %>% round(3)
+
+
+```
+
+
+```{r compare3v4, echo = FALSE}
+coxph_summ <- clusters.surv %>%
+  mutate(Cluster=factor(Cluster)) %>%
+  coxph(Surv( TTT, treatedAfter) ~  factor2ind(Cluster, 4),  data=.) %>% 
+  summary()
+
+
+C3vsC4_p <- coxph_summ$coefficients[3,5] %>% round(3)
+
+```
+
+
+
+```{r clusterLDTTTT, fig.cap='(ref:clusterLDTTTT)',  echo = FALSE, fig.height = 5, fig.width = 8, out.width = "100%"}
+
+##Run survfit on TTT
+fit.TTT <- survfit(Surv(TTT, treatedAfter)~Cluster, clusters.surv)
+
+
+t_plot<-  t2+theme(plot.title=element_blank(), axis.title.x=element_blank(), legend.key = element_blank())
+t_table<- t2+theme(plot.title=element_blank(), panel.grid.major.x = element_blank())
+
+TTT_KM <- 
+  ggsurvplot(fit.TTT,
+             surv.median.line = "hv", # Add medians survival
+             legend.title = "Cluster",# Change legends: title & labels
+             legend.labs = c("1", "2","3","4"),
+             pval = FALSE,
+             risk.table = TRUE,
+             palette = c(colors[1], colors[2], colors[3], colors[4]),
+             ggtheme = t_plot,
+             tables.theme = t_table,
+             legend = "right",
+             xlab="Time in years",
+             ylab="TTT (probability)",
+             break.time.by=1, 
+             xlim=c(0,8))
+
+clusterTTT <-
+  TTT_KM$plot +
+  annotate(geom="text", x=6.3, y=0.5,    label=C3vsC4_p, color="black", size=4) +
+  geom_segment(x = 5.7, xend = 5.7, y = 0.72, yend = 0.28, color="black") +
+  geom_segment(x = 5.6, xend = 5.7, y = 0.72, yend = 0.72, color="black") +
+  geom_segment(x = 5.6, xend = 5.7, y = 0.281, yend = 0.281, color="black") +
+  annotate(geom="text", x = 6.9, y = 0.23, label = C1vsC2_p, color="black", size=4) +
+  geom_segment(x = 6.3, xend = 6.3, y = 0.33, yend = 0.13, color="black") +
+  geom_segment(x = 6.2, xend = 6.3, y = 0.33, yend = 0.33, color="black") +
+  geom_segment(x = 6.2, xend = 6.3, y = 0.131, yend = 0.131, color="black")
+
+
+
+thedesign <- "
+  AB
+"
+
+
+
+clusterLDT + clusterTTT +  plot_layout(design = thedesign) + plot_annotation(tag_levels = c('A'))
+
+
+
+```
+
+The difference in disease progression between the clusters indicated that microenvironmental response represents an additional biological layer, holding information relevant to disease dynamics.  To validate that these clusters were not simply an indication of any underlying genetic features, we checked whether the observed differences in progression dynamics could be explained by other prognostic markers (Bruch & Giles et al. 2021).
+
+A multivariate Cox proportional hazard model accounting for IGHV status, trisomy 12 and TP53 in addition to the cluster assignment indicated an independent prognostic value for cluster assignment between C3 and C4 (p= 0.039, Table \@ref(tab:clusterCox)).
+
+(ref:clusterCox) Table depicting results of multivariate Cox proportional hazard model to test prognostic value of key genetic features and clusters using TTT and C3 as reference. Table adapted from Bruch & Giles et al. 2021.
+
+```{r clusterCox, tab.cap='(ref:clusterTTT)', echo = FALSE}
+### TTT
+# Multivariate Coxph Analysis
+# Cluster 3 as reference group
+
+coxph_summ <- clusters.surv %>%
+  mutate(Cluster=factor(Cluster)) %>%
+    coxph(Surv( TTT, treatedAfter) ~  factor2ind(Cluster, 3) +IGHV.status+trisomy12+TP53,  data=.) %>%
+  summary()
+
+coxph_coeff <- coxph_summ$coefficients
+
+rownames(coxph_coeff)<-rownames(coxph_coeff) %>% 
+  gsub(pattern="factor2ind", "", .)%>% 
+  gsub(pattern="[()]", "", .)%>% 
+  gsub(pattern=":", " ", .)%>% 
+  gsub(pattern="Cluster, 3", "Cluster 3 vs ", .)%>% 
+  gsub(pattern="IGHV.statusU", "IGHV.status", .)%>% 
+  gsub(pattern="trisomy121", "trisomy 12", .)%>% 
+  gsub(pattern="TP531", "TP53", .)
+
+cox_results<-coxph_coeff %>% 
+  as_tibble(rownames="Factor") %>% 
+  mutate(Comparison="Cluster 3", Survival_measurement="TTT", Model="Multivariate")
+
+Supp_table_4<-coxph_coeff %>% 
+  round(5) %>%
+  as_tibble(rownames = "Factor") %>% 
+  dplyr::rename(p.value=`Pr(>|z|)`) %>% 
+  dplyr::mutate(p.value=ifelse(p.value<0.0001,"<0.0001", p.value )) 
+
+
+Supp_table_4 %>%  
+  kable(caption = "Table depicting results of Multivariate Cox Proportional Hazard Model to test prognostic value of key genetic features and clusters using Time to Next Treatment and C3 as reference. ") %>%
+  kable_styling(latex_options = "striped", 
+                stripe_color = colors[7],
+                html_font = "Arial Narrow") 
+
+
+
+C3vsC4_p_mv <- coxph_coeff[3,5] %>% round(3)
+
+```
+
+### The clusters showed differential responses to drugs *in vitro*
+The potential clinical relevance of the clusters was underlined by my observation that the samples within each group showed differential responses to drugs *in vitro* (Figure \@ref(fig:clusterDrugResponse)). 
+
+As expected, the IGHV-U enriched clusters C1 and 2 were more sensitive to BCR inhibition by ibrutinib, idelalisib and PRT062607, than C3 and 4. Between C1 and C2, C2 was more sensitive to a number of the drugs, including idelalisib (SYK) (p-value = 0.012), everolimus (mTOR) (p-value = 0.02) and the chemotherapeutics fludarabine (p-value = 0.031) and nutlin-3a (p-value = 0.042). Amongst C3 and C4, C3 showed lower sensitivity to everolimus (p-value = 0.051) and to fludarabine (p-value < 0.001) and nutlin-3a (p-value = 0.01). This aligns with the observation that patients in C3 have a poorer prognosis, despite most of these samples annotated as IGHV-M. C4 also showed a positive repsonse to Nf$\kappa$B  inhibition by BAY-11-7085, and p38 MAPK inhibition by Ralimetinib.
+
+Such differential drug response patterns suggests that microenvironmental response may reflect disease-specific CLL biology, in the same way as molecular profiling,  and thus may have the potential to guide therapy decisions in future. 
+
+(ref:clusterDrugResponse) Log-transformed normalised viability values, stratified by cluster, for each drug. Drugs targeting the same pathway are grouped together. P-values from Student't t-test. 
+
+```{r clusterDrugResponse, fig.cap='(ref:clusterDrugResponse)', out.width = "100%", fig.height = 7, fig.width = 6,  fig.align="center", echo = FALSE}
+
+symnum.args <- list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))
+
+df_complete %>%
+  filter(Drug_Concentration == "High", Cytokine == "No Cytokine") %>% 
+  mutate(Drugpathway = ifelse(Drug %in% c( "Ibrutinib",   "PRT062607",   "Idelalisib"),"BCR",
+                              ifelse(Drug == "Everolimus", "mTOR", 
+                              ifelse(Drug %in% c("Fludarabine", "Nutlin-3a"), "DNA Damage Response",
+                                     ifelse(Drug %in% c("Selumetinib", "Ralimetinib"), "MAPK", 
+                                            ifelse(Drug == "BAY-11-7085", "NF\u03BAB",
+                                                   ifelse(Drug == "Pyridone-6", "JAK/STAT",
+                                                          ifelse(Drug == "I-BET 762", "Epigenome","HSP90")))))))) %>%
+  left_join(clusters, by = "PatientID") %>%
+  dplyr::filter(Cluster %in% c(1,2,3,4)) %>%
+  dplyr::filter(!Drug %in% c("Pyridone-6", "I-BET 762", "Selumetinib", "Luminespib")) %>%
+  dplyr::mutate(Cluster=factor(Cluster),
+                Drugpathway = factor(Drugpathway, levels = c("BCR", "mTOR", "DNA Damage Response","MAPK","NF\u03BAB"))) %>%
+  
+
+  ggplot(aes(x=Cluster, y= Log,color = Cluster)) +
+  geom_hline(yintercept = 0)+
+  geom_boxplot(aes(x=Cluster, y= Log, color = Cluster))+
+  geom_beeswarm(aes(x=Cluster, y= Log, color = Cluster))+
+  scale_color_manual(values=colors[1:4])+
+  t2 + theme(strip.background =element_rect(fill=lightergrey))+
+    theme(strip.text = element_text(size = 8)) +
+  guides(color="none")+
+  #facet_nested(. ~ pathway + Cytokine, scales = "free" ) +
+  facet_nested_wrap(. ~ Drugpathway + Drug, scales = "free", nrow = 2 ) +
+  ylab("Log(Viability)")+
+  coord_cartesian(clip="off") +
+  stat_compare_means(method = "t.test", comparisons = list(c(1,2), c(3,4)), step.increase =c(0,0), label = "p.signif" )
+
+
+
+```
+
+
+
+
+### The clusters are enriched for different genetic features 
+Next we assessed differences in the molecular profiles of samples within each cluster. Visually, it appeared that certain clusters were enriched or depleted for various genetic features recurrent in CLL (Figure \@ref(fig:clusterMatrix).  
+
+
+(ref:clusterMatrix) Distribution of selected genetic features (rows) within each cluster for all patient samples (columns). Where a patient sample is not annotated for a feature, this is marked in white.  
+
+
+
+```{r clusterMatrix, fig.cap='(ref:clusterMatrix)',  fig.height = 4, fig.width = 6, out.width = "100%", warnings = FALSE,  echo  = FALSE}
+
+cluster_annotations <- left_join(patMeta, clusters, by = "PatientID") %>% 
+dplyr:: select("PatientID", "IGHV.status", "trisomy12", "del13q", "del17p", "del11q", "SF3B1", "POT1", "ATM", "TP53", "KRAS", "NRAS", "BRAF", "gain8q") %>%
+  mutate(trisomy12 = ifelse(trisomy12=="1", "3", "2")) %>%
+  mutate(del13q = ifelse(del13q=="1", "3", "2")) %>%
+  mutate(del17p = ifelse(del17p=="1", "3", "2")) %>%
+  mutate(del11q = ifelse(del11q=="1", "3", "2")) %>%
+  mutate(gain8q = ifelse(gain8q=="1", "3", "2")) %>%
+  mutate(IGHV.status = as.character(IGHV.status))
+  
+
+colnames(cluster_annotations) <- c("PatientID", "IGHV status", "Trisomy 12", "del13q", "del17p", "del11q", "SF3B1", "POT1", "ATM", "TP53", "KRAS", "NRAS", "BRAF", "gain8q")
+
+
+anno_long = cluster_annotations %>% gather(feature, status, -PatientID) %>%
+  left_join( clusters, by = "PatientID") %>% 
+  mutate(Cluster = factor(Cluster, levels = c(1,2,3,4))) %>% 
+  mutate(PatientID = factor(PatientID))%>% 
+  mutate(feature = factor(feature, levels = c("IGHV status", "Trisomy 12", "del13q", "del17p", "del11q",  "gain8q", "SF3B1", "POT1", "ATM", "TP53", "KRAS", "NRAS", "BRAF"))) %>% 
+  mutate(status = factor(status))
+
+col_vector <- c("NA" = "white",
+                "M" = colors[1],
+                "U" = colors[7],
+                "1" = colors[3],
+                "0" = lightergrey,
+                "3" = colors[4],
+                "2" = lightergrey)
+
+
+Cluster.labs <- c("C1", "C2", "C3", "C4")
+names(Cluster.labs) <- c(1, 2, 3, 4)
+ 
+
+geneticMatrix <- 
+  ggplot(anno_long, aes(PatientID, feature)) +
+  geom_tile(aes(fill = status), color = "grey",height=0.9, show.legend = FALSE) +
+  t1 +
+  theme(axis.text.x = element_blank(),
+        axis.ticks = element_blank(), 
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.major.x = element_blank(),
+        strip.background = element_rect(fill = "white", colour = "black", size = 1)) +
+  xlab("") + 
+  ylab("") +
+  scale_fill_manual(values = col_vector, na.value = "white")+ 
+  facet_grid(.~Cluster, space = "free", scales = "free", 
+             labeller = labeller(Cluster = Cluster.labs))
+
+
+geneticMatrix 
+
+
+```
+
+To quantify this, I ran a multinomial model, with lasso regularisation, to predict cluster membership (C1 -4) based on the matrix of genetic features for all the patient samples (Bruch & Giles et al 2021). The model assigned coefficients to genetic features, where a positive coefficient indicated that this feature was enriched in the cluster, and a negative coefficient indicated it was depleted. 
+
+The approach used 3-fold cross validation, selecting the optimal model using lamda min.  To ensure that the resulting coefficients were robust, we selected  coefficients that satisfied certain cut-offs. Coefficients were selected if they were assigned in > 60% of 50 bootstrapped repeats, and were larger than 0.35. Figure \@ref(fig:clusterEnrichment) shows the mean coefficients and associated standard deviation, for each genetic feature that met these criteria in each cluster. 
+
+
+(ref:clusterEnrichment) Multinomial regression with lasso penalisation to identify enrichment or depletion of genetic features within each cluster. Matrix of genetic features  (p=39), and IGHV status (encoded as M = 1 and U = 0) were used to identify multivariate predictors of cluster assignment.  x axis shows genetic predictors, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and  error bars represent the mean ± standard deviation.  Genetic features with >20% missing values were excluded, and only patients with complete annotation were included in the model (n=137). Figure from Bruch & Giles et al 2021. 
+
+```{r FeatureMatrix04}
+#Generate Matrix
+#select features from patient meta file
+geneMatrix <- 
+  dplyr::select(patMeta,
+                -c(gender:treatment)) %>%
+  
+  #adjust IGHV.status levels  U and M to numeric 1 and 0 
+  mutate(IGHV = ifelse(is.na(IGHV.status), NA,
+                       ifelse(IGHV.status == "M", 1, 0)), 
+         #remove old columns and remove Methylation Cluster
+         IGHV.status=NULL, Methylation_Cluster=NULL ) %>%
+  
+  #convert factors to numeric
+  mutate_if(is.factor, as.character) %>%
+  mutate_at(vars(-PatientID), as.numeric) %>%
+
+  #convert to matrix format, with patient IDs as rownames
+  data.frame() %>% 
+  column_to_rownames("PatientID") %>% 
+  as.matrix()
+
+
+#Tidy matrix for use in glmnet function
+
+#Remove genes with higher than 20% missing values
+geneMatrix <- geneMatrix[,colSums(is.na(geneMatrix))/nrow(geneMatrix) <= 0.2]
+
+#Filter for patients with complete data
+geneMatrix.complete <- geneMatrix[complete.cases(geneMatrix),]
+
+
+#Combine KRAS, NRAS and BRAF mutations into a single column
+#set up empty matrix
+Ras_Raf <- matrix(NA, 
+                  nrow = nrow(geneMatrix.complete), 
+                  ncol = 1)
+
+colnames(Ras_Raf) <- "RAS/RAF"
+
+#add RAS/RAF column to matrix
+geneMatrix.complete <- cbind(geneMatrix.complete, Ras_Raf)
+
+#Annotate RAS_RAF where where any of KRAS, NRAS or BRAF are mutated
+geneMatrix.complete[,"RAS/RAF"] <- ifelse(geneMatrix.complete[,"KRAS"]==1,1,
+		                                        ifelse(geneMatrix.complete[,"BRAF"]==1,1,
+	                	                          ifelse(geneMatrix.complete[,"NRAS"]==1, 1, 0)))
+
+
+#remove KRAS, NRAS and BRAF columns
+geneMatrix.complete <- 
+  geneMatrix.complete[, colnames(geneMatrix.complete) != "KRAS"]
+
+geneMatrix.complete <- 
+  geneMatrix.complete[, colnames(geneMatrix.complete) != "BRAF"]
+
+geneMatrix.complete <- 
+  geneMatrix.complete[, colnames(geneMatrix.complete) != "NRAS"]
+
+
+```
+
+
+```{r responseMatrix04}
+#get Clusters and Patients
+y <- 
+  dplyr::select(patMeta_cl, PatientID, Cluster) %>% 
+  column_to_rownames("PatientID")
+
+#Cluster column as.numeric
+y$Cluster <- as.numeric(as.character(y$Cluster))
+
+#transform matrix
+y <- t(y)
+
+#Match response matrix and feature matrix
+y <- y[,rownames(geneMatrix.complete)]
+
+```
+
+
+```{r runGlmnet04}
+
+X <- geneMatrix.complete
+y <- y
+
+res <- runGlm_multiCluster(X, y, method = "lasso", repeats = 50, folds = 3)
+
+```
+
+
+```{r extractCoefficients04}
+
+coefList <- res$coefMat
+
+#Filter for features whose coefficients meet the frequency and minimum value thresholds
+coefTab <- lapply(names(coefList), function(d) {
+   coefMat <- coefList[[d]]
+   coefTab <- sumCoef(coefMat=coefMat, freqCut = 0.6, coefCut = 0.35) %>%
+     mutate(cluster = d)
+}) %>% bind_rows()
+
+
+
+```
+
+
+```{r clusterEnrichment, fig.cap='(ref:clusterEnrichment)', fig.height = 4, fig.width = 6, out.width = "100%", warnings = FALSE,  echo  = FALSE}
+
+#average remaining coefficients in dataframe for plotting
+#ie show all sig features, the cluster they predict, and the average coefficient 
+enrichment_plotTab <-
+  coefTab %>%
+  dplyr::group_by(feature, cluster) %>% 
+  dplyr::summarise(meanCoef = mean(coef),
+                   sdCoef = sd(coef)) %>%
+  dplyr::arrange(desc(meanCoef)) %>% 
+  ungroup()
+
+enrichment_plotTab$feature <- factor(enrichment_plotTab$feature,
+                                levels=c("IGHV", 
+                                         "trisomy12",
+                                         "SF3B1", 
+                                         "POT1",
+                                         "ATM", 
+                                         "TP53",
+                                         "RAS/RAF",
+                                         "gain8q"))
+
+
+Cluster.labs <- c("C1", "C2", "C3", "C4")
+names(Cluster.labs) <- c(1, 2, 3, 4)
+ 
+
+clusterEnrichment <- 
+    ggplot(enrichment_plotTab, aes(x=feature, y=meanCoef))+ 
+    geom_bar(stat= "identity", aes(fill = cluster))+
+    geom_errorbar(aes(ymin = meanCoef - sdCoef, 
+                      ymax = meanCoef + sdCoef))+
+    ggtitle("") +
+    coord_cartesian(ylim=c(-1.5, 1.75))+
+    geom_hline(yintercept=0)+
+    ylab("Depleted / Enriched\n")+
+    xlab("") +
+    scale_fill_manual(values=colors[1:4])+
+    t2+
+    theme(strip.background = element_rect(fill = "white", colour = "black", size = 1)) +
+    facet_wrap(~cluster, 
+               nrow=4, 
+               strip.position = "top", 
+               labeller = labeller(cluster = Cluster.labs))+
+   guides(fill = "none")
+
+
+clusterEnrichment
+```
+As we expected, IGHV status was the main feature that predicted cluster membership. Beyond IGHV status, trisomy 12 and *SF3B1* mutations were enriched in C2, which showed enhanced responses to many stimuli. C4, which was associated with slow in-vivo progression, showed depletion of *TP53*, *ATM*, RAS/RAF mutations and gain8q. 
+
+
+### GSEA of DE genes between subgroups
+In addition to genetic features, I investigated differential expression of genes within each cluster. For n = 49 samples, RNAseq data was available for matched PBMC samples. I focused on the difference between clusters 3 and 4, for which 21 RNAseq samples were available (Bruch & Giles et al. 2021). 
+
+To quantify differential gene expression, I began by filtering out immunoglobulin genes, including genes at the heavy, light and kappa loci that encode the antigen receptor of B cells. The clusters each show differential enrichment of IGHV-M and U samples, and thus the differential expression analysis would otherwise be dominated by immunoglobulin genes that are well known to affected by this biomarker. 
+
+I followed the Deseq2 protocol using a design formula to quantify the difference between clusters, and accounting for the confounding effect of IGHV status.  87 genes were differentially expressed (adjusted p < 0.05) between C3 and 4 (Figure \@ref(fig:clusterDE)).
+
+
+(ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. X axis indicates log2 fold change values, calculated using the `DESeq2` package [@Deseq2], y axis gives corresponding -log10(adjusted p value). P values adjusted using BH method. Genes are labeled where ajdusted p < 0.05. Figure from Bruch & Giles et al. 2021.
+
+```{r rnaPrep04}
+cytSeq <- dds_smp
+
+#Filter out IGHV genes
+cytSeq <- cytSeq[!grepl("IG_", rowData(cytSeq)$biotype),] 
+
+#split into 3,4
+cytSeq.34 <- cytSeq[,colData(cytSeq)[,"Cluster"] %in% c(3,4)]
+
+#remove patients where IGHV is unknown
+cytSeq.34 <- cytSeq.34[,colData(cytSeq.34)[,"IGHV.status"] %in% c("U","M")]
+
+#set order of factors
+cytSeq.34$Cluster <- factor(cytSeq.34$Cluster, 
+                            levels = c("3","4"))
+
+cytSeq.34$IGHV.status <- factor(cytSeq.34$IGHV.status, 
+                                levels = c("U","M"))
+
+design(cytSeq.34) <- ~ IGHV.status + Cluster
+
+```
+
+```{r RunDeseq04}
+
+
+cytSeq.34 <- DESeq(cytSeq.34)
+
+```
+
+
+```{r  deseqResults04}
+
+res.ds <- 
+  results(cytSeq.34, contrast = c("Cluster", 3, 4), tidy = TRUE) %>%
+  dplyr::rename(Symbol = "row") %>% 
+  dplyr::arrange(pvalue) 
+
+```
+
+```{r}
+
+#get ensembl ids to Entrez dataframe
+ens2entrez <- 
+  rowData(cytSeq.34)[c("entrezgene", "symbol")] %>% 
+  as.data.frame() %>% 
+  rownames_to_column("ENSEMBL") %>%  
+  tibble::as_tibble()
+
+
+#Join 
+res.ds <- left_join(res.ds, ens2entrez, by=c("Symbol"="ENSEMBL"))
+
+
+```
+
+
+```{r getRanks04}
+
+d <- 
+  dplyr::select(res.ds, entrezgene, stat) %>%
+  na.omit() %>% 
+  dplyr::group_by(entrezgene) %>% 
+  dplyr::summarize(stat=mean(stat)) 
+
+## feature 1: numeric vector
+geneList <- d$stat
+
+## feature 2: named vector
+names(geneList) <- as.character(d$entrezgene)
+
+## feature 3: decreasing order
+geneList <- sort(geneList, decreasing = TRUE)
+
+
+```
+
+```{r getTERM2GENE04}
+
+
+hm2gene <- 
+  msigdbr(species = "Homo sapiens", category = "H") %>% 
+  dplyr::select(gs_name, entrez_gene)
+
+#tidy up terms
+hm2gene$gs_name <- gsub("HALLMARK_", "",hm2gene$gs_name)
+hm2gene$gs_name <- gsub("_", " ",hm2gene$gs_name)
+hm2gene$gs_name <-gsub("MTORC1 SIGNALING"	,"MTORC1 Signaling",hm2gene$gs_name)
+hm2gene$gs_name <-gsub("MYC TARGETS V1",	"MYC Targets V1"	,hm2gene$gs_name)
+hm2gene$gs_name <-gsub("OXIDATIVE PHOSPHORYLATION",	"Oxidative Phosphorylation",hm2gene$gs_name)
+hm2gene$gs_name <-gsub("TNFA SIGNALING VIA NFKB",	"TNFa Signalling via NFKB"	,hm2gene$gs_name)
+hm2gene$gs_name <-gsub("UNFOLDED PROTEIN RESPONSE",	"Unfolded Protein Response"	,hm2gene$gs_name)	
+hm2gene$gs_name <-gsub("UV RESPONSE UP",	"UV Response Up",hm2gene$gs_name)
+hm2gene$gs_name <-gsub("INTERFERON GAMMA RESPONSE",	"Interferon Gamma Response"	,hm2gene$gs_name)
+hm2gene$gs_name <-gsub("G2M CHECKPOINT",	"G2M Checkpoint",hm2gene$gs_name)	
+hm2gene$gs_name <-gsub("E2F TARGETS", "E2F Targets"	,hm2gene$gs_name)
+hm2gene$gs_name <-gsub("P53 PATHWAY",	"P53 Pathway",hm2gene$gs_name)
+
+
+ 
+```
+
+```{r runGSEA04, }
+#run GSEA
+set.seed(1996)
+gsea.res <- GSEA(geneList, TERM2GENE = hm2gene, by = "fgsea", seed = TRUE)
+
+#make readable with gene names
+gsea.res <- setReadable(gsea.res, org.Hs.eg.db, keyType = "ENTREZID")
+
+
+```
+
+```{r clusterDE, fig.cap='(ref:clusterDE)', out.width = "100%",  echo = FALSE}
+
+
+sgncuoff <- 1.4
+
+clusterDE <-
+  res.ds %>%
+  filter(!is.na(padj), !is.na(symbol), symbol!="") %>%
+
+ggplot( aes(x=log2FoldChange, y=-log10(padj))) +
+      annotate("rect", xmin = 0.0, xmax = Inf, ymin = -Inf, ymax = Inf, fill = palreds[1], alpha = 0.2)+
+      annotate("rect", xmin = 0.0, xmax = -Inf, ymin = -Inf, ymax = Inf,alpha = 0.2, fill = palblues[1])+
+      geom_point(aes(alpha=0.4, colour = ifelse(-log10(padj)>sgncuoff,"black","grey"))) +
+      theme(legend.position = "none") +
+      geom_label_repel(aes(label=ifelse(-log10(padj)>sgncuoff&abs(log2FoldChange)>2,as.character(symbol),''),
+                           colour=ifelse(log2FoldChange>0, palreds[2], palblues[4])))+
+      scale_colour_manual(values=c(palblues[2], palreds[4], "black", "grey"))+
+      t2 +
+      labs(title="Cluster 3 versus 4", x = "Log2FC", y = "-log10(adj p-val)", color = "Significance")+
+      guides(color="none", alpha="none")
+
+clusterDE
+
+```
+
+
+To assign biological meaning to the differentially expressed genes, I quantified the enrichment of Hallmark pathways amongst the genes. I ranked the genes based on the Wald statistic, and then ran GSEA was using the fgsea algorithm (Figure \@ref(fig:clusterGSEA)) (Bruch & Giles et al. 2021).
+
+Several pathways were upregulated amongst samples in C3, compared to C4, indicating that these pathways may relate in some way to the shorter TTT and LDT of patients within this cluster. Pathways associated with higher disease aggression were regulated in C3 including genesets relating to  stress response (Unfolded Protein Response, UV Response Up, P53 Pathway),  metabolism (Oxidative Phosphorylation) and proliferation (G2M Checkpoint, MYC Targets V1, MTORC1 Signaling, E2F Targets) (Figure \@ref(fig:GSEApathways)). 
+
+
+(ref:clusterGSEA) Gene set enrichment analysis (GSEA) to compare expression of genes in samples from  C3 and C4 reveals upregulation of Hallmark pathways involved in microenvironmental signalling, stress response, metabolism and proliferation in C3. Normalised enrichment scores (NES) are shown for top 10 most significant pathways upregulated in C3 versus C4. Bars coloured according to adjusted p-value. Genes are ranked based on Wald statistic, calculated using the Deseq2 package and GSEA performed using the fgsea algorithm. Figure from Bruch & Giles et al. 2021.  
+
+
+```{r clusterGSEA, fig.cap='(ref:clusterGSEA)',  out.width = "100%", echo = FALSE}
+
+#get dataframe of results
+gsea.df <- fortify(gsea.res, 
+              showCategory = 10, #how many levels to show
+              split=NULL)
+
+#order by NES
+gsea.df <- dplyr::mutate(gsea.df, "NES" = eval(parse(text="NES")))
+idx <- order(gsea.df[["NES"]], decreasing = TRUE)
+gsea.df$Description <- factor(gsea.df$Description, levels=rev(unique(gsea.df$Description[idx])))
+    
+  
+gsea.df$pos <- 0
+
+  clusterGSEA <-
+   ggplot(gsea.df,
+         aes_string(x="NES", 
+                    y="Description", 
+                    fill="p.adjust")) +
+    geom_bar(stat = "identity") +
+    scale_fill_continuous(low=palreds[7],
+                         high=palreds[2], 
+                         name = "Adjusted p value",
+                         guide=guide_colorbar(reverse=TRUE)) +
+    
+  ylab("Hallmark Pathway\n\n") + 
+  xlab("NES") +
+  ggtitle("Upregulation of gene sets in C3 versus C4") +  
+  t2 + 
+  scale_size(range=c(3, 8)) + 
+  geom_text(aes(label=Description, x = pos), nudge_x = 0.1, hjust = 0,  size = 6, color = "white") +
+  theme(legend.position=c(0.86, 0.3),
+        legend.background = element_blank(),
+        legend.box.background = element_rect(size = 0.5),
+        legend.title = element_text(face='bold',
+                                    hjust = 1, size=11),
+        legend.key = element_blank(),
+        legend.text = element_text(size=11),
+        axis.text.y = element_blank(), 
+        axis.ticks.y = element_blank()) 
+  
+
+clusterGSEA
+
+
+#ADD Expression of keycytokine genes within each cluster heatmap (see Sophie's thesis)
+
+```
+
+
+In addition, C3 showed upregulation of  microenvironmental signalling pathways relative to C4, including TNFa Signalling via NFKB and Interferon Gamma Response (Figure \@ref(fig:GSEApathways)) (Bruch & Giles et al. 2021). This finding underlines our hypothesis that  differential activity of microenvironmental signalling, both *in vivo* and *ex vivo* may be relevant to disease prognosis. 
+
+(ref:GSEApathways) Enrichment plots of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes.  The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software. Figure from Bruch & Giles et al. 2021
+
+```{r GSEApathways, fig.cap='(ref:GSEApathways)', out.wdith = "100%",   echo = FALSE}
+
+TNFaEnrichment <-
+  enrichmentPlot(filter(hm2gene, gs_name =="TNFa Signalling via NFKB")$entrez_gene, geneList) +
+  labs(title="TNFA signalling via NFKB")
+
+
+#myc targets
+mycEnrichment <-
+  enrichmentPlot(filter(hm2gene, gs_name =="MYC Targets V1")$entrez_gene, geneList) +
+  labs(title="MYC targets V1")
+
+
+#oxidative phosphorylation
+oxphosEnrichment <-
+  enrichmentPlot(filter(hm2gene, gs_name =="Oxidative Phosphorylation")$entrez_gene, geneList) +
+  labs(title="Oxidative Phosphorylation")
+
+
+#p53 pathway
+p53Enrichment <-
+  enrichmentPlot(filter(hm2gene, gs_name =="P53 Pathway")$entrez_gene, geneList) +
+  labs(title="P53 Pathway")
+
+
+
+GSEApathways <-  
+  (wrap_elements(TNFaEnrichment) + 
+  wrap_elements(mycEnrichment) )/
+  (wrap_elements(oxphosEnrichment)  +
+  wrap_elements(p53Enrichment) ) +
+  plot_annotation(tag_levels = "A")
+  
+GSEApathways
+
+```
+
+## Additional Analysis
+Can microenvironmental response aid prognostic models? Run a Multivariate model to predict survival/drug response with genetic matrix and stimuli response matrix?
+
+## Summary
+The screen represents an attempt to comprehensively dissect the impact of individual microenvironmental pathways on CLL viability. Our assay has enabled us to highlight key, broad spectrum signals such as IL4. Our heterogeneous cohort also reveals pathways that operate in subsets of patients, such as TLR. IL4 and TLR represent the key pathways that we focus on throughout the rest of this thesis.
+
+In addition, this approach enables us to use microenvironmental response profiles, as an alternative to molecular profiling, to look for the existence of subgroups. 
+
+We uncovered four such subgroup with distinct response profiles and molecular properties and clinical outcomes, suggesting that microenvironmental response holds biologically significant information that may be relevant to prognosis and treatment decision making. 
+
+## Discussion
+Gosia suggested discussing each results section individually? 
+
