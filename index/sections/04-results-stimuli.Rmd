@@ -12,7 +12,8 @@ knitr::opts_chunk$set(
    echo = FALSE, 
    message = FALSE, 
    warning = FALSE,
-   fig.align="center"
+   fig.align="center", 
+   cache = TRUE
 )
 
 ```
@@ -2040,7 +2041,7 @@ To quantify differential gene expression, I began by filtering out immunoglobuli
 I followed the Deseq2 protocol using a design formula to quantify the difference between clusters, and accounting for the confounding effect of IGHV status.  87 genes were differentially expressed (adjusted p < 0.05) between C3 and 4 (Figure \@ref(fig:clusterDE)).
 
 
-(ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. X axis indicates log2 fold change values, calculated using the `DESeq2` package [@Deseq2], y axis gives corresponding -log10(adjusted p value). P values adjusted using BH method. Genes are labeled where ajdusted p < 0.05. Figure from Bruch & Giles et al. 2021.
+(ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. X axis indicates log2 fold change values, calculated using the `DESeq2` package [@DESeq2], y axis gives corresponding -log10(adjusted p value). P values adjusted using BH method. Genes are labeled where ajdusted p < 0.05. Figure from Bruch & Giles et al. 2021.
 
 ```{r rnaPrep04}
 cytSeq <- dds_smp
