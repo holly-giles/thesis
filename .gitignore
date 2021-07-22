@@ -12,4 +12,5 @@ index/thesis-examples
 index/thesis-output/archive
 
 #Specific Files
-
+index/.Rhistory
+index/thesis.Rmd
