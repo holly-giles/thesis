@@ -70,7 +70,6 @@ if (!require(heididown)) {
   library(heididown)
 }
 
-knitr::opts_chunk$set(cache = TRUE)
 
 
 ```
