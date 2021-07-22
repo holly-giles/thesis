@@ -4,33 +4,77 @@
 library(ggplot2)
 ```
 
-Brief: 
-Referencing: 
-* What do we already know about the subject (literature review)? Use citations:
-  @JCIpaper shows that... Alternative Forms of the Wald test are
-  considered [@JCIpaper].
+(theoretical background)
+# CLL Disease biology of CLL
 
-* Provide an overview of your results.
+## Disease Characteristcs
+@JCIpaper shows that...  [@JCIpaper].
 
-* Outline of the paper:\
-  _The thesis is organized as follows. The next section describes the model
-  under investigation. Section "[Data]" describes the data set
-  and Section "[Results]" presents the results. Finally, Section
-  "[Conclusion]" concludes._
-  
-* The introduction should  be around  8 pages.
+## Disease biology
+### IGHV status
 
+### The role of BCR signalling 
+
+###Recurrent genetic features in CLL  
+-mutations
+
+-copy number variants
+
+### The incompletely understood role of trisomy12 
+
+### Stratification of CLL patients
+
+# The tumour microenvironment in CLL 
+## The concept of the protective niche 
+Lymph nodes etc
+
+## Microenvironmeental pathways and cross-talk 
+pathways esp IL4 and TLR    
 The microenvironment in CLL constitutes cross talk via soluble factors and cell-cell contacts, in the blood, bone marrow and lymph nodes. \@ref(fig:microenvironmentOverview)
 ```{r microenvironmentCrosstalk, fig.cap= "Summary of microenvironmental in CLL", echo = FALSE}
 
 #knitr::include_graphics("figures/microenvironmentCrosstalk.eps")
 
 ```
+_Figure adapted from ..._ 
+
 
 ```{r microenvironmentTissues, fig.cap= "The tissues that constitute the microenvironment in CLL", echo = FALSE}
 
 #knitr::include_graphics("figures/microenvironmentTissues.eps")
 
 ```
+_Figure adapted from ..._ 
 
+# Therapies in CLL 
+## Clinical regimes 
 
+## New Targeted therapies
+in particular Ibrutinib and idelalisib  
+
+## Drug resistances in CLL
+incl ME -mediated and ibrutinib - IL4 
+
+## BET inhibitors, and their potential for the treatment of leukemia
+
+# Background to the approache used in this thesis
+## Ex-vivo drug sensitivity screens
+
+## Studies of the microenivornment, and attempts to replicate the impact of the microenvironment 
+
+## Measurement of outcomes? 
+LDT, TTT, TFT, OS 
+
+## Multiomics datasets to study CLL 
+The power of multi-omics approaches especially the use of ATAC sequencing and combining ATAC and RNA
+ 
+## Mathematical modelling 
+Mathematical background in particular, lasso-regularised regression, and the caveats associated with feature selection
+wrt cluster assignment 
+
+## CLL as a model for studying tumour biology
+
+# Aims of this thesis
+
+# Overview of the approach
+Including diagrams 
