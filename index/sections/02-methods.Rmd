@@ -1,81 +1,202 @@
 # Methods
 
-* Describe the data and its quality.
+Methods in quotation marks are taken from Bruch & Giles et al. 2021 and I have authored the original text, unless stated otherwise. Paragraphs without quotation marks were rewritten for the thesis. 
 
-* How was the data sample selected?
+Routine: 
+all headings should be here 
+at the end of each chapter, make sure all methods are included
+Copy things in and put in quotation marks if from Bruch & Giles et al. 2021, mark if they were not written by me, or if they were written jointly 
+Add REFERENCE and TABLE for now 
+Return to this later and neaten / expand on methods, and provide all referencing and tables 
 
-* Provide descriptive statistics such as:
+#Experimental methods: 
+## Drug - Stimulus Combinatorial Pertubation Assay
+### Patient Sample Preparation
+_with Peter-Martin Bruch_ Original 
+Peripheral Blood was taken from 192 patients for the initial drug-stimulation assay. Blood was separated by Ficoll gradient (GE Healthcare) and mononuclear cells were cryopreserved. 
+ 
+## Preparation of screening plates
+_with Peter-Martin Bruch_ Original 
+"Sample preparation, cell-culture, drug-stimulation profiling and genomic annotation was performed on 192 CLL patient samples as previously described20 with the following adjustments. Stimuli and drugs were mixed and preplated in the culture plates directly before adding the cell suspensions. RPMI-1640 and supplements were acquired from Gibco by Life Technologies, human serum was acquired from PAN Biotech (Cat.No. P40-2701, Lot.No:P-020317). Luminescence was measured after 48h on a Perkin Elmer EnVision." 
 
-  * time period,
+_with Peter-Martin Bruch_ Original 
+Compounds were obtained from Selleckchem, MedChemExpress and Sigma-Aldrich, dissolved in DMSO and stored at -20°C. 12 drugs were used in two concenttations [TABLE] . Final DMSO concentration did not exceed 0.3% in all experiments. Carfilzomib, Panobinostat and Venetoclax were removed from the analysis as they showed inconsistent toxicity depending on used media.
+Insert table
 
-  * item number of observations, data frequency,
+Recombinant cytokines and stimulatory agents were dissolved according to manufacturer's protocol.17 stimuli were selected [TABLE]. HS-5 conditioned medium was produced by incubating HS-5 stroma cell line (gifted by Martina Seiffert, DKFZ, Heidelberg) for 4 days at 37°C and 5% CO2, after which the supernatant was centrifuged and stored at -20°C, the final concentration of HS-5 CM was 20%. Bead immobilised anti-IgM was removed from the analysis due to storage instability. "
 
-  * item mean, median,
+Paper: 
+"Compounds and stimulatory agents were dissolved, stored and diluted according to manufacturer's protocol. HS-5 conditioned medium was produced by incubating HS-5 stromal cell line to >80% confluency and cell removal by centrifugation. For a detailed list of stimuli and drugs and associated concentrations see Supp. Tables 1 and 2. Final DMSO concentration did not exceed 0.3%. "
 
-  * item min, max, standard deviation,
+Original 
+Compounds were preplated in 384-well polypropylene storage plates (Greiner Bio-One Cat.No.:781271), which were stored at -20°C. For each batch of samples tested on the same day a new storage plate was thawed and diluted in serum free RPMI, with or without stimuli. 5µl of drug-stimulation dilution were added into each well of the assay plates, 20 µl of cell suspension were added. The final cell concentration was 8*10^5 cells/ml. Cells were thawed as previously described[REFERENCE].
 
-  * item skewness, kurtosis, Jarque--Bera statistic,
+# Drug-Stimulation assay 
+_with Peter-Martin Bruch_ Original 
+Drug-stimulation assays were performed with RPMI-1640 (Gibco by Life Technologies) supplemented with Penicillin Streptomycin (Gibco) final concentration of 100 Units/ml and 100 µg/ml respectively, L-Glutamine (Gibco) final concentration 2mM, and 10% pooled, heat-inactivated and sterile filtered human type AB male off the clot serum (PAN Biotech, Cat.No. P40-2701, Lot.No:P-020317).
 
-  * item time series plots, histogram.
+Compounds and MES were added to the cells simultaneously. Culture was performed in 384-well plates (Greiner Bio-One Cat.No.: 781904) and cells were incubated at 37°C and 5% CO2 for 48h.
 
-* For example (you can decide whether you want to display the code below or 
-not by setting `echo=TRUE` or `echo=FALSE`, respectively, in the code 
-chunk header):
+Cell Viability was determined using the ATP-based CellTiter-Glo assay (Promega, Cat.No.:G7573). Luminescence was measured for the drug-stimulation assays using a Perkin Elmer EnVision and for the drug-drug interaction experiments using a Perkin Elmer EnSight, with a measurement time of 100ms per well.
 
-```{r table1, echo=TRUE}
-col_names <- c(
-  "3m", "6m", "1yr", "2yr", "3yr", "5yr", "7yr", "10yr", "12yr", "15yr"
-)
-means     <- c(
-  3.138, 3.191, 3.307, 3.544, 3.756, 4.093, 4.354, 4.621, 4.741, 4.878
-)
-stddev    <- c(
-  0.915, 0.919, 0.935, 0.910, 0.876, 0.825, 0.803, 0.776, 0.768, 0.762
-)
-row_names <- c("Mean", "StD")
 
-df <- matrix(data = c(means, stddev), nrow = 2, byrow = T)
-rownames(df) <- row_names
-colnames(df) <- col_names
-df <- data.frame(df)
-knitr::kable(
-  df,
-  booktabs = TRUE,
-  caption = "Detailed descriptive statistics of location and dispersion for 2100 observed swap rates for the period from February 15, 1999 to March 2, 2007. Swap rates measured as 3.12 (instead of 0.0312).",
-  col.names = col_names, 
-  escape = FALSE
-) %>%
-kable_styling(latex_options = c("HOLD_position")) %>%
-row_spec(2, hline_after = T)
-```
+# WES, RNA Sequencing, Targeted Sequencing and DNA Copy number variants 
+_Myself_ Original 
+Sequencing data generated by Dietrich et al[REFERENCE], and all sequencing and data processing were performed as described there. For 
 
-* Allows the reader to judge whether the sample is biased or to evaluate 
-  possible impacts of outliers, for example.
+## Follow - up investigations 
+### Lymphocyte doubling time 
 
-* Here tables can be easily integrated using the `kable()` function in the
-  `knitr` package (with perhaps some additional help from the `kableExtra`
-  package). `kable()` will automatically generate a label for the table
-  environment. That way you don't have to manually enter in the table in LaTex,
-  you can embed tables from R code. 
+### Survival data 
 
-* Tables can be referenced using `\@ref(label)`, where `label` is `tab:<name>`,
-  where `<name>` is the code chunk label.
+### ATACsequencing of 4 CLL samples 
+_with Peter-Martin Bruch (mostly edited by me)_ Paper 
+"Peripheral blood was taken from 4 CLL patients and separated by Ficoll gradient (GE Healthcare), mononuclear cells were cryopreserved on liquid nitrogen. Samples were later thawed from frozen as previously described[REFERENCE] and MACS sorted for CD19 positive cells (Milteny autoMACS®). The cells were resuspended in RPMI (GIBCO, Cat.No. 21875-034), with the addition of 2mM glutamine (GIBCO, Cat.No. 25030-24), 1% Pen/Strep (GIBCO, Cat.No. 15140-122) and 10% pooled, heat-inactivated and sterile filtered human type AB male off the clot serum (PAN Biotech, Cat.No. P40-2701, Lot.No:P-020317). 5ml of cell suspension was cultured in 6-well plates (Greiner Bio-One Cat.No. 657160). After thawing, cells were incubated at 37°C and 5% CO2 for 6 hours in 0.2% DMSO. The final cell concentration was 2x10ˆ6 cells/ml. Cell viability and purity was assessed using FACS. All samples had a viability over 90% and over 95% of CD19+/CD5+/CD3- cells."
 
-* The appearance may look different to tables directly typed with LaTex, due to
-  limitations in `kable()`. To compare:
-    \begin{table}[ht]
+_with Nayara_ Paper 
+"ATAC-seq libraries were generated as described previously[REFERENCE]. Cell preparation and transposition was performed according to the protocol, starting with 5x10ˆ4 cells per sample. Purified DNA was stored at −20°C until library preparation was performed. To generate multiplexed libraries, the transposed DNA was initially amplified for 5x PCR cycles using 2.5 μL each of 25 μM PCR Primer 1 and 2.5 μL of 25 μM Barcoded PCR Primer 2 (included in the Nextera index kit, Illumina, San Diego, CA, USA), 25 μL of NEBNext High-Fidelity 2x PCR Master Mix (New England Biolabs, Boston, Massachusetts) in a total volume of 50 μL. 5 μL of the amplified DNA was used to determine the appropriate number of additional PCR cycles using qPCR. Additional number of cycles was calculated through the plotting of the linear Rn versus cycle, and corresponds to one-third of the maximum fluorescent intensity. Finally, amplification was performed on the remaining 45 μL of the PCR reaction using the optimal number of cycles determined for each library by qPCR (max. 13 cycles in total). The amplified fragments were purified with two rounds of SPRI bead clean-up (1.4x). The size distribution of the libraries was assessed on Bioanalyzer with a DNA High Sensitivity kit (Agilent Technologies, Santa Clara, CA), concentration was measured with Qubit® DNA High Sensitivity kit in Qubit® 2.0 Flurometer (Life Technologies, Carlsbad, CA). Sequencing was performed on NextSeq 500 (Illumina, San Diego, CA, USA) using 75bp paired-end sequencing, generating ∼450 million paired-reads per run, with an average of 55 million reads per sample."
 
-    \begin{center}
-        {\footnotesize
-        \begin{tabular}{l|cccccccccc}
-            \hline \hline
-                      & 3m    & 6m    & 1yr   & 2yr   & 3yr   & 5yr   & 7yr   & 10yr  & 12yr  & 15yr   \\
-            \hline
-                Mean   & 3.138 & 3.191 & 3.307 & 3.544 & 3.756 & 4.093 & 4.354 & 4.621 & 4.741 & 4.878  \\
-                StD    & 0.915 & 0.919 & 0.935 & 0.910 & 0.876 & 0.825 & 0.803 & 0.776 & 0.768 & 0.762  \\
-            \hline \hline
-        \end{tabular}}
-    \end{center}
-    \caption{This table was handwritten with LaTeX.}
-    \label{tab:table2}
-    \end{table}
+
+### Spi-B and PU.1 shRNA Knockdowns
+
+### Immunohistochemistry of patient lymph nodes
+_Peter-Martin Bruch_ Paper 
+"LN biopsies of CLL-infiltrated and non-neoplastic lymph nodes were Paraffin fixed and arranged in Tissue Microarrays. Consecutively they were stained for PAX-5 (790-4420, Roche), CD3 (790-4341, Roche), pSTAT6 (ab28829, abcam), STAT6 (519-4290, Zytomed Systems) and pIRAK4 (ab216513, abcam). The slides were analysed using Qupath 50 and the recommended protocol. Cell based data on mean staining intensity was exported and further analysed using R. "
+
+### Ibrutinib - IL4 - STAT6i interaction assay 
+
+## Investigation of Ibrutinib + IL4 + IBET-762
+### Ibrutinib - IL4 - IBET-762 interaction assay
+
+### Ibrutinib - IL4 - IBET -762 treatment
+
+### ATACsequencing 
+_with Peter Martin Bruch_ get from diffTF 
+Peripheral blood was taken from 4 CLL patients and separated by Ficoll gradient (GE Healthcare), mononuclear cells were cryopreserved on liquid nitrogen. Samples were later thawed from frozen as previously described[REFERENCE] and MACS sorted for CD19 positive cells (Milteny autoMACS®). The cells were resuspended in RPMI (GIBCO, Cat.No. 21875-034), with the addition of 2mM glutamine (GIBCO, Cat.No. 25030-24), 1% Pen/Strep (GIBCO, Cat.No. 15140-122) and 10% pooled, heat-inactivated and sterile filtered human type AB male off the clot serum (PAN Biotech, Cat.No. P40-2701, Lot.No:P-020317). 5ml of cell suspension was cultured in 6-well plates (Greiner Bio-One Cat.No. 657160). After thawing, cells were incubated at 37°C and 5% CO2 for 6 hours in 0.2% DMSO. The final cell concentration was 2x10ˆ6 cells/ml. Cell viability and purity was assessed using FACS. All samples had a viability over 90% and over 95% of CD19+/CD5+/CD3- cells.
+
+_with Nayara_ get from diffTF 
+ATAC-seq libraries were generated as described previously[REFERENCE]. Cell preparation and transposition was performed according to the protocol, starting with 5x10ˆ4 cells per sample. Purified DNA was stored at −20°C until library preparation was performed. To generate multiplexed libraries, the transposed DNA was initially amplified for 5x PCR cycles using 2.5 μL each of 25 μM PCR Primer 1 and 2.5 μL of 25 μM Barcoded PCR Primer 2 (included in the Nextera index kit, Illumina, San Diego, CA, USA), 25 μL of NEBNext High-Fidelity 2x PCR Master Mix (New England Biolabs, Boston, Massachusetts) in a total volume of 50 μL. 5 μL of the amplified DNA was used to determine the appropriate number of additional PCR cycles using qPCR. Additional number of cycles was calculated through the plotting of the linear Rn versus cycle, and corresponds to one-third of the maximum fluorescent intensity. Finally, amplification was performed on the remaining 45 μL of the PCR reaction using the optimal number of cycles determined for each library by qPCR (max. 13 cycles in total). The amplified fragments were purified with two rounds of SPRI bead clean-up (1.4x). The size distribution of the libraries was assessed on Bioanalyzer with a DNA High Sensitivity kit (Agilent Technologies, Santa Clara, CA), concentration was measured with Qubit® DNA High Sensitivity kit in Qubit® 2.0 Flurometer (Life Technologies, Carlsbad, CA). Sequencing was performed on NextSeq 500 (Illumina, San Diego, CA, USA) using 75bp paired-end sequencing, generating ∼450 million paired-reads per run, with an average of 55 million reads per sample.
+
+### RNAsequencing 
+
+### Proteomics 
+
+# Data availability
+European Genome-Phenome Archive (EGA) accession .... The data  for …. and computational analysis code used in this study are available from ….
+
+
+Additionally, we obtained CLL ATACseq data[REFERENCE] from the European Genome-phenome Archive (EGA: EGAD00001002110). 
+
+For the ChIPseq analysis of SPIB binding sites, we accessed the data 37 from the NCBI GEO database 51, accession GEO: GSE56857. We made use of the data for SPIB in the OCILY3 DLBCL cell line (GSM1370276). 
+
+---------- 
+# Statistical Analysis 
+Mixutre of paper and original 
+Integrative data analysis of screening data, DNA and RNA sequencing, CNV and methylation profiles and follow up experiments was performed using R version 4 (REFERENCE R Core Team, 2018) with the RStudio interface (REFERENCE RStudio Team, 2016) and using packages that included DESeq2[REFERENCE], survival[REFERENCE], Glmnet[REFERENCE], ConsensusClusterPlus[REFERENCE], clusterProfiler[REFERENCE], ChIPseeker[REFERENCE], genomation[REFERENCE] and BloodCancerMultiOmics2017[REFERENCE] to perform univariate association tests, multivariate regression with and without lasso penalization, Cox regression, generalised linear modelling and clustering. 
+
+## Screening Data
+### Processing of screening data
+_with Peter-Martin Bruch_ Paper 
+To quantify the response of a patient sample to each treatment condition, we used viability relative to the control, i.e., the CellTiter Glo luminescence readout of the respective well divided by the median of luminescence readouts of the DMSO control wells on the same plate.
+
+### Quality Assessment and Control 
+
+
+### Drug -drug and stimulus - stimulus correlations 
+_myself_ original complete 
+Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the `cor` functions of the [@stats][REFERENCE] package with log transformed viability values which were normalised to untreated controls.
+
+### Characterising stimulus responses across all samples
+_myself_ original complete (just check)
+For the heatmap in figure \@ref(fig:stimuliHeatmap), the viability data is represented as z scores. Log transformed viability values, normalised to DMSO controls, are row-scaled  according to the Median Absolute Deviance.  Limits were then applied to this row scaling factor for optimal visualisation. The matrix of z scores was plotted using the [@pheatmap][REFERENCE] package. The ordering of the columns (patient samples) was obtained from the dendrogram that resulted from running `ConsensusClusterPlus`, from the [@ConsensusClusterPlus] [REFERENCE] package. The rows were ordered using the dendrogram order produced by `hclust` with default branch arrangement.
+
+### Univariate gene - repsonse testing 
+
+# Penalised multivariate regression of gene - response 
+_myself_ original 
+For the plots in Figure 3B, we used a Gaussian linear model with L1-penalty. As the dependent variable, the normalised viability value was used for all stimuli. We used the same features as above, plus Methylation Cluster(coded as 0, 0.5, 1). As a measure of explained variance the reduction in cross-validated mean squared error relative to the null model was calculated. 
+
+### Correlation of RNA-Receptor Expression with viability
+
+### Linear modelling of drug - stimulus interactions 
+
+### Modelling of drug - stimulus - gene interactions
+_myself_ original 
+To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package glmnet[REFERENCE]. As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
+
+##Follow up 
+### Lympocyte doubling times
+_Herbst et al., 2020c_ - update
+"Patients which had lymphocyte counts available for less than 4 timepoints between the sample
+collection date and the time of the next treatment and patients currently in treatment were ex-cluded. Thus, ... patients with enough data remained.  Lymphocyte growth rates were calculated by fitting a linear model to the log10 transformed lymphocyte counts of all timepoints between the sample collection date and the time of the next treatment versus the period of time."
+
+### Survival analyses 
+_myself_ original 
+Survival analyses were performed using TTT, TFT and OS as metrics.  Follow-up information to calculate OS was available for all 192 CLL patients. For 188 of 192 CLL patients treatment information after sample collection was available. 
+
+_Herbst et al_
+”Time to next treatment (TTT) was calculated from the date of sample collection to subsequent
+treatment initiation. Patients without treatment initiation during the observation time and
+patients who died before treatment initiation were censored at the latest follow-up contact."
+
+_myself_ original 
+For for the purpose of visualising Kaplan-Meier plots , optimal cut-points of staining levels were calculated using maximally selected rank statistics as computed by the package [@maxstat] [REFERENCE](Hothorn,2017). Based on these cut points, patients were split into two groups, and their survival data were plotted using the Kaplan-Meier method, using the R package [@survminer] [REFERENCE](Kassambara et al., 2019) . 
+
+For Cox proportional hazards regression, the  `coxph` function of the R package survival [REFERENCE] (Therneau, 2020) was used. Expand 
+
+### Penalised multivariate regression genetic predictors of cluster membership 
+_Myself_ original (edit so not similar to JCI)
+I used a multinomial linear model with L1-penalty, implemented in the [@cvglmnet] package[REFERENCE]. As the dependent variable, the cluster assignment for each patient was used. As input to the model ,genetic features with more than 20% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39) and IGHV status (coded as 0-1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation. The resulting coefficients indicated associations between genetic features and each cluster. 
+ 
+### Gene expression and gene set enrichment analysis between clusters 
+_myself_ original
+For the n=49 patient samples for which viability data and RNA–Seq data for matching samples was available, the R package [@DESeq2][REFERENCE] was used to search for associations of these two data types.RNA-Seq read count data was regressed on to the patient clusters C3, C4 (design formula ~ IGHV.status + Cluster). Genes were ranked by their test statistics and Gene Set Enrichment Analysis (GSEA) (implementing the fgsea algorithm with the [@clusterProfiler] package[REFERENCE]) was applied to the ranked lists with the KEGG pathway gene set selections from the MSigDBdatabase[REFERENCE].  
+
+### Associations of ex-vivo stimulus responses with genomic features
+We tested for associations between stimulus viability assay results and genomic features by Student’s t-tests (two-sided, with equal variance). We tested somatic mutations (aggregated at the gene level), copy number aberrations and IGHV status. We restricted the analysis to features that were present in at least 3 patient samples (63 features). p-values were adjusted for multiple testing by applying the Benjamini-Hochberg procedure. 
+
+###ATACseq processing 
+_with Ivan Berest_ original (update to paper) 
+We downloaded CLL data[REFERENCE] from the European Genome-phenome Archive (EGA: EGAD00001002110). Original dataset had 88 ATAC-seq samples from 55 patients, however we used for the analysis only one sample per patient passing quality checks, resulting in 52 samples. We used an in-house constructed ATAC-seq processing pipeline[REFERENCE] to obtain final bam files mapped to the hg19 annotation genome that were corrected for CG bias. 
+
+###Annotation of trisomy 12 status
+_with Ivan Berest_ original (update to paper) 
+As trisomy 12 status was not included in the original metadata, we used a mean amount of reads in the chromatin accessible peaks for each sample to distinguish trisomy 12 patients. All samples containing 1.4 times more reads in the peaks located on chromosome 12, compared to the peaks on all other chromosomes, were classified as trisomy 12 patients.
+
+### diffTF analysis of TF activity in trisomy 12 CLL
+_with Ivan Berest_ original (update to paper) 
+FOr the larger ATACseq dataset, we ran analytical mode of diffTF[REFERENCE] pipeline to investigate differential TF activity between trisomy 12 and non-trisomy 12 patients using the HOCOMOCO v10 database with the following design formula: “~ Batch + Gender + IGHV status + trisomy12 status”. 
+
+For the smaller ATACseq dataset, ATAC-seq data generated from our CLL samples were processed similarly with the in-house ATAC-seq pipeline, as described previously[REFERENCE], with the only exception that we didn’t use CG bias correction step. We used a similarly analytical mode of diffTF with HOCOMOCO v10 database[REFERENCE] using the following parameters: minOverlap = 1; design formula = “~ Patient + Trisomy 12 status”.  
+
+### Functional enrichment analysis of SPIB ChIPseq data
+_myeslf_ original (update to paper) 
+We downloaded SPIB ChIPseq data[REFERENCE] from the NCBI GEO database[REFERENCE], accession GEO:GSE56857. We made use of the data for SPIB in the OCILY3 DLBCL cell line (GSM1370276). SPIB ChIP peaks were filtered for significance (q value<0.05). We used the annotatePeaks function from the package clusterProfiler[REFERENCE] to annotate the nearest gene for each ChIPpeak. We filtered peaks  within ±1kb of a TSS of a gene and performed over-representation of  KEGG and Reactome pathways (using the clusterProfiler package[REFERENCE])  amongst the resulting list of genes. 
+
+### Linear modelling of drug - stimulus interactions 
+_myself_ original 
+To identify drug-stimulus interactions, we fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn1. Drug - stimulus interaction coefficients and associated p values were extracted and used to define significant interactions.
+
+### Drug-Drug interaction assay
+
+An independent patient cohort of 16 patients was used in the drug-drug interaction experiments.
+
+### Survival analysis of immunohistory chemistry data 
+
+## Ibrutinib - IBET-762 - IL-4 analysis 
+### RNAseq processing
+
+###Deseq2 analysis
+
+### ATACseq processing
+
+### diffTF analysis 
+
+### Generation of Gene Regulatory Network 
+
+### Proteomics Processing
+
+### Proteomics Analysis 
+
+
+
