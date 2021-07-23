@@ -14,4 +14,6 @@ index/thesis-output/archive
 #Specific Files
 index/.Rhistory
 index/thesis.Rmd
-index/.RData 
+index/.RData
+index/thesis.log
+index/thesis.tex
