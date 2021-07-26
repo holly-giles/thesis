@@ -1,0 +1,425 @@
+---
+title: 'Trisomy 12 Gene Dosage'
+author: "Holly Giles"
+date: "`r doc_date()`"
+output:
+  BiocStyle::html_document
+---
+
+To investigate the role of Trisomy 12 as an enhancer of response to ME stimulation: 
+
+Aim: 
+1. Find which components of key ME signalling pathways can be found on Chromosome 12     
+2. Compare RNA and Protein abundances for these components    
+
+
+#Load libraries and datasets
+```{r setup, include=FALSE}
+
+#Load libraries
+library(msigdbr)
+library(ggbeeswarm)
+library(ggpubr)
+library(MultiAssayExperiment)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(DESeq2)
+library(biobroom)
+library(biomartr)
+library(biomaRt)
+
+```
+
+
+#Set up and load data
+```{r warning=FALSE, message = FALSE}
+
+##########LOAD ALL FILES################
+
+#Data
+#df: tibble containing all screening viability data
+load("data/df.RData")
+df_complete <- df
+
+#patMeta: tibble containing all patient genetic data
+load("data/patMeta.RData")
+
+#RNA
+load("data/dds_smp.RData")
+
+#Load proteomics data
+load("data/multiomics_MAE.RData")
+
+#get table to convert between IDS
+ensembl = useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl", version="90")
+transAnno <- getBM(attributes=c('ensembl_gene_id','hgnc_symbol','chromosome_name', 'transcript_biotype'), mart = ensembl)
+transAnno <- dplyr::filter(transAnno, hgnc_symbol != "")
+id2gene <- dplyr::select(transAnno, ensembl_gene_id, hgnc_symbol)
+
+```
+
+# Set colour schemes
+```{r  warning=FALSE, message = FALSE}
+#Trisomy 12 
+tri12rna <- c("#CBA3D8", "#E2E868")
+tri12protein <- c("#734595", "#A1BE1F")
+
+```
+
+# Images? 
+```{r Load images, echo = FALSE, warning=FALSE, message = FALSE}
+Tri12_IL4 = readImage("/g/huber/users/giles/projects/publications/drug_cyt_screen/vignettes/section3/figs/IL4_Tri12.png")
+Tri12_TLR = readImage("/g/huber/users/giles/projects/publications/drug_cyt_screen/vignettes/section3/figs/TLR_Tri12_IGHV.png")
+Tri12_TGFbeta = readImage("/g/huber/users/giles/projects/publications/drug_cyt_screen/vignettes/section3/figs/TGFb_Tri12.png")
+
+
+display(Tri12_IL4, method = "raster")
+display(Tri12_TLR, method = "raster")
+display(Tri12_TGFbeta, method = "raster")
+
+
+```
+
+Get TGF beta, IL4 and TLR genes on chr12
+```{R}
+
+tgf_beta_genes <- 
+  msigdbr(species = "Homo sapiens", category = "C2", subcategory = "CP:KEGG") %>% 
+  #select pathway name and entrez id 
+  dplyr::select(gs_name, entrez_gene) %>%
+  filter(gs_name == "KEGG_TGF_BETA_SIGNALING_PATHWAY")
+
+#get ens ids
+tgf_beta_genes <- getBM(
+  attributes = c('ensembl_gene_id','entrezgene', 'hgnc_symbol', "chromosome_name"), 
+  filters = 'entrezgene',
+  values = tgf_beta_genes$entrez_gene,
+  mart = ensembl)
+
+
+#get chromosome info on tgfbeta genes
+tgf_beta_12 <- getBM(
+  attributes = c('ensembl_gene_id','entrezgene', 'hgnc_symbol', "chromosome_name"), 
+  filters = 'entrezgene',
+  values = tgf_beta_genes$entrez_gene,
+  mart = ensembl
+) %>% filter(chromosome_name == 12)
+
+il4_genes <- 
+  msigdbr(species = "Homo sapiens", category = "C2", subcategory = "CP:KEGG") %>% 
+  #select pathway name and entrez id 
+  dplyr::select(gs_name, entrez_gene) %>%
+  filter(gs_name == "KEGG_JAK_STAT_SIGNALING_PATHWAY")
+
+#get ens ids
+il4_genes <- getBM(
+  attributes = c('ensembl_gene_id','entrezgene', 'hgnc_symbol', "chromosome_name"), 
+  filters = 'entrezgene',
+  values = il4_genes$entrez_gene,
+  mart = ensembl)
+
+#get chromosome info on tgfbeta genes
+il4_12 <- getBM(
+  attributes = c('ensembl_gene_id','entrezgene', 'hgnc_symbol', "chromosome_name"), 
+  filters = 'entrezgene',
+  values = il4_genes$entrez_gene,
+  mart = ensembl
+) %>% filter(chromosome_name == 12)
+
+
+
+tlr_genes <- 
+  msigdbr(species = "Homo sapiens", category = "C2", subcategory = "CP:KEGG") %>% 
+  #select pathway name and entrez id 
+  dplyr::select(gs_name, entrez_gene) %>%
+  filter(gs_name == "KEGG_TOLL_LIKE_RECEPTOR_SIGNALING_PATHWAY")
+
+#get ens ids
+tlr_genes <- getBM(
+  attributes = c('ensembl_gene_id','entrezgene', 'hgnc_symbol', "chromosome_name"), 
+  filters = 'entrezgene',
+  values = tlr_genes$entrez_gene,
+  mart = ensembl)
+
+#get chromosome info on tgfbeta genes
+tlr_12 <- getBM(
+  attributes = c('ensembl_gene_id','entrezgene', 'hgnc_symbol', "chromosome_name"), 
+  filters = 'entrezgene',
+  values = tlr_genes$entrez_gene,
+  mart = ensembl
+) %>% filter(chromosome_name == 12)
+
+```
+
+
+### RNA counts for hits
+1. For all genes in pathway
+```{r warning=FALSE, message = FALSE}
+
+#TGF beta 
+#get names of genes and cross reference in RNA data
+lapply(tgf_beta_genes$ensembl_gene_id, function(x){
+    #Prep data for plot
+    data <- plotCounts(dds_smp, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>%
+      filter(trisomy12 %in% c("0", "1"))
+    
+    #get hgnc symbol from ENS id
+    gene_name <- dplyr::select(filter(tgf_beta_genes, ensembl_gene_id == x), hgnc_symbol)
+    
+    #Make plot
+    ggplot(data, aes(x = trisomy12, y = count, color=trisomy12)) +
+      geom_boxplot() +
+      geom_beeswarm() + 
+      ggtitle(gene_name) +
+      ylab("Raw Counts") +
+      xlab("Trisomy 12 Status") +
+      
+      t1 +
+      scale_color_manual(values = c(colors[1], colors[2])) +
+      theme(aspect.ratio=1,  text = element_text(size=15), legend.position = "none") +
+      
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=5)
+  
+})
+
+
+```
+
+2. For genes on Chromosome 12 
+```{r warning=FALSE, message = FALSE}
+
+#TGF beta 
+#get names of genes and cross reference in RNA data
+hh = lapply(tgf_beta_12$ensembl_gene_id, function(x){
+    #Prep data for plot
+    data <- plotCounts(dds_smp, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>% filter(trisomy12 %in% c("0", "1"))
+    
+    #get hgnc symbol from ENS id
+    gene_name <- dplyr::select(filter(tgf_beta_12, ensembl_gene_id == x), hgnc_symbol)
+    
+    #Make plot
+    ggplot(data, aes(x = trisomy12, y = count, color=trisomy12)) +
+      scale_y_log10() + 
+      geom_boxplot() +
+      geom_point(position=position_jitter(width=.1,height=0), size=3) + 
+      
+      ggtitle(gene_name) +
+      ylab("Raw Count") +
+      xlab("Trisomy 12 Status") +
+      
+      t1 +
+      scale_color_manual(values = c(colors[1], colors[2])) +
+      theme(aspect.ratio=1,  text = element_text(size=15), legend.position = "none") +
+      
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=5)
+  
+})
+
+hh
+```
+
+###Protein abundances for hits
+```{r warning=FALSE, message = FALSE}
+
+#get names of proteins from proteomics
+allproteins <- rownames(MultiAssayExperiment::assays(multiomics_MAE)[["proteomics"]])
+
+#check which proteins in list of hits were detected
+proteins <- proteins[proteins %in% allproteins]
+
+gg = lapply(proteins, function(x){
+     #Prepare data for plot
+     df_tbl_prot <- wideFormat(multiomics_MAE[x,,"proteomics"] ) %>% as_tibble()
+     colnames(df_tbl_prot)[2] <- "protein"
+     
+     mae_mini <- multiomics_MAE[,,c("SNPs", "chrom_abber", "health_record_bin")]
+     df_tbl_SNP <- wideFormat(mae_mini["trisomy12",,]) %>% as_tibble()
+     colnames(df_tbl_SNP)[2] <- "alteration"
+     df_tbl_SNP <- df_tbl_SNP %>% mutate(alteration=factor(alteration))
+     
+     df_tbl <- left_join(df_tbl_prot, df_tbl_SNP, by="primary" )
+     
+     #Make plot
+      gg = df_tbl %>% filter(!is.na(alteration), !is.na(protein)) %>% ggplot(aes(alteration, protein, colour = alteration, group=alteration)) +
+       scale_y_log10() +
+       geom_boxplot() + 
+       geom_point(position=position_jitter(width=.1,height=0), size=3)+
+        
+       ggtitle(x)+
+       ylab("Protein abundance") +
+       xlab("Trisomy 12 Status") + 
+        
+       theme_bw()+  
+       scale_colour_manual(values = c(tri12protein[1],tri12protein[2])) + 
+       pp_sra_noguides +  
+       theme(aspect.ratio=1,  text = element_text(size=15), legend.position = "none") +
+       
+       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=5)
+  
+})
+gg
+
+
+```
+
+
+
+
+###RNA counts for hits
+```{r warning=FALSE, message = FALSE}
+
+#get names of genes and cross reference in RNA data
+hh = lapply(ENSIDs, function(x){
+    #Prep data for plot
+    data <- plotCounts(dds_mut, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>% filter(trisomy12 %in% c("0", "1"))
+    
+    #get hgnc symbol from ENS id
+    gene_name <- dplyr::select(filter(id2gene, ensembl_gene_id == x), hgnc_symbol)
+    
+    #Make plot
+    ggplot(data, aes(x=trisomy12, y=count, color=trisomy12)) +
+      scale_y_log10() + 
+      geom_boxplot()+
+      geom_point(position=position_jitter(width=.1,height=0), size=3)+
+      
+      ggtitle(gene_name)+
+      ylab("Raw Count") +
+      xlab("Trisomy 12 Status") +
+      
+      theme_bw()+
+      scale_color_manual(values = c(tri12rna[1], tri12rna[2]))+
+      theme(aspect.ratio=1,  text = element_text(size=15), legend.position = "none") +
+      
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=5)
+  
+})
+hh
+
+```
+
+###Protein abundances for hits
+```{r warning=FALSE, message = FALSE}
+
+#get names of proteins and cross reference in proteomics
+allproteins <- rownames(MultiAssayExperiment::assays(multiomics_MAE)[["proteomics"]])
+proteins <- proteins[proteins %in% allproteins]
+
+gg = lapply(proteins, function(x){
+     #Prepare data for plot
+     df_tbl_prot <- wideFormat(multiomics_MAE[x,,"proteomics"] ) %>% as_tibble()
+     colnames(df_tbl_prot)[2] <- "protein"
+     
+     mae_mini <- multiomics_MAE[,,c("SNPs", "chrom_abber", "health_record_bin")]
+     df_tbl_SNP <- wideFormat(mae_mini["trisomy12",,]) %>% as_tibble()
+     colnames(df_tbl_SNP)[2] <- "alteration"
+     df_tbl_SNP <- df_tbl_SNP %>% mutate(alteration=factor(alteration))
+     
+     df_tbl <- left_join(df_tbl_prot, df_tbl_SNP, by="primary" )
+     
+     #Make plot
+      gg = df_tbl %>% filter(!is.na(alteration), !is.na(protein)) %>% ggplot(aes(alteration, protein, colour = alteration, group=alteration)) +
+       scale_y_log10() +
+       geom_boxplot() + 
+       geom_point(position=position_jitter(width=.1,height=0), size=3)+
+        
+       ggtitle(x)+
+       ylab("Protein abundance") +
+       xlab("Trisomy 12 Status") + 
+        
+       theme_bw()+  
+       scale_colour_manual(values = c(tri12protein[1],tri12protein[2])) + 
+       pp_sra_noguides +  
+       theme(aspect.ratio=1,  text = element_text(size=15), legend.position = "none") +
+       
+       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=5)
+  
+})
+
+gg
+```
+
+
+#
+
+###RNA counts for hits
+```{r warning=FALSE, message = FALSE}
+
+hh = lapply(ENSIDs, function(x){
+    #Prep data for plot
+    data <- plotCounts(dds_mut, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>% filter(trisomy12 %in% c("0", "1"))
+    
+    #get hgnc symbol from ENS id
+    gene_name <- dplyr::select(filter(id2gene, ensembl_gene_id == x), hgnc_symbol)
+    
+    #Make plot
+    ggplot(data, aes(x=trisomy12, y=count, color=trisomy12)) +
+      scale_y_log10() + 
+      geom_boxplot()+
+      geom_point(position=position_jitter(width=.1,height=0), size=3)+
+      
+      ggtitle(gene_name)+
+      ylab("Raw Count") +
+      xlab("Trisomy 12 Status") +
+      
+      theme_bw()+
+      scale_color_manual(values = c(tri12rna[1], tri12rna[2]))+
+      theme(aspect.ratio=1,  text = element_text(size=15), legend.position = "none") +
+      
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=5)
+  
+})
+
+hh
+```
+
+
+###Protein abundances for hits
+```{r warning=FALSE, message = FALSE}
+
+
+#get names of proteins and cross reference in proteomics
+allproteins <- rownames(MultiAssayExperiment::assays(multiomics_MAE)[["proteomics"]])
+proteins <- proteins[proteins %in% allproteins]
+
+gg = lapply(proteins, function(x){
+     #Prepare data for plot
+     df_tbl_prot <- wideFormat(multiomics_MAE[x,,"proteomics"] ) %>% as_tibble()
+     colnames(df_tbl_prot)[2] <- "protein"
+     
+     mae_mini <- multiomics_MAE[,,c("SNPs", "chrom_abber", "health_record_bin")]
+     df_tbl_SNP <- wideFormat(mae_mini["trisomy12",,]) %>% as_tibble()
+     colnames(df_tbl_SNP)[2] <- "alteration"
+     df_tbl_SNP <- df_tbl_SNP %>% mutate(alteration=factor(alteration))
+     
+     df_tbl <- left_join(df_tbl_prot, df_tbl_SNP, by="primary" )
+     
+     #Make plot
+      gg = df_tbl %>% filter(!is.na(alteration), !is.na(protein)) %>% ggplot(aes(alteration, protein, colour = alteration, group=alteration)) +
+       scale_y_log10() +
+       geom_boxplot() + 
+       geom_point(position=position_jitter(width=.1,height=0), size=3)+
+        
+       ggtitle(x)+
+       ylab("Protein abundance") +
+       xlab("Trisomy 12 Status") + 
+        
+       theme_bw()+  
+       scale_colour_manual(values = c(tri12protein[1],tri12protein[2])) + 
+       pp_sra_noguides +  
+       theme(aspect.ratio=1,  text = element_text(size=15), legend.position = "none") +
+       
+       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=5)
+  
+})
+
+gg
+
+
+
+```
+
+```{r}
+sessionInfo()
+```
+
