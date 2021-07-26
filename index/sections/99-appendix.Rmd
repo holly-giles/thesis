@@ -5,10 +5,10 @@
 
 
 
-(ref:diffTFsmall_volPlot) Analysis of ATACseq dataset of two trisomy 12 and two non-trisomy 12 untreated CLL PMBC samples. The volcano plot depicts change in TF activity (x axis) versus BH-adjusted p-values (y axis) for  636  TFs, comparing trisomy 12  and non-trisomy 12 samples. The [@diffTF][REFERENCE] package was ran in analytical mode to calculate TF activity, measured as  weighted mean difference. TFs are labeled if adjusted p-value < 0.01 and absolute weighted mean difference > 0.15.
+(ref:diffTFsmallvolPlot) Analysis of ATACseq dataset of two trisomy 12 and two non-trisomy 12 untreated CLL PMBC samples. The volcano plot depicts change in TF activity (x axis) versus BH-adjusted p-values (y axis) for  636  TFs, comparing trisomy 12  and non-trisomy 12 samples. The [@diffTF][REFERENCE] package was ran in analytical mode to calculate TF activity, measured as  weighted mean difference. TFs are labeled if adjusted p-value < 0.01 and absolute weighted mean difference > 0.15.
 
 
-```{r diffTFsmall_volPlot, fig.cap='(ref:diffTFsmall_volPlot)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r diffTFsmallvolPlot, fig.cap='(ref:diffTFsmallvolPlot)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 knitr::include_graphics("figures/graph.eps")
 ```
 
