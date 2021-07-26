@@ -1,5 +1,13 @@
 # Genetic modulators of responses to microenvironmental stimulation
 
+To conitnue:
+add the addiotnal plots 
+text and plto arrangement 
+any addiotanl plots 
+text dump 
+
+Continute to figure 6 (see at clsoe of tomorrow if you are better of leaveing this till i get back, then only one week behind)
+
 ```{r, echo = FALSE}
 
 knitr::opts_chunk$set(
@@ -802,12 +810,13 @@ wrap_elements(Fig3B_1 + Fig3B_2 + Fig3B_3 +
 ```
 
 ### individual cytokine – gene interactions of note
--Role of IGHV status and BCR signalling in Cytokine response
-(Figure \@ref(fig:IHGV_BCR)).
+Role of IGHV status and BCR signalling in Cytokine response
+(Figure \@ref(fig:IHGVBCR)).
 
-(ref:IHGV_BCR) 
+(ref:IHGVBCR) 
 
-```{r IHGV_BCR, fig.cap='(ref:IHGV_BCR)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+```{r IHGVBCR, fig.cap='(ref:IHGVBCR)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 
 #add genetic data to viability dataframe
@@ -843,12 +852,12 @@ wrap_elements(gg[[1]]) + wrap_elements(gg[[2]]) + wrap_elements(gg[[3]])
 
 ```
 
--TLR response stratified by IGHV status (and trisomy 12) and discussion of interactions between BCR and TLR pathways
-(Figure \@ref(fig:TLR_IHGV_tri12)).
+TLR response stratified by IGHV status (and trisomy 12) and discussion of interactions between BCR and TLR pathways
+(Figure \@ref(fig:TLRIHGVtri12)).
 
-(ref:TLR_IHGV_tri12) 
+(ref:TLRIHGVtri12) 
 
-```{r TLR_IHGV_tri12, fig.cap='(ref:TLR_IHGV_tri12)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r TLRIHGVtri12, fig.cap='(ref:TLRIHGVtri12)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 
 #filter for Resiquimod-only treatment, only show patients who are annoyated for IGHV and Trisomy12
@@ -884,15 +893,15 @@ df_patmeta %>%
 ```
 
 -Modulators of TLR signalling incl. effect of del11q and ATM mutations on TLR response
-(Figure \@ref(fig:TLR_genes)).
+(Figure \@ref(fig:TLRGenes)).
 
-(ref:TLR_genes) 
+(ref:TLRGenes) 
 
 Potentially show effect of IGHV, then ivnestgiation of TLR combined boave and belwo, then look intro tri 12
 
 These plots are not working right now - can work on them if i haev time 
 
-```{r TLR_genes, fig.cap='(ref:TLR_genes)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r TLRGenes, fig.cap='(ref:TLRGenes)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 hh = 
   lapply(c("ATM", "del11q", "SF3B1", "del13q", "del17p", "TP53"), function(x){
@@ -924,11 +933,11 @@ wrap_elements(hh[[1]]) + wrap_elements(hh[[2]]) + wrap_elements(hh[[3]])
 
 -samples with KRAS mutations benefit less from IL4 stimulation
 
-(Figure \@ref(fig:IL4_KRAS)).
+(Figure \@ref(fig:IL4KRAS)).
 
-(ref:IL4_KRAS) 
+(ref:IL4KRAS) 
 
-```{r IL4_KRAS, fig.cap='(ref:IL4_KRAS)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 3, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r IL4KRAS, fig.cap='(ref:IL4KRAS)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 3, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 df_patmeta %>% 
    dplyr::filter(Cytokine=="IL-4",
@@ -954,11 +963,11 @@ df_patmeta %>%
 
 ## Profiling the effects of trisomy 12 on cytokine response, and how this may be possible
 ### Trisomy 12 modulates responses to IL4, TGFbeta and TLR stimuli
-(Figure \@ref(fig:tri12_cytResponse)).
+(Figure \@ref(fig:tri12cytResponse)).
 
-(ref:tri12_cytResponse) 
+(ref:tri12cytResponse) 
 
-```{r tri12_cytResponse, fig.cap='(ref:tri12_cytResponse)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r tri12cytResponse, fig.cap='(ref:tri12cytResponse)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 #add genetic data to viability dataframe
 df_patmeta <- left_join(df, patMeta, by = "PatientID")
@@ -993,11 +1002,11 @@ wrap_elements(ii[[1]]) + wrap_elements(ii[[2]]) + wrap_elements(ii[[3]])
 ```
 
 ### Gene dosage effects
-(Figure \@ref(fig:tri12_geneDosage).
+(Figure \@ref(fig:tri12geneDosage).
 
-(ref:tri12_geneDosage) 
+(ref:tri12geneDosage) 
 
-```{r tri12_geneDosage, fig.cap='(ref:tri12_geneDosage)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r tri12geneDosage, fig.cap='(ref:tri12geneDosage)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 
 ```
@@ -1015,6 +1024,16 @@ wrap_elements(ii[[1]]) + wrap_elements(ii[[2]]) + wrap_elements(ii[[3]])
 tri 12 annotation 
 
 running diffTF, add a diagram to explain?
+
+(Figure \@ref(fig:diffTFexplainer).
+
+(ref:diffTFexplainer) 
+
+```{r diffTFexplainer, fig.cap='(ref:diffTFexplainer)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+knitr::include_graphics("figures/diffTF_method.eps")
+
+```
 
 visualisation of results 
 
@@ -1035,7 +1054,7 @@ visualisation of results
 
 (ref:tri12diffTF) 
 
-Also refer to : (Figure \@ref(fig:diffTFsmall_volPlot)
+Also refer to : (Figure \@ref(fig:diffTFsmallvolPlot)
 
 ```{r tri12diffTF, fig.cap='(ref:tri12diffTF)', message = FALSE,  echo = FALSE,fig.height=6, fig.width=15, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1132,13 +1151,13 @@ Key result: generation of GRN to identify SPIB and PU1 regulated genes, and inve
 
 
 ### SPIB/PU1 DKOs in trisomy 12+ cell lines 
-(Figure \@ref(fig:SpiB_shRNAKD).
+(Figure \@ref(fig:SpiBshRNAKD).
 
-(ref:SpiB_shRNAKD) 
+(ref:SpiBshRNAKD) 
 
 _The data here was generated by Tina Bericoviv and was included in Bruch & Giles et al. 2021. It is included in this thesis for completeness._ 
 
-```{r SpiB_shRNAKD, fig.cap='(ref:SpiB_shRNAKD)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+```{r SpiBshRNAKD, fig.cap='(ref:SpiBshRNAKD)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 
   SPIB_KD_Cellcounts %>% 
