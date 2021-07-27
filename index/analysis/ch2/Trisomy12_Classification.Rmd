@@ -1,0 +1,592 @@
+---
+title: 'Modelling Trisomy 12 Response Profiles'
+author: "Holly Giles"
+date: "`r doc_date()`"
+output:
+  BiocStyle::html_document
+---
+
+# Load libraries and datasets
+## Libraries
+```{r, message=FALSE, warning=FALSE, include=!exists(".standalone"), eval=!exists(".standalone")}
+knitr::opts_chunk$set(echo = TRUE)
+
+set.seed(1)
+
+library(tidyverse)
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(data.table)
+library("magrittr")
+library(ggbeeswarm)
+library(pheatmap)
+library(gtable)
+library(glmnet)
+library(RColorBrewer)
+library(ROCR)
+
+library(ggpubr)
+library(cowplot)
+library(plyr)
+library(gridExtra)
+
+```
+
+## Data
+```{r Load data}
+
+#Data
+#df: tibble containing all screening viability data
+load("../../data/df.RData")
+df_complete <- df
+
+#patMeta: tibble containing all patient genetic data
+load("../../data/patMeta.RData")
+
+#Lists of Cytokines
+thecytokines <- unique(df$Cytokine) %>% setdiff("No Cytokine")
+
+```
+
+
+## Arrange data
+```{r }
+  
+#####TIDY UP DATA FOR DOWNSTREAM ANALYSIS#######
+    ######Viabilities######
+    #Filter df
+    df <- 
+  dplyr::filter(df, Cytokine %in% thecytokines, drugC %in% "DMSO:None") %>% 
+  dplyr::select( PatientID, drugC, Cytokine, DCK, Log) 
+
+```
+
+## Define aesthetics
+
+```{r }
+
+source("../../R/themes_colors.R")
+
+```
+
+
+## Define Functions
+### Scale Feature Matrix
+Here I define a function to scale the matrix, with MAD, and centre to the median row wise. This is necessary before feeding this matrix to the lasso function.      
+
+I removed the upper and lower limits of the scaling function. For the purposes of visualisation (ie in the heatmap), this is useful to reduce the effects of outliers, but for the purposes of modelling this is unhelpful.      
+
+```{r Scale viability matrix}
+########### Scaling and Centering of Viability Matrix ################
+
+# medianCenter_MadScale: 
+#function to  scale with MAD, center to merdian
+medianCenter_MadScale <- function(x) {
+  s <- median(x)
+  #s=0
+  (x - s) / mad(x, center = s)
+}
+
+# scaleCytResp function:  to apply medianCenter_MadScale row wise to viability matrix
+scaleCytResp  <- function(x) t(apply(x, 1, medianCenter_MadScale)) 
+
+```
+
+
+### Plot ROC and calculate auc
+```{r ROC plot}
+
+#function to plot ROC curves
+plotROC <- function(glmModel, X, y, lambda = "lambda.1se") {
+  lambdaChose <- glmModel[[lambda]]
+  glmPred <- prediction(predict(glmModel, type = "response", newx = X, s=lambdaChose), y)
+  glmPerform <- performance(glmPred,"tpr","fpr")
+  aucVal <- performance(glmPred, measure = "auc")@y.values[[1]]
+  xname <- glmPerform@x.name
+  yname <- glmPerform@y.name
+  plotTab <- tibble(x= glmPerform@x.values[[1]],
+                    y = glmPerform@y.values[[1]])
+  p <- ggplot(plotTab, aes(x=x, y =y )) + geom_line(color = "red") +
+    xlab(xname) + ylab(yname) + theme(panel.grid = element_blank())
+  
+  if (!is.null(aucVal)) {
+    p <- p + annotate("text", x= 0.75, y = 0.25, label = sprintf("AUC: %1.2f", aucVal))
+  }
+  list(plot=p, auc = aucVal)
+}
+```
+
+### Perform Regularised logistic regression on binary response
+Explanation: For each of the repeats, the model:    
+
+If you run the model by specifying a test ratio:    
+(so you have a separate test, train and CV dataset. This is best if you want to make actual predictions, and if you have a large enough dataset)      
+-splits the dataset in two (according to ratio)       
+-runs binomial regression on the training data (ie splits the data into a further test and training dataset to run CV for the given number of folds to extract a lambda min)       
+-identifies an optimal lambda value and selects an optimal model        
+-tests this model on the testing dataset       
+-uses the test data to obtain an ROC curve and run AUC test        
+-for all repeats, you can find the optimal AUC and use this        
+-ideally then use this model to predict on an external cohort 
+   
+If you run the model without specifying a test ratio:       
+(so the training set and CV set are the same. This is adequate for my purposes here)   
+-runs binomial regression and CV on the whole dataset (ie for each repeat the CV splits the whole dataset to have a training dataset to run CV for the given number of folds to extract a lambda min)    
+-identifies an optimal lambda value and selects an optimal model    
+-tests this model on the remaining testing dataset, to obtain AUC (can use this to obtain optimal model from number all repeats)   
+
+
+```{r Glmnet function}
+
+#indicate how to split test set and training set
+testPartition <- function(y, ratio) {
+  #balanced sampling of test set
+  ord <- seq_along(y)
+  testIdx <- lapply(unique(y),function(n) {
+    subY <- ord[y == n]
+    sample(subY, size = as.integer(length(subY)  * ratio)) 
+  }) %>% do.call(c,.) %>% sort()
+  return(testIdx)
+}
+
+#Function for multi-variant binomial regression
+runGlm.bin <- function(X, y, method = "lasso", repeats=20, folds = 3, testRatio = NULL, lambda = "lambda.1se") {
+  modelList <- list()
+  lambdaList <- c()
+  aucCV <- c()
+  aucTest <- c()
+  rocTest <- list()
+  coefMat  <- matrix(NA, ncol(X), repeats)
+  rownames(coefMat) <- colnames(X)
+  
+  if (method == "lasso"){
+    alpha = 1
+  } else if (method == "ridge") {
+    alpha = 0
+  }
+  
+  for (i in seq(repeats)) {
+    if (!is.null(testRatio)) {
+      testIdx <- testPartition(y, testRatio)
+      X.test <- X[testIdx,]
+      X.train <- X[-testIdx,]
+      y.test <- y[testIdx]
+      y.train <- y[-testIdx]
+    } else {
+      X.train <- X
+      y.train <- y
+    }
+    
+    #need to add a set seed for this function, but ensure that it changes with each loop otherwise all 10 repeats are the same 
+    vecFold <- mltools::folds(y.train, nfolds = folds, stratified = TRUE, seed = i)
+    
+    #train model
+    res <- cv.glmnet(X.train,y.train, type.measure = "auc",
+                      foldid = vecFold, alpha = alpha, standardize = FALSE,
+                     intercept = TRUE, family = "binomial")
+    lambdaList <- c(lambdaList, res[[lambda]])
+    #If you arent splitting the data into a training and testing dataset. you can use the AUC for the CV
+    aucCV <- c(aucCV, res$cvm[res$lambda == res[[lambda]]])
+    modelList[[i]] <- res
+    coefMat[,i] <- coef(res, s = lambda)[-1]
+    
+    #test model if testRatio is speficied- can use this AUC to identify the best model 
+    if(!is.null(testRatio)) {
+      rocRes <- plotROC(res, X.test, y.test, lambda)
+      aucTest <- c(aucTest, rocRes$auc)
+      rocTest[[i]] <- rocRes$plot
+    }
+  }
+  list(modelList = modelList, lambdaList = lambdaList, aucCV = aucCV, coefMat = coefMat,
+       aucTest = aucTest, rocTest = rocTest)
+}
+```
+
+## Visualise predictors of binary response
+```{r}
+#function to visualise predictors of Trisomy 12 status
+lassoPlot <- function(lassoOut, xIn, yIn, freqCut = 1, coefCut = 0.01, symbolMap = NULL, modelIndex = NULL, textWidth =0.8, rowHeight = 0.0005) {
+  
+    #for the barplot on the left of the heatmap
+    if (is.null(modelIndex)) {
+      #average all models
+      barValue <- rowMeans(lassoOut$coefMat)
+      freqValue <- rowMeans(lassoOut$coefMat !=0)
+      barValue <- barValue[abs(barValue) > coefCut & freqValue >= freqCut] # a certain threshold
+      barValue <- barValue[order(barValue)]
+      if(length(barValue) == 0) {
+        return(NA)
+      }
+    } else {
+      #using a specificed model
+      barValue <- lassoOut$coefMat[,modelIndex]
+      barValue <- barValue[abs(barValue) > coefCut] # a certain threshold
+      barValue <- barValue[order(barValue)]
+      if(length(barValue) == 0) {
+        return(NA)
+      }
+    }
+    
+    #for the heatmap and scatter plot below the heatmap
+    mapData <- xIn
+    scatterData <- yIn
+    
+    ord <- order(scatterData)
+    scatterData <- scatterData[ord]
+    mapData <- mapData[ord, names(barValue) ,drop=FALSE]
+    idOrd <- rownames(mapData) #to record the order of the rows
+    mapData <- mapData %>% as_tibble() %>% mutate(row = idOrd) %>%
+      gather(key = "Var", value = "Value", -row) %>%
+      mutate(row = factor(row, levels = idOrd),
+             Var = factor(Var, levels = names(barValue)))
+    #add tri12 status
+    tri12meta <- dplyr::select(patMeta, PatientID, trisomy12) 
+    tri12meta$PatientID <- as.factor(tri12meta$PatientID)
+    colnames(mapData) <- c("PatientID", "Var", "Value")
+    mapData_tri12 <- left_join(mapData, tri12meta, by =  "PatientID")
+    
+    #update labeling 
+    mapData_tri12$Var <- revalue(mapData_tri12$Var, c("Resiquimod" = "Resiquimod", "TGF-b1" = "TGF-\u03B21", "sCD40L+IL-4" = "sCD40L + IL4")) 
+    
+    #plot the heatmap
+    p1 <- ggplot(mapData_tri12, aes(x=PatientID, y=Var)) + geom_tile(aes(fill=Value),color = "gray") + 
+      theme_bw()  + 
+      theme(axis.text.x=element_blank(), axis.ticks=element_blank(), 
+            panel.border=element_rect(colour="gainsboro"),  
+            plot.title=element_text(size=18), 
+            panel.background=element_blank(), 
+            panel.grid.major=element_blank(), 
+            panel.grid.minor=element_blank()) + 
+      xlab("Samples") + ylab("Log(Viability)") + 
+      ggtitle("")+
+      scale_fill_gradient2(low = palblues[1],high = palreds[8], mid = "white",guide="none")+ 
+      facet_grid(~trisomy12, space = "free", scales = "free") + theme(strip.background =element_rect(fill="white"))
+    
+    #Plot the bar plot on the left of the heatmap
+    if (is.null(symbolMap)) {
+      barDF = data.frame(barValue=barValue, 
+                         nm=factor(names(barValue),levels=names(barValue)))
+    } else {
+      #a id to symbol dataframe is provided
+      barDF = data.frame(barValue = barValue, 
+                         nm = symbolMap[names(barValue),1])
+      barDF$nm <- factor(barDF$nm, levels = unique(barDF$nm))
+    }
+    
+    p2 <- ggplot(data=barDF, aes(x=nm, y=barValue)) + 
+      geom_bar(stat="identity", fill=darkergrey, colour="black", position = "identity", width=.66, size=0.2) + 
+      theme_bw() + geom_hline(yintercept=0, size=0.3) + scale_x_discrete(expand=c(0,0.5)) + 
+      scale_y_continuous(expand=c(0,0)) + 
+      coord_flip(ylim=c(min(barValue),max(barValue))) + 
+      theme(panel.grid.major=element_blank(), 
+            panel.background=element_blank(), axis.ticks.y = element_blank(),
+            panel.grid.minor = element_blank(), axis.text.y=element_text(size=8, hjust=0),
+            axis.text.x = element_text(size=10),
+            panel.border=element_blank()) +
+      xlab("") + 
+      ylab("Size of predictor") + 
+      geom_vline(xintercept=c(0.5), color="black", size=0.6)
+    
+
+    #Scale bar for continuous variable
+
+    Vgg = ggplot(mapData, aes(x=PatientID, y=Var, col = Value)) + 
+      geom_point() + 
+      scale_color_gradient2(low = palblues[1],high = palreds[8], mid = "white", name = "z-score") + 
+      theme(legend.title=element_text(size=10), legend.text=element_text(size=10))
+    
+    #Assemble all the plots together
+
+    # construct the gtable
+    
+    wdths = c(1.5, 0.2, 1.3*ncol(mapData), textWidth,0.8)
+    hghts = c(0.2, rowHeight*nrow(mapData), 0.2, 0.5)
+    gt = gtable(widths=unit(wdths, "in"), heights=unit(hghts, "in"))
+    
+    ## make grobs
+    gg1 = ggplotGrob(p1)
+    gg2 = ggplotGrob(p2)
+    gg4 = ggplotGrob(Vgg)
+    
+    ## fill in the gtable
+    gt = gtable_add_grob(gt, gtable_filter(gg2, "panel"), 2, 1) # add barplot
+    gt = gtable_add_grob(gt, gtable_filter(gg2, "xlab-b"), 1, 1) # add  y axis label to barplot 
+    gt = gtable_add_grob(gt, gtable_filter(gg1, "panel"), 2, 3) # add heatmap
+    gt = gtable_add_grob(gt, gtable_filter(gg1, "strip-t"), 1, 3) # add facetstip to plot
+   
+    gt = gtable_add_grob(gt, gtable_filter(gg2, "axis-b"), 3, 1) # y axis for barplot
+    gt = gtable_add_grob(gt, gtable_filter(gg2, "axis-l"), 2, 4) # variable names
+    gt = gtable_add_grob(gt, gtable_filter(gg4, "guide-box"), 2, 5) # scale bar for continous variables
+
+    
+    #plot
+    #grid.draw(gt)
+    gt
+}
+```
+# Prepare data
+## Feature matrix
+```{r featureMatrix}
+########### Viability matrix ################
+#make viability matrix for cytokine treatments for patients
+cyt_viab <- dplyr::select(df, 
+                PatientID, 
+                Log, 
+                Cytokine) %>% spread(Cytokine, Log) %>% as.data.frame()
+
+#make PatID the row names
+rownames(cyt_viab) <- unlist(cyt_viab[,1]) # the first row will be the header
+cyt_viab <- dplyr::select(cyt_viab,-PatientID) 
+
+cyt_viab <- t(cyt_viab)
+
+#run scaleCytResp on viability matrix
+x <- scaleCytResp(cyt_viab)
+x <-t(x)
+
+```
+
+## Response matrix 
+```{r responseMatrix, message=FALSE}
+
+#Get Tri 12 status
+y <- dplyr::select(patMeta, PatientID, trisomy12) %>% dplyr::filter(!is.na(trisomy12)) %>% column_to_rownames("PatientID")
+
+y$trisomy12 <- as.numeric(as.character(y$trisomy12))
+
+y <- t(y)
+
+#Remove NA patients from viability matrix
+x <- x[colnames(y),]
+
+```
+
+
+# Run logistic regression
+## Run model
+```{r Run model}
+X <- x
+
+#set whether to spilt data into test and training set
+testRatio = FALSE
+
+#set parameters for running model
+repeats <- 50
+folds <- 3
+
+if(testRatio){
+  
+  glmRes <- runGlm.bin(X,as.integer(y), repeats = repeats, folds =folds, testRatio = 0.3)
+  
+}else{
+  
+  glmRes <- runGlm.bin(X, as.integer(y), repeats = repeats, folds = folds, testRatio = NULL)}
+
+
+```
+
+## ROC of best model
+```{r, ROC,  fig.height=8, fig.width=10, fig.path=plotDir, dev=c("png", "pdf")}
+
+if(testRatio){
+iBest <- which.max(glmRes$aucCV)
+glmRes$rocTest[[iBest]]
+}else{
+  iBest <- which.max(glmRes$aucCV)
+}
+
+```
+
+## Average AUC
+(if using test ration)
+```{r, fig.width=4, fig.height=2, fig.path=plotDir, dev=c("png", "pdf")}
+
+if(testRatio){
+  
+plotTab <- tibble(CV_set = glmRes$aucCV, 
+                  Test_set = glmRes$aucTest) %>%
+  gather(key = "type", value = auc) %>%
+  group_by(type) %>% summarise(meanAuc = mean(auc),
+                               sdAuc = sd(auc))
+
+ggplot(plotTab, aes(x=type, y = meanAuc, fill = type)) + 
+  geom_col(width = 0.4) +
+  geom_errorbar(aes(ymin = meanAuc - sdAuc, ymax = meanAuc + sdAuc), width =0.2) +
+  ylim(0,1) + xlab("") + ylab("mean AUC") +
+  coord_flip() + theme(legend.position = "none")
+} 
+```
+
+## Plot best model
+```{r,Tri12_predictors}
+
+X.scale <- X
+
+p <- lassoPlot(glmRes, X.scale, y,freqCut = 0, coefCut = 0.01, modelIndex = iBest, rowHeight = 0.001)
+
+grid.arrange(p)
+
+```
+
+
+# Predict Trisomy 12 status
+Get patients out
+```{r extract predicted Tri12 status}
+
+#Extract all predicted Tri 12 statuses for all 50 models
+#get dataframe of Tri 12 status with Pat ID
+Tri12 <- as.data.frame(t(y))
+
+#Predict Tri 12 status - use response to extract probabilities
+Tri12 <- lapply(1:length(glmRes$modelList), function(i){
+          y.pred <- predict(glmRes$modelList[[i]], type = "class", s = "lambda.min", newx = X)[,1] %>% as.data.frame() 
+          
+          #change to numeric
+          y.pred[i,] <-  as.numeric(y.pred[i,])
+          colnames(y.pred) <- i
+          Tri12 <- merge(Tri12, y.pred, by = 0)
+})
+
+Tri12 <- Reduce(merge, lapply(Tri12, function(x) data.frame(x, rn = row.names(x)))) 
+
+#TIdy up 
+Tri12 <- Tri12[,c(1,2, 4:23)]
+
+
+#Identify patients that are misclassified more than 50% of cases
+#filter dataframe for just WT patients
+WT <- dplyr::filter(Tri12, trisomy12 == 0)
+
+#Convert factors to numeric
+WT[,3:22] <- sapply(WT[3:22], as.character)
+WT[,3:22] <- sapply(WT[3:22], as.numeric)
+
+#Make row names into column
+WT <- WT%>%column_to_rownames("Row.names")
+
+#COmpute row sums
+WT$Total <- rowSums(WT)
+
+#convert row names back to column
+WT <- WT %>% rownames_to_column("PatientID")
+WT %>% DT::datatable()
+
+#Filter for misclassified patients 
+Pats <- dplyr:: filter(WT, Total>9) %>% dplyr::select(PatientID)
+print(Pats)
+
+print(paste("The misclassified patients are", as.character(Pats[1,]), "and", as.character(Pats[2,]), sep = " "))
+
+#Two patients are wrongly misclassified: 
+#Pat_033 - several changes on chromosome 12 
+#Pat_114
+
+```
+
+Response to predictors 
+```{R}
+
+plotTab <- filter(df, Cytokine%in% c("Resiquimod", "sCD40L+IL-4", "TGF-b1"))
+plotTab %>%
+  ggplot(aes(x=Cytokine,
+             y=Log)) + 
+  geom_boxplot(fill=NA)+
+  geom_beeswarm(cex=0.3, alpha=0.4, color= lightergrey)+
+  t2 +
+  ylab("Log(Viability") + xlab("")+
+  geom_point(data=dplyr::filter(plotTab, PatientID =="Pat_033"), aes(x=Cytokine, y=Log), colour=palblues[1], size=2) + 
+    geom_point(data=dplyr::filter(plotTab, PatientID =="Pat_114"), aes(x=Cytokine, y=Log), colour=palreds[8], size=2)+ scale_x_discrete(labels = c("Resiquimod" = "Resiquimod", "sCD40L+IL-4" = "sCD40L + IL4", "TGF-b1" = "TGF-\u03B21"))
+
+
+```
+
+```{r}
+
+filter(patMeta, PatientID%in% c("Pat_114", "Pat_033"))
+
+```
+
+Conclusions
+
+Any further profiling 
+
+Hopefully good to here = have a predictor i can talk about 
+get figures and conclusion out 
+
+Then get a few figures to profile the misclassified patients 
+
+-----
+= additioanl figures are sorted
+
+next: 
+tidy up figures 
+
+if time, text, otherwise three more days to finish chapter 5, then a week behind my schedule 
+
+----
+
+also this afternoon: 
+30 mins - 1 hr to stay on top of other things 
+
+
+# can also: 
+check out the copy number varation for both of these patients
+check out their RNA expression profiles 
+whats their gene dosage for STAT6, IRAK4, SMAD3, SPIB, PU1? 
+
+
+# SPIB and PU1 features of missclassified patients 
+```{R }
+genes <- c("ENSG00000269404", "ENSG00000066336")
+
+lapply(genes, function(x){
+  data <- plotCounts(dds_smp, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>%
+      filter(trisomy12 %in% c("0", "1"))
+    
+    #get hgnc symbol from ENS id
+    gene_name <- dplyr::select(filter(tgf_beta_genes, ensembl_gene_id == x), hgnc_symbol)
+    
+    #Make plot
+    ggplot(data, aes(x = trisomy12, y = count, color = trisomy12)) +
+      geom_boxplot() +
+      geom_beeswarm() + 
+      ggtitle(gene_name) +
+      ylab("Counts") +
+      xlab("Trisomy 12 Status") +
+      
+      t1 +
+      scale_color_manual(values = c(colors[1], colors[2])) +
+      theme(aspect.ratio=1,  text = element_text(size=15), legend.position = "none") +
+      
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=5) + 
+      geom_point(data=dplyr::filter(data, PatientID =="Pat_114"), aes(x=trisomy12, y=count), colour=palreds[8], size=2)
+      
+})
+
+
+```
+
+# CNV features of misclassified Patients
+NB For the genes of interest:    
+SP1 = q13.13    
+STAT6 = q13.3    
+IRAK4 = q12   
+
+## P0069
+This patient has duplicated regions: 
+-p13.31
+-q24.13
+-q24.33
+
+## P0701
+This patient has no CNVs on Chromosome 12 
+
+```{r}
+
+sessionInfo()
+
+
+```
+   
