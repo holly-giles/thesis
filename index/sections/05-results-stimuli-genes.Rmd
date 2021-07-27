@@ -1,9 +1,9 @@
 # Genetic modulators of responses to microenvironmental stimulation
 
-To conitnue:
-add the addiotnal plots 
-text and plto arrangement 
-any addiotanl plots 
+To continue:
+add the additional plots 
+text and plot arrangement also update the cytokine labelling and gene labelling 
+any additional plots 
 text dump 
 
 Continute to figure 6 (see at clsoe of tomorrow if you are better of leaveing this till i get back, then only one week behind)
@@ -45,7 +45,10 @@ library(msigdbr)
 library(png)
 library(cowplot)
 library(Hmisc)
-
+library(MultiAssayExperiment)
+library(biomartr)
+library(biomaRt)
+library(patchwork)
 ```
 
 ```{r loadData05, eval = TRUE}
@@ -85,8 +88,12 @@ peak.spib <-  genomation ::readBed("data/GSM1370276_OCILY3_SPIB_GEM_events.bed.g
 peak.pu1 <-  genomation ::readBed( "data/GSM1370275_OCILY3_PU1_GEM_events.bed.gz", track.line = "auto")
 
 
-#SPIB_KD_Cellcounts: a tibble containing Normalized Cell Counts for Cell Lines infected with shRNA against SPIB and PU1
+#SPIB_KD_Cellcounts: a tibble containing Normalized Cell Counts for Cell Lines infected with shRNA against SPIB and PU1 from Tina Becirovic
 load( "data/SPIB_KD_Cellcounts.RData")
+
+
+#Load proteomics data from Sophie Herbst
+load("../../data/multiomics_MAE.RData")
 ```
 
 ```{r themes_functions05, echo = FALSE, eval = TRUE}
@@ -963,9 +970,11 @@ df_patmeta %>%
 
 ## Profiling the effects of trisomy 12 on cytokine response, and how this may be possible
 ### Trisomy 12 modulates responses to IL4, TGFbeta and TLR stimuli
-(Figure \@ref(fig:tri12cytResponse)).
 
-(ref:tri12cytResponse) 
+
+(Figure \@ref(fig:SMAD3geneDosage)).
+
+(ref:SMAD3geneDosage) 
 
 ```{r tri12cytResponse, fig.cap='(ref:tri12cytResponse)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1006,8 +1015,207 @@ wrap_elements(ii[[1]]) + wrap_elements(ii[[2]]) + wrap_elements(ii[[3]])
 
 (ref:tri12geneDosage) 
 
-```{r tri12geneDosage, fig.cap='(ref:tri12geneDosage)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
+_The Proteomics dataset was kindly shared by Sophie Herbst, from her paper..._ 
+```{r prepgeneDosae}
+
+#get table to convert between IDS
+ensembl = useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl", version="90")
+transAnno <- getBM(attributes=c('ensembl_gene_id','hgnc_symbol','chromosome_name', 'transcript_biotype'), mart = ensembl)
+transAnno <- dplyr::filter(transAnno, hgnc_symbol != "")
+id2gene <- dplyr::select(transAnno, ensembl_gene_id, hgnc_symbol)
+
+```
+
+```{r SMAD3geneDosage, fig.cap='(ref:SMAD3geneDosage)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+data <- plotCounts(dds_smp, gene="ENSG00000166949", #SMAD3
+                   intgroup=c("trisomy12"), 
+                   returnData=TRUE) %>%
+      filter(trisomy12 %in% c("0", "1"))
+
+
+#Make plot
+SMAD3rna <- 
+  ggplot(data, aes(x = trisomy12, y = count, color=trisomy12)) +
+  geom_boxplot() +
+  geom_beeswarm() + 
+  ggtitle("SMAD3") +
+  ylab("Counts") +
+  xlab("Trisomy 12 Status") +
+  t2 +
+  scale_color_manual(values = c(colors[1], colors[2])) +
+  theme(aspect.ratio=1,  legend.position = "none") +
+  stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+ 
+    
+df_tbl_prot <- 
+  wideFormat(multiomics_MAE["SMAD3",,"proteomics"] ) %>% as_tibble()
+
+colnames(df_tbl_prot)[2] <- "protein"
+
+mae_mini <- multiomics_MAE[,,c("SNPs", "chrom_abber", "health_record_bin")]
+
+df_tbl_SNP <- wideFormat(mae_mini["trisomy12",,]) %>% as_tibble()
+colnames(df_tbl_SNP)[2] <- "alteration"
+df_tbl_SNP <- df_tbl_SNP %>% mutate(alteration=factor(alteration))
+df_tbl <- left_join(df_tbl_prot, df_tbl_SNP, by="primary" )
+
+#Make plot
+SMAD3pro = 
+  df_tbl %>% 
+  filter(!is.na(alteration), !is.na(protein)) %>% 
+  
+  ggplot(aes(alteration, protein, colour = alteration, group=alteration)) +
+  scale_y_log10() +
+  geom_boxplot() + 
+  geom_point() +
+  ggtitle("SMAD3") +
+  ylab("Protein abundance") +
+  xlab("Trisomy 12 Status") + 
+  theme_bw() +  
+  scale_colour_manual(values = c(colors[1],colors[2])) + 
+  t2 + 
+  theme(aspect.ratio=1,  legend.position = "none") +
+  stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+  
+     
+SMAD3rna + SMAD3pro
+
+```
+
+(Figure \@ref(fig:STATgeneDosage)).
+
+(ref:STATgeneDosage) 
+```{r STATgeneDosage, fig.cap='(ref:STATgeneDosage)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+
+stat_rna <- 
+lapply(c("ENSG00000166888", "ENSG00000170581"), function(x){
+    #Prep data for plot
+    data <- plotCounts(dds_smp, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>%
+      filter(trisomy12 %in% c("0", "1"))
+    
+    #get hgnc symbol from ENS id
+    gene_name <- dplyr::select(filter(il4_genes, ensembl_gene_id == x), hgnc_symbol)
+    
+    #Make plot
+    ggplot(data, aes(x = trisomy12, y = count, color=trisomy12)) +
+      geom_boxplot() +
+      geom_beeswarm() + 
+      ggtitle(gene_name) +
+      ylab("Counts") +
+      xlab("") +
+      
+      t2 +
+      scale_color_manual(values = c(colors[1], colors[2])) +
+      theme(aspect.ratio=1,  legend.position = "none") +
+      
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+  
+})
+
+
+stat_pro = lapply(c("STAT6", "STAT2"), function(x){
+     #Prepare data for plot
+     df_tbl_prot <- wideFormat(multiomics_MAE[x,,"proteomics"] ) %>% as_tibble()
+     colnames(df_tbl_prot)[2] <- "protein"
+     
+     mae_mini <- multiomics_MAE[,,c("SNPs", "chrom_abber", "health_record_bin")]
+     df_tbl_SNP <- wideFormat(mae_mini["trisomy12",,]) %>% as_tibble()
+     colnames(df_tbl_SNP)[2] <- "alteration"
+     df_tbl_SNP <- df_tbl_SNP %>% mutate(alteration=factor(alteration))
+     
+     df_tbl <- left_join(df_tbl_prot, df_tbl_SNP, by="primary" )
+     
+     #Make plot
+      gg = df_tbl %>% filter(!is.na(alteration), !is.na(protein)) %>% ggplot(aes(alteration, protein, colour = alteration, group=alteration)) +
+       geom_boxplot() + 
+       geom_point() +
+        
+       ggtitle("")+
+       ylab("Protein abundance") +
+       xlab("Trisomy 12 Status") + 
+        
+       theme_bw()+  
+       scale_colour_manual(values = c(colors[1],colors[2])) + 
+       t2 +  
+       theme(aspect.ratio=1, legend.position = "none") +
+       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+  
+})
+
+(stat_rna[[1]] + stat_rna[[2]])/
+  (stat_pro[[1]] + stat_pro[[2]]) 
+
+```
+
+(Figure \@ref(fig:IRAK4geneDosage)).
+
+
+(ref:IRAK4geneDosage) 
+
+```{r IRAK4geneDosage, fig.cap='(ref:IRAK4geneDosage)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+#IRAK4
+
+irak4_rna <- 
+lapply(c("ENSG00000198001","ENSG00000172936"),  function(x){
+    #Prep data for plot
+    data <- plotCounts(dds_smp, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>%
+      filter(trisomy12 %in% c("0", "1"))
+    
+    #get hgnc symbol from ENS id
+    gene_name <- dplyr::select(filter(tlr_genes, ensembl_gene_id == x), hgnc_symbol)
+    
+    #Make plot
+    ggplot(data, aes(x = trisomy12, y = count, color=trisomy12)) +
+      geom_boxplot() +
+      geom_beeswarm() + 
+      ggtitle(gene_name) +
+      ylab("Counts") +
+      xlab("") +
+      
+      t2 +
+      scale_color_manual(values = c(colors[1], colors[2])) +
+      theme(aspect.ratio=1,  legend.position = "none") +
+      
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+  
+})
+
+
+irak4_pro = lapply(c("IRAK4", "MYD88"), function(x){
+     #Prepare data for plot
+     df_tbl_prot <- wideFormat(multiomics_MAE[x,,"proteomics"] ) %>% as_tibble()
+     colnames(df_tbl_prot)[2] <- "protein"
+     
+     mae_mini <- multiomics_MAE[,,c("SNPs", "chrom_abber", "health_record_bin")]
+     df_tbl_SNP <- wideFormat(mae_mini["trisomy12",,]) %>% as_tibble()
+     colnames(df_tbl_SNP)[2] <- "alteration"
+     df_tbl_SNP <- df_tbl_SNP %>% mutate(alteration=factor(alteration))
+     
+     df_tbl <- left_join(df_tbl_prot, df_tbl_SNP, by="primary" )
+     
+     #Make plot
+      gg = df_tbl %>% filter(!is.na(alteration), !is.na(protein)) %>% ggplot(aes(alteration, protein, colour = alteration, group=alteration)) +
+       geom_boxplot() + 
+       geom_point() +
+        
+       ggtitle("")+
+       ylab("Protein abundance") +
+       xlab("Trisomy 12 Status") + 
+        
+       theme_bw()+  
+       scale_colour_manual(values = c(colors[1],colors[2])) + 
+       t2 +  
+       theme(aspect.ratio=1, legend.position = "none") +
+       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2) 
+  
+})
+
+(irak4_rna[[1]] + irak4_rna[[2]])/
+  (irak4_pro[[1]] + irak4_pro[[2]])
 
 ```
 
