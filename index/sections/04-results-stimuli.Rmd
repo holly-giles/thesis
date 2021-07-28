@@ -1759,7 +1759,7 @@ Such differential drug response patterns suggests that microenvironmental respon
 
 (ref:clusterDrugResponse) Log-transformed normalised viability values, stratified by cluster, for each drug. Drugs targeting the same pathway are grouped together. P-values from Student't t-test. 
 
-```{r clusterDrugResponse, fig.cap='(ref:clusterDrugResponse)', out.width = "100%", fig.height = 7, fig.width = 6,  fig.align="center", echo = FALSE}
+```{r clusterDrugResponse, fig.cap='(ref:clusterDrugResponse)', out.width = "60%", fig.height = 9, fig.width = 6,  fig.align="center", echo = FALSE}
 
 symnum.args <- list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))
 
@@ -1782,7 +1782,7 @@ df_complete %>%
   ggplot(aes(x=Cluster, y= Log,color = Cluster)) +
   geom_hline(yintercept = 0)+
   geom_boxplot(aes(x=Cluster, y= Log, color = Cluster))+
-  geom_beeswarm(aes(x=Cluster, y= Log, color = Cluster))+
+  geom_beeswarm(aes(x=Cluster, y= Log, color = Cluster), size = 2)+
   scale_color_manual(values=colors[1:4])+
   t2 + theme(strip.background =element_rect(fill=lightergrey))+
     theme(strip.text = element_text(size = 8)) +
@@ -2029,6 +2029,8 @@ clusterEnrichment <-
 
 clusterEnrichment
 ```
+
+
 As we expected, IGHV status was the main feature that predicted cluster membership. Beyond IGHV status, trisomy 12 and *SF3B1* mutations were enriched in C2, which showed enhanced responses to many stimuli. C4, which was associated with slow in-vivo progression, showed depletion of *TP53*, *ATM*, RAS/RAF mutations and gain8q. 
 
 
