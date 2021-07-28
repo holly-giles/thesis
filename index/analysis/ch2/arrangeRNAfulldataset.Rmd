@@ -1,0 +1,70 @@
+---
+title: "Arrange Full RNA Dataset"
+author: "Holly Giles"
+date: "7/28/2021"
+output: html_document
+---
+
+```{r}
+library(DESeq2)
+library(dplyr)
+
+load("ddsrna_180717.RData")
+```
+
+
+```{r RNAdata all samples}
+
+#1. Make counts matrix  for patients in Cytokine Screen 2020 only
+#subset deseq object for samples used in screen
+dds.smp <- dds[, which(colData(dds)[,"sampleID"] %in% unique(df$SampleID))]
+
+#get counts matrix, rowdata and coldata  
+ctsMat.smp <- counts(dds.smp)
+
+coldata.smp <- as.data.frame(colData(dds.smp))
+
+rowdata.smp <- rowData(dds.smp)
+
+#2. Arrange meta data
+#add new anonymised patient IDs
+coldata.smp <- 
+  left_join(coldata.smp, Patients, by= c( "PatID" = "PatientID"))
+
+#subset for columns on interest
+coldata.smp <-
+  coldata.smp[,c( "Patient", "PatID")]
+
+#rename columns
+colnames(coldata.smp) <- c( "PatientID", "origPatID")
+
+coldata.smp <- 
+  left_join(coldata.smp, patMeta, by = "PatientID") 
+
+coldata.smp <- 
+  left_join(coldata.smp, Heatmap_clusters, by= "PatientID")
+
+
+#3. Arrange counts matrix
+#make sure call patients in colData are in counts matrix
+all(coldata.smp[,"origPatID"] %in% colnames(ctsMat.smp))
+
+#put counts in same order as columns of coldata
+ctsMat.smp <- ctsMat.smp[, coldata.smp[,"origPatID"]]
+
+#remove old Patient IDs
+colnames(ctsMat.smp) <- coldata.smp[,"PatientID"]
+
+coldata.smp <- select(coldata.smp, -origPatID)
+
+#4. Make new dds dataset with new counts matrix and coldata
+dds.smp <- DESeqDataSetFromMatrix(ctsMat.smp, coldata.smp, design =~1)
+
+#5. Add rowdata
+rowData(dds.smp) <- rowdata.smp
+
+dds_smp <- dds.smp
+
+save(dds_smp, file = paste(filepath, "/data/dds_smp.RData", sep = ""))
+
+```

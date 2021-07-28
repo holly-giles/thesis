@@ -1,0 +1,1 @@
+scaleCytResp05  <- function(x) t(apply(x, 1, medianCenter_MadScale05)) 
