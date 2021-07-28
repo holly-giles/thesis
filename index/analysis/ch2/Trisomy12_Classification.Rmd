@@ -26,11 +26,11 @@ library(gtable)
 library(glmnet)
 library(RColorBrewer)
 library(ROCR)
-
 library(ggpubr)
 library(cowplot)
 library(plyr)
 library(gridExtra)
+library(DESeq2)
 
 ```
 
@@ -44,6 +44,9 @@ df_complete <- df
 
 #patMeta: tibble containing all patient genetic data
 load("../../data/patMeta.RData")
+
+#Full RNA dataset: Deseq2 object
+load("../../data/dds_smp_full.RData")
 
 #Lists of Cytokines
 thecytokines <- unique(df$Cytokine) %>% setdiff("No Cytokine")
@@ -64,7 +67,6 @@ thecytokines <- unique(df$Cytokine) %>% setdiff("No Cytokine")
 ```
 
 ## Define aesthetics
-
 ```{r }
 
 source("../../R/themes_colors.R")
@@ -326,6 +328,7 @@ lassoPlot <- function(lassoOut, xIn, yIn, freqCut = 1, coefCut = 0.01, symbolMap
     gt
 }
 ```
+
 # Prepare data
 ## Feature matrix
 ```{r featureMatrix}
@@ -388,7 +391,7 @@ if(testRatio){
 ```
 
 ## ROC of best model
-```{r, ROC,  fig.height=8, fig.width=10, fig.path=plotDir, dev=c("png", "pdf")}
+```{r, ROC}
 
 if(testRatio){
 iBest <- which.max(glmRes$aucCV)
@@ -399,28 +402,9 @@ glmRes$rocTest[[iBest]]
 
 ```
 
-## Average AUC
-(if using test ration)
-```{r, fig.width=4, fig.height=2, fig.path=plotDir, dev=c("png", "pdf")}
-
-if(testRatio){
-  
-plotTab <- tibble(CV_set = glmRes$aucCV, 
-                  Test_set = glmRes$aucTest) %>%
-  gather(key = "type", value = auc) %>%
-  group_by(type) %>% summarise(meanAuc = mean(auc),
-                               sdAuc = sd(auc))
-
-ggplot(plotTab, aes(x=type, y = meanAuc, fill = type)) + 
-  geom_col(width = 0.4) +
-  geom_errorbar(aes(ymin = meanAuc - sdAuc, ymax = meanAuc + sdAuc), width =0.2) +
-  ylim(0,1) + xlab("") + ylab("mean AUC") +
-  coord_flip() + theme(legend.position = "none")
-} 
-```
 
 ## Plot best model
-```{r,Tri12_predictors}
+```{r, Tri12_predictors}
 
 X.scale <- X
 
@@ -451,30 +435,29 @@ Tri12 <- lapply(1:length(glmRes$modelList), function(i){
 
 Tri12 <- Reduce(merge, lapply(Tri12, function(x) data.frame(x, rn = row.names(x)))) 
 
-#TIdy up 
-Tri12 <- Tri12[,c(1,2, 4:23)]
+#Tidy up 
+Tri12 <- dplyr::select(Tri12, -rn)
+Tri12 <- as.data.frame(Tri12)
+colnames(Tri12)[1] <- "PatientID"
 
-
-#Identify patients that are misclassified more than 50% of cases
+#Identify patients that are misclassified as tri12 more than 50% of cases
 #filter dataframe for just WT patients
 WT <- dplyr::filter(Tri12, trisomy12 == 0)
 
 #Convert factors to numeric
-WT[,3:22] <- sapply(WT[3:22], as.character)
-WT[,3:22] <- sapply(WT[3:22], as.numeric)
+WT %<>% mutate_at(vars(-c(PatientID, trisomy12)), as.numeric) %>% mutate_at(vars(PatientID), as.factor)
 
 #Make row names into column
-WT <- WT%>%column_to_rownames("Row.names")
+WT %<>% column_to_rownames("PatientID")
 
 #COmpute row sums
 WT$Total <- rowSums(WT)
 
 #convert row names back to column
-WT <- WT %>% rownames_to_column("PatientID")
-WT %>% DT::datatable()
+WT %<>% rownames_to_column("PatientID")
 
 #Filter for misclassified patients 
-Pats <- dplyr:: filter(WT, Total>9) %>% dplyr::select(PatientID)
+Pats <- dplyr:: filter(WT, Total>25) %>% dplyr::select(PatientID)
 print(Pats)
 
 print(paste("The misclassified patients are", as.character(Pats[1,]), "and", as.character(Pats[2,]), sep = " "))
@@ -483,9 +466,11 @@ print(paste("The misclassified patients are", as.character(Pats[1,]), "and", as.
 #Pat_033 - several changes on chromosome 12 
 #Pat_114
 
+
 ```
 
-Response to predictors 
+# Profiling patietns Pat_033 and Pat_114
+## Response to predictors 
 ```{R}
 
 plotTab <- filter(df, Cytokine%in% c("Resiquimod", "sCD40L+IL-4", "TGF-b1"))
@@ -501,52 +486,42 @@ plotTab %>%
 
 
 ```
-
+## Genetic features
 ```{r}
 
-filter(patMeta, PatientID%in% c("Pat_114", "Pat_033"))
+filter(patMeta, PatientID %in% c("Pat_114", "Pat_033"))
+
 
 ```
 
-Conclusions
-
-Any further profiling 
-
-Hopefully good to here = have a predictor i can talk about 
-get figures and conclusion out 
-
-Then get a few figures to profile the misclassified patients 
-
------
-= additioanl figures are sorted
-
-next: 
-tidy up figures 
-
-if time, text, otherwise three more days to finish chapter 5, then a week behind my schedule 
-
-----
-
-also this afternoon: 
-30 mins - 1 hr to stay on top of other things 
 
 
-# can also: 
-check out the copy number varation for both of these patients
-check out their RNA expression profiles 
-whats their gene dosage for STAT6, IRAK4, SMAD3, SPIB, PU1? 
-
-
-# SPIB and PU1 features of missclassified patients 
+## Gene expression
 ```{R }
-genes <- c("ENSG00000269404", "ENSG00000066336")
+
+#CHeck if RNA data exists 
+"Pat_114" %in% rownames(colData(dds_smp_full))
+"Pat_033" %in% rownames(colData(dds_smp_full))
+
+
+genes <- c("ENSG00000269404", #SPIB
+           "ENSG00000066336", #PU1
+           "ENSG00000166888", #STAT6
+           "ENSG00000198001", #IRAK4
+           "ENSG00000166949" #SMAD3
+           )
 
 lapply(genes, function(x){
-  data <- plotCounts(dds_smp, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>%
-      filter(trisomy12 %in% c("0", "1"))
+  data <- plotCounts(dds_smp_full, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>%
+      filter(trisomy12 %in% c("0", "1")) %>% rownames_to_column("PatientID")
     
     #get hgnc symbol from ENS id
-    gene_name <- dplyr::select(filter(tgf_beta_genes, ensembl_gene_id == x), hgnc_symbol)
+    gene_name <-
+    as.data.frame(rowData(dds_smp_full)) %>% 
+    rownames_to_column("ensembl_gene_id") %>%
+    filter(ensembl_gene_id == x) %>%
+    select(symbol)
+    if(gene_name== "SPI1"){genename <- "PU.1"}
     
     #Make plot
     ggplot(data, aes(x = trisomy12, y = count, color = trisomy12)) +
@@ -561,32 +536,31 @@ lapply(genes, function(x){
       theme(aspect.ratio=1,  text = element_text(size=15), legend.position = "none") +
       
       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=5) + 
-      geom_point(data=dplyr::filter(data, PatientID =="Pat_114"), aes(x=trisomy12, y=count), colour=palreds[8], size=2)
+      geom_point(data=dplyr::filter(data, PatientID =="Pat_114"), aes(x=trisomy12, y=count), colour=palreds[8], size=2) +
+      geom_point(data=dplyr::filter(data, PatientID =="Pat_033"), aes(x=trisomy12, y=count), colour=palblues[1], size=2)
       
 })
 
 
 ```
 
-# CNV features of misclassified Patients
+## CNV features of misclassified Patients
 NB For the genes of interest:    
-SP1 = q13.13    
 STAT6 = q13.3    
 IRAK4 = q12   
 
-## P0069
-This patient has duplicated regions: 
--p13.31
--q24.13
--q24.33
+### P0069 / Pat033
+This patient has duplicated regions:  
+-p13.31 - 42 copies  
+-q24.13 - 10 copies  
+-q24.33 - 21 copies   
 
-## P0701
-This patient has no CNVs on Chromosome 12 
+###P0701 / Pat_114
+This patient has no CNVs on Chromosome 12   
 
 ```{r}
 
 sessionInfo()
-
 
 ```
    
