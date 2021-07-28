@@ -49,6 +49,8 @@ library(MultiAssayExperiment)
 library(biomartr)
 library(biomaRt)
 library(patchwork)
+
+
 ```
 
 ```{r loadData05, eval = TRUE}
@@ -93,7 +95,15 @@ load( "data/SPIB_KD_Cellcounts.RData")
 
 
 #Load proteomics data from Sophie Herbst
-load("../../data/multiomics_MAE.RData")
+load("data/multiomics_MAE.RData")
+
+
+#Full RNA dataset: Deseq2 object
+load("data/dds_smp_full.RData")
+
+#Matching samples only RNA dataset: Deseq2 object
+load("data/dds_smp.RData")
+
 ```
 
 ```{r themes_functions05, echo = FALSE, eval = TRUE}
@@ -490,7 +500,230 @@ lassoPlot05 <- function(lassoOut, geneMatrix, viabMatrix, freqCut = 1, coefCut =
     plotList[[seaName]] <- gt
   }
   return(plotList)
+  
+  
+  
 }
+
+
+
+########### Scaling and Centering of Viability Matrix ################
+
+# medianCenter_MadScale: 
+#function to  scale with MAD, center to merdian
+medianCenter_MadScale05 <- function(x) {
+  s <- median(x)
+  #s=0
+  (x - s) / mad(x, center = s)
+}
+
+# scaleCytResp function:  to apply medianCenter_MadScale row wise to viability matrix
+scaleCytResp05  <- function(x) t(apply(x, 1, medianCenter_MadScale05)) 
+
+#ROC cruve
+
+#function to plot ROC curves
+plotROC05 <- function(glmModel, X, y, lambda = "lambda.1se") {
+  lambdaChose <- glmModel[[lambda]]
+  glmPred <- prediction(predict(glmModel, type = "response", newx = X, s=lambdaChose), y)
+  glmPerform <- performance(glmPred,"tpr","fpr")
+  aucVal <- performance(glmPred, measure = "auc")@y.values[[1]]
+  xname <- glmPerform@x.name
+  yname <- glmPerform@y.name
+  plotTab <- tibble(x= glmPerform@x.values[[1]],
+                    y = glmPerform@y.values[[1]])
+  p <- ggplot(plotTab, aes(x=x, y =y )) + geom_line(color = "red") +
+    xlab(xname) + ylab(yname) + theme(panel.grid = element_blank())
+  
+  if (!is.null(aucVal)) {
+    p <- p + annotate("text", x= 0.75, y = 0.25, label = sprintf("AUC: %1.2f", aucVal))
+  }
+  list(plot=p, auc = aucVal)
+}
+
+#indicate how to split test set and training set
+testPartition05 <- function(y, ratio) {
+  #balanced sampling of test set
+  ord <- seq_along(y)
+  testIdx <- lapply(unique(y),function(n) {
+    subY <- ord[y == n]
+    sample(subY, size = as.integer(length(subY)  * ratio)) 
+  }) %>% do.call(c,.) %>% sort()
+  return(testIdx)
+}
+
+#Function for multi-variant binomial regression
+runGlm.bin <- function(X, y, method = "lasso", repeats=20, folds = 3, testRatio = NULL, lambda = "lambda.1se") {
+  modelList <- list()
+  lambdaList <- c()
+  aucCV <- c()
+  aucTest <- c()
+  rocTest <- list()
+  coefMat  <- matrix(NA, ncol(X), repeats)
+  rownames(coefMat) <- colnames(X)
+  
+  if (method == "lasso"){
+    alpha = 1
+  } else if (method == "ridge") {
+    alpha = 0
+  }
+  
+  for (i in seq(repeats)) {
+    if (!is.null(testRatio)) {
+      testIdx <- testPartition(y, testRatio)
+      X.test <- X[testIdx,]
+      X.train <- X[-testIdx,]
+      y.test <- y[testIdx]
+      y.train <- y[-testIdx]
+    } else {
+      X.train <- X
+      y.train <- y
+    }
+    
+    #need to add a set seed for this function, but ensure that it changes with each loop otherwise all 10 repeats are the same 
+    vecFold <- mltools::folds(y.train, nfolds = folds, stratified = TRUE, seed = i)
+    
+    #train model
+    res <- cv.glmnet(X.train,y.train, type.measure = "auc",
+                      foldid = vecFold, alpha = alpha, standardize = FALSE,
+                     intercept = TRUE, family = "binomial")
+    lambdaList <- c(lambdaList, res[[lambda]])
+    #If you arent splitting the data into a training and testing dataset. you can use the AUC for the CV
+    aucCV <- c(aucCV, res$cvm[res$lambda == res[[lambda]]])
+    modelList[[i]] <- res
+    coefMat[,i] <- coef(res, s = lambda)[-1]
+    
+    #test model if testRatio is speficied- can use this AUC to identify the best model 
+    if(!is.null(testRatio)) {
+      rocRes <- plotROC(res, X.test, y.test, lambda)
+      aucTest <- c(aucTest, rocRes$auc)
+      rocTest[[i]] <- rocRes$plot
+    }
+  }
+  list(modelList = modelList, lambdaList = lambdaList, aucCV = aucCV, coefMat = coefMat,
+       aucTest = aucTest, rocTest = rocTest)
+}
+
+#function to visualise predictors of Trisomy 12 status
+lassoPlot_bin <- function(lassoOut, xIn, yIn, freqCut = 1, coefCut = 0.01, symbolMap = NULL, modelIndex = NULL, textWidth =0.8, rowHeight = 0.0005) {
+  
+    #for the barplot on the left of the heatmap
+    if (is.null(modelIndex)) {
+      #average all models
+      barValue <- rowMeans(lassoOut$coefMat)
+      freqValue <- rowMeans(lassoOut$coefMat !=0)
+      barValue <- barValue[abs(barValue) > coefCut & freqValue >= freqCut] # a certain threshold
+      barValue <- barValue[order(barValue)]
+      if(length(barValue) == 0) {
+        return(NA)
+      }
+    } else {
+      #using a specificed model
+      barValue <- lassoOut$coefMat[,modelIndex]
+      barValue <- barValue[abs(barValue) > coefCut] # a certain threshold
+      barValue <- barValue[order(barValue)]
+      if(length(barValue) == 0) {
+        return(NA)
+      }
+    }
+    
+    #for the heatmap and scatter plot below the heatmap
+    mapData <- xIn
+    scatterData <- yIn
+    
+    ord <- order(scatterData)
+    scatterData <- scatterData[ord]
+    mapData <- mapData[ord, names(barValue) ,drop=FALSE]
+    idOrd <- rownames(mapData) #to record the order of the rows
+    mapData <- mapData %>% as_tibble() %>% mutate(row = idOrd) %>%
+      gather(key = "Var", value = "Value", -row) %>%
+      mutate(row = factor(row, levels = idOrd),
+             Var = factor(Var, levels = names(barValue)))
+    #add tri12 status
+    tri12meta <- dplyr::select(patMeta, PatientID, trisomy12) 
+    tri12meta$PatientID <- as.factor(tri12meta$PatientID)
+    colnames(mapData) <- c("PatientID", "Var", "Value")
+    mapData_tri12 <- left_join(mapData, tri12meta, by =  "PatientID")
+    
+    #update labeling 
+    mapData_tri12$Var <- revalue(mapData_tri12$Var, c("Resiquimod" = "Resiquimod", "TGF-b1" = "TGF-\u03B21", "sCD40L+IL-4" = "sCD40L + IL4")) 
+    
+    #plot the heatmap
+    p1 <- ggplot(mapData_tri12, aes(x=PatientID, y=Var)) + geom_tile(aes(fill=Value),color = "gray") + 
+      theme_bw()  + 
+      theme(axis.text.x=element_blank(), axis.ticks=element_blank(), 
+            panel.border=element_rect(colour="gainsboro"),  
+            plot.title=element_text(size=18), 
+            panel.background=element_blank(), 
+            panel.grid.major=element_blank(), 
+            panel.grid.minor=element_blank()) + 
+      xlab("Samples") + ylab("Log(Viability)") + 
+      ggtitle("")+
+      scale_fill_gradient2(low = palblues[1],high = palreds[8], mid = "white",guide="none")+ 
+      facet_grid(~trisomy12, space = "free", scales = "free") + theme(strip.background =element_rect(fill="white"))
+    
+    #Plot the bar plot on the left of the heatmap
+    if (is.null(symbolMap)) {
+      barDF = data.frame(barValue=barValue, 
+                         nm=factor(names(barValue),levels=names(barValue)))
+    } else {
+      #a id to symbol dataframe is provided
+      barDF = data.frame(barValue = barValue, 
+                         nm = symbolMap[names(barValue),1])
+      barDF$nm <- factor(barDF$nm, levels = unique(barDF$nm))
+    }
+    
+    p2 <- ggplot(data=barDF, aes(x=nm, y=barValue)) + 
+      geom_bar(stat="identity", fill=darkergrey, colour="black", position = "identity", width=.66, size=0.2) + 
+      theme_bw() + geom_hline(yintercept=0, size=0.3) + scale_x_discrete(expand=c(0,0.5)) + 
+      scale_y_continuous(expand=c(0,0)) + 
+      coord_flip(ylim=c(min(barValue),max(barValue))) + 
+      theme(panel.grid.major=element_blank(), 
+            panel.background=element_blank(), axis.ticks.y = element_blank(),
+            panel.grid.minor = element_blank(), axis.text.y=element_text(size=8, hjust=0),
+            axis.text.x = element_text(size=10),
+            panel.border=element_blank()) +
+      xlab("") + 
+      ylab("Size of predictor") + 
+      geom_vline(xintercept=c(0.5), color="black", size=0.6)
+    
+
+    #Scale bar for continuous variable
+
+    Vgg = ggplot(mapData, aes(x=PatientID, y=Var, col = Value)) + 
+      geom_point() + 
+      scale_color_gradient2(low = palblues[1],high = palreds[8], mid = "white", name = "z-score") + 
+      theme(legend.title=element_text(size=10), legend.text=element_text(size=10))
+    
+    #Assemble all the plots together
+
+    # construct the gtable
+    
+    wdths = c(1.5, 0.2, 1.3*ncol(mapData), textWidth,0.8)
+    hghts = c(0.2, rowHeight*nrow(mapData), 0.2, 0.5)
+    gt = gtable(widths=unit(wdths, "in"), heights=unit(hghts, "in"))
+    
+    ## make grobs
+    gg1 = ggplotGrob(p1)
+    gg2 = ggplotGrob(p2)
+    gg4 = ggplotGrob(Vgg)
+    
+    ## fill in the gtable
+    gt = gtable_add_grob(gt, gtable_filter(gg2, "panel"), 2, 1) # add barplot
+    gt = gtable_add_grob(gt, gtable_filter(gg2, "xlab-b"), 1, 1) # add  y axis label to barplot 
+    gt = gtable_add_grob(gt, gtable_filter(gg1, "panel"), 2, 3) # add heatmap
+    gt = gtable_add_grob(gt, gtable_filter(gg1, "strip-t"), 1, 3) # add facetstip to plot
+   
+    gt = gtable_add_grob(gt, gtable_filter(gg2, "axis-b"), 3, 1) # y axis for barplot
+    gt = gtable_add_grob(gt, gtable_filter(gg2, "axis-l"), 2, 4) # variable names
+    gt = gtable_add_grob(gt, gtable_filter(gg4, "guide-box"), 2, 5) # scale bar for continous variables
+
+    
+    #plot
+    #grid.draw(gt)
+    gt
+}
+
 ```
 
 
@@ -534,8 +767,11 @@ df_complete <- df_complete %>%
   
   dplyr::mutate(Cytokine = factor(Cytokine))
 
-
+#patMeta
 patMeta$treatment <- as.factor(patMeta$treatment)
+
+#Lists of Cytokines
+thecytokines <- unique(df$Cytokine) %>% setdiff("No Cytokine")
 
 
 ```
@@ -546,7 +782,7 @@ patMeta$treatment <- as.factor(patMeta$treatment)
 
 (ref:stimuliGeneAssosciations) 
 
-```{r stimuliGeneAssosciations, fig.cap='(ref:stimuliGeneAssosciations)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+```{r stimuliGeneAssosciations, fig.cap='(ref:stimuliGeneAssosciations)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
 
 ##################### List of mutations with >2 postive cases #############################
 selected_mutations <- 
@@ -636,25 +872,23 @@ p_values %<>%
          aes(x = Cytokine, y = -log10(adj.p.value))) +
   geom_point(color = "lightgrey", size = 3) +
   geom_beeswarm(data = dplyr::filter(p_values, adj.p.value <= fdr), 
-                aes( color=Genetic_alt), size = 5, cex = 1.7) +
+                aes( color=Genetic_alt), size = 3, cex = 1.7) +
   ##FDR line  
   geom_hline(yintercept = -log10(fdr),linetype = "dashed", size=0.3)+
   
   ##Main Theme
   t1 +
   
-  theme(axis.text.x = element_text(angle = 45, 
-                                   size = 18, 
-                                   face = "bold",
+  theme(axis.text.x = element_text(angle = 45,
                                    hjust = 1, 
                                    vjust = 1),
         axis.title.x=element_blank()) +
   ##Legend Theme
-  theme(legend.position="bottom", 
-        legend.title = element_text(face='bold', hjust = 0, size=18), 
+  theme(legend.position=c(0.65,0.65), 
+        legend.title = element_text(face='bold', hjust = 0, size=13), 
         legend.key = element_blank(),  
-        legend.text = element_text(size=18)) +
-  guides(colour = guide_legend(nrow=3, title = "Mutations"), 
+        legend.text = element_text(size=11)) +
+  guides(colour = guide_legend(nrow=7, title = "Mutations"), 
          shape = guide_legend(ncol = 1)) +
   scale_color_manual(name = "Mutations", values = colors, labels=c("IGHV.status"="IGHV status", 
                                                                    "del9p"="del(9p)", 
@@ -670,7 +904,7 @@ p_values %<>%
                                                                    "del11q"="del(11q)", 
                                                                    "del1q" = "del(1q)")) +
   scale_y_continuous(expression("BH-adjusted  "* italic(p)*"-value"), 
-                     breaks=seq(0,10,5),
+                     breaks=seq(0, 10, 5),
                      labels=math_format(expr=10^.x)(-seq(0,10,5))) +
   
   scale_x_discrete(labels = c("TGF-b1"="TGF-\u03B21", "sCD40L+IL-4"="sCD40L + IL4", "IL-1b"="IL1\u03B2", "IL-4"="IL4", "IL-6"="IL6","IL-15"="IL15","IL-10"="IL10", "IL-21"="IL21","IL-2"="IL2", "Interferon gamma"= "Interferon \u03B3", "SDF-1a"="SDF-1\u03B1"))
@@ -685,7 +919,7 @@ p_values %<>%
 
 (ref:stimuliGeneAssosciationsMulti) 
 
-```{r stimuliGeneAssosciationsMulti, fig.cap='(ref:stimuliGeneAssosciationsMulti)', message = FALSE,  echo = FALSE, fig.height=3, fig.width=8.5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r stimuliGeneAssosciationsMulti, fig.cap='(ref:stimuliGeneAssosciationsMulti)', message = FALSE,  echo = FALSE, fig.height=9, fig.width=8.5, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
 
 #Generate feature Matrix
 #select features from patient meta file
@@ -795,17 +1029,17 @@ coldef["G"] <- list(c(offwhite, "#373A36")) #WT and Mutated
 legends = makelegends(legendFor=c("G","I","M"),coldef)
 
 #assemble
-Fig3B_1 <- wrap_elements(grid.arrange( grobs = heatMaps_cyt[1], ncol =1))
-Fig3B_2 <- wrap_elements(grid.arrange( grobs = heatMaps_cyt[2], ncol =1))
-Fig3B_3 <- wrap_elements(grid.arrange( grobs = heatMaps_cyt[3], ncol =1))
+Fig3B_1 <- invisible(wrap_elements(arrangeGrob( grobs = heatMaps_cyt[1], ncol =1)))
+Fig3B_2 <- invisible(wrap_elements(arrangeGrob( grobs = heatMaps_cyt[2], ncol =1)))
+Fig3B_3 <- invisible(wrap_elements(arrangeGrob( grobs = heatMaps_cyt[3], ncol =1)))
 Fig3B_leg <- legends[["plot"]] %>% wrap_elements()
+
 
 
 blankplot <- 
   ggplot() +
   geom_blank() +
   theme(panel.background = element_blank())
-
 
 wrap_elements(Fig3B_1 + Fig3B_2 + Fig3B_3 +
                 wrap_elements(blankplot + Fig3B_leg + 
@@ -816,14 +1050,14 @@ wrap_elements(Fig3B_1 + Fig3B_2 + Fig3B_3 +
 
 ```
 
-### individual cytokine – gene interactions of note
+### Individual cytokine – gene interactions of note
 Role of IGHV status and BCR signalling in Cytokine response
 (Figure \@ref(fig:IHGVBCR)).
 
 (ref:IHGVBCR) 
 
 
-```{r IHGVBCR, fig.cap='(ref:IHGVBCR)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r IHGVBCR, fig.cap='(ref:IHGVBCR)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 8, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 
 #add genetic data to viability dataframe
@@ -844,7 +1078,7 @@ df_patmeta %>%
   guides(color="none", shape="none")+
   stat_compare_means(method = "t.test",
                      label.x.npc = "center", 
-                     size=5)+
+                     size=3)+
   xlab("IGHV status") +
   ylab("Log(Viability)") +
   ggtitle(x) +
@@ -864,7 +1098,8 @@ TLR response stratified by IGHV status (and trisomy 12) and discussion of intera
 
 (ref:TLRIHGVtri12) 
 
-```{r TLRIHGVtri12, fig.cap='(ref:TLRIHGVtri12)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+```{r TLRIHGVtri12, fig.cap='(ref:TLRIHGVtri12)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 
 #filter for Resiquimod-only treatment, only show patients who are annoyated for IGHV and Trisomy12
@@ -887,7 +1122,7 @@ df_patmeta %>%
   stat_compare_means(method = "t.test",
                      label.x.npc = "center", 
                      comparisons = list( c(1,2), c(3,4), c(1,3)),
-                     size=7)+
+                     size=3)+
   xlab("") +
   ylab("Log(Viability)") +
   ggtitle("Resiquimod") +
@@ -908,33 +1143,133 @@ Potentially show effect of IGHV, then ivnestgiation of TLR combined boave and be
 
 These plots are not working right now - can work on them if i haev time 
 
-```{r TLRGenes, fig.cap='(ref:TLRGenes)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r TLRGenes, fig.cap='(ref:TLRGenes)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 10,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
-hh = 
-  lapply(c("ATM", "del11q", "SF3B1", "del13q", "del17p", "TP53"), function(x){
 
+ATM <- 
 df_patmeta %>% 
   dplyr::filter(Cytokine=="Resiquimod") %>%
-      filter(!is.na(x)) %>%
+      filter(!is.na(ATM)) %>%
          
-  ggplot(aes(x=x,y=Log,color=(x)))+
+  ggplot(aes(x=ATM,y=Log,color=(ATM)))+
   geom_hline(yintercept = 0)+
   geom_boxplot()+
   geom_beeswarm(cex=1.5) +
   guides(color="none", shape="none")+
   stat_compare_means(method = "t.test",
                      label.x.npc = "center", 
-                     size=5)+
-  xlab(x) +
+                     size=3)+
+  xlab("ATM") +
+  ylab("Log(Viability)") +
+  ggtitle("") +
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+
+  t2
+
+del11q <- 
+df_patmeta %>% 
+  dplyr::filter(Cytokine=="Resiquimod") %>%
+      filter(!is.na(del11q)) %>%
+         
+  ggplot(aes(x=del11q,y=Log,color=(del11q)))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     size=3)+
+  xlab("del(11q)") +
+  ylab("Log(Viability)") +
+  ggtitle("") +
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+
+  t2
+
+SF3B1 <- 
+df_patmeta %>% 
+  dplyr::filter(Cytokine=="Resiquimod") %>%
+      filter(!is.na(SF3B1)) %>%
+         
+  ggplot(aes(x=SF3B1,y=Log,color=(SF3B1)))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     size=3)+
+  xlab("SF3B1") +
+  ylab("Log(Viability)") +
+  ggtitle("") +
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+
+  t2
+
+trisomy12 <- 
+df_patmeta %>% 
+  dplyr::filter(Cytokine=="Resiquimod") %>%
+      filter(!is.na(trisomy12)) %>%
+         
+  ggplot(aes(x=trisomy12,y=Log,color=(trisomy12)))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     size=3)+
+  xlab("trisomy 12") +
   ylab("Log(Viability)") +
   ggtitle("Resiquimod") +
   scale_color_manual(values=c(colors[1], colors[2])) + 
 
   t2
 
-})
+del17p <- 
+df_patmeta %>% 
+  dplyr::filter(Cytokine=="Resiquimod") %>%
+      filter(!is.na(del17p)) %>%
+         
+  ggplot(aes(x = del17p,y = Log,color = (del17p)))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     size=3)+
+  xlab("del(17p)") +
+  ylab("Log(Viability)") +
+  ggtitle("") +
+  scale_color_manual(values=c(colors[1], colors[2])) + 
 
-wrap_elements(hh[[1]]) + wrap_elements(hh[[2]]) + wrap_elements(hh[[3]]) 
+  t2
+
+TP53 <- 
+df_patmeta %>% 
+  dplyr::filter(Cytokine=="Resiquimod") %>%
+      filter(!is.na(TP53)) %>%
+         
+  ggplot(aes(x=TP53,y=Log,color=(TP53)))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     size=3)+
+  xlab("TP53") +
+  ylab("Log(Viability)") +
+  ggtitle("") +
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+
+  t2
+
+
+
+(del11q + trisomy12 + del17p)/
+(ATM + SF3B1 + TP53)  
 
 ```
 
@@ -944,7 +1279,7 @@ wrap_elements(hh[[1]]) + wrap_elements(hh[[2]]) + wrap_elements(hh[[3]])
 
 (ref:IL4KRAS) 
 
-```{r IL4KRAS, fig.cap='(ref:IL4KRAS)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 3, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r IL4KRAS, fig.cap='(ref:IL4KRAS)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 df_patmeta %>% 
    dplyr::filter(Cytokine=="IL-4",
@@ -957,7 +1292,7 @@ df_patmeta %>%
   guides(color="none", shape="none")+
   stat_compare_means(method = "t.test",
                      label.x.npc = "center", 
-                     size=5)+
+                     size=3)+
   xlab("KRAS") +
   ylab("Log(Viability)") +
   ggtitle("IL4") +
@@ -972,11 +1307,11 @@ df_patmeta %>%
 ### Trisomy 12 modulates responses to IL4, TGFbeta and TLR stimuli
 
 
-(Figure \@ref(fig:SMAD3geneDosage)).
+(Figure \@ref(fig:tri12cytResponse)).
 
-(ref:SMAD3geneDosage) 
+(ref:tri12cytResponse) 
 
-```{r tri12cytResponse, fig.cap='(ref:tri12cytResponse)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r tri12cytResponse, fig.cap='(ref:tri12cytResponse)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 #add genetic data to viability dataframe
 df_patmeta <- left_join(df, patMeta, by = "PatientID")
@@ -996,7 +1331,7 @@ df_patmeta %>%
   guides(color="none", shape="none")+
   stat_compare_means(method = "t.test",
                      label.x.npc = "center", 
-                     size=5)+
+                     size=3)+
   xlab("trisomy 12") +
   ylab("Log(Viability)") +
   ggtitle(x) +
@@ -1011,13 +1346,12 @@ wrap_elements(ii[[1]]) + wrap_elements(ii[[2]]) + wrap_elements(ii[[3]])
 ```
 
 ### Gene dosage effects
-(Figure \@ref(fig:tri12geneDosage).
+(Figure \@ref(fig:SMAD3geneDosage).
 
-(ref:tri12geneDosage) 
-
+(ref:SMAD3geneDosage) 
 
 _The Proteomics dataset was kindly shared by Sophie Herbst, from her paper..._ 
-```{r prepgeneDosae}
+```{r prepgeneDosage}
 
 #get table to convert between IDS
 ensembl = useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl", version="90")
@@ -1027,7 +1361,7 @@ id2gene <- dplyr::select(transAnno, ensembl_gene_id, hgnc_symbol)
 
 ```
 
-```{r SMAD3geneDosage, fig.cap='(ref:SMAD3geneDosage)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r SMAD3geneDosage, fig.cap='(ref:SMAD3geneDosage)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 data <- plotCounts(dds_smp, gene="ENSG00000166949", #SMAD3
                    intgroup=c("trisomy12"), 
@@ -1046,7 +1380,7 @@ SMAD3rna <-
   t2 +
   scale_color_manual(values = c(colors[1], colors[2])) +
   theme(aspect.ratio=1,  legend.position = "none") +
-  stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+  stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=3)
  
     
 df_tbl_prot <- 
@@ -1072,12 +1406,12 @@ SMAD3pro =
   geom_point() +
   ggtitle("SMAD3") +
   ylab("Protein abundance") +
-  xlab("Trisomy 12 Status") + 
+  xlab("trisomy 12") + 
   theme_bw() +  
   scale_colour_manual(values = c(colors[1],colors[2])) + 
   t2 + 
   theme(aspect.ratio=1,  legend.position = "none") +
-  stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+  stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=3)
   
      
 SMAD3rna + SMAD3pro
@@ -1087,7 +1421,7 @@ SMAD3rna + SMAD3pro
 (Figure \@ref(fig:STATgeneDosage)).
 
 (ref:STATgeneDosage) 
-```{r STATgeneDosage, fig.cap='(ref:STATgeneDosage)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r STATgeneDosage, fig.cap='(ref:STATgeneDosage)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 
 stat_rna <- 
@@ -1097,7 +1431,12 @@ lapply(c("ENSG00000166888", "ENSG00000170581"), function(x){
       filter(trisomy12 %in% c("0", "1"))
     
     #get hgnc symbol from ENS id
-    gene_name <- dplyr::select(filter(il4_genes, ensembl_gene_id == x), hgnc_symbol)
+    gene_name <-
+    as.data.frame(rowData(dds_smp)) %>% 
+    rownames_to_column("ensembl_gene_id") %>%
+    filter(ensembl_gene_id == x) %>%
+    dplyr::select(symbol)
+    if(gene_name== "SPI1"){genename <- "PU.1"}
     
     #Make plot
     ggplot(data, aes(x = trisomy12, y = count, color=trisomy12)) +
@@ -1111,7 +1450,7 @@ lapply(c("ENSG00000166888", "ENSG00000170581"), function(x){
       scale_color_manual(values = c(colors[1], colors[2])) +
       theme(aspect.ratio=1,  legend.position = "none") +
       
-      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=3)
   
 })
 
@@ -1135,13 +1474,13 @@ stat_pro = lapply(c("STAT6", "STAT2"), function(x){
         
        ggtitle("")+
        ylab("Protein abundance") +
-       xlab("Trisomy 12 Status") + 
+       xlab("trisomy 12") + 
         
        theme_bw()+  
        scale_colour_manual(values = c(colors[1],colors[2])) + 
        t2 +  
        theme(aspect.ratio=1, legend.position = "none") +
-       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=3)
   
 })
 
@@ -1152,10 +1491,9 @@ stat_pro = lapply(c("STAT6", "STAT2"), function(x){
 
 (Figure \@ref(fig:IRAK4geneDosage)).
 
-
 (ref:IRAK4geneDosage) 
 
-```{r IRAK4geneDosage, fig.cap='(ref:IRAK4geneDosage)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r IRAK4geneDosage, fig.cap='(ref:IRAK4geneDosage)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 #IRAK4
 
@@ -1166,7 +1504,12 @@ lapply(c("ENSG00000198001","ENSG00000172936"),  function(x){
       filter(trisomy12 %in% c("0", "1"))
     
     #get hgnc symbol from ENS id
-    gene_name <- dplyr::select(filter(tlr_genes, ensembl_gene_id == x), hgnc_symbol)
+    gene_name <-
+    as.data.frame(rowData(dds_smp)) %>% 
+    rownames_to_column("ensembl_gene_id") %>%
+    filter(ensembl_gene_id == x) %>%
+    dplyr::select(symbol)
+    if(gene_name== "SPI1"){genename <- "PU.1"}
     
     #Make plot
     ggplot(data, aes(x = trisomy12, y = count, color=trisomy12)) +
@@ -1180,7 +1523,7 @@ lapply(c("ENSG00000198001","ENSG00000172936"),  function(x){
       scale_color_manual(values = c(colors[1], colors[2])) +
       theme(aspect.ratio=1,  legend.position = "none") +
       
-      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2)
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=3)
   
 })
 
@@ -1204,13 +1547,13 @@ irak4_pro = lapply(c("IRAK4", "MYD88"), function(x){
         
        ggtitle("")+
        ylab("Protein abundance") +
-       xlab("Trisomy 12 Status") + 
+       xlab("trisomy 12") + 
         
        theme_bw()+  
        scale_colour_manual(values = c(colors[1],colors[2])) + 
        t2 +  
        theme(aspect.ratio=1, legend.position = "none") +
-       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=2) 
+       stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=3) 
   
 })
 
@@ -1220,11 +1563,165 @@ irak4_pro = lapply(c("IRAK4", "MYD88"), function(x){
 ```
 
 ### Investigation of non-trisomy12 samples that are phenocopies of trisomy12 CLL+ (based on their responses to stimuli) 
-(Figure \@ref(fig:tri12Phenocopies).
+(Figure \@ref(fig:tri12Classfier).
 
-(ref:tri12Phenocopies) 
+(ref:tri12Classfier) 
 
-```{r tri12Phenocopies, fig.cap='(ref:tri12Phenocopies)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{R phenocopyPrework}
+########### Viability matrix ################
+#make viability matrix for cytokine treatments for patients
+cyt_viab <- dplyr::select(df, 
+                PatientID, 
+                Log, 
+                Cytokine) %>% spread(Cytokine, Log) %>% as.data.frame()
+
+#make PatID the row names
+rownames(cyt_viab) <- unlist(cyt_viab[,1]) # the first row will be the header
+cyt_viab <- dplyr::select(cyt_viab,-PatientID) 
+
+cyt_viab <- t(cyt_viab)
+
+#run scaleCytResp on viability matrix
+x <- scaleCytResp05(cyt_viab)
+x <-t(x)
+
+
+## Response matrix 
+#Get Tri 12 status
+y <- dplyr::select(patMeta, PatientID, trisomy12) %>% dplyr::filter(!is.na(trisomy12)) %>% column_to_rownames("PatientID")
+
+y$trisomy12 <- as.numeric(as.character(y$trisomy12))
+
+y <- t(y)
+
+#Remove NA patients from viability matrix
+x <- x[colnames(y),]
+
+
+# Run logistic regression
+X <- x
+
+#set whether to spilt data into test and training set
+testRatio = FALSE
+
+#set parameters for running model
+repeats <- 50
+folds <- 3
+
+if(testRatio){
+  
+  glmRes <- runGlm.bin(X,as.integer(y), repeats = repeats, folds =folds, testRatio = 0.3)
+  
+}else{
+  
+  glmRes <- runGlm.bin(X, as.integer(y), repeats = repeats, folds = folds, testRatio = NULL)}
+
+
+
+## ROC of best model
+if(testRatio){
+iBest <- which.max(glmRes$aucCV)
+glmRes$rocTest[[iBest]]
+}else{
+  iBest <- which.max(glmRes$aucCV)
+}
+
+```
+
+
+
+```{r tri12Classfier, fig.cap='(ref:tri12Classfier)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 8, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+
+X.scale <- X
+
+p <- lassoPlot_bin(glmRes, X.scale, y,freqCut = 0, coefCut = 0.01, modelIndex = iBest, rowHeight = 0.001)
+
+grid.arrange(p)
+
+```
+
+(Figure \@ref(fig:tri12PhenocopiesCytResponse).
+
+(ref:tri12PhenocopiesCytResponse) 
+
+```{r tri12PhenocopiesCytResponse, fig.cap='(ref:tri12PhenocopiesCytResponse)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 3, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+
+plotTab <- filter(df, Cytokine%in% c("Resiquimod", "sCD40L+IL-4", "TGF-b1"))
+plotTab %>%
+  ggplot(aes(x=Cytokine,
+             y=Log)) + 
+  geom_boxplot(fill=NA)+
+  geom_beeswarm(cex=0.3, alpha=0.4, color= lightergrey)+
+  t2 +
+  ylab("Log(Viability") + xlab("")+
+  geom_point(data=dplyr::filter(plotTab, PatientID =="Pat_033"), aes(x=Cytokine, y=Log), colour=palblues[1], size=2) + 
+    geom_point(data=dplyr::filter(plotTab, PatientID =="Pat_114"), aes(x=Cytokine, y=Log), colour=palreds[8], size=2)+ scale_x_discrete(labels = c("Resiquimod" = "Resiquimod", "sCD40L+IL-4" = "sCD40L \n+ IL4", "TGF-b1" = "TGF-\u03B21"))
+
+
+```
+(Figure \@ref(fig:tri12PhenocopiesRNA).
+
+(ref:tri12PhenocopiesRNA) 
+
+```{r tri12PhenocopiesRNA, fig.cap='(ref:tri12PhenocopiesRNA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 5, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
+genes <- c("ENSG00000269404", #SPIB
+           "ENSG00000166888", #STAT6
+           "ENSG00000198001", #IRAK4
+           "ENSG00000166949" #SMAD3
+           )
+RNAplots <- 
+lapply(genes, function(x){
+  data <- plotCounts(dds_smp_full, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>%
+      filter(trisomy12 %in% c("0", "1")) %>% rownames_to_column("PatientID")
+    
+    #get hgnc symbol from ENS id
+    gene_name <-
+    as.data.frame(rowData(dds_smp_full)) %>% 
+    rownames_to_column("ensembl_gene_id") %>%
+    filter(ensembl_gene_id == x) %>%
+    dplyr::select(symbol)
+    if(gene_name== "SPI1"){genename <- "PU.1"}
+    
+    #Make plot
+    ggplot(data, aes(x = trisomy12, y = count, color = trisomy12)) +
+      geom_boxplot() +
+      geom_beeswarm() + 
+      ggtitle(gene_name) +
+      ylab("Counts") +
+      xlab("trisomy 12") +
+      
+      t2 +
+      scale_color_manual(values = c(colors[1], colors[2])) +
+      theme(aspect.ratio=1,  text = element_text(size = 15), legend.position = "none") +
+      
+      stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size = 3) + 
+      
+      geom_point(data=dplyr::filter(data, PatientID =="Pat_114"), aes(x=trisomy12, y=count), colour=palreds[8], size=2) +
+      geom_point(data=dplyr::filter(data, PatientID =="Pat_033"), aes(x=trisomy12, y=count), colour=palblues[1], size=2)
+      
+})
+
+(RNAplots[[1]] + RNAplots[[2]])/
+(RNAplots[[3]] + RNAplots[[4]]) 
+
+
+```
+
+
+Pat033 has duplicated regions: 
+-p13.31 - 42 copies
+-q24.13 - 10 copies
+-q24.33 - 21 copies 
+See what Junyan says about this and potentially add a figure 
+
+(Figure \@ref(fig:tri12PhenocopiesCNV).
+
+(ref:tri12PhenocopiesCNV) 
+
+```{r tri12PhenocopiesCNV, fig.cap='(ref:tri12PhenocopiesCNV)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+
 
 ```
 
@@ -1264,7 +1761,7 @@ visualisation of results
 
 Also refer to : (Figure \@ref(fig:diffTFsmallvolPlot)
 
-```{r tri12diffTF, fig.cap='(ref:tri12diffTF)', message = FALSE,  echo = FALSE,fig.height=6, fig.width=15, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r tri12diffTF, fig.cap='(ref:tri12diffTF)', message = FALSE,  echo = FALSE,fig.height=6, fig.width=8, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
 
 
 #Get all TFs that show differential activity
@@ -1312,8 +1809,6 @@ plotTab.diffTF$TF <- factor(plotTab.diffTF$TF,levels=rev(unique(plotTab.diffTF$T
   coord_flip() 
   
   
-  
-
   
 
 ```
@@ -1365,7 +1860,7 @@ Key result: generation of GRN to identify SPIB and PU1 regulated genes, and inve
 
 _The data here was generated by Tina Bericoviv and was included in Bruch & Giles et al. 2021. It is included in this thesis for completeness._ 
 
-```{r SpiBshRNAKD, fig.cap='(ref:SpiBshRNAKD)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 5, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+```{r SpiBshRNAKD, fig.cap='(ref:SpiBshRNAKD)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 7, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 
   SPIB_KD_Cellcounts %>% 
