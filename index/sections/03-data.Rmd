@@ -6,7 +6,7 @@ output:
 # Data
 
 
-```{r setup02, echo = FALSE}
+```{r setup02, echo = FALSE, message = FALSE, warning = FALSE}
 #libraries
 library(ggplot2)
 library(tidyverse)
@@ -23,10 +23,6 @@ source("R/plotPathways.R")
 
 ```
 
-
->"C'est ne pas un pipe."
->
-> Descartes
 
 Characterisation of primary CLL samples by high-throughput combinatorial screening and multi-omic profiling. An introduction to the dataset that my PhD is based on. 
 
@@ -132,7 +128,7 @@ df$Drug <- factor(df$Drug, levels=orderDrug)
 ### Stimulus - Stimulus Correlations
 
 ## Characteristics of patient samples used in the screen
-###Genetic Data available for each patient
+### Genetic Data available for each patient
 WES, CNVs, Methylation, Transcriptomic, ATACseq, LDT, survT, IHC
 PLus Ibrutinib + IBET + IL4 treated samples - ATACseq, RNAseq, proteomics 
 
@@ -141,9 +137,9 @@ PLus Ibrutinib + IBET + IL4 treated samples - ATACseq, RNAseq, proteomics
 
 
 ## Generation of public resource
-###Shiny app
+### Shiny app
 
-###Package 
+### Package 
 
 
 
