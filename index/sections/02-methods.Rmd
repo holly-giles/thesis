@@ -8,6 +8,7 @@ at the end of each chapter, make sure all methods are included
 Copy things in and put in quotation marks if from Bruch & Giles et al. 2021, mark if they were not written by me, or if they were written jointly 
 Add REFERENCE and TABLE for now 
 Return to this later and neaten / expand on methods, and provide all referencing and tables 
+-fine to use quotations (although check plaigerism email), suggested rewriting as i / he / pmb throughout 
 
 ## Experimental methods: 
 ### Drug - Stimulus Combinatorial Pertubation Assay
