@@ -1,12 +1,19 @@
 # Genetic modulators of responses to microenvironmental stimulation
+Profiling the effects of the panel of stimuli revealed the potency of the IL4 and TLR pathways in modulating CLL viability, and the heterogenous nature of responses to stimulation. IL4 uniformly increased viability across the patient samples, but in certain subgroups the effect was even stronger. Stimulation of TLR 7/8/9 increased viability in some samples, whilst it reduced viability in others. Each of the four clusters showed distinct response profiles, and this related to clinical disease progression. 
 
-To continue:
-add the additional plots 
-text and plot arrangement also update the cytokine labelling and gene labelling 
-any additional plots 
-text dump 
+It was next natural to ask to what extent this heterogeneity of response relates to the molecular profiles of the tumours. We combined our screening dataset with multi-omics profiles of the patient samples. Patient molecular profiling was available in the PACE repository[REFERENCE], consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, for a small subset of patients we also generated  ATAC sequencing and Mass Spectrometry data. 
 
-Continute to figure 6 (see at clsoe of tomorrow if you are better of leaveing this till i get back, then only one week behind)
+Collectively, these data enable us to probe genetic and epigenetic modulators of microenvironmental signalling, in a heterogeneous cohort that encompasses the clinical and molecular diversity of CLL. I began by performing a comprehensive survey of how the genetic features realte to microenvironmental response, and next investigated individual findings of this analysis. 
+
+
+Feedback from Wolfgang: 
+-include gene dosage and tir 12 classfier - its ok if these aren't final in themselves
+-include before the SPIb aowrk - say this is where we ended up 
+-don't try and cram in more work this is fine
+
+More generally: 
+-keep talking to him about content as i go 
+-focus on clsoing dowb what i haev now, add more if time 
 
 ```{r, echo = FALSE}
 
@@ -777,10 +784,12 @@ thecytokines <- unique(df$Cytokine) %>% setdiff("No Cytokine")
 ```
 
 ## Systematic analysis of the effect of genetic features on responses to stimuli:
-### Univariate analysis identifies IGHV status and tirsomy 12 as key modulators 
-(Figure \@ref(fig:stimuliGeneAssosciations)).
+### Univariate analysis identifies IGHV status and trisomy 12 as key modulators of microenvironmental response
+To begin, I ran a univariate analysis to compare viability values post-stimulation for patient samples with and without each genetic feature. In total 63 genetic features were surveyed, including IGHV status, somatic gene mutations and structural variants where there were at least three patient samples in each group (Figure \@ref(fig:stimuliGeneAssosciations)).. 
 
-(ref:stimuliGeneAssosciations) 
+This analysis revealed the extent to which genetic features modulate microenvironmental response: for 10/17 stimuli, at least one genetic feature determined  response and for 6/17 stimuli, 2 or more genetic features significantly altered the response (Student's  t-tests,  FDR  =  10%).The most common features to modulate response were IGHV status and trisomy 12. Del(11q) also affected reponses to several stimuli. Notably, the other Doehner mutations del(13q) and del(17p) had no impact of the responses to external signals. 
+
+(ref:stimuliGeneAssosciations) Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested gene-stimulus associations. Tests performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63). Each circle represents a gene-stimulus association. Associations that meet 10% FDR cut off are indicated in colour, where the colour denotes the genetic feature. 
 
 ```{r stimuliGeneAssosciations, fig.cap='(ref:stimuliGeneAssosciations)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
 
@@ -914,8 +923,12 @@ p_values %<>%
 ```
 
 
-### Multivariate analysis demosntrates multiple layers of biology involved
-(Figure \@ref(fig:stimuliGeneAssosciationsMulti)).
+### Multivariate analysis of gene - stimulus assosciations reveals multiple layers of biology involved
+It was possible that there may be interplay between genetic factors in determining responses to external signals. To address this, I applied multivariate modelling to integrate the influence of genetic features, IGHV status and DNA methylation on the size of response. I used a Gaussian linear model with L1-penalty (i.e., lasso regression),  to derive a predictor for each stimulus, comprised of these covariates. 
+
+As input to the model, the response matrix was composed of the log transformed viability values for each stimulus. To generate the feautre amtrix (137 samples versus 39 features), I excluded genetic features for which >20\% of there values were missing, and  patient samples with incomplete annotation. As predictors, I included genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1). I ran lasso regression, as implemented `R` package [@glmnet][REFERENCE], using 3-fold cross-validation with misclassifcation error as loss. The resulting predictors are the mean  of those coefficients that were selected in at least 75% of 30 bootstrapped repeats. 
+
+Using the output of the regression, I generated predictor profiles for each stimulus. For 5 / 17 stimuli, there was at least one genetic predictor that met the cut-offs (a selection are shown in figure \@ref(fig:stimuliGeneAssosciationsMulti)).
 
 (ref:stimuliGeneAssosciationsMulti) 
 
@@ -1049,7 +1062,12 @@ wrap_elements(Fig3B_1 + Fig3B_2 + Fig3B_3 +
 
 
 ```
+Trisomy 12 and IGHV status were again the most common features. 
 
+The number of predictors for the response to TLR stimuliation by CpG ODN indicates the multiple layers of biology involved. TLR response was highly heterogenous and a determinant of cluster memebrship that also related to clinical disease pgroess. For this reason, I decided to ivnestae these in more detail. 
+
+### The imapct of RNA 
+Also RNA plot 
 ### Individual cytokine – gene interactions of note
 Role of IGHV status and BCR signalling in Cytokine response
 (Figure \@ref(fig:IHGVBCR)).
