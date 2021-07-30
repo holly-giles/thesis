@@ -10,14 +10,18 @@ library(DESeq2)
 library(dplyr)
 
 load("ddsrna_180717.RData")
+load("../../data/patMeta.RData")
+
+#PatientID key 
+load("/Volumes/huber/users/giles/projects/publications/cytokine_screen_2020/vignettes/Finalised/data/individual_datasets/PatientIDkeys/Pat_ID_key.Rdata")
 ```
 
 
 ```{r RNAdata all samples}
 
 #1. Make counts matrix  for patients in Cytokine Screen 2020 only
-#subset deseq object for samples used in screen
-dds.smp <- dds[, which(colData(dds)[,"sampleID"] %in% unique(df$SampleID))]
+#subset for patients in screen 
+dds.smp <- dds[, which(colData(dds)[,"PatID"] %in% unique(Patients$PatientID))]
 
 #get counts matrix, rowdata and coldata  
 ctsMat.smp <- counts(dds.smp)
@@ -41,8 +45,6 @@ colnames(coldata.smp) <- c( "PatientID", "origPatID")
 coldata.smp <- 
   left_join(coldata.smp, patMeta, by = "PatientID") 
 
-coldata.smp <- 
-  left_join(coldata.smp, Heatmap_clusters, by= "PatientID")
 
 
 #3. Arrange counts matrix
@@ -63,8 +65,9 @@ dds.smp <- DESeqDataSetFromMatrix(ctsMat.smp, coldata.smp, design =~1)
 #5. Add rowdata
 rowData(dds.smp) <- rowdata.smp
 
-dds_smp <- dds.smp
+dds_smp_full <- dds.smp
 
-save(dds_smp, file = paste(filepath, "/data/dds_smp.RData", sep = ""))
+save(dds_smp_full, file = "../../data/dds_smp_full.RData")
+
 
 ```
