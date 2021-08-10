@@ -1,11 +1,9 @@
 # Introduction
 Next tasks:
-Add captions for images
-Add this paper to mendeley and bibtex
+Continue to go through add the next papers
+Then go throuhg each section, do a lit review, and read what i need for each, add the text and references and kkep going 
+Should then be easy to tie this together 
 
-go through and add the next papers
-
-Then continue goung through section by seciotn and paper by paper - should be easy to write when i get back now :) 
 
 
 ```{r loadLibraries, echo = FALSE}
@@ -17,6 +15,13 @@ library(ggplot2)
 
 ### Disease Characteristcs
 CD5, CD19, CD23+, lowlevelsofCD20 
+
+Reading: 
+
+From Kipps 2017: 
+Incidence (get for 2021)
+Siegel R, et al. Cancer treatment and survivorship statistics, 2012. CA Cancer J. Clin. 2012; 62:220–241. [PubMed: 22700443]
+
 
 \@ref(fig:CLLmorphology) Taken from Kipps et al 2017: "Wright–Giemsa-stained blood smears showing the typical chronic lymphocytic leukaemia (CLL) B lymphocyte (part a)"
 
@@ -44,6 +49,21 @@ CLL is estimated to account for ~19,000 of all newly detected cancers in the Uni
 The
 
 ### IGHV status and the role of BCR signalling
+Reading: 
+From Kipps 2017: 
+IGHV status:
+Hamblin TJ, Davis Z, Gardiner A, Oscier DG, Stevenson FK. Unmutated Ig V(H) genes are associated with a more aggressive form of chronic lymphocytic leukemia. Blood. 1999; 94:1848– 1854. [PubMed: 10477713]
+
+Damle RN, et al. Ig V gene mutation status and CD38 expression as novel prognostic indicators in chronic lymphocytic leukemia. Blood. 1999; 94:1840–1847. [PubMed: 10477712] References 1 and 2 are landmark papers that describe two main subsets of patients with different disease progression tendencies based on IGHV mutation status of the immunoglobulins that are expressed by CLL cells.
+
+Restricted repetoire: 
+Kipps TJ, et al. Developmentally restricted immunoglobulin heavy chain variable region gene expressed at high frequency in chronic lymphocytic leukemia. Proc. Natl Acad. Sci. USA. 1989; 86:5913–5917. [PubMed: 2503826] This paper describes the discovery that the immunoglobulin repertoire of CLL cells may be highly restricted, suggesting that the antibodies expressed by CLL cells are most likely selected based on their capacity to bind to some common self-antigens.
+
+Fais F, et al. Chronic lymphocytic leukemia B cells express restricted sets of mutated and unmutated antigen receptors. J. Clin. Invest. 1998; 102:1515–1525. [PubMed: 9788964]
+
+Widhopf G, F 2nd, et al. Chronic lymphocytic leukemia B cells of more than 1% of patients express virtually identical immunoglobulins. Blood. 2004; 104:2499–2504. [PubMed: 15217828]
+
+
 \@ref(fig:BCRsignalling) Adapted from: Kipps et al 2017: "B cell receptor (BCR) signalling is initiated by SRC-family kinase-dependent phosphorylation (mainly LYN) of CD79A and CD79B that creates a docking site for the binding and activation of spleen tyrosine kinase (SYK). SYK then triggers the formation of a multi-component ‘signalosome’, comprising Bruton tyrosine kinase (BTK), AKT, phosphoinositide 3-kinase (PI3K), phospholipase Cγ2 (PLCγ2) and B cell-linker protein (BLNK), among others. CD19 is a co-receptor for BCR and is important for PI3K activation, which recruits and activates PLCγ2, BTK and AKT. PLCγ2 generates diacylglycerol (DAG) and inositol-1,4,5-trisphosphate (Ins(1,4,5)P3), which triggers Ca2+ release from the endoplasmic reticulum, leading to the activation of the MEK–extracellular signal-regulated kinase (ERK) and nuclear factor-κB (NF-κB) signalling pathways. Other effects of BCR signalling include activation of mechanistic target of rapamycin complex 1 (mTORC1) and of Rho-family GTPases, RAC1 and RHOA, which can affect the cytoskeleton. Inhibitors of SYK, PI3K and BTK are shown. Note that this figure describes the main molecules and interactions that are involved in positive BCR signalling, but is not an exhaustive description of all signalling pathways or molecules activated. IKK, IκB kinase; PKC, protein kinase C."
 
 ```{r BCRsignalling, fig.cap='(ref:BCRsignalling)', echo = FALSE}
@@ -75,6 +95,59 @@ The repertoire of immunoglobin molecules produced by the CLL cells of all patien
 ### Recurrent genetic features in CLL
 Genetic alterations in CLL can include chromosomal alterations, mutations, alterations in the expression of mi RNAs and epigenetic modifications.
 
+REading: 
+From Kipps et al: 
+38 Dohner H, et al. Genomic aberrations and survival in chronic lymphocytic leukemia. N. Engl. J. Med. 2000; 343:1910–1916. [PubMed: 11136261]
+
+Del(13q)mechanism: 39. Klein U, et al. The DLEU2/miR-15a/16-1 cluster controls B cell proliferation and its deletion leads to chronic lymphocytic leukemia. Cancer Cell. 2010; 17:28–40. [PubMed: 20060366]
+
+Del(17p) mechanism 40. Zenz T, Mertens D, Kuppers R, Dohner H, Stilgenbauer S. From pathogenesis to treatment of chronic lymphocytic leukaemia. Nat. Rev. Cancer. 2010; 10:37–50. [PubMed: 19956173]
+
+del(11q)
+
+Mutations and outcome: 
+38: Dohner H, et al. Genomic aberrations and survival in chronic lymphocytic leukemia. N. Engl. J. Med. 2000; 343:1910–1916. [PubMed: 11136261]
+
+Improved in recent years: 41: Van Dyke DL, et al. The Dohner fluorescence in situ hybridization prognostic classification of chronic lymphocytic leukaemia (CLL): the CLL Research Consortium experience. Br. J. Haematol. 2016; 173:105–113. [PubMed: 26848054]
+
+CLl ahrbours a high degree of genetic diversity: 
+Fabbri G, et al. Analysis of the chronic lymphocytic leukemia coding genome: role of NOTCH1 mutational activation. J. Exp. Med. 2011; 208:1389–1401. [PubMed: 21670202]
+43. Pleasance ED, et al. A comprehensive catalogue of somatic mutations from a human cancer genome. Nature. 2010; 463:191–196. [PubMed: 20016485]
+44. Puente XS, et al. Whole-genome sequencing identifies recurrent mutations in chronic lymphocytic leukaemia. Nature. 2011; 475:101–105. [PubMed: 21642962]
+45. Wang L, et al. SF3B1 and other novel cancer genes in chronic lymphocytic leukemia. N. Engl. J. Med. 2011; 365:2497–2506. [PubMed: 22150006]
+
+Functional role of mutations: 
+WNT: 47 Wang L, et al. Somatic mutation as a mechanism of Wnt/beta-catenin pathway activation in CLL. Blood. 2014; 124:1089–1098. [PubMed: 24778153]
+
+POT1: reference thereview
+
+SF3B1: 
+45 Wang L, et al. SF3B1 and other novel cancer genes in chronic lymphocytic leukemia. N. Engl. J. Med. 2011; 365:2497–2506. [PubMed: 22150006]
+ 48 Ferreira PG, et al. Transcriptome characterization by RNA sequencing identifies a major molecular and clinical subdivision in chronic lymphocytic leukemia. Genome Res. 2014; 24:212–226. [PubMed: 24265505]
+ 
+ 49. Quesada V, et al. Exome sequencing identifies recurrent mutations of the splicing factor SF3B1 gene in chronic lymphocytic leukemia. Nat. Genet. 2012; 44:47–52.
+50. Te Raa GD, et al. The impact of SF3B1 mutations in CLL on the DNA-damage response. Leukemia. 2015; 29:1133–1142. [PubMed: 25371178]
+
+Seqencing studies: 
+two seminal studies: 
+51. Landau DA, et al. Mutations driving CLL and their evolution in progression and relapse. Nature. 2015; 526:525–530. [PubMed: 26466571]
+52. Puente XS, et al. Non-coding recurrent mutations in chronic lymphocytic leukaemia. Nature. 2015; 526:519–524. [PubMed: 26200345] References 51 and 52 describe landmark studies on whole-exome sequencing of CLL cells obtained from a large cohort of patients, reporting new driver mutations in CLL.
+
+
+Epigenetic changes: 
+Global hypomethylation and local hypermethylation
+66. Cahill N, et al. 450K–array analysis of chronic lymphocytic leukemia cells reveals global DNA
+methylation to be relatively stable over time and similar in resting and proliferative compartments. Leukemia. 2013; 27:150–158. [PubMed: 22922567]
+67. Wahlfors J, et al. Genomic hypomethylation in human chronic lymphocytic leukemia. Blood. 1992; 80:2074–2080. [PubMed: 1382719]
+68. Ziller MJ, et al. Charting a dynamic DNA methylation landscape of the human genome. Nature. 2013; 500:477–481. [PubMed: 23925113]
+
+Methylation for classification: 
+69. Kulis M, et al. Epigenomic analysis detects widespread gene-body DNA hypomethylation in chronic lymphocytic leukemia. Nat. Genet. 2012; 44:1236–1242. [PubMed: 23064414] This paper describes an analysis of DNA methylation in CLL cases, showing that the two molecular subtypes of CLL have differing DNA methylomes that seem to represent epigenetic imprints from distinct normal B cell subpopulations.
+
+74. Bhoi S, et al. Prognostic impact of epigenetic classification in chronic lymphocytic leukemia: the
+case of subset #2. Epigenetics. 2016; 11:449–455. [PubMed: 27128508]
+
+
 \@ref(fig:CLLmutations) Taken from Kipps et al 2017: "Genes that are mutated in chronic lymphocytic leukaemia (CLL) are involved in several cellular pathways (blue boxes). As such, mutations in these genes can lead to a range of cellular consequences, such as aberrant DNA repair and B cell receptor (BCR) signalling, among others51,213. The minus sign from GBN1 to the MAPK–ERK pathway indicates negative regulation. *For more detail of the BCR and its associated signalling, see FIG. 3. ASXL1, additional sex combs-like protein 1; ATM, ataxia telangiectasia mutated; BAZ2A, bromodomain adjacent to zinc-finger domain protein 2A; BCOR, BCL-6 co-repressor; BIRC3, baculoviral IAP repeat-containing protein 3; BRCC3, BRCA1/BRCA2-containing complex subunit 3; C-NOTCH, carboxy-terminal domain of NOTCH; CARD11, caspase recruitment domain-containing protein 11; CHD2, chromodomainhelicase-DNA-binding protein 2; CHK2, checkpoint kinase 2; Co-A, co-activator; CSL, CBF1–Suppressor of Hairless–LAG1 (also known as RBPJ); DDX3X, ATP-dependent RNA helicase DDX3X; DYRK1A, dual-specificity tyrosine-phosphorylation-regulated kinase 1A; EGR2, early growth response 2; ELF4, ETS-related transcription factor Elf-4; ERK, extracellular signal-regulated kinase; EWSR1, Ewing sarcoma breakpoint region 1 protein; FBXW7, F-box/WD repeat-containing protein 7; FUBP1, far upstream element-binding protein 1; GNB1, guanine nucleotide-binding protein G(I)/G(S)/G(T) subunit β1; H3K4, histone H3 lysine 4; IC, intracellular domain; IKZF3, Ikaros family zinc-finger protein 3; IL-1R, IL-1 receptor; IRF4, interferon regulatory factor 4; ITPKB, inositol-trisphosphate 3-kinase B; LRP, low-density lipoprotein receptor-related protein; MAP2K1, dual-specificity mitogen-activated protein kinase kinase 1; MAPK, mitogen-activated protein kinase; MED12, Mediator of RNA polymerase II transcription subunit 12; MGA, MAX gene-associated protein; MYD88, myeloid differentiation primary response protein MyD88; NF-κB, nuclear factor-κB; NXF1, nuclear RNA export factor 1; P, phosphate; POT1, protection of telomeres protein 1; PTPN11, tyrosine-protein phosphatase non-receptor type 11; RIPK1, receptor-interacting serine/threonine-protein kinase 1; RPS15, 40S ribosomal protein S15; SAMHD1, SAM domain and HD domain-containing protein 1; SF3B1, splicing factor 3B subunit 1; SHP1, Src homology region 2 domain-containing phosphatase 1 (also known as PTPN6); SYK, spleen tyrosine kinase; TCF/LEF, T cell factor/lymphoid enhancer factor; TLR8, Toll-like receptor 8; TNFR1, tumour necrosis factor receptor 1 (also known as TNFRSF1A); TRAF, TNFR-associated factor; XPO, exportin; ZMYM3, zinc-finger MYM-type protein 3. Adapted with permission from REF. 51, Macmillan Publishers Limited."
 
 ```{r CLLmutations, fig.cap='(ref:CLLmutations)', echo = FALSE}
@@ -90,6 +163,9 @@ Several large genetic studies have revealed numerous genetic alterations in CLL,
 
 [@Kipps2017]
 The altered expression of genes that are located in or near CLL-associated SNPs might contribute to disease development. For example, a SNP in IRF4 is associated with low expression of interferon regulatory factor 4; mice that are deficient in this protein can develop CLL23, partly owing to hyperactivation of Notch signalling24. 
+
+23: Shukla V, Ma S, Hardy RR, Joshi SS, Lu R. A role for IRF4 in the development of CLL. Blood. 2013; 122:2848–2855. [PubMed: 23926303]
+24. Shukla V, Shukla A, Joshi SS, Lu R. Interferon regulatory factor 4 attenuates notch signaling to suppress the development of chronic lymphocytic leukemia. Oncotarget. 2016; 7:41081–41094. [PubMed: 27232759]
 
 
 [@Kipps2017]
@@ -118,6 +194,13 @@ Methylation signatures can classify distinct clinical CLL subgroups69,74. As the
 ### The incompletely understood role of trisomy12 
 
 ### Stratification of CLL patients
+Reading: 
+(from Kipps)
+
+12. Nabhan C, et al. The impact of race, ethnicity, age and sex on clinical outcome in chronic lymphocytic leukemia: a comprehensive Surveillance, Epidemiology, and End Results analysis in the modern era. Leuk. Lymphoma. 2014; 55:2778–2784. [PubMed: 24588735]
+13. Li Y, Wang Y, Wang Z, Yi D, Ma S. Racial differences in three major NHL subtypes: descriptive epidemiology. Cancer Epidemiol. 2015; 39:8–13. [PubMed: 25560974]
+14. Pulte D, Redaniel MT, Bird J, Jeffreys M. Survival for patients with chronic leukemias in the US and Britain: age-related disparities and changes in the early 21st century. Eur. J. Haematol. 2015; 94:540–545. [PubMed: 25315799]
+
 \@ref(fig:CLLstratification) Taken from Kipps et al 2017: "Indications for therapy of patients with chronic lymphocytic leukaemia (CLL) include late-stage disease, evidence for rapid disease progression or disease-related symptoms. Patients with del(17p) or mutated TP53 should be treated with therapy that does not require functional TP53, such as ibrutinib (a Bruton tyrosine kinase (BTK) inhibitor), given the relatively poor outcome for such patients with chemotherapy. For patients without del(17p) or known mutations in TP53, immunoglobulin heavy-chain variable region (IGHV) mutational status can help to define the treatment strategy; patients with unmutated IGHV could be considered for therapy with a BTK inhibitor (such as ibrutinib) and patients with mutated IGHV might be good candidates for chemoimmunotherapy (CIT), if amenable. Indeed, patients with mutated IGHV can have excellent outcomes with CIT regimens, such as fludarabine, cyclophosphamide and rituximab, with >50% of patients having a median progression-free survival of >10 years, including the potential for cure. If the patient is amenable to CIT, age, medical comorbidities and myeloid reserve should be taken into consideration. Patients >65 years of age commonly have medical comorbidities and are less able to tolerate myelosuppressive regimens, such as fludarabine, cyclophosphamide and rituximab. Thus, considerations should be given to using reduced dose or less myelosuppressive chemotherapy regimens, such as chlorambucil or reduced-dose bendamustine and an anti-CD20 monoclonal antibody for patients with limited myeloid reserve. Patients who either do not respond, have a poor tolerance to CIT or relapse following CIT, should be re-evaluated for del(17p) or TP53 mutations. Patients who develop de novo del(17p) or TP53 mutations, or have known del(17p) and/or TP53 mutations, or who develop resistance or intolerance to ibrutinib, could be considered for therapy with idelalisib and rituximab or the BCL-2 inhibitor venetoclax. Patients treated with CIT who do not have del(17p) or TP53 mutations could be considered for repeat CIT if their progression-free survival after CIT is >2 years and the patient has sufficient myeloid reserve. Such patients also might be treated with a BTK inhibitor or a phosphoinositide 3-kinase (PI3K) inhibitor, which also could be considered for patients who develop intolerance or resistance to therapy with ibrutinib. Patients who develop resistance or intolerance to inhibitors of BTK, PI3K and/or BCL-2 should be considered for clinical trials or alternative agents. LDT, lymphocyte doubling time."
 
 ```{r CLLstratification, fig.cap='(ref:CLLstratification)', echo = FALSE}
