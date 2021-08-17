@@ -36,6 +36,7 @@ output:
     SF3B1 & & Splicing factor 3B subunit 1 \\
     STAT & & Signal transducer and activator of transcription \\
     SYK & & Spleen tyrosine kinase \\
+    VST & & Variance Stabilising Transformation \\
     ZAP70 & & Tyrosine-protein kinase ZAP-70 \\
 
     
