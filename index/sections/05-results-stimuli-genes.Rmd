@@ -3,7 +3,7 @@ Profiling the effects of the panel of stimuli revealed the potency of the IL4 an
 
 It was next natural to ask to what extent this heterogeneity of response relates to the molecular profiles of the tumours. We combined our screening dataset with multi-omics profiles of the patient samples. Patient molecular profiling was available in the PACE repository[REFERENCE], consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, for a small subset of patients we also generated  ATAC sequencing and Mass Spectrometry data. 
 
-Collectively, these data enable us to probe genetic and epigenetic modulators of microenvironmental signalling, in a heterogeneous cohort that encompasses the clinical and molecular diversity of CLL. I began by performing a comprehensive survey of how the genetic features realte to microenvironmental response, and next investigated individual findings of this analysis. 
+Collectively, these data enable us to probe genetic and epigenetic modulators of microenvironmental signalling, in a heterogeneous cohort that encompasses the clinical and molecular diversity of CLL. I began by performing a comprehensive survey of how the genetic features relate to microenvironmental response, and next investigated individual findings of this analysis. 
 
 
 Feedback from Wolfgang: 
@@ -110,6 +110,13 @@ load("data/dds_smp_full.RData")
 
 #Matching samples only RNA dataset: Deseq2 object
 load("data/dds_smp.RData")
+
+#cytReceptors: tibble containing meta data on cytokine receptors
+load( "data/cytReceptors.RData")
+
+#cyt_and_receptors: tibble containing meta data on cytokines and receptors
+load( "data/cyt_and_receptors.RData")
+
 
 ```
 
@@ -787,7 +794,6 @@ thecytokines <- unique(df$Cytokine) %>% setdiff("No Cytokine")
 ### Univariate analysis identifies IGHV status and trisomy 12 as key modulators of microenvironmental response
 To begin, I ran a univariate analysis to compare viability values post-stimulation for patient samples with and without each genetic feature. In total 63 genetic features were surveyed, including IGHV status, somatic gene mutations and structural variants where there were at least three patient samples in each group (Figure \@ref(fig:stimuliGeneAssosciations)).. 
 
-This analysis revealed the extent to which genetic features modulate microenvironmental response: for 10/17 stimuli, at least one genetic feature determined  response and for 6/17 stimuli, 2 or more genetic features significantly altered the response (Student's  t-tests,  FDR  =  10%).The most common features to modulate response were IGHV status and trisomy 12. Del(11q) also affected reponses to several stimuli. Notably, the other Doehner mutations del(13q) and del(17p) had no impact of the responses to external signals. 
 
 (ref:stimuliGeneAssosciations) Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested gene-stimulus associations. Tests performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63). Each circle represents a gene-stimulus association. Associations that meet 10% FDR cut off are indicated in colour, where the colour denotes the genetic feature. 
 
@@ -921,16 +927,105 @@ p_values %<>%
 
 
 ```
+This analysis revealed the extent to which genetic features modulate microenvironmental response: for 10/17 stimuli, at least one genetic feature determined  response and for 6/17 stimuli, two or more genetic features significantly altered the response (Student's  t-tests,  FDR  =  10%). The most common features to modulate response were IGHV status and trisomy 12. Del(11q) also affected response to several stimuli. Notably, the other Doehner mutations del(13q) and del(17p) had no impact of the responses to external signals. 
 
+
+### The impact of RNA 
+Next, we wanted to confirm that the observed differences in responses to the stimuli above were not merely due to differential expression of the corresponding receptor. We calculated Pearson correlation coefficients comparing control - normalised  log viability values for each stimulus with transformed RNA counts of the corresponding stimulus receptor(s). Only Resiquimod and its receptor TLR7 were correlated (where R>0.3). 
+
+(ref:RNAcorrelations) Volcano plot showing p-values versus Pearson correlation coefficients, for the correlation between control - normalised log viability values for each stimulus and expression of the corresponding stimulus receptor, in matched patient samples. Expression calculated using transformed RNA counts (using VST method) of untreated CLL sample.
+
+```{r RNAcorrelations, fig.cap='(ref:RNAcorrelations)', message = FALSE,  echo = FALSE, fig.height=10, fig.width=7, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
+
+
+#VST
+vsd <- vst(dds_smp, blind=TRUE)
+
+#rename transformed counts
+assayNames(vsd)<-"transformedcounts"
+ColData<-as.data.frame(colData(dds_smp))
+tidy_RNA_data<-
+  vsd%>%
+  tidy()%>%
+  filter(gene%in%cytReceptors$ENSEMBLID)%>%
+  dplyr::rename(PatientID=sample)%>%
+  left_join(cyt_and_receptors, by=c("gene"="ENSEMBLID"))
+
+RNA_Screen_data <-
+  df %>%
+  filter(Drug=="DMSO", Cytokine%in%c("Resiquimod","IL-4" ,"TGF-b1","IL-1b",
+                                     "Interferon gamma","SDF-1a","sCD40L",
+                                     "sCD40L+IL-4","soluble anti-IgM","CpG ODN",
+                                     "IL-6","IL-10","IL-21","anti-IgM Beads",
+                                     "HS-5 CM","IL-15","BAFF","IL-2")) %>%
+  filter(PatientID %in% unique(tidy_RNA_data$PatientID)) %>%
+  select(PatientID, Cytokine, Normalized) %>%
+  left_join(tidy_RNA_data, by=c("PatientID", "Cytokine"))
+Cytokine_Receptor_combinations <-
+  RNA_Screen_data %>%
+  group_by(Cytokine, Receptor)%>%
+  summarize(.groups = "keep") %>%
+  filter(!is.na(Receptor))
+
+Cytokine_Receptor_combinations$p.value<-as.numeric(NA)
+Cytokine_Receptor_combinations$pearson_R<-as.numeric(NA)
+
+for(i in 1:nrow(Cytokine_Receptor_combinations)) {
+  x=Cytokine_Receptor_combinations[i,]
+  Correlation_data_matrix<-RNA_Screen_data%>%
+    mutate(Cytokine_Receptor=paste0(Cytokine,":", Receptor))%>%
+    filter(Cytokine_Receptor==paste0(x[1],":",x[2]))%>%
+    select(Normalized, value)%>%
+    as.matrix()
+  correlation_res<-cor.test(Correlation_data_matrix[,1],Correlation_data_matrix[,2], method = "pearson")
+  Cytokine_Receptor_combinations[which(Cytokine_Receptor_combinations$Cytokine==unlist(x[1])&Cytokine_Receptor_combinations$Receptor==unlist(x[2])),]$p.value=correlation_res$p.value
+  Cytokine_Receptor_combinations[which(Cytokine_Receptor_combinations$Cytokine==unlist(x[1])&Cytokine_Receptor_combinations$Receptor==unlist(x[2])),]$pearson_R<-correlation_res$estimate
+}
+Cytokine_Receptor_combinations <- Cytokine_Receptor_combinations%>%
+  mutate(adj.p.value=p.adjust(p.value, method="fdr"))
+colnames(Cytokine_labels) <- c("Cytokine", "Cytlabel")
+Cytokine_Receptor_combinations <- left_join(Cytokine_Receptor_combinations, Cytokine_labels, by = "Cytokine")
+Cytokine_Receptor_combinations$Receptor[grepl("IL-10 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL10 R \u03B1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-10 R beta",Cytokine_Receptor_combinations$Receptor)]<-"IL10 R \u03B2"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-15 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL15 R \u03B1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-2 R beta",Cytokine_Receptor_combinations$Receptor)]<-"IL2 R \u03B2"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-2 R gamma",Cytokine_Receptor_combinations$Receptor)]<-"IL2 R \u03B3"
+ 
+Cytokine_Receptor_combinations$Receptor[grepl("IL-1 R1",Cytokine_Receptor_combinations$Receptor)]<-"IL1 R1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-2 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL2 R \u03B1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-13 R A1",Cytokine_Receptor_combinations$Receptor)]<-"IL13 R A1"
+Cytokine_Receptor_combinations$Receptor[grepl("IFN-gamma R2",Cytokine_Receptor_combinations$Receptor)]<-"IFN \u03B3 R2"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-6 R",Cytokine_Receptor_combinations$Receptor)]<-"IL6 R"
+Cytokine_Receptor_combinations$Receptor[grepl("IFN gamma R1",Cytokine_Receptor_combinations$Receptor)]<-"IFN \u03B3 R1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-4 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL4 R \u03B1"
+CR_volcanoplot <-
+  ggplot(Cytokine_Receptor_combinations,
+         aes(x=pearson_R,
+             y=-log10(adj.p.value)))+
+  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R>(-0.3)&pearson_R<0.3), color="grey")+
+  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.3)|pearson_R>0.3), color="red")+
+   geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.3)|pearson_R>0.3), nudge_x = 0.07, color="red", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5)+
+  geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.1)|pearson_R>0.1, !(pearson_R<(-0.3)|pearson_R>0.3)), nudge_x = 0.07, color="grey", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5)+
+  coord_cartesian(xlim=c(-0.45,0.45))+
+  geom_vline(xintercept = -0.3, linetype=3)+
+  geom_vline(xintercept = 0.3, linetype=3)+
+  theme_minimal()+
+  scale_x_continuous(breaks = c(-0.3,0,0.3))+
+  xlab("Pearson Correlation Coefficient")+
+  ylab("-log10(BH adjusted p-value)")+
+  t2
+CR_volcanoplot
+```
 
 ### Multivariate analysis of gene - stimulus assosciations reveals multiple layers of biology involved
 It was possible that there may be interplay between genetic factors in determining responses to external signals. To address this, I applied multivariate modelling to integrate the influence of genetic features, IGHV status and DNA methylation on the size of response. I used a Gaussian linear model with L1-penalty (i.e., lasso regression),  to derive a predictor for each stimulus, comprised of these covariates. 
 
-As input to the model, the response matrix was composed of the log transformed viability values for each stimulus. To generate the feautre amtrix (137 samples versus 39 features), I excluded genetic features for which >20\% of there values were missing, and  patient samples with incomplete annotation. As predictors, I included genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1). I ran lasso regression, as implemented `R` package [@glmnet][REFERENCE], using 3-fold cross-validation with misclassifcation error as loss. The resulting predictors are the mean  of those coefficients that were selected in at least 75% of 30 bootstrapped repeats. 
+As input to the model, the response matrix was composed of the log transformed viability values for each stimulus. To generate the feature matrix (137 samples versus 39 features), I excluded genetic features for which >20\% of the values were missing, and  patient samples with incomplete annotation. As predictors, I included genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation Cluster (coded as 0, 0.5, 1). I ran lasso regression, as implemented in the `R` package [@glmnet][REFERENCE], using three-fold cross-validation with misclassification error as loss. The resulting predictors are the mean of those coefficients that were selected in at least 75% of 30 bootstrapped repeats. 
 
 Using the output of the regression, I generated predictor profiles for each stimulus. For 5 / 17 stimuli, there was at least one genetic predictor that met the cut-offs (a selection are shown in figure \@ref(fig:stimuliGeneAssosciationsMulti)).
 
-(ref:stimuliGeneAssosciationsMulti) 
+
+(ref:stimuliGeneAssosciationsMulti) Predictor profiles for IL4, CpG ODN and TGF$\beta$ depicting gene - stimulus associations determined using Gaussian linear modelling with L1-penalty. Bar plots (left) show size and sign of assigned coefficients named on the right. A positive coefficient indicates that when stimulated with given cytokine, the increase in viability is larger when the feature is present. Scatter plots (bottom) and corresponding heatmaps above show how the presence of selected genetic feature relate to the sample viabilities. Scatter plots show ranked log(viability) values for each sample and heatmaps show mutation status for each of the genetic predictors for corresponding sample in scatter plot. 
 
 ```{r stimuliGeneAssosciationsMulti, fig.cap='(ref:stimuliGeneAssosciationsMulti)', message = FALSE,  echo = FALSE, fig.height=9, fig.width=8.5, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
 
@@ -1062,20 +1157,19 @@ wrap_elements(Fig3B_1 + Fig3B_2 + Fig3B_3 +
 
 
 ```
-Trisomy 12 and IGHV status were again the most common features. 
+The size of the response to IL4 could be predicted by a number of features. Notably,presence of trisomy 12 or IGHV-U was associated with a stronger increase in viability upon stimulation by IL4. In contrast, samples with a mutation in KRAS, NRAS or BRAF showed a smaller increase in viability upon stimulation, in other words, these tumours benefited less from the anti-apoptotic effects of IL4. This could indicate that the ability of IL4 to increase the viability of the samples is in part dependent upon signalling via RAS/RAF, which is already active in mutant samples. 
 
-The number of predictors for the response to TLR stimuliation by CpG ODN indicates the multiple layers of biology involved. TLR response was highly heterogenous and a determinant of cluster memebrship that also related to clinical disease pgroess. For this reason, I decided to ivnestae these in more detail. 
+The response to TLR stimulation by CpG ODN showed the largest number of predictors, reflecting the multiple layers of biology involved. This is discussed in more detail below. 
 
-### The imapct of RNA 
-Also RNA plot 
-### Individual cytokine – gene interactions of note
-Role of IGHV status and BCR signalling in Cytokine response
-(Figure \@ref(fig:IHGVBCR)).
+Response to TGF$\beta$ stimulation was most strongly associated with trisomy 12 and IGHV status. 
 
-(ref:IHGVBCR) 
+Two concepts emerged from this analysis. Firstly, the number of predictors for the response to TLR stimulation by CpG ODN indicates the multiple layers of biology involved. TLR response was highly heterogenous and a determinant of cluster membership that also related to clinical disease progress. For this reason, I decided to investigate these in more detail. 
 
+This analysis also highlighted trisomy 12 and IGHV status as the most common features to modulate responses to stimulation. IGHV status relates to the mutational status of the BCR, and so it is expected that the activity of the BCR signalling pathway may affect responses to other cytokine pathways (Figure \@ref(fig:IHGVBCR)). In contrast, whilst trisomy 12 is frequently occurs in CLL patients, its role in CLL drive is still incompletely understood. These results suggest a role in responding to microenvironmental signals, so I decided to investigate this in more detail. 
 
-```{r IHGVBCR, fig.cap='(ref:IHGVBCR)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 8, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+(ref:IHGVBCR) Control-normalised log transformed viabilty values after treatment with sCD40L, IL1$\beta$ and TGF$\beta$, stratified by IGHV status. 
+
+```{r IHGVBCR, fig.cap='(ref:IHGVBCR)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8, fig.align = "center", out.width = '100%', dev = 'cairo_pdf'}
 
 
 #add genetic data to viability dataframe
@@ -1111,55 +1205,10 @@ wrap_elements(gg[[1]]) + wrap_elements(gg[[2]]) + wrap_elements(gg[[3]])
 
 ```
 
-TLR response stratified by IGHV status (and trisomy 12) and discussion of interactions between BCR and TLR pathways
-(Figure \@ref(fig:TLRIHGVtri12)).
+## Investigating the genetic determinants of TLR response
+The responses to TLR stimulation by CpG ODN and Resiquimod were both determined by many genetic features, including del(11q) and *ATM* , del(17p) and *TP53*, IGHV status, trisomy 12 and *SF3B1* (Figure \@ref(fig:TLRGenes)). 
 
-(ref:TLRIHGVtri12) 
-
-
-```{r TLRIHGVtri12, fig.cap='(ref:TLRIHGVtri12)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
-
-
-#filter for Resiquimod-only treatment, only show patients who are annoyated for IGHV and Trisomy12
-df_patmeta %>% 
-  dplyr::filter(Cytokine=="Resiquimod",
-                !is.na(trisomy12),
-                !is.na(IGHV.status)) %>%
-         
-  ggplot(aes(x=interaction(IGHV.status, trisomy12),
-                    y=Log,
-                    color=(trisomy12)))+
-  geom_hline(yintercept = 0)+
-  geom_boxplot()+
-  geom_beeswarm(cex=1.5) +
-  guides(color="none", shape="none")+
-  scale_x_discrete(labels=c("M.0"="IGHV-M\n WT",
-                            "U.0"="IGHV-U\n WT",
-                            "M.1"="IGHV-M\n trisomy 12",
-                            "U.1"="IGHV-U\n trisomy 12"))+
-  stat_compare_means(method = "t.test",
-                     label.x.npc = "center", 
-                     comparisons = list( c(1,2), c(3,4), c(1,3)),
-                     size=3)+
-  xlab("") +
-  ylab("Log(Viability)") +
-  ggtitle("Resiquimod") +
-  scale_color_manual(values=c(colors[1], colors[2])) + 
-  coord_cartesian(ylim = c(-1.5, 3.1), clip="off") +
-  t1+
-  theme(axis.text.x = element_text(angle = 45, vjust =1))
-
-
-```
-
--Modulators of TLR signalling incl. effect of del11q and ATM mutations on TLR response
-(Figure \@ref(fig:TLRGenes)).
-
-(ref:TLRGenes) 
-
-Potentially show effect of IGHV, then ivnestgiation of TLR combined boave and belwo, then look intro tri 12
-
-These plots are not working right now - can work on them if i haev time 
+(ref:TLRGenes) Control-normalised log transformed viabilty values after treatment with Resqiumod (TLR 7/8), stratified by named genetic features. 
 
 ```{r TLRGenes, fig.cap='(ref:TLRGenes)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 10,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
@@ -1291,38 +1340,55 @@ df_patmeta %>%
 
 ```
 
--samples with KRAS mutations benefit less from IL4 stimulation
 
-(Figure \@ref(fig:IL4KRAS)).
+IGHV status is  known to affect response to TLR stimulation [@Chatzouli2014], leading to increased viability in IGHV-U samples, and decreased in IGHV-M. @Chatzouli2014 show that stimulation of TLR in IGHV-U samples leads to pronounced p-ERK induction, whereas in M-CLL, stimulation of TLR concomitantly with BCR stimulation is required to induce a smaller increase in p-ERK. TLR stimulation without BCR stimulation in IGHV-M samples leads to an induction of caspase-8 and apoptosis, much more so than in IGHV-U samples[@Chatzouli2014].
 
-(ref:IL4KRAS) 
+We noted trisomy 12 as an additional, previously unknown, determinant of TLR response (Bruch & Giles et al. 2021). In samples that do not have trisomy 12, as expected TLR stimulation increases the viability of IGHV-U samples, whilst it decreases viability in IGHV-M samples. In contrast, in samples with trisomy 12, TLR stimulation increases viability regardless of IGHV status (Student’s t-test, p<0.001 and p=0.018, Figure \@ref(fig:TLRIHGVtri12)).
 
-```{r IL4KRAS, fig.cap='(ref:IL4KRAS)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+The Chatzouli paper points to the existence of specific types of BCR/TLR collaboration  in CLL, dependent on the mutational status of the BCR. Our results point to a role for trisomy12 12 in this collbaoration between TLR and BCR signalling.
 
+
+(ref:TLRIHGVtri12) Beeswarm-boxplot showing control-normalise log transformed viability values, after treatment with Resiquimod, stratified by trisomy 12 and IGHV status. p-values from Student’s t-tests. 
+
+```{r TLRIHGVtri12, fig.cap='(ref:TLRIHGVtri12)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+
+
+#filter for Resiquimod-only treatment, only show patients who are annoyated for IGHV and Trisomy12
 df_patmeta %>% 
-   dplyr::filter(Cytokine=="IL-4",
-                !is.na(KRAS)) %>% 
+  dplyr::filter(Cytokine=="Resiquimod",
+                !is.na(trisomy12),
+                !is.na(IGHV.status)) %>%
          
-  ggplot(aes(x=KRAS,y=Log, color=(KRAS)))+
+  ggplot(aes(x=interaction(IGHV.status, trisomy12),
+                    y=Log,
+                    color=(trisomy12)))+
   geom_hline(yintercept = 0)+
   geom_boxplot()+
   geom_beeswarm(cex=1.5) +
   guides(color="none", shape="none")+
+  scale_x_discrete(labels=c("M.0"="IGHV-M\n WT",
+                            "U.0"="IGHV-U\n WT",
+                            "M.1"="IGHV-M\n trisomy 12",
+                            "U.1"="IGHV-U\n trisomy 12"))+
   stat_compare_means(method = "t.test",
                      label.x.npc = "center", 
+                     comparisons = list( c(1,2), c(3,4), c(1,3)),
                      size=3)+
-  xlab("KRAS") +
+  xlab("") +
   ylab("Log(Viability)") +
-  ggtitle("IL4") +
+  ggtitle("Resiquimod") +
   scale_color_manual(values=c(colors[1], colors[2])) + 
-
-  t2
+  coord_cartesian(ylim = c(-1.5, 3.1), clip="off") +
+  t1+
+  theme(axis.text.x = element_text(angle = 45, vjust =1))
 
 
 ```
+The impact of del(11q),  del(17p), and *ATM* and *TP53* mutations on TLR response isa lso interesting. Del(17p) occurs in 7% of CLL cases and is associated with loss of TP53, a tumour suppressor gene invovled in DNA damage and repair [@Zenz2010]. del(11q) is more common (18% of cases) and is associated with loss of ATM, another protein involved in DNA repair[@Kipps2017]. This suggests that there may be a role for the DNA damage response in determining whether CLL viability is increased or decreased in the presence of TLR stimulation. 
+The response to TLR stimulation was asscoiated with prognosis... 
 
-## Profiling the effects of trisomy 12 on cytokine response, and how this may be possible
-### Trisomy 12 modulates responses to IL4, TGFbeta and TLR stimuli
+## Investigating Trisomy 12 as a modulator of microenvironmental response
+### Trisomy 12 modulates responses to IL4, TGF$\beta$ and TLR stimuli
 
 
 (Figure \@ref(fig:tri12cytResponse)).
