@@ -1780,7 +1780,7 @@ Next, to see whether the enhanced response of patient samples A and B were due t
 
 (Figure \@ref(fig:tri12PhenocopiesRNA).
 
-(ref:tri12PhenocopiesRNA) Protein abundances for SMAD3, IRAK4 and STAT6. Patient sample A and B are indicated in blue and red, respectively. 
+(ref:tri12PhenocopiesRNA) RNA counts for SMAD3, IRAK4 and STAT6, stratified by trisomy 12 status. Patient sample A and B are indicated in blue and red, respectively. P values from Student's t-test. 
 
 ```{r tri12PhenocopiesRNA, fig.cap='(ref:tri12PhenocopiesRNA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 5, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
 genes <- c(
@@ -1808,7 +1808,7 @@ lapply(genes, function(x){
       ylab("Counts") +
       xlab("trisomy 12") +
       
-      t2 +
+      t1 +
       scale_color_manual(values = c(colors[1], colors[2])) +
       theme(aspect.ratio=1,  text = element_text(size = 15), legend.position = "none") +
       
@@ -1819,7 +1819,7 @@ lapply(genes, function(x){
       
 })
 
-RNAplots[[1]] + RNAplots[[2]]) + RNAplots[[3]] 
+RNAplots[[1]] + RNAplots[[2]] + RNAplots[[3]] 
 
 
 ```
@@ -1828,12 +1828,23 @@ Finally, I aimed to check whether these two trisomy 12 phenocopies may have an a
 These results collectively suggest that increased gene dosage of key genes in the IL4, TLR and TGF$\beta$ pathways may underlie the increased response of trisomy 12 samples to these pathways. This is also reflected in the patient samples A and B, which responded more strongly to the TGF$\beta$ and TLR pathways, respectively, and correspondingly higher levels of SMAD3 and STAT6 proteins. However, bioinformatics techniques can only go to far in providing biological proof. In the next stage of the analysis, I identified two more proteins that were of interest, and we decided to pursue this instead. 
 
 
-### Investigation of TF activity in trisomy12+ CLL and finding that SPIB and PU1 TFs are upregulated in trisomy12+ CLL
-tri 12 annotation 
+###  SPIB and PU1 TFs show higher activity in trisomy12+ CLL
+Trisomy 12 has been well-studied at the transcriptomic and proteomic level, and yet the cause of its recurrence in CLL  remains to be fully understood. My analysis of gene dosage and trisomy 12 phenocopies proved inconclusive. Thus, I next decided to investigate the impact of trisomy 12 on the epigenetic landscape of CLL, which is less well studied. In particular, I wanted to investigate differential transcription factor activity in CLL, which would give an indicator of whcih pathways are differentially active. 
 
-running diffTF, add a diagram to explain?
+I acquired two independent ATAC sequencing datasets. The first, planned by myself and P.M.B, and performed by P.M.B and N.A.Z, consisted of two WT and two trisomy 12 samples. The second, taken from @Rendeiro2017, comprised 43 WT and nine trisomy 12 samples. In the external dataset, trisomy 12 status was not annotated. To do this, we used the ATACseq reads to call trisomy 12 in samples that contained > 1.4 times more reads per peak (i.e. genomic region) on average in chromosome 12, compared to peaks on other chromosomes. 
 
-(Figure \@ref(fig:diffTFexplainer).
+(Figure \@ref(fig:tri12annotation).
+
+(ref:tri12annotation) 
+
+```{r tri12annotation, fig.cap='(ref:tri12annotation)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+
+#ADd represemtative examples? 
+
+```
+
+Next, we used the `R` package [@diffTF][REFERENCE] to identify TFs that showed differential binding site accessibility between the WT and trisomy 12 samples (Figure \@ref(fig:diffTFexplainer). To run diffTF, we provided a list of 636 TFs, and the genomic locations of their bindings sites, taken from the Hocomoco v10 database [REFERENCE]. For each TF, the diffTF software uses the ATACseq counts at each of the binding sites accross the genome to generate a distribution of fold changes between trisomy 12 and WT samples. This fold change distribution is compared to a background fold-change distribution of fold changes, calculated similarly using ATACseq counts for a GC-matched motif, that does not contain the TF binding motif. The TF is classified as differentially active between trisomy 12 and WT samples where these two distributions are significantly different. Each TF is assigned a weighted mean difference value, which quantifies the change in activity, and a p value. 
 
 (ref:diffTFexplainer) 
 
@@ -1843,26 +1854,15 @@ knitr::include_graphics("figures/diffTF_method.eps")
 
 ```
 
-visualisation of results 
+Runing this analysis on both ATACseq datasets indicated that the binding sites of nine TFs  were more accessible (p<0.05) in the trisomy 12 samples of the larger, external dataset (Figure \@ref(fig:tri12diffTF). In the smaller in-house dataset, the binding sites of 92 TFs were likewise more accessible (Supp. Figure \@ref(fig:diffTFsmallvolPlot)). RNA and proteomics data show difference abundances of transcripts and proteins in trisomy 12 CLL: ATACseq data here shows that this also corresponds to a specific signalling signature in trisomy 12 CLL. 
 
+We confirmed that the results were not affected by the additional copy of chromosome 12, by replicating the diffTF analysis without the ATACreads from chromsome 12. This did not impact on the signficant TFs.  
 
-(Figure \@ref(fig:tri12annotation).
+In both datasets, the TFs with the largest increase in activity in trisomy 12  were Spi-B and/or PU.1. Both TFs share similar binding motifs and exhibit functional redundancy38[REFERENCE], which make it difficult to distinguish from ATACseq data whether either or both are more active. 
 
-(ref:tri12annotation) 
+Spi-B and PU.1  are haematopoetic regulators that are known to be key regulators of healthy B-cell function[REFERENCE]39,40, controlling B-cell responses to environmental cues including CD40L, TLR ligands and IL4[REFERENCE]41.
 
-```{r tri12annotation, fig.cap='(ref:tri12annotation)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-
-
-
-```
-
-
-(Figure \@ref(fig:tri12diffTF).
-
-(ref:tri12diffTF) 
-
-Also refer to : (Figure \@ref(fig:diffTFsmallvolPlot)
+(ref:tri12diffTF) Bar plot showing the results of the diffTF analysis for the @Rendeiro2016 dataset. y axis shows change in TF activity (weighted mean difference)  between trisomy 12 (n = 9) and non-trisomy 12 samples (n = 43),x axis indicates TF names. 17 / 636 TFs, with BH adjusted p <0.05 are shown. p values generated by diffTF in permutation mode. TF binding sites defined in HOCOMOCO v10 [REFERENCE].
 
 ```{r tri12diffTF, fig.cap='(ref:tri12diffTF)', message = FALSE,  echo = FALSE,fig.height=6, fig.width=8, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
 
@@ -1910,19 +1910,240 @@ plotTab.diffTF$TF <- factor(plotTab.diffTF$TF,levels=rev(unique(plotTab.diffTF$T
           size=5 , fontface="bold") +
   #flip plot
   coord_flip() 
-  
-  
-  
 
 ```
 
-## Profiling the downstream effects of SPIB and PU1:
-### Over-representation of BCR, TLR, interleukin and TGFbeta response genes amongst SPIB and PU1 targets in ChIPseq data
-(Figure \@ref(fig:SpiBChipSeq).
+## Profiling the downstream effects of Spi-B and PU.1
+Spi-B and PU.1 appeared to be upregulated in trisomy 12 CLL, and evidence in the literature indicated that these may regulate environmental sensing genes, providing a link between trisomy 12, and enhanced responses to external signals. 
+
+To provide further evidence of this, I next aimed to profile the downstream effects of Spi-B and PU.1 in lymphoma. 
+
+### Spi-B and PU.1 targets are enriched for immune signalling pathways
+I hypothesised that Spi-B and PU.1 might coordinating transcriptional response to external signals, thus modulating CLL proliferation in response to the microenvironment. To identify Spi-B and PU.1 target genes specifically  in lymphoma, I acquired a ChIPseq dataset35[REFERENCE] containing data on Spi-B and PU.1 binding in lymphoma cell lines. I used this dataset to test for functional enrichment of immune signalling pathways amongst the TF targets. 
+
+To define TF targets, I took the closest gene to each significant ChIP peak (q value<0.05), and within ±1kb of TSS. I then tested for over-representation of these TF targets amongst selected KEGG[REFERENCE] and Reactome [REFERENCE] genesets, using the 'R' package [@clusterProfiler]. This method corresponded to a one-sided version of Fisher's exact test. This analysis showed TLR, BCR and TGF$\beta$ signalling genes to be enriched (p<0.01) amongst Spi-B and PU.1 targets (Figure \@ref(fig:SpiBChipSeq).
 
 (ref:SpiBChipSeq) 
 
-```{r SpiBChipSeq, fig.cap='(ref:SpiBChipSeq)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r SpiBChipSeq, fig.cap='(ref:SpiBChipSeq)', message = FALSE,  echo = FALSE, fig.height=2, fig.width = 15, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+#Get significant peaks
+#filter ChipSeq data for peaks with significant score -log10(Qscore)>1.3
+#if q < 0.05, then Qlog >1.3
+spib.filtered <- peak.spib[(elementMetadata(peak.spib)[,1] > 1.3)]
+pu1.filtered <- peak.pu1[(elementMetadata(peak.pu1)[,1] > 1.3)]
+
+
+# Annotate peaks with meta data
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+peakAnno.spib <- annotatePeak(spib.filtered, 
+                              tssRegion = c(-3000, 3000),
+                              TxDb = txdb, 
+                              annoDb = "org.Hs.eg.db")
+peakAnno.pu1 <- annotatePeak(pu1.filtered, 
+                             tssRegion = c(-3000, 3000),
+                             TxDb = txdb, 
+                             annoDb = "org.Hs.eg.db")
+#Filter for genes within ±1kb
+peakAnno.spib.1kb <- as.data.frame(peakAnno.spib) %>% dplyr::filter(abs(distanceToTSS) <1000)
+peakAnno.pu1.1kb <- as.data.frame(peakAnno.pu1) %>% dplyr::filter(abs(distanceToTSS) <1000)
+
+#get  KEGG pathways from msigdbr database
+kegg <- 
+  msigdbr(species = "Homo sapiens", category = "C2", subcategory = "CP:KEGG") %>% 
+  #select pathway name and entrez id 
+  dplyr::select(gs_name, entrez_gene)
+#subset for pathways that we want to test
+kegg <-
+  dplyr::filter(kegg, 
+         #All KEGG immune signaling pathways
+         gs_name %in% c("KEGG_B_CELL_RECEPTOR_SIGNALING_PATHWAY",
+                        "KEGG_CHEMOKINE_SIGNALING_PATHWAY",
+                        "KEGG_CYTOKINE_CYTOKINE_RECEPTOR_INTERACTION", 
+                        "KEGG_JAK_STAT_SIGNALING_PATHWAY" ,
+                        "KEGG_NOD_LIKE_RECEPTOR_SIGNALING_PATHWAY"  , 
+                        "KEGG_NOTCH_SIGNALING_PATHWAY", 
+                        "KEGG_RIG_I_LIKE_RECEPTOR_SIGNALING_PATHWAY", 
+                        "KEGG_TOLL_LIKE_RECEPTOR_SIGNALING_PATHWAY",
+                        "KEGG_T_CELL_RECEPTOR_SIGNALING_PATHWAY",
+                        #Control genesets
+                        "KEGG_OXIDATIVE_PHOSPHORYLATION",                  
+                        "KEGG_DNA_REPLICATION"
+         ))
+colnames(kegg) <- c("term", "gene")
+#tidy up terms - remove KEGG, underscore and put in lower cases
+kegg$term <- gsub("KEGG_", "",kegg$term )
+kegg$term <- gsub("_", " ",kegg$term )
+kegg$term <- gsub("B CELL RECEPTOR SIGNALING PATHWAY", 
+                  "BCR Signaling Pathway",kegg$term )
+kegg$term <- gsub("CHEMOKINE SIGNALING PATHWAY", 
+                  "Chemokine Signaling Pathway",kegg$term )
+kegg$term <- gsub("CYTOKINE CYTOKINE RECEPTOR INTERACTION", 
+                  "Cytokine Cytokine Receptor Interaction",kegg$term )
+kegg$term <- gsub("JAK STAT SIGNALING PATHWAY", 
+                  "JAK STAT signaling pathway",kegg$term )
+kegg$term <- gsub("NOD LIKE RECEPTOR SIGNALING PATHWAY", 
+                  "NLR Signaling Pathway",kegg$term )
+kegg$term <- gsub("NOTCH SIGNALING PATHWAY", 
+                  "Notch Signaling Pathway",kegg$term )
+kegg$term <- gsub("RIG I LIKE RECEPTOR SIGNALING PATHWAY", 
+                  "RLR Signaling Pathway",kegg$term )
+kegg$term <- gsub("TOLL LIKE RECEPTOR SIGNALING PATHWAY", 
+                  "TLR Signaling Pathway",kegg$term )
+kegg$term <- gsub("T CELL RECEPTOR SIGNALING PATHWAY", 
+                  "TCR Signaling Pathway",kegg$term )
+kegg$term <- gsub("OXIDATIVE PHOSPHORYLATION", 
+                  "Oxidative Phosphorylation",kegg$term )
+kegg$term <- gsub("P53 SIGNALING PATHWAY", 
+                  "P53 Signaling Pathway",kegg$term )
+kegg$term <- gsub("DNA REPLICATION", 
+                  "DNA Replication",kegg$term )
+kegg$genesetDatabase <- "KEGG"
+#get reactome pathways
+reactome <- 
+  msigdbr(species = "Homo sapiens", category = "C2", subcategory = "CP:REACTOME") %>% 
+  #select pathway name and entrez id
+  dplyr::select(gs_name, entrez_gene)
+#subset for pathways that we want to test
+reactome <-
+  dplyr::filter(reactome, 
+         gs_name %in% c(#selected immune pathways
+                        "REACTOME_SIGNALING_BY_TGF_BETA_RECEPTOR_COMPLEX",
+                        "REACTOME_TNF_SIGNALING",
+                        "REACTOME_INTERLEUKIN_1_SIGNALING",
+                        "REACTOME_INTERLEUKIN_10_SIGNALING",
+                        "REACTOME_INTERLEUKIN_15_SIGNALING",
+                        "REACTOME_INTERLEUKIN_2_SIGNALING",
+                        "REACTOME_INTERLEUKIN_4_AND_INTERLEUKIN_13_SIGNALING",
+                        "REACTOME_INTERLEUKIN_6_SIGNALING" ,
+                        "REACTOME_OTHER_INTERLEUKIN_SIGNALING",
+                        "REACTOME_SIGNALING_BY_INTERLEUKINS",
+                        "REACTOME_INTERFERON_ALPHA_BETA_SIGNALING" ,
+                        "REACTOME_INTERFERON_GAMMA_SIGNALING", 
+                        #Control genesets
+                        "REACTOME_CELL_CYCLE",                  
+                        "REACTOME_REGULATION_OF_TP53_ACTIVITY" 
+                        ))
+colnames(reactome) <- c("term", "gene")
+#tidy up terms
+reactome$term <- gsub("REACTOME_", "",reactome$term )
+reactome$term <- gsub("_", " ",reactome$term )
+#tidy up and put in lower case
+reactome$term <- gsub("CELL CYCLE", 
+                      "Cell Cycle",reactome$term )
+reactome$term <- gsub("INTERLEUKIN 1 SIGNALING", 
+                      "Interleukin 1 Signaling",reactome$term )
+reactome$term <- gsub("INTERLEUKIN 10 SIGNALING", 
+                      "Interleukin 10 Signaling",reactome$term )
+reactome$term <- gsub("INTERLEUKIN 15 SIGNALING", 
+                      "Interleukin 15 Signaling",reactome$term )
+reactome$term <- gsub("INTERLEUKIN 2 SIGNALING", 
+                      "Interleukin 2 Signaling",reactome$term )
+reactome$term <- gsub("INTERLEUKIN 4 AND INTERLEUKIN 13 SIGNALING", 
+                      "Interleukin 4 and Interleukin 13 Signaling",reactome$term )
+reactome$term <- gsub("INTERLEUKIN 6 SIGNALING",
+                      "Interleukin 6 Signaling",reactome$term )
+reactome$term <- gsub("OTHER INTERLEUKIN SIGNALING", 
+                      "Other Interleukin Signaling",reactome$term )
+reactome$term <- gsub("SIGNALING BY INTERLEUKINS", 
+                      "Signaling by Interleukins",reactome$term )
+reactome$term <- gsub("REGULATION OF TP53 ACTIVITY", 
+                      "Regulation of TP53 Pathway",reactome$term )
+reactome$term <- gsub("SIGNALING BY TGF BETA RECEPTOR COMPLEX",
+                      "Signaling by TGFbeta \nReceptor Complex", reactome$term )
+reactome$term <- gsub("TNF SIGNALING", 
+                      "TNF Signaling",reactome$term )
+reactome$term <- gsub("INTERFERON ALPHA BETA SIGNALING", 
+                      "Interferon Alpha Beta Signaling",reactome$term )
+reactome$term <- gsub("INTERFERON GAMMA SIGNALING", 
+                      "Interferon Gamma Signaling", reactome$term )
+#annotate which database these pathways come from 
+reactome$genesetDatabase <- "Reactome"
+
+
+#Run over-representation test forSPIB
+
+#generate TERM2GENE dataframe to use in overrepresetation test
+#join kegg and reactome gene sets together - this defines the list of pathways we are interested in, and select term and gene columns
+term2gene <- rbind(kegg, reactome) %>% dplyr::select(term, gene)
+#term2genesetdatabase - keep details of database source for each pathway 
+term2genesetdatabase <- rbind(kegg, reactome) %>% dplyr::select(term, genesetDatabase)
+colnames(term2genesetdatabase) <- c("term", "name")
+##SPIB
+#run over-representation test, and extract all results and p values:
+#NB Bg ratio = number of genes in set / number of unique genes in term2gene, 
+#NB Gene ratio = number of SPIB targets in gene set being tested / total number of SPIB targets that overlap with genes in term to gene
+spibRes <- enricher(unique(as.data.frame(peakAnno.spib.1kb)$geneId), 
+                    #Use pathways in term2gene
+                    TERM2GENE=term2gene, 
+                    #assign description for each term, as its database source
+                    TERM2NAME = term2genesetdatabase, 
+                    #no cutoffs on reported results, we want to see all results and p values 
+                    minGSSize = 0,
+                    maxGSSize = 1000,
+                    pvalueCutoff = 1, 
+                    qvalueCutoff = 1)
+#get dataframe of results
+spibRes.df <- fortify(spibRes, 
+              showCategory = length(unique(term2gene$term)), #show all pathways tested
+              split=NULL)
+resTab.spib <-  
+  mutate(spibRes.df, genesetSize = BgRatio*length(unique(term2gene$gene))) %>%  #multiply BgRatio by total genes tested to get number of genes in set
+  dplyr::select(ID, Description, pvalue, Count, genesetSize)
+colnames(resTab.spib) <- c("ID", "genesetDatabase", "pvalue_SPIB","count_SPIB", "genesetSize")
+
+
+#Run over-representation test for PU1
+
+##PU1
+#run overepresentation test, and extract all results and pvalues (ie use p value and q value cutoff at 1) 
+#NB not all results are shown because for some genesets there is no overlap between pu1 targets and geneset
+pu1Res <- enricher(unique(as.data.frame(peakAnno.pu1.1kb)$geneId), 
+                    TERM2GENE=term2gene, 
+                    TERM2NAME = term2genesetdatabase, 
+                    minGSSize = 0,
+                    maxGSSize = 10000,
+                    pvalueCutoff = 1, 
+                    qvalueCutoff = 1)
+#get dataframe of results
+pu1Res.df <- fortify(pu1Res, 
+              showCategory = length(unique(term2gene$term)), #show all pathways tested 
+              split=NULL)
+resTab.pu1 <-  mutate(pu1Res.df, genesetSize = BgRatio*length(unique(term2gene$gene))) %>%  #multiply BgRatio by total genes tested to get number of genes in set
+  dplyr::select(ID, Description, pvalue, Count, genesetSize)
+colnames(resTab.pu1) <- c("ID", "genesetDatabase", "pvalue_PU1","count_PU1", "genesetSize")
+
+
+#join results for SPIB and PU1 together to show in one table
+resTab <- full_join(resTab.spib, resTab.pu1)
+#where count and p value is NA, put a 0 / 1 (ie there were no PU1/SPIB target genes in the set)
+resTab$count_PU1[is.na(resTab$count_PU1)] <- 0
+resTab$count_SPIB[is.na(resTab$count_SPIB)] <- 0
+resTab$pvalue_SPIB[is.na(resTab$pvalue_SPIB)] <- 1
+resTab$pvalue_PU1[is.na(resTab$pvalue_PU1)] <- 1
+#select columns of interest to show in figure
+resTab <- dplyr::select(resTab, ID, genesetDatabase, genesetSize,  count_SPIB, pvalue_SPIB,count_PU1, pvalue_PU1)
+#adjust decimal places of p values
+resTab$pvalue_SPIB <- round(resTab$pvalue_SPIB, digits = 3)
+resTab$pvalue_PU1 <- round(resTab$pvalue_PU1, digits = 3)
+#get significant results
+resTab <- dplyr::filter(resTab, pvalue_SPIB<0.01|pvalue_PU1<0.01)
+colnames(resTab) <- c("Pathway",
+                      "Geneset Database" , 
+                      "Geneset Size",  
+                      #show the total number of SPIB targets in ChIPseq data 
+                      paste("Spi-B targets (/" ,length(unique(as.data.frame(peakAnno.spib.1kb)$geneId)),")", sep= ""), 
+                      "SPIB p-value", 
+                      #show the total number of PU1 targets in ChIPseq data  
+                      paste("PU.1 targets (/" ,length(unique(as.data.frame(peakAnno.pu1.1kb)$geneId)),")",sep= ""), 
+                      "PU1 p-value")
+
+ggtexttable(resTab, rows = NULL, 
+           theme = ttheme(
+             colnames.style = colnames_style(color = "white", fill = palreds[7], size = 16),
+             tbody.style = tbody_style(color = "black",size = 18)
+           )
+)
 
 ```
 
@@ -1988,6 +2209,14 @@ _The data here was generated by Tina Bericoviv and was included in Bruch & Giles
 
 
 ## Discussion
+
+## Contributions
+
+ATAC seq data set 
+-planned by me and PEter, generated by PEter and Nayara
+
+ATAC seq analysi s
+-tri 12 annoation performed by ivan and me, diffTF analysi ran by Ivan, interpfreted by me 
 
 TLR signalling: 
 REad [@Chatzouli2017]
