@@ -8,7 +8,7 @@ Collectively, these data enable us to probe genetic and epigenetic modulators of
 
 To do here: 
 -finish all writing  *<-*
--go through and proof, tidy the sotry, self-cite
+-go through and proof, tidy the sotry, self-cite, add {#id}
 -reference
 -add to methods / discussion / intro 
 
@@ -1444,7 +1444,7 @@ wrap_elements(ii[[1]]) + wrap_elements(ii[[2]]) + wrap_elements(ii[[3]])
 
 ```
 
-### Gene dosage effects
+### Gene dosage effects {#gene-dosage-effects}
 Trisomy 12 samples contain a third copy of chromosome 12: transcriptomic and proteomic profiling of CLL samples with this lesion have demonstrated that this has a major impact on gene expression and protein abundances. It has also been shown that BCR signalling proteins are amongst those with increased expression in trisomy 12 [@HerbstThesis], and this is thought to contribute to increased susceptibility to BCR inhibition in trisomy 12 CLL [@JCI]. 
 
 In a similar way, I began by investigating RNA and protein expression levels amongst genes involved in the TGF$\beta$, IL4 and TLR pathways, to which trisomy 12 samples respond more strongly. The aim was to determine whether proteins in these pathways are more abundant in trisomy 12 CLL, thus contributing to the enhanced response.  
@@ -1668,11 +1668,18 @@ irak4_pro = lapply(c("IRAK4", "MYD88"), function(x){
   (irak4_pro[[1]] + irak4_pro[[2]])
 
 ```
+Next I looked for further evidence that the hgiher gene dosage may explain the trisomy 12 phenotype. 
+
 
 ### Investigation of non-trisomy12 samples that are phenocopies of trisomy12 CLL+ (based on their responses to stimuli) 
-(Figure \@ref(fig:tri12Classfier).
+I next looked at whether any non-trisomy 12 samples showed a similar phenotype to the trisomy 12 samples, with stronger responses to the stimuli. The aim was to identify trisomy 12 phenocopies, in order to investigate the molecular profiles of these samples and isolate any features which may be repsoieble for enhanced responses . In particualr, I was interested to see if these phenocopies showed higher expression of the genes identified above. 
 
-(ref:tri12Classfier) 
+To identifier trisomy 12 phenocopies, I generated a classifier which could predict trisomy 12 status of a sample from the response values to the panel of stimuli. I aimed to find non-trisomy 12 samples that were consistently misclassified as trisomy 12, indicating that their response profiles were similar to that of trisomy 12 samples. 
+
+The classifer was built using binomial regression, with lasso penalisation,  as implemented in the `R` package [@glmnet][REFERENCE]. The feature matrix consisted of z scores of the viability values after treatment with each stimulus, and was used to predict the response (trisomy 12 status). I ran the model for 50 bootstrapped repeats, using  three-fold cross-validation and mean absolute error as loss. Resiquimod, sCD40L+IL4 and TGF$\beta$ were selected as coefficients that predict trisomy 12 status (Figure \@ref(fig:tri12Classfier).
+
+
+(ref:tri12Classfier) Predictor profile showing coefficients selected as predictors of trisomy 12 status. Here, binomial modelling with L1-penalty was used to identify associations between responses to stimuli and trisomy 12 status. Bar plots (left) show size and sign of assigned coefficients named on the right. A positive coefficient indicates that higher viability upon treatment named stimulus is associated with trisomy 12. Facet labels (top) and corresponding heatmap below show how the viability with each named stimulus relates to trisomy 12 status. The model shown was selected from 50 bootstrapped repeats, based on maximal AUC.
 
 ```{R phenocopyPrework}
 ########### Viability matrix ################
@@ -1747,9 +1754,11 @@ grid.arrange(p)
 
 ```
 
-(Figure \@ref(fig:tri12PhenocopiesCytResponse).
+I then ran the classifier on the same dataset, using the viabilty z scores to predict trisomy 12 status, using each of the 50 bootstrapped models. I compared the results of the classifcation with the true tirsomy 12 status. Two patient samples were consistently misclassified as trisomy 12 in more than 50% of repeats, here I refer to them as patient sample A and B. 
 
-(ref:tri12PhenocopiesCytResponse) 
+To investigate these samples in more detail, I first looked at their responses to the stimuli of interest (Figure \@ref(fig:tri12PhenocopiesCytResponse). Patient sample A showed the lowest viability with TGF$\beta$. Patient sample B showed the highest viability with IL4, and the second highest with Resiquimod.  This appeared to be the cause of their missclassfication. 
+
+(ref:tri12PhenocopiesCytResponse) Control-normalised log-transformed viability values, for all samples after treatment with Resiquimod, sCD40L + IL4 and TGF$\beta$. Patient sample A and B are indicated in blue and red, respectively. 
 
 ```{r tri12PhenocopiesCytResponse, fig.cap='(ref:tri12PhenocopiesCytResponse)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 3, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1767,12 +1776,14 @@ plotTab %>%
 
 
 ```
+Next, to see whether the enhanced response of patient samples A and B were due to differences in gene dosage, I visualised the RNA expression levels for the proteins identified in \@ref(gene-dosage-effects). Patient sample A, which responded most strongly to Resiquimod, showed higher levels of IRAK4. PAtient sample B, which responded strongly to TGF$\beta$ showed the highest level of SMAD3 expression amongst the non-trisomy 12 samples. Neither sample showed any notable difference in STAT6 levels. 
+
 (Figure \@ref(fig:tri12PhenocopiesRNA).
 
-(ref:tri12PhenocopiesRNA) 
+(ref:tri12PhenocopiesRNA) Protein abundances for SMAD3, IRAK4 and STAT6. Patient sample A and B are indicated in blue and red, respectively. 
 
 ```{r tri12PhenocopiesRNA, fig.cap='(ref:tri12PhenocopiesRNA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 5, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
-genes <- c("ENSG00000269404", #SPIB
+genes <- c(
            "ENSG00000166888", #STAT6
            "ENSG00000198001", #IRAK4
            "ENSG00000166949" #SMAD3
@@ -1788,7 +1799,6 @@ lapply(genes, function(x){
     rownames_to_column("ensembl_gene_id") %>%
     filter(ensembl_gene_id == x) %>%
     dplyr::select(symbol)
-    if(gene_name== "SPI1"){genename <- "PU.1"}
     
     #Make plot
     ggplot(data, aes(x = trisomy12, y = count, color = trisomy12)) +
@@ -1809,28 +1819,14 @@ lapply(genes, function(x){
       
 })
 
-(RNAplots[[1]] + RNAplots[[2]])/
-(RNAplots[[3]] + RNAplots[[4]]) 
+RNAplots[[1]] + RNAplots[[2]]) + RNAplots[[3]] 
 
 
 ```
+Finally, I aimed to check whether these two trisomy 12 phenocopies may have an amplicon on chromosome 12, which may help to isolate the gene or genes responsible for the trisomy 12 phenocopy, and by ...,  the genes that may drive the increased incidence of trisomy 12 in CLL. Whole exome sequencing was available for both patient samples A and B, and I used this data to check for differences in copy numbers on any regions of chromosome 12. Patient sample A had amplified regions at 12p13.31 (42 copies), 12q24.13 (10 copies) and 12q24.33  (21 copies).  None of these regiosn contained any of the signalling genes identified in  \@ref(gene-dosage-effects). 
 
+These results collectively suggest that increased gene dosage of key genes in the IL4, TLR and TGF$\beta$ pathways may underlie the increased response of trisomy 12 samples to these pathways. This is also reflected in the patient samples A and B, which responded more strongly to the TGF$\beta$ and TLR pathways, respectively, and correspondingly higher levels of SMAD3 and STAT6 proteins. However, bioinformatics techniques can only go to far in providing biological proof. In the next stage of the analysis, I identified two more proteins that were of interest, and we decided to pursue this instead. 
 
-Pat033 has duplicated regions: 
--p13.31 - 42 copies
--q24.13 - 10 copies
--q24.33 - 21 copies 
-See what Junyan says about this and potentially add a figure 
-
-(Figure \@ref(fig:tri12PhenocopiesCNV).
-
-(ref:tri12PhenocopiesCNV) 
-
-```{r tri12PhenocopiesCNV, fig.cap='(ref:tri12PhenocopiesCNV)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-
-
-```
 
 ### Investigation of TF activity in trisomy12+ CLL and finding that SPIB and PU1 TFs are upregulated in trisomy12+ CLL
 tri 12 annotation 
