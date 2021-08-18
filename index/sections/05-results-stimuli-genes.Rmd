@@ -7,7 +7,7 @@ Collectively, these data enable us to probe genetic and epigenetic modulators of
 
 
 To do here: 
-0finsh all writing  *<-*
+-finish all writing  *<-*
 -go through and proof, tidy the sotry, self-cite
 -reference
 -add to methods / discussion / intro 
@@ -1404,7 +1404,9 @@ Activation of TLR 7/8/9 was one of the most potent modulators of CLL viabilty id
 
 ## Investigating Trisomy 12 as a modulator of microenvironmental response
 ### Trisomy 12 modulates responses to IL4, TGF$\beta$ and TLR stimuli
-Our survey of genetic determinants of stimuli response highlighted trisomy 12 as a modulator of responses to IL4, TGF$\beta$, soluble CD40L + IL4 and TLR stimuli (Bruch & GIles et al. 2021, Figure \@ref(fig:tri12cytResponse)). For example, the increase in viability induced by IL4 was enhanced in trisomy 12 samples, as was the decrease in viability in response to TGF$\beta$ stimulation. Trisomy 12 is commonly found in CLL (15% of patients)[@Dohner2000]. Until recently, trisomy 12 has been seen as an intermediate-risk abnormality, though novel therapies have improved outcomes from trisomy 12 patients [@Bosch2019]. However, the functional explanation for its recurrence remains undetermined.  
+Our survey of genetic determinants of stimuli response highlighted trisomy 12 as a modulator of responses to IL4, TGF$\beta$, soluble CD40L + IL4 and TLR stimuli (Bruch & Giles et al. 2021, Figure \@ref(fig:tri12cytResponse)). For example, the increase in viability induced by IL4 was enhanced in trisomy 12 samples, as was the decrease in viability in response to TGF$\beta$ stimulation. 
+
+Trisomy 12 is commonly found in CLL (15% of patients)[@Dohner2000]. Until recently, this genetic lesion has been regarded as endowing?? intermediate risk, though novel therapies have improved outcomes for trisomy 12 patients [@Bosch2019]. However, the functional explanation for its recurrence remains undetermined. In the following, I outline my work to investigate how trisomy 12 may act as a modulator of responses to environmental signals in CLL.
 
 (ref:tri12cytResponse) Control-normalised log transformed viabilty values after treatment with IL4, sCD40L + IL4" and TGF$\beta$, stratified by trisomy 12. 
 
@@ -1443,11 +1445,19 @@ wrap_elements(ii[[1]]) + wrap_elements(ii[[2]]) + wrap_elements(ii[[3]])
 ```
 
 ### Gene dosage effects
-(Figure \@ref(fig:SMAD3geneDosage).
+Trisomy 12 samples contain a third copy of chromosome 12: transcriptomic and proteomic profiling of CLL samples with this lesion have demonstrated that this has a major impact on gene expression and protein abundances. It has also been shown that BCR signalling proteins are amongst those with increased expression in trisomy 12 [@HerbstThesis], and this is thought to contribute to increased susceptibility to BCR inhibition in trisomy 12 CLL [@JCI]. 
 
-(ref:SMAD3geneDosage) 
+In a similar way, I began by investigating RNA and protein expression levels amongst genes involved in the TGF$\beta$, IL4 and TLR pathways, to which trisomy 12 samples respond more strongly. The aim was to determine whether proteins in these pathways are more abundant in trisomy 12 CLL, thus contributing to the enhanced response.  
 
-_The Proteomics dataset was kindly shared by Sophie Herbst, from her paper..._ 
+I ran differential expression analysis to compare CLL samples from the screen with and without trisomy 12. Next, I filtered ... the differentially expressed genes (adjusted p < 0.1) for those belonging to the TGF$\beta$, JAK-STAT and TLR pathways genesets, from the KEGG database. I visualised the RNA counts and protein abundances for those genes. 
+
+Only a small proportion of the differentially expressed genes belonged to the TGF$\beta$, JAK-STAT and TLR pathways genesets. However of those that were, several genes were key downstream mediators of these pathways (Figure \@ref(fig:geneDosage). Amongst TGF$\beta$ signalling genes, 7 / 95 were upregulated in trisomy 12, including SMAD3. 12 / 160 IL4 signalling genes were differentially expressed, 3 of those are found on chromosome 12, including STAT2 and STAT6. Only 2 / 116 genes in the TLR geneset were differentially expressed, though significantly this included IRAK4 on chromosome 12. Amongst these key mediators, SMAD3, STAT2 and STAT6, and IRAK4, all showed higher protein abundance in addition to RNA expression. 
+
+(Figure \@ref(fig:geneDosage).
+
+(ref:geneDosage) Beeswarm-boxplots showing RNA counts and protein abundances for named genes, stratified by trisomy 12 status. P values from Student's t-test. _The Proteomics dataset was kindly shared by Sophie Herbst, generated as part of her doctoral thesis [@HerbstThesis]..._ 
+**COMBINE FIGURES**
+
 ```{r prepgeneDosage}
 
 #get table to convert between IDS
