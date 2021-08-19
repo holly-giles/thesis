@@ -377,3 +377,6 @@ wrt cluster assignment
 
 ## Overview of the approach
 Including diagrams 
+
+## Note on contributions
+Many of the figures, adn their cpations are taken directly from the amunscript. Where this si the case, it is indicated in the figure caption. 
