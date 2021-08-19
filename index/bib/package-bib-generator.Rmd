@@ -1,0 +1,65 @@
+---
+title: "generate-package-bib"
+author: "Holly Giles"
+date: "8/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r loadLibraries}
+library(ggplot2)
+library(tidyverse)
+library(ggbeeswarm)
+library(RColorBrewer)
+library(ggrepel)
+library(patchwork)
+library(tidyr)
+library(magrittr)
+library(pheatmap)
+library(ggfortify)
+library(gridExtra)
+library(DESeq2)
+library(survival)
+library(survminer)
+library(glmnet)
+library(ConsensusClusterPlus)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(msigdbr)
+library(dplyr)
+library(fgsea)
+library(kableExtra)
+library(ggplotify)
+library(reshape2)
+library(grid)
+library(ggh4x)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(ChIPseeker)
+library(genomation)
+library(ggpubr)
+library(gtable)
+library(scales)
+library(gridExtra)
+library(ggrepel)
+library(broom)
+library(plyr)
+library(png)
+library(cowplot)
+library(Hmisc)
+library(MultiAssayExperiment)
+library(biomartr)
+library(biomaRt)
+library(BloodCancerMultiOmics2017)
+
+```
+
+
+```{r pressure, echo=FALSE}
+knitr::write_bib(c(.packages(), "bookdown"), "/Volumes/huber/users/giles/thesis/index/bib/packages.bib")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
