@@ -1149,59 +1149,12 @@ wrap_elements(Fig3B_1 + Fig3B_2 + Fig3B_3 +
 
 The multivariate analysis demonstrated that responses to IL4 and sCD40L + IL4, TLR and TGF$\beta$ were all affected by multiple genetic features. 
 
-For example, presence of trisomy 12 or IGHV-U was associated with a stronger increase in viability upon stimulation by IL4. In contrast, samples with a mutation in KRAS, NRAS or BRAF showed a smaller increase in viability upon stimulation, in other words, these tumours benefited less from the anti-apoptotic effects of IL4. This could indicate that the ability of IL4 to increase the viability of the samples is in part dependent upon signalling via RAS/RAF, which is already active in mutant samples. 
+For example, higher viability in response to IL4 stimulation was associated with trisomy 12 and unmutated IGHV. In contrast, IL4 generated little or no increase in viabilty in samples with a mutation in KRAS, NRAS or BRAF. These tumours benefited less from the anti-apoptotic effects of IL4, indicating that the ability of IL4 to increase  viability could be dependent on signalling via Ras-Raf-MEK-ERK, which is already active in mutant samples. 
 
-The response to TLR stimulation by CpG ODN showed the largest number of predictors, reflecting the multiple layers of biology involved. These included del(11q) and *ATM* , del(17p) and *TP53*, IGHV status, trisomy 12 and *SF3B1*. In general,  TGF$\beta$ activation led to a decrease in viability in CLL samples, and this was enahnced in IGHV-U and trisomy 12 samples. 
+### Response to TLR stimulation is dependent on IGHV status, trisomy 12 and mutations in DNA Damage Response genes
+The multivariate analysis highlighted that TLR stimulation by CpG ODN and Resiquimod both showed the largest number of predictors, reflecting the multiple layers of biology involved here. These included del(11q) and *ATM* , del(17p) and *TP53*, IGHV status, trisomy 12 and *SF3B1*. Amongst the screening cohort, TLR stimulation increased viability in certain samples and decreased in others. The clustering groups identified in  section \@ref(clustering) also showed highly divergent responses to TLR, and this related to disease progression, thus warranting a more detailed look at the underlying features modulating TLR response (Figure \@ref(fig:TLRGenes)). 
 
-Summarise systematic anlaysis , in the rest of this chapter, we look at indiviudal findings 
-UPDATE THIS: 
-
-Two concepts emerged from this analysis. Firstly, the number of predictors for the response to TLR stimulation by CpG ODN indicates the multiple layers of biology involved. TLR response was highly heterogenous and a determinant of cluster membership that also related to clinical disease progress. For this reason, I decided to investigate these in more detail.
-
-This analysis also highlighted trisomy 12 and IGHV status as the most common features to modulate responses to stimulation. IGHV status relates to the mutational status of the BCR, and so it is expected that the activity of the BCR signalling pathway may affect responses to other cytokine pathways (Figure \@ref(fig:IHGVBCR)). In contrast, whilst trisomy 12 is frequently occurs in CLL patients, its role in CLL drive is still incompletely understood. These results suggest a role in responding to microenvironmental signals, so I decided to investigate this in more detail.
-
-(ref:IHGVBCR) Control-normalised log transformed viabilty values after treatment with sCD40L, IL1$\beta$ and TGF$\beta$, stratified by IGHV status. 
-
-```{r IHGVBCR, fig.cap='(ref:IHGVBCR)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8, fig.align = "center", out.width = '100%', dev = 'cairo_pdf'}
-
-
-#add genetic data to viability dataframe
-df_patmeta <- left_join(df, patMeta, by = "PatientID")
-
-gg = 
-  lapply(c("sCD40L", "IL-1\u03B2","TGF\u03B2"), function(x){
-
-df_patmeta %>% 
-  dplyr::filter(Cytlabel==x,
-                !is.na(IGHV.status)) %>%
-
-         
-  ggplot(aes(x=IGHV.status,y=Log,color=(IGHV.status)))+
-  geom_hline(yintercept = 0)+
-  geom_boxplot()+
-  geom_beeswarm(cex=1.5) +
-  guides(color="none", shape="none")+
-  stat_compare_means(method = "t.test",
-                     label.x.npc = "center", 
-                     size=3)+
-  xlab("IGHV status") +
-  ylab("Log(Viability)") +
-  ggtitle(x) +
-  scale_color_manual(values=c(colors[1], colors[2])) + 
-
-  t2
-
-})
-
-wrap_elements(gg[[1]]) + wrap_elements(gg[[2]]) + wrap_elements(gg[[3]]) 
-
-
-```
-
-## Investigating the genetic determinants of TLR response
-The responses to TLR stimulation by CpG ODN and Resiquimod were both determined by many genetic features, including del(11q) and *ATM* , del(17p) and *TP53*, IGHV status, trisomy 12 and *SF3B1* (Figure \@ref(fig:TLRGenes)). 
-
-(ref:TLRGenes) Control-normalised log transformed viabilty values after treatment with Resqiumod (TLR 7/8), stratified by named genetic features. 
+(ref:TLRGenes) Control-normalised log transformed viability values after treatment with Resiquimod (TLR 7/8), stratified by named genetic features. 
 
 ```{r TLRGenes, fig.cap='(ref:TLRGenes)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 10,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
@@ -1333,13 +1286,9 @@ df_patmeta %>%
 
 ```
 
-MAybe edit this down, move to discussion
-IGHV status is  known to affect response to TLR stimulation [@Chatzouli2014], leading to increased viability in IGHV-U samples, and decreased in IGHV-M. @Chatzouli2014 show that stimulation of TLR in IGHV-U samples leads to pronounced p-ERK induction, whereas in M-CLL, stimulation of TLR concomitantly with BCR stimulation is required to induce a smaller increase in p-ERK. TLR stimulation without BCR stimulation in IGHV-M samples leads to an induction of caspase-8 and apoptosis, much more so than in IGHV-U samples[@Chatzouli2014].
+IGHV status (along with Methylation Cluster, which is related to IGHV) and trisomy 12 had the strongest effect on TLR response. @Chatzouli2014 have previously shown that TLR responses is dependent on IGHV status. We noted trisomy 12 as an additional, novel determinant of TLR response (Bruch & Giles et al. 2021). In samples that do not have trisomy 12, TLR stimulation increases the viability of IGHV-U samples, whilst it decreases viability in IGHV-M samples, as expected. In contrast, in samples with trisomy 12, TLR stimulation increases viability regardless of IGHV status (Student’s t-test, p<0.001 and p=0.018, Figure \@ref(fig:TLRIHGVtri12)).
 
-We noted trisomy 12 as an additional, previously unknown, determinant of TLR response (Bruch & Giles et al. 2021). In samples that do not have trisomy 12, as expected TLR stimulation increases the viability of IGHV-U samples, whilst it decreases viability in IGHV-M samples. In contrast, in samples with trisomy 12, TLR stimulation increases viability regardless of IGHV status (Student’s t-test, p<0.001 and p=0.018, Figure \@ref(fig:TLRIHGVtri12)).
-
-The Chatzouli paper points to the existence of specific types of BCR/TLR collaboration  in CLL, dependent on the mutational status of the BCR. Our results point to a role for trisomy12 12 in this collaboration between TLR and BCR signalling.
-
+@Chatzouli2014's observations point to the existence of specific types of BCR/TLR collaboration  in CLL, leading to activation of pro-survival pathways, or apoptosis depending on the IGHV status of the tumour. Our results suggest that synergy between BCR and TLR may also be dependent on trisomy 12 status. 
 
 (ref:TLRIHGVtri12) Beeswarm-boxplot showing control-normalised log transformed viability values, after treatment with Resiquimod, stratified by trisomy 12 and IGHV status. p-values from Student’s t-tests. 
 
@@ -1377,13 +1326,19 @@ df_patmeta %>%
 
 
 ```
-The impact of del(11q), del(17p), and *ATM* and *TP53* mutations on TLR response is also interesting. Del(17p) occurs in 7% of CLL cases and is associated with loss of TP53, a tumour suppressor gene involved in DNA damage and repair [@Zenz2010]. del(11q) is more common (18% of cases) and is associated with loss of ATM, another protein involved in DNA repair[@Kipps2017]. This suggests that there may be a role for the DNA damage response in determining whether CLL viability is increased or decreased in the presence of TLR stimulation. 
 
-Activation of TLR 7/8/9 was one of the most potent modulators of CLL viabilty identified in the screen. The impact of TLR stimulation is also highly variable and dependet on many genetic features. The role of TLR signalling in CLL pathogenesis and prognosis may so far be underappreciated. 
+In addition to trisomy 12, TLR stimulation also increased viability in samples with mutations in the DNA damage response pathway, namely del(11q), del(17p), and *ATM* and *TP53*. Del(17p) occurs in 7% of CLL cases and is associated with loss of TP53, a tumour suppressor gene involved in DNA damage and repair [@Zenz2010]. del(11q) is more common (18% of cases) and is associated with loss of ATM, another protein involved in DNA repair[@Kipps2017]. This suggests that there may also be cross-talk between the TLR and DNA damage response pathway, and that this affects the outcome of TLR stimulation. 
+
+The effect of TLR stimulation on CLL viability is dependent on the molecular makeup of the tumour. The nature of TLR response may also be important in prognosis, underlined by our the observation in section \@ref(clustering) that a subgroup of patients (C3) shows slower disease progression, and is the only group in which TLR induces apoptosis. The role of TLR signalling in pathogenesis and prognosis may thus so far be under appreciated. 
+
+This work represents the first large-scale attempt to profile the integrative effects of cell-extrinsic signals and cell-intrinsic features in lymphoma on a large scale. Two of the most potent pathways in CLL, namely IL4 and TLR, were modulated by a number of genetic features. Understanding how these pathways 
+
+Our systematic approach also highlighted trisomy 12  as the most common feature to modulate responses.  Trisomy 12 is frequently mutated in CLL patients, though  the reason for this remains undetermined. The rest of this chapter outlines my work to investigate a role for trisomy 12 in microenvironmental response. 
+
 
 ## Investigating Trisomy 12 as a modulator of microenvironmental response
-### Trisomy 12 modulates responses to IL4, TGF$\beta$ and TLR stimuli
-Our survey of genetic determinants of stimuli response highlighted trisomy 12 as a modulator of responses to IL4, TGF$\beta$, soluble CD40L + IL4 and TLR stimuli (Bruch & Giles et al. 2021, Figure \@ref(fig:tri12cytResponse)). For example, the increase in viability induced by IL4 was enhanced in trisomy 12 samples, as was the decrease in viability in response to TGF$\beta$ stimulation. 
+### Trisomy 12 enhances responses to IL4, TGF$\beta$ and TLR stimuli
+Trisomy 12 modulated responses to IL4, TGF$\beta$, soluble CD40L + IL4 and TLR stimuli (Bruch & Giles et al. 2021, Figure \@ref(fig:tri12cytResponse)). For example, the increase in viability induced by IL4 was enhanced in trisomy 12 samples, as was the decrease in viability in response to TGF$\beta$ stimulation. 
 
 Trisomy 12 is commonly found in CLL (15% of patients)[@Dohner2000]. Until recently, this genetic lesion has been regarded as endowing?? intermediate risk, though novel therapies have improved outcomes for trisomy 12 patients [@Bosch2019]. However, the functional explanation for its recurrence remains undetermined. In the following, I outline my work to investigate how trisomy 12 may act as a modulator of responses to environmental signals in CLL.
 
@@ -2197,6 +2152,11 @@ UP until now, cancer is understoof as a disease of genetics. We show it is impor
 
 
 ## Discussion
+
+TLR and BCR 
+@Chatzouli2014 show that stimulation of TLR in IGHV-U samples leads to pronounced p-ERK induction, whereas in M-CLL, stimulation of TLR concomitantly with BCR stimulation is required to induce a smaller increase in p-ERK. TLR stimulation without BCR stimulation in IGHV-M samples leads to an induction of caspase-8 and apoptosis, much more so than in IGHV-U samples[@Chatzouli2014].
+
+
 REad up on trisomy 12
 [@Abruzzo2018; @HerbstThesis; @MeierAbt2021, @JCI]. 
 
