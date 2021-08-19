@@ -1,9 +1,9 @@
 # Genetic modulators of responses to microenvironmental stimulation
 Profiling the effects of the panel of stimuli revealed the heterogenous nature of responses to stimulation. The analysis revealed four  patient sample groups, with distinct responses to the stimuli, unique molecular profiles, and differential disease progression. Two pathways emerged as the most potent modulators of CLL viability, namely IL4 and TLR. These too induced heterogeneous responses across the cohort, in particular stimulation of TLR 7/8/9 increased viability in some samples, whilst it reduced viability in others. 
 
-Next we asked to what extent this heterogeneity of response relates to the molecular profiles of the tumours. We sought to understand which underlying genetic features might modulate responses to external signals, and how these interactions may occur.  We combined the screening dataset with multi-omics profiles of the patient samples taken from the PACE repository[@JCI; R-BloodCancerMultiOmics2017] and performed a systematic survey of molecular determinants of stimulus response, using whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, for a small subset of patients we also generated  ATAC sequencing and Mass Spectrometry data. 
+Next we asked to what extent this heterogeneity of response relates to the molecular profiles of the tumours. We sought to understand which underlying genetic features might modulate responses to external signals, and how these interactions may occur.  We combined the screening dataset with multi-omics profiles of the patient samples taken from the PACE repository [@JCI; R-BloodCancerMultiOmics2017] and performed a systematic survey of molecular determinants of stimulus response, using whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, for a small subset of patients we also generated  ATAC sequencing and Mass Spectrometry data. 
 
-Collectively, these data enabled us to probe genetic and epigenetic modulators of microenvironmental signalling, in a heterogeneous cohort that encompasses the clinical and molecular diversity of CLL. In the first part of this chapter, I apply a broad systematic approach to identify important genetic modulators, and in the second, I outline the follow-up investigations into specific features of interest. 
+Collectively, these data enabled us to probe genetic and epigenetic modulators of microenvironmental signalling, in a heterogeneous cohort that encompasses the clinical and molecular diversity of CLL. In the first part of this chapter, I apply a broad systematic approach to identify important genetic modulators, and in the second, I outline my follow-up investigations into the impact of trisomy 12 on stimulus response. 
 
 
 ```{r, echo = FALSE}
@@ -784,7 +784,6 @@ thecytokines <- unique(df$Cytokine) %>% setdiff("No Cytokine")
 ### Univariate analysis identifies IGHV status and trisomy 12 as key modulators of microenvironmental response
 To begin, I ran a univariate analysis to compare viability values post-stimulation for patient samples with and without each genetic feature. In total 63 genetic features were surveyed, including IGHV status, somatic gene mutations and structural variants, where there were at least three patient samples in each group (Figure \@ref(fig:stimuliGeneAssosciations)). 
 
-
 (ref:stimuliGeneAssosciations) Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested gene-stimulus associations. Tests performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63). Each circle represents a gene-stimulus association. Associations that meet 10% FDR cut off are indicated in colour, where the colour denotes the genetic feature. 
 
 ```{r stimuliGeneAssosciations, fig.cap='(ref:stimuliGeneAssosciations)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
@@ -918,10 +917,10 @@ p_values %<>%
 
 ```
 
-This analysis revealed the extent to which genetic features modulate microenvironmental response: for ten out of 17 stimuli, at least one genetic feature determined  response and for six out of 17 stimuli, two or more genetic features significantly altered the response (Student's  t-tests,  FDR  =  10%). The most common features were IGHV status and trisomy 12. Del(11q) also affected response to several stimuli. Notably,  del(13q) and del(17p), which are some of the most common aberations in CLL and also act as prognostic markers [@Dohner2000] had no impact on the responses to the panel of stimuli. 
+This analysis revealed the extent to which genetic features modulate microenvironmental response: for ten out of 17 stimuli, at least one genetic feature determined  response and for six out of 17 stimuli, two or more genetic features significantly altered the response (Student's  t-tests,  FDR  =  10%). The most common features were IGHV status and trisomy 12. Del(11q) also affected response to several stimuli. Notably,  del(13q) and del(17p), which like trisomy 12 and del(11q) are the most common aberrations in CLL and act as prognostic markers [@Dohner2000], had no impact on the responses to the panel of stimuli. 
 
-### Heterogenetiy of response is not caused by differences in receptor expression
-Next, we tested whether the observed heterogeneity of response was caused by differences in receptor expression.  We calculated Pearson correlation coefficients comparing control - normalised  log viability values for each stimulus with transformed RNA counts of the corresponding stimulus receptor(s). No  stimulus-receptor pair showed a correlation greater than 0.4, confirming that the heterogeneity of response was not caused by differential receptor expression. 
+### Heterogeneity of response is not caused by differences in receptor expression
+Next, we tested whether the observed heterogeneity of response was caused by differences in receptor expression.  We calculated Pearson correlation coefficients comparing control - normalised  log viability values for each stimulus with transformed RNA counts of the corresponding stimulus receptor(s). No  stimulus-receptor pair showed a Pearson coefficient greater than 0.4, confirming that the heterogeneity of response was not caused by differential receptor expression. 
 
 (ref:RNAcorrelations) Volcano plot showing p-values versus Pearson correlation coefficients, for the correlation between control - normalised log viability values for each stimulus and expression of the corresponding stimulus receptor, in matched patient samples. Expression calculated using transformed RNA counts (using VST method) of untreated CLL sample.
 
@@ -1149,7 +1148,7 @@ wrap_elements(Fig3B_1 + Fig3B_2 + Fig3B_3 +
 
 The multivariate analysis demonstrated that responses to IL4 and sCD40L + IL4, TLR and TGF$\beta$ were all affected by multiple genetic features. 
 
-For example, higher viability in response to IL4 stimulation was associated with trisomy 12 and unmutated IGHV. In contrast, IL4 generated little or no increase in viabilty in samples with a mutation in KRAS, NRAS or BRAF. These tumours benefited less from the anti-apoptotic effects of IL4, indicating that the ability of IL4 to increase  viability could be dependent on signalling via Ras-Raf-MEK-ERK, which is already active in mutant samples. 
+For example, higher viability in response to IL4 stimulation was associated with trisomy 12 and unmutated IGHV. In contrast, IL4 generated little or no increase in viability in samples with a mutation in KRAS, NRAS or BRAF. These tumours benefited less from the anti-apoptotic effects of IL4, indicating that the ability of IL4 to increase viability could be dependent on signalling via Ras-Raf-MEK-ERK, which is already active in mutant samples. 
 
 ### Response to TLR stimulation is dependent on IGHV status, trisomy 12 and mutations in DNA Damage Response genes
 The multivariate analysis highlighted that TLR stimulation by CpG ODN and Resiquimod both showed the largest number of predictors, reflecting the multiple layers of biology involved here. These included del(11q) and *ATM* , del(17p) and *TP53*, IGHV status, trisomy 12 and *SF3B1*. Amongst the screening cohort, TLR stimulation increased viability in certain samples and decreased in others. The clustering groups identified in  section \@ref(clustering) also showed highly divergent responses to TLR, and this related to disease progression, thus warranting a more detailed look at the underlying features modulating TLR response (Figure \@ref(fig:TLRGenes)). 
@@ -1327,14 +1326,24 @@ df_patmeta %>%
 
 ```
 
-In addition to trisomy 12, TLR stimulation also increased viability in samples with mutations in the DNA damage response pathway, namely del(11q), del(17p), and *ATM* and *TP53*. Del(17p) occurs in 7% of CLL cases and is associated with loss of TP53, a tumour suppressor gene involved in DNA damage and repair [@Zenz2010]. del(11q) is more common (18% of cases) and is associated with loss of ATM, another protein involved in DNA repair[@Kipps2017]. This suggests that there may also be cross-talk between the TLR and DNA damage response pathway, and that this affects the outcome of TLR stimulation. 
+In addition to trisomy 12, TLR stimulation also increased viability in samples with mutations in the DNA damage response pathway, namely del(11q), del(17p), and *ATM* and *TP53*. Del(17p) occurs in 7% of CLL cases and is associated with loss of TP53, a tumour suppressor gene involved in DNA damage and repair [@Zenz2010]. Del(11q) is more common (18% of cases) and is associated with loss of ATM, another protein involved in DNA repair[@Kipps2017]. This suggests that there may also be cross-talk between the TLR and DNA damage response pathway, and that this affects the outcome of TLR stimulation. 
 
 The effect of TLR stimulation on CLL viability is dependent on the molecular makeup of the tumour. The nature of TLR response may also be important in prognosis, underlined by our the observation in section \@ref(clustering) that a subgroup of patients (C3) shows slower disease progression, and is the only group in which TLR induces apoptosis. The role of TLR signalling in pathogenesis and prognosis may thus so far be under appreciated. 
 
-This work represents the first large-scale attempt to profile the integrative effects of cell-extrinsic signals and cell-intrinsic features in lymphoma on a large scale. Two of the most potent pathways in CLL, namely IL4 and TLR, were modulated by a number of genetic features. Understanding how these pathways 
+Collectively, this work represents the first large-scale attempt to profile the integrative effects of cell-extrinsic signals and cell-intrinsic features in lymphoma on a large scale. This systematic approach highlighted trisomy 12  as the most common feature to modulate responses. The rest of this chapter outlines my work to investigate the role of trisomy 12 in microenvironmental response. 
 
-Our systematic approach also highlighted trisomy 12  as the most common feature to modulate responses.  Trisomy 12 is frequently mutated in CLL patients, though  the reason for this remains undetermined. The rest of this chapter outlines my work to investigate a role for trisomy 12 in microenvironmental response. 
 
+All good to here
+Tomorrow 0 make this into a single section and remove the other part - save this into an extra time script 
+Then go through and check self -citing and crediting and contributions 
+Then knit 
+Then adjust figures 
+Then dump things into methods and intro and discussion 
+=should be able to sign off this chapter today or tomorrow 
+
+Then speed up initial part for chapter 6 may need two weeks? and keep reading 
+
+Then introduction and discussion 
 
 ## Investigating Trisomy 12 as a modulator of microenvironmental response
 ### Trisomy 12 enhances responses to IL4, TGF$\beta$ and TLR stimuli
