@@ -1,0 +1,96 @@
+---
+title: "Extra Time Script"
+author: "Holly Giles"
+date: "8/20/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Chapter 1
+
+# Chapter 2
+
+# Chapter 3
+
+# Chapter 4
+
+# Chapter 5
+IGVH and BCR signalling 
+(ref:IHGVBCR) Control-normalised log transformed viabilty values after treatment with sCD40L, IL1$\beta$ and TGF$\beta$, stratified by IGHV status. 
+
+```{r IHGVBCR, fig.cap='(ref:IHGVBCR)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8, fig.align = "center", out.width = '100%', dev = 'cairo_pdf'}
+
+
+#add genetic data to viability dataframe
+df_patmeta <- left_join(df, patMeta, by = "PatientID")
+
+gg = 
+  lapply(c("sCD40L", "IL-1\u03B2","TGF\u03B2"), function(x){
+
+df_patmeta %>% 
+  dplyr::filter(Cytlabel==x,
+                !is.na(IGHV.status)) %>%
+
+         
+  ggplot(aes(x=IGHV.status,y=Log,color=(IGHV.status)))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     size=3)+
+  xlab("IGHV status") +
+  ylab("Log(Viability)") +
+  ggtitle(x) +
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+
+  t2
+
+})
+
+wrap_elements(gg[[1]]) + wrap_elements(gg[[2]]) + wrap_elements(gg[[3]]) 
+
+
+```
+
+### Visualisation of SPIB and PU1 binding sites from ChIPseq data in BCR, TLR, interleukin and TGFbeta signalling genes
+Remove / Add if time
+(Figure \@ref(fig:SpiBBindingSites).
+
+(ref:SpiBBindingSites) 
+
+```{r SpiBBindingSites, fig.cap='(ref:SpiBBindingSites)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+```
+
+### Investigation of DE genes within IL4 and TGFbeta pathways in SPIB/PU1 DKO mice
+Remove / Add if time
+(Figure \@ref(fig:SpiBDEgenes).
+
+(ref:SpiBDEgenes) 
+
+```{r SpiBDEgenes, fig.cap='(ref:SpiBDEgenes)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+```
+
+### Spi-B and PU.1 linked genes 
+Key result: generation of GRN to identify SPIB and PU1 regulated genes, and investigation of associated log2FCs of these genes in trisomy 12 vs non-trisomy12 samples (including CD79A and B) 
+
+Remove / Add if time 
+
+(Figure \@ref(fig:SpiBGRN).
+
+(ref:SpiBGRN) 
+
+```{r SpiBGRN, fig.cap='(ref:SpiBGRN)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+```
+
+
+
+
+# Chapter 6
