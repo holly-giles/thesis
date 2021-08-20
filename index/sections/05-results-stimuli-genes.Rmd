@@ -1333,23 +1333,15 @@ The effect of TLR stimulation on CLL viability is dependent on the molecular mak
 Collectively, this work represents the first large-scale attempt to profile the integrative effects of cell-extrinsic signals and cell-intrinsic features in lymphoma on a large scale. This systematic approach highlighted trisomy 12  as the most common feature to modulate responses. The rest of this chapter outlines my work to investigate the role of trisomy 12 in microenvironmental response. 
 
 
-All good to here
-Tomorrow 0 make this into a single section and remove the other part - save this into an extra time script 
-Then go through and check self -citing and crediting and contributions 
-Then knit 
-Then adjust figures 
-Then dump things into methods and intro and discussion 
-=should be able to sign off this chapter today or tomorrow 
 
-Then speed up initial part for chapter 6 may need two weeks? and keep reading 
-
-Then introduction and discussion 
 
 ## Investigating Trisomy 12 as a modulator of microenvironmental response
-### Trisomy 12 enhances responses to IL4, TGF$\beta$ and TLR stimuli
+### Trisomy 12 is a modulator of microenvironmental response {#trisomy12-modulator}
 Trisomy 12 modulated responses to IL4, TGF$\beta$, soluble CD40L + IL4 and TLR stimuli (Bruch & Giles et al. 2021, Figure \@ref(fig:tri12cytResponse)). For example, the increase in viability induced by IL4 was enhanced in trisomy 12 samples, as was the decrease in viability in response to TGF$\beta$ stimulation. 
 
-Trisomy 12 is commonly found in CLL (15% of patients)[@Dohner2000]. Until recently, this genetic lesion has been regarded as endowing?? intermediate risk, though novel therapies have improved outcomes for trisomy 12 patients [@Bosch2019]. However, the functional explanation for its recurrence remains undetermined. In the following, I outline my work to investigate how trisomy 12 may act as a modulator of responses to environmental signals in CLL.
+Trisomy 12 is commonly mutated in CLL (15% of patients)[@Dohner2000]. Until recently, this genetic lesion was regarded as conferring intermediate risk, though novel therapies have improved outcomes for trisomy 12 patients [@Bosch2019]. However, the functional explanation for its recurrence is incompletely understood. Previous work has shown a role for gene dosage effects in the pathogenic mechanism: @Kienle2005 show that overexpression of genes including CDK4 and E2F1 leads to increased cell cycling and higher proliferative capacity. Likewise, @HerbstThesis showed that BCR signalling proteins are also upregulated, which may also contribute to the increased proliferative capacity. Despite this, outcomes in trisomy 12 CLL are more favourable, and these cases show increased susceptibility to BCR inhibition [@JCI]. 
+
+In the following, I outline my work to investigate the incompletely understood role of trisomy 12 in CLL.
 
 (ref:tri12cytResponse) Control-normalised log transformed viability values after treatment with IL4, sCD40L + IL4 and TGF$\beta$, stratified by trisomy 12. 
 
@@ -1387,14 +1379,14 @@ wrap_elements(ii[[1]]) + wrap_elements(ii[[2]]) + wrap_elements(ii[[3]])
 
 ```
 
-### Gene dosage effects {#gene-dosage-effects}
+### STAT6, IRAK4 and SMAD3 are more highly expressed in trisomy 12 CLL  {#gene-dosage-effects}
 Trisomy 12 samples contain a third copy of chromosome 12: transcriptomic and proteomic profiling of CLL samples with this lesion have demonstrated that this has a major impact on gene expression and protein abundances [@Abruzzo2018; @HerbstThesis; @MeierAbt2021]. It has also been shown that BCR signalling proteins are amongst those with increased expression in trisomy 12 [@HerbstThesis], and this is thought to contribute to increased susceptibility to BCR inhibition in trisomy 12 CLL [@JCI]. 
 
 Guided by this observation, I began by investigating RNA and protein expression levels amongst genes involved in the TGF$\beta$, IL4 and TLR pathways, to which trisomy 12 samples respond more strongly. The aim was to determine whether proteins in these pathways are more abundant in trisomy 12 CLL, thus contributing to the enhanced response.  
 
 I ran differential expression analysis to compare CLL samples from the screen with and without trisomy 12. Next, I filtered the differentially expressed genes (adjusted p < 0.1) for those belonging to the TGF$\beta$, JAK-STAT and TLR pathways genesets, from the KEGG database. I visualised the RNA counts and protein abundances for those genes. 
 
-Only a small proportion of the differentially expressed genes belonged to the TGF$\beta$, JAK-STAT and TLR pathways genesets. However of those that were, several genes were key downstream mediators of these pathways (Figure \@ref(fig:geneDosage). Amongst TGF$\beta$ signalling genes, 7 / 95 were upregulated in trisomy 12, including SMAD3. 12 / 160 IL4 signalling genes were differentially expressed, 3 of those are found on chromosome 12, including STAT2 and STAT6. Only 2 / 116 genes in the TLR geneset were differentially expressed, though significantly this included IRAK4 on chromosome 12. Amongst these key mediators, SMAD3, STAT2 and STAT6, and IRAK4, all showed higher protein abundance in addition to RNA expression. 
+Only a small proportion of the differentially expressed genes belonged to the TGF$\beta$, JAK-STAT and TLR pathways genesets. However of those that were, several genes were key downstream mediators of these pathways (Figure \@ref(fig:geneDosage). Amongst TGF$\beta$ signalling genes, 7 / 95 were upregulated in trisomy 12, including SMAD3. 12 / 160 IL4 signalling genes were differentially expressed, including STAT2.  Only 2 / 116 genes in the TLR geneset were differentially expressed, though this included IRAK4 on chromosome 12. Amongst these key mediators SMAD3, STAT2, and IRAK4, all showed higher protein abundance in addition to increased RNA expression. Notably, STAT6, the key downstream mediator of IL4 signalling,  was not differentially expressed, but also showed differential protein abundance. Interestingly, many of the overexpressed genes are not located on chromosome 12, indicating the extent to which the differential dosage of this chromosome has on the expression of the entire genome. 
 
 (Figure \@ref(fig:geneDosage).
 
@@ -1611,13 +1603,15 @@ irak4_pro = lapply(c("IRAK4", "MYD88"), function(x){
   (irak4_pro[[1]] + irak4_pro[[2]])
 
 ```
-Next I looked for further evidence that the higher gene dosage may explain the trisomy 12 phenotype. 
-### Classification analysis identifies trisomy 12 phenocopies that shed light on trisomy 12 mechansism
-I next looked at whether any non-trisomy 12 samples showed a similar phenotype to the trisomy 12 samples, with stronger responses to the stimuli. The aim was to identify trisomy 12 phenocopies, in order to investigate the molecular profiles of these samples and isolate any features which may be repsoieble for enhanced responses . In particualr, I was interested to see if these phenocopies showed higher expression, or even gene amplification, of the genes identified above. 
 
-To identifier trisomy 12 phenocopies, I generated a classifier which could predict trisomy 12 status of a sample from the response values to the panel of stimuli. I aimed to find non-trisomy 12 samples that were consistently misclassified as trisomy 12, indicating that their response profiles were similar to that of trisomy 12 samples. 
+Next I looked for further evidence to directly link the higher gene dosage of cytokine signalling genes, to enhanced responses to cytokine signals. 
 
-The classifier was built using binomial regression, with lasso penalisation,  as implemented in the `R` package `glmnet` [@R-glmnet]. The feature matrix consisted of z scores of the viability values after treatment with each stimulus, and was used to predict the response (trisomy 12 status). I ran the model for 50 bootstrapped repeats, using  three-fold cross-validation and mean absolute error as loss. Resiquimod, sCD40L+IL4 and TGF$\beta$ were selected as coefficients that predict trisomy 12 status (Figure \@ref(fig:tri12Classfier).
+### Classification analysis identifies trisomy 12 phenocopies that show increased expression of IRAK4 and SMAD3
+I next investigated whether any non-trisomy 12 samples might display a trisomy 12-like phenotype (refered to as a phenocopy), in that they respond in a similar way to the panel of stimuli. The aim was to identify trisomy 12 phenocopies and to isolate the feature of these samples that might explain the underlying cause of enhanded response to external signals in trisomy 12 CLL.  In particular, I was interested to see if these phenocopies showed higher expression, or even gene amplification, of the signalling genes identified in section  \@ref(gene-dosage-effects). 
+
+To identify trisomy 12 phenocopies, I began by generating a classifier to predict the trisomy 12 status of a sample from its stimulus response matrix. I aimed to find non-trisomy 12 samples that were consistently misclassified as trisomy 12.
+
+The classifier was built using binomial regression, with lasso penalisation,  as implemented in the `R` package `glmnet` [@R-glmnet]. The feature matrix consisted of z scores of the viability values after treatment with each stimulus, and was used to predict the response (trisomy 12 status). I ran the model for 50 bootstrapped repeats, using  three-fold cross-validation and mean absolute error as loss. Resiquimod, sCD40L+IL4 and TGF$\beta$ were selected as coefficients that predict trisomy 12 status (Figure \@ref(fig:tri12Classfier), as would be expected bed on the observations in section \@ref(trisomy12-modulator).
 
 
 (ref:tri12Classfier) Predictor profile showing coefficients selected as predictors of trisomy 12 status. Here, binomial modelling with L1-penalty was used to identify associations between responses to stimuli and trisomy 12 status. Bar plots (left) show size and sign of assigned coefficients named on the right. A positive coefficient indicates that higher viability upon treatment named stimulus is associated with trisomy 12. Facet labels (top) and corresponding heatmap below show how the viability with each named stimulus relates to trisomy 12 status. The model shown was selected from 50 bootstrapped repeats, based on maximal AUC.
@@ -1695,9 +1689,7 @@ grid.arrange(p)
 
 ```
 
-I then ran the classifier on the same dataset, using the viabilty z scores to predict trisomy 12 status, using each of the 50 bootstrapped models. I compared the results of the classification with the true trisomy 12 status. Two patient samples were consistently misclassified as trisomy 12 in more than 50% of repeats, here I refer to them as patient sample A and B. 
-
-To investigate these samples in more detail, I first looked at their responses to the stimuli of interest (Figure \@ref(fig:tri12PhenocopiesCytResponse). Patient sample A showed the lowest viability with TGF$\beta$. Patient sample B showed the highest viability with IL4, and the second highest with Resiquimod.  This appeared to be the cause of their missclassfication. 
+I then predicted trisomy 12 status with the same viability matrix, using each of the 50 bootstrapped. I compared the results of the classification with the true trisomy 12 status. Two patient samples were misclassified as trisomy 12 in more than 50% of repeats; I refer to these as patient sample A and B in the below. Patient sample A showed the lowest viability with TGF$\beta$ (Figure \@ref(fig:tri12PhenocopiesCytResponse), and Patient sample B showed the highest viability with IL4, and the second highest with Resiquimod.  
 
 (ref:tri12PhenocopiesCytResponse) Control-normalised log-transformed viability values, for all samples after treatment with Resiquimod, sCD40L + IL4 and TGF$\beta$. Patient sample A and B are indicated in blue and red, respectively. 
 
@@ -1717,11 +1709,12 @@ plotTab %>%
 
 
 ```
-Next, to see whether the enhanced response of patient samples A and B were due to differences in gene dosage, I visualised the RNA expression levels for the proteins identified in \@ref(gene-dosage-effects). Patient sample A, which responded most strongly to Resiquimod, showed higher levels of IRAK4. PAtient sample B, which responded strongly to TGF$\beta$ showed the highest level of SMAD3 expression amongst the non-trisomy 12 samples. Neither sample showed any notable difference in STAT6 levels. 
+I next investigated whether either of these non-trisomy 12 samples contained any regional amplifications on chromosome 12, which may help to isolate the gene(s) causing the tumour to respond more strongly to these signals. The whole exome sequencing for both patient samples indicated that Patient sample A had several amplified regions at 12p13.31 (42 copies), 12q24.13 (10 copies) and 12q24.33 (21 copies).  An examination of the genes in these regions indicated that none of the signalling genes identified in  \@ref(gene-dosage-effects) could be found in these regions, and no clear candidate gene(s) emerged that may be involved in responses to external signals. 
 
-(Figure \@ref(fig:tri12PhenocopiesRNA).
+In the absence of gene amplification, I next checked patient samples A and B might show higher expression of the  signalling genes identified in  \@ref(gene-dosage-effects) by visualising the RNA expression levels for SMAD3, IRAK4 and STAT6 for these patients (Figure \@ref(fig:tri12PhenocopiesRNA). Patient sample A, which responded most strongly to Resiquimod, showed high levels of IRAK4 compared to the other non-triomsy 12 samples. Patient sample B, which responded strongly to TGF$\beta$ showed the highest level of SMAD3 expression amongst the non-trisomy 12 samples. Thus, whilst neither patient sample contained an amplicon of SMAD3 or IRAK4,  its possible that increased expression of these proteins enables a stronger response to the corresponding pathway.
 
-(ref:tri12PhenocopiesRNA) RNA counts for SMAD3, IRAK4 and STAT6, stratified by trisomy 12 status. Patient sample A and B are indicated in blue and red, respectively. P values from Student's t-test. 
+
+(ref:tri12PhenocopiesRNA) Raw RNA counts for SMAD3, IRAK4 and STAT6, stratified by trisomy 12 status. Patient sample A and B are indicated in blue and red, respectively. P values from Student's t-test. 
 
 ```{r tri12PhenocopiesRNA, fig.cap='(ref:tri12PhenocopiesRNA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 5, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
 genes <- c(
@@ -1764,14 +1757,12 @@ RNAplots[[1]] + RNAplots[[2]] + RNAplots[[3]]
 
 
 ```
-Finally, I aimed to check whether these two trisomy 12 phenocopies may have an amplicon on chromosome 12, which may help to isolate the gene or genes responsible for the trisomy 12 phenocopy, and by ...,  the genes that may drive the increased incidence of trisomy 12 in CLL. Whole exome sequencing was available for both patient samples A and B, and I used this data to check for differences in copy numbers on any regions of chromosome 12. Patient sample A had amplified regions at 12p13.31 (42 copies), 12q24.13 (10 copies) and 12q24.33  (21 copies).  None of these regiosn contained any of the signalling genes identified in  \@ref(gene-dosage-effects). 
+These results collectively suggest that increased gene dosage of key genes in the IL4, TLR and TGF$\beta$ pathways may underlie the increased response of trisomy 12 samples to these pathways. This is also reflected in the patient samples A and B, which responded more strongly to the TGF$\beta$ and TLR pathways, respectively, and correspondingly higher levels of SMAD3 and STAT6 proteins. However, computational techniques can only go to far in providing biological proof, and more work is needed here to confirm this finding. In addition to gene dosage effects, I also investigated differences in transcription factor activity in trisomy 11. The results of this warranted further follow up, and this forms the focus of rest of this chapter. 
 
-These results collectively suggest that increased gene dosage of key genes in the IL4, TLR and TGF$\beta$ pathways may underlie the increased response of trisomy 12 samples to these pathways. This is also reflected in the patient samples A and B, which responded more strongly to the TGF$\beta$ and TLR pathways, respectively, and correspondingly higher levels of SMAD3 and STAT6 proteins. However, bioinformatics techniques can only go to far in providing biological proof. In the next stage of the analysis, I identified two more proteins that were of interest, and we decided to pursue this instead. 
+###  Spi-B and PU.1 TFs show higher activity in trisomy 12 CLL
+Trisomy 12 has been well-studied at both the transcriptomic and proteomic level, and yet the cause of its recurrence in CLL  remains to be fully understood. Thus, I next decided to investigate the impact of trisomy 12 on the epigenetic landscape of CLL, which is less well studied. In particular, I wanted to investigate differential transcription factor activity in CLL, which would give an indicator of which pathways are differentially active. 
 
-###  Spi-B and PU.1 TFs show higher activity in trisomy12+ CLL
-Trisomy 12 has been well-studied at the transcriptomic and proteomic level, and yet the cause of its recurrence in CLL  remains to be fully understood. My analysis of gene dosage and trisomy 12 phenocopies proved inconclusive. Thus, I next decided to investigate the impact of trisomy 12 on the epigenetic landscape of CLL, which is less well studied. In particular, I wanted to investigate differential transcription factor activity in CLL, which would give an indicator of which pathways are differentially active. 
-
-I acquired two independent ATAC sequencing datasets. The first, planned by myself and P.M.B, and performed by P.M.B and N.A.Z, consisted of two WT and two trisomy 12 samples. The second, taken from @Rendeiro2017, comprised 43 WT and nine trisomy 12 samples. In the external dataset, trisomy 12 status was not annotated. To do this, we used the ATACseq reads to call trisomy 12 in samples that contained > 1.4 times more reads per peak (i.e. genomic region) on average in chromosome 12, compared to peaks on other chromosomes. 
+I acquired two independent ATAC sequencing datasets. The first, generated in our lab, consisted of two WT and two trisomy 12 samples. The second, taken from @Rendeiro2017, comprised 43 WT and nine trisomy 12 samples. In the external dataset, trisomy 12 status was not annotated. To do this, we used the ATACseq reads to call trisomy 12 in samples that contained > 1.4 times more reads per peak (i.e. genomic region) on average in chromosome 12, compared to peaks on other chromosomes. 
 
 (Figure \@ref(fig:tri12annotation).
 
@@ -1780,13 +1771,13 @@ I acquired two independent ATAC sequencing datasets. The first, planned by mysel
 ```{r tri12annotation, fig.cap='(ref:tri12annotation)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 
-#ADd represemtative examples? 
+#Add representative examples? 
 
 ```
 
-Next, we used the `R` package `diffTF` [@R-diffTF] to identify TFs that showed differential binding site accessibility between the WT and trisomy 12 samples (Figure \@ref(fig:diffTFexplainer). To run diffTF, we provided a list of 636 TFs, and the genomic locations of their bindings sites, taken from the HOCOMOCO v10 database [@HOCOMOCO]. For each TF, the diffTF software uses the ATACseq counts at each of the binding sites accross the genome to generate a distribution of fold changes between trisomy 12 and WT samples. This fold change distribution is compared to a background distribution of fold changes, calculated similarly using ATACseq counts for a GC-matched motif, that does not contain the TF binding motif. The TF is classified as differentially active between trisomy 12 and WT samples where these two distributions are significantly different. Each TF is assigned a weighted mean difference value, which quantifies the change in activity, and a p value. 
+Next, we used the `R` package `diffTF` [@R-diffTF] to identify TFs that showed differential binding site accessibility between the WT and trisomy 12 samples (Figure \@ref(fig:diffTFexplainer). To run diffTF, we provided a list of 636 TFs, and the genomic locations of their bindings sites, taken from the HOCOMOCO v10 database [@HOCOMOCO]. For each TF,  the software calculates a distribution of fold changes comparing the number of ATACseq reads at each binding site in the trisomy 12 and WT samples. Each TF is assigned a weighted mean difference value, which quantifies the change in activity, and a p value.
 
-(ref:diffTFexplainer) 
+(ref:diffTFexplainer) Graphic shows diffTF workflow, taken from [@Berest2019]. The software takes a list of 636 TFs, and the genomic locations of their bindings sites, defined in the HOCOMOCO v10 database [@HOCOMOCO]. For each TF,  the software computes the distribution of fold changes between the trisomy 12 and WT samples, using the ATACseq peaks at each TF binding site in each condition. The software compares this distribution to a background set of fold changes generated using GC content-matched loci that do not contain the same TF binding site motif. Each TF is thus assigned assigned a weighted mean difference value, which quantifies the change in activity, and a p value.
 
 ```{r diffTFexplainer, fig.cap='(ref:diffTFexplainer)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1796,9 +1787,9 @@ knitr::include_graphics("figures/diffTF_method.eps")
 
 Running this analysis on both ATACseq datasets indicated that the binding sites of nine TFs  were more accessible (p<0.05) in the trisomy 12 samples of the larger, external dataset (Figure \@ref(fig:tri12diffTF). In the smaller in-house dataset, the binding sites of 92 TFs were likewise more accessible (Supp. Figure \@ref(fig:diffTFsmallvolPlot)). RNA and proteomics data show different abundances of transcripts and proteins in trisomy 12 CLL: ATACseq data here shows that this also corresponds to a specific signalling signature in trisomy 12 CLL. 
 
-We confirmed that the results were not affected by the additional copy of chromosome 12, by replicating the diffTF analysis without the ATACreads from chromsome 12. This did not impact on the signficant TFs.  
+We confirmed that the results were not affected by the additional copy of chromosome 12.  Rerunning diffTF analysis without the ATACseq reads from chromosome 12 had minor impact on the significant TFs. 
 
-In both datasets, the TFs with the largest increase in activity in trisomy 12  were Spi-B and/or PU.1. Both TFs share similar binding motifs and exhibit functional redundancy[@GarrettSinha2001], which make it difficult to distinguish from ATACseq data whether either or both are more active. 
+In both datasets, the TFs with the largest increase in activity in trisomy 12  were Spi-B and/or PU.1. Both TFs share similar binding motifs and exhibit functional redundancy[@GarrettSinha2001], which make it difficult to distinguish from ATACseq data alone whether either or both are more active. 
 
 Spi-B and PU.1  are haematopoetic regulators that are known to be key regulators of healthy B-cell function [@Turkistany2011][READ MORE], controlling B-cell responses to environmental cues including CD40L, TLR ligands and IL4 [@Willis2017].
 
@@ -1852,14 +1843,12 @@ plotTab.diffTF$TF <- factor(plotTab.diffTF$TF,levels=rev(unique(plotTab.diffTF$T
   coord_flip() 
 
 ```
-
-## Profiling the downstream effects of Spi-B and PU.1
 Spi-B and PU.1 appeared to be upregulated in trisomy 12 CLL, and evidence in the literature indicated that these may regulate environmental sensing genes, providing a link between trisomy 12, and enhanced responses to external signals. 
 
 To provide further evidence of this, I next aimed to profile the downstream effects of Spi-B and PU.1 in lymphoma. 
 
 ### Spi-B and PU.1 targets are enriched for immune signalling pathways
-I hypothesised that Spi-B and PU.1 might coordinating transcriptional response to external signals, thus modulating CLL proliferation in response to the microenvironment. To identify Spi-B and PU.1 target genes specifically  in lymphoma, I acquired a ChIPseq dataset [@Care2014] containing data on Spi-B and PU.1 binding in lymphoma cell lines. I used this dataset to test for functional enrichment of immune signalling pathways amongst the TF targets. 
+I hypothesised that Spi-B and PU.1 might coordinate transcriptional response to external signals, thus modulating CLL proliferation in response to the microenvironment. To identify Spi-B and PU.1 target genes specifically  in lymphoma, I acquired a ChIPseq dataset [@Care2014] containing data on Spi-B and PU.1 binding in lymphoma cell lines. I used this dataset to test for functional enrichment of immune signalling pathways amongst the TF targets. 
 
 To define TF targets, I took the closest gene to each significant ChIP peak (q value<0.05), and within ±1kb of TSS. I then tested for over-representation of these TF targets amongst selected KEGG[@KEGG] and Reactome [@Reactome] genesets, using the 'R' package `clusterProfiler` [@R-clusterProfiler]. This method corresponded to a one-sided version of Fisher's exact test. This analysis showed TLR, BCR and TGF$\beta$ signalling genes to be enriched (p<0.01) amongst Spi-B and PU.1 targets (Figure \@ref(fig:SpiBChipSeq).
 
@@ -2086,46 +2075,11 @@ ggtexttable(resTab, rows = NULL,
 
 ```
 
-### Visualisation of SPIB and PU1 binding sites from ChIPseq data in BCR, TLR, interleukin and TGFbeta signalling genes
-Remove / Add if time
-(Figure \@ref(fig:SpiBBindingSites).
-
-(ref:SpiBBindingSites) 
-
-```{r SpiBBindingSites, fig.cap='(ref:SpiBBindingSites)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-```
-
-### Investigation of DE genes within IL4 and TGFbeta pathways in SPIB/PU1 DKO mice
-Remove / Add if time
-(Figure \@ref(fig:SpiBDEgenes).
-
-(ref:SpiBDEgenes) 
-
-```{r SpiBDEgenes, fig.cap='(ref:SpiBDEgenes)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-```
-
-### Spi-B and PU.1 linked genes 
-Key result: generation of GRN to identify SPIB and PU1 regulated genes, and investigation of associated log2FCs of these genes in trisomy 12 vs non-trisomy12 samples (including CD79A and B) 
-
-Remove / Add if time 
-
-(Figure \@ref(fig:SpiBGRN).
-
-(ref:SpiBGRN) 
-
-```{r SpiBGRN, fig.cap='(ref:SpiBGRN)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-```
-
 
 ### Double knockdown of Spi-B and PU.1 reduces profileration of trisomy 12+ cell lines
-To establish the functional impact of Spi-B and PU.1 inihibiton in trisomy 12+ lymphoma, we tested th impact of inhibiting these TFs on profileration of lymphoma cell lines (Figure \@ref(fig:SpiBshRNAKD). We generated single and double shRNA knockdowns in lymphoma cell lines, namely SU-DHL4 and SU-DHL5 (trisomy 12+) and SU-DHL2 (no trisomy 12) and then measured cell counts at 24 hour intervals. 
+To establish the functional impact of Spi-B and PU.1 inhibition in trisomy 12+ lymphoma, we tested th impact of inhibiting these TFs on proliferation of lymphoma cell lines (Figure \@ref(fig:SpiBshRNAKD). We generated single and double shRNA knockdowns in lymphoma cell lines, namely SU-DHL4 and SU-DHL5 (trisomy 12+) and SU-DHL2 (no trisomy 12) and then measured cell counts at 24 hour intervals. 
 
-(ref:SpiBshRNAKD) 
-
-_The data here was generated by Tina Bericoviv and was included in Bruch & Giles et al. 2021. It is included in this thesis for completeness._ 
+(ref:SpiBshRNAKD) Knockdown of Spi-B and PU.1 led to growth restriction and cell death. Data shown is the mean of three technical replicates. While SU-DHL 5 was already growth impaired after Spi-B KD, SU-DHL 2 and SU-DHL 4 were only impaired after double knock-down. Double knockdown lead to rapid cell death in SU-DHL 5 (data not shown). Cell count normalised to seeded cell number of diffuse large b cell lymphoma cell lines after knockdown of Spi-B or double knockdown of Spi-B and PU.1 or shRNA as control. Figure and Caption from Bruch & Giles et al. 2021, data generated by Tina Bericoviv. 
 
 ```{r SpiBshRNAKD, fig.cap='(ref:SpiBshRNAKD)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 7, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
@@ -2150,15 +2104,26 @@ _The data here was generated by Tina Bericoviv and was included in Bruch & Giles
 
 ```
 
-The single knockdowns had a small impact on proliferation: Spi-B inhibition reduced proliferation in SU-DHL5, as did  PU.1 to a lesser extent. Double knockdown of both TFs markedly reduced proliferation in SU-DHL2 and SU-DHL4, and was lethal in SU-DHL5. This result suggested that there is functional redundancy between Spi-B and PU.1 in this context, and that they are both important TFs in lymphoma.
+The single knockdowns had a small impact on proliferation: Spi-B inhibition reduced proliferation in SU-DHL5, as did PU.1 to a lesser extent. Double knockdown of both TFs markedly reduced proliferation in SU-DHL2 and SU-DHL4, and was lethal in SU-DHL5. This result suggested that both these TFs play an important role in the proliferative capacity of the tumour cells, and that there is functional redundancy between Spi-B and PU.1 in this context. 
 
-Collectively, these results demonstrate trisomy 12 modulates responses to microenvironmental signals. We link trisomy 12 to higher Spi-B and PU.1 activity, and demonstrate that these TFs regulate genes relating to environmental sensing, and reduced profileration of cell lines when inhibited.
+Collectively, these results demonstrate that trisomy 12 modulates responses to microenvironmental signals. We link trisomy 12 to higher Spi-B and PU.1 activity, and demonstrate that these TFs regulate genes relating to environmental sensing, and reduce proliferation of cell lines when inhibited.
 
 ## Summary 
-In this chapter, systematic survey of genetic determinants of microenvironmental response. Two key players emerge, that of TLR signalling, and that of trisomy 12  . We look at these in more detail, and in particular, investigate the mechanism by which trisomy 12 may module responses This analysis led to the identification of Spi-B and PU.1, which show higher activity in trisomy 12 and regulate environmental sensing genes. 
+In this chapter, we perform a systematic survey of genetic determinants of microenvironmental response, leading to two key findings. Firstly, TLR signalling has a range of effects on CLL viability, and this is determined by many genetic features, including IGHV status, trisomy 12 and mutation in the DNA Damage Response pathway. Secondly, we identify trisomy 12 as a modulator of microenvironmental response, and show that higher activity of Spi-B and PU.1 may mediate this effect.  
 
-UP until now, cancer is understoof as a disease of genetics. We show it is importnat to understand this in context of signalling. 
 
+All good to here
+Tomorrow 0 make this into a single section and remove the other part - save this into an extra time script [x] 
+Then go through and check self -citing and crediting and contributions and tenses 
+Then knit 
+Then adjust figures 
+Then dump things into methods and intro and discussion 
+Then decide about how to manage discussion aprt 
+=should be able to sign off this chapter today or tomorrow 
+
+Then speed up initial part for chapter 6 may need two weeks? and keep reading 
+
+Then introduction and discussion 
 
 ## Discussion
 
@@ -2168,6 +2133,9 @@ TLR and BCR
 
 REad up on trisomy 12
 [@Abruzzo2018; @HerbstThesis; @MeierAbt2021, @JCI]. 
+
+Whats knwon about pathogenetic mechanims: 
+DOI: 10.1200/JCO.2005.02.568 Journal of Clinical Oncology 23, no. 16 (June 01, 2005) 3780-3792. 
 
 REad up on SPIb and PU1
 SPib an dpU 1 regulate BTK: https://pubmed.ncbi.nlm.nih.gov/8934542/
