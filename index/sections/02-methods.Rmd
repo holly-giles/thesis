@@ -168,6 +168,8 @@ As trisomy 12 status was not included in the original metadata, we used a mean a
 _with Ivan Berest_ original (update to paper) 
 FOr the larger ATACseq dataset, we ran analytical mode of diffTF[REFERENCE] pipeline to investigate differential TF activity between trisomy 12 and non-trisomy 12 patients using the HOCOMOCO v10 database [REFERENCE] with the following design formula: “~ Batch + Gender + IGHV status + trisomy12 status”. 
 
+for tirsomy 12 software uses the ATACseq counts at each of the binding sites across the genome to generate a distribution of fold changes between trisomy 12 and WT samples. This fold change distribution is compared to a background distribution of fold changes, calculated similarly using ATACseq counts for a GC-matched motif, that does not contain the TF binding motif. The TF is classified as differentially active between trisomy 12 and WT samples where these two distributions are significantly different. Each TF is assigned a weighted mean difference value, which quantifies the change in activity, and a p value. 
+
 For the smaller ATACseq dataset, ATAC-seq data generated from our CLL samples were processed similarly with the in-house ATAC-seq pipeline, as described previously[REFERENCE], with the only exception that we didn’t use CG bias correction step. We used a similarly analytical mode of diffTF with HOCOMOCO v10 database[REFERENCE] using the following parameters: minOverlap = 1; design formula = “~ Patient + Trisomy 12 status”.  
 
 #### Functional enrichment analysis of SPIB ChIPseq data
