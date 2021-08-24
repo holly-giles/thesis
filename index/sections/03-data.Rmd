@@ -41,6 +41,8 @@ knitr::include_graphics("figures/studyOverview.eps")
 ### Validation experiments
 In addition to the screen, we acquired the following validatory data (Figure \@ref(fig:additionalData)). 
 
+Proper explamantion of data srouces and how we acuried them, the format they are in 
+
 
 (ref:additionalDataCap) Schematic of validatory data. 
 
@@ -134,6 +136,106 @@ PLus Ibrutinib + IBET + IL4 treated samples - ATACseq, RNAseq, proteomics
 
 ## Processing of raw values obtained from cell viability assay 
 ### Data normalization and quality control
+
+### How viabilty is calucalted, why we use log values etc 
+
+### Heterogeneity of response is not caused by differences in receptor expression
+Next, we tested whether the observed heterogeneity of response was caused by differences in receptor expression.  We calculated Pearson correlation coefficients comparing control - normalised  log viability values for each stimulus with transformed RNA counts of the corresponding stimulus receptor(s). No  stimulus-receptor pair showed a Pearson coefficient greater than 0.4, confirming that the heterogeneity of response was not caused by differential receptor expression. 
+
+(ref:RNAcorrelations) Volcano plot showing p-values versus Pearson correlation coefficients, for the correlation between control - normalised log viability values for each stimulus and expression of the corresponding stimulus receptor, in matched patient samples. Expression calculated using transformed RNA counts (using VST method) of untreated CLL sample.
+
+```{r RNAcorrelations, fig.cap='(ref:RNAcorrelations)', message = FALSE,  eval = FALSE, echo = FALSE, fig.height=10, fig.width=7, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+
+#VST
+vsd <- vst(dds_smp, blind=TRUE)
+
+#rename transformed counts
+assayNames(vsd) <- "transformedcounts"
+ColData <- as.data.frame(colData(dds_smp))
+tidy_RNA_data <-
+  vsd %>%
+  tidy() %>%
+  filter(gene %in% cytReceptors$ENSEMBLID) %>%
+  dplyr::rename(PatientID=sample) %>%
+  left_join(cyt_and_receptors, by=c("gene"="ENSEMBLID"))
+
+RNA_Screen_data <-
+  df %>%
+  dplyr::filter(Drug=="DMSO", Cytokine %in% c("Resiquimod","IL-4" ,"TGF-b1","IL-1b",
+                                     "Interferon gamma","SDF-1a","sCD40L",
+                                     "sCD40L+IL-4","soluble anti-IgM","CpG ODN",
+                                     "IL-6","IL-10","IL-21","anti-IgM Beads",
+                                     "HS-5 CM","IL-15","BAFF","IL-2")) %>%
+  
+  dplyr::filter(PatientID %in% unique(tidy_RNA_data$PatientID)) %>%
+  
+  dplyr::select(PatientID, Cytokine, Normalized) %>%
+  
+  left_join(tidy_RNA_data, by=c("PatientID", "Cytokine"))
+
+
+Cytokine_Receptor_combinations <-
+  RNA_Screen_data %>%
+  dplyr::group_by(Cytokine, Receptor) %>%
+  dplyr::summarize(.groups = "keep") %>%
+  dplyr::filter(!is.na(Receptor))
+
+Cytokine_Receptor_combinations$p.value <- as.numeric(NA)
+Cytokine_Receptor_combinations$pearson_R <- as.numeric(NA)
+
+for(i in 1:nrow(Cytokine_Receptor_combinations)) {
+  
+  x = Cytokine_Receptor_combinations[i,]
+  Correlation_data_matrix<-RNA_Screen_data %>%
+    mutate(Cytokine_Receptor=paste0(Cytokine,":", Receptor)) %>%
+    dplyr::filter(Cytokine_Receptor==paste0(x[1],":",x[2])) %>%
+    dplyr::select(Normalized, value) %>%
+    as.matrix()
+  
+  correlation_res <- cor.test(Correlation_data_matrix[,1],Correlation_data_matrix[,2], method = "pearson")
+  Cytokine_Receptor_combinations[which(Cytokine_Receptor_combinations$Cytokine==unlist(x[1])&Cytokine_Receptor_combinations$Receptor==unlist(x[2])),]$p.value=correlation_res$p.value
+  
+  Cytokine_Receptor_combinations[which(Cytokine_Receptor_combinations$Cytokine==unlist(x[1])&Cytokine_Receptor_combinations$Receptor==unlist(x[2])),]$pearson_R<-correlation_res$estimate
+  
+}
+Cytokine_Receptor_combinations <- Cytokine_Receptor_combinations%>%
+  mutate(adj.p.value=p.adjust(p.value, method="fdr"))
+colnames(Cytokine_labels) <- c("Cytokine", "Cytlabel")
+Cytokine_Receptor_combinations <- left_join(Cytokine_Receptor_combinations, Cytokine_labels, by = "Cytokine")
+Cytokine_Receptor_combinations$Receptor[grepl("IL-10 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL10 R \u03B1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-10 R beta",Cytokine_Receptor_combinations$Receptor)]<-"IL10 R \u03B2"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-15 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL15 R \u03B1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-2 R beta",Cytokine_Receptor_combinations$Receptor)]<-"IL2 R \u03B2"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-2 R gamma",Cytokine_Receptor_combinations$Receptor)]<-"IL2 R \u03B3"
+ 
+Cytokine_Receptor_combinations$Receptor[grepl("IL-1 R1",Cytokine_Receptor_combinations$Receptor)]<-"IL1 R1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-2 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL2 R \u03B1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-13 R A1",Cytokine_Receptor_combinations$Receptor)]<-"IL13 R A1"
+Cytokine_Receptor_combinations$Receptor[grepl("IFN-gamma R2",Cytokine_Receptor_combinations$Receptor)]<-"IFN \u03B3 R2"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-6 R",Cytokine_Receptor_combinations$Receptor)]<-"IL6 R"
+Cytokine_Receptor_combinations$Receptor[grepl("IFN gamma R1",Cytokine_Receptor_combinations$Receptor)]<-"IFN \u03B3 R1"
+Cytokine_Receptor_combinations$Receptor[grepl("IL-4 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL4 R \u03B1"
+CR_volcanoplot <-
+  ggplot(Cytokine_Receptor_combinations,
+         aes(x=pearson_R,
+             y=-log10(adj.p.value)))+
+  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R>(-0.4)&pearson_R<0.4), color="grey")+
+  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.4)|pearson_R>0.4), color="red")+
+   geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.4)|pearson_R>0.4), nudge_x = 0.07, color="red", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5)+
+  geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.1)|pearson_R>0.1, !(pearson_R<(-0.4)|pearson_R>0.4)), nudge_x = 0.07, color="grey", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5) + 
+  coord_cartesian(xlim=c(-0.45,0.45)) +
+  geom_vline(xintercept = -0.4, linetype=3) +
+  geom_vline(xintercept = 0.4, linetype=3) +
+  theme_minimal() +
+  scale_x_continuous(breaks = c(-0.2,0,0.2)) +
+  xlab("Pearson Correlation Coefficient") +
+  ylab("-log10(BH adjusted p-value)") +
+  t2
+
+CR_volcanoplot
+
+```
 
 
 ## Generation of public resource
