@@ -14,6 +14,18 @@ knitr::include_graphics("figures/graph.eps")
 
 ## Tables {-}
 
+(ref:receptorPairs) Table depicting stimulus and receptor pairs used in stimulus response - stimulus receptor expression analysis. 
+
+```{r receptorPairs, tab.cap='(ref:receptorPairs)', echo = FALSE}
+
+cyt_and_receptors %>%  
+    kable() %>%
+    kable_styling(latex_options = "striped", 
+                stripe_color = colors[7],
+                html_font = "Arial Narrow") 
+
+```
+
 \begin{table}[ht]
     \begin{center}
         {\footnotesize
