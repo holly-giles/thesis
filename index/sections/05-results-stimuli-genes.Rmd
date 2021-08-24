@@ -47,6 +47,7 @@ library(MultiAssayExperiment)
 library(biomartr)
 library(biomaRt)
 library(patchwork)
+library(biobroom)
 
 ```
 
@@ -773,10 +774,16 @@ df_complete <- df_complete %>%
 
 #patMeta
 patMeta$treatment <- as.factor(patMeta$treatment)
+df_patmeta <- left_join(df, patMeta, by ="PatientID")
 
 #Lists of Cytokines
 thecytokines <- unique(df$Cytokine) %>% setdiff("No Cytokine")
 
+
+#Cytokine labels 
+#generate table of Cytokines and assosciated labels 
+Cytokine_labels <- df %>% filter(PatientID == "Pat_001", Drug == "DMSO") %>% dplyr::select( Cytokine, Cytlabel)
+colnames(Cytokine_labels) <- c("name", "Cytlabel")
 
 ```
 
@@ -786,7 +793,7 @@ To begin, I ran a univariate analysis to compare viability values post-stimulati
 
 (ref:stimuliGeneAssosciations) Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested gene-stimulus associations. Tests performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63). Each circle represents a gene-stimulus association. Associations that meet 10% FDR cut off are indicated in colour, where the colour denotes the genetic feature. 
 
-```{r stimuliGeneAssosciations, fig.cap='(ref:stimuliGeneAssosciations)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
+```{r stimuliGeneAssosciations, fig.cap='(ref:stimuliGeneAssosciations)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 ##################### List of mutations with >2 postive cases #############################
 selected_mutations <- 
@@ -924,51 +931,60 @@ Next, we tested whether the observed heterogeneity of response was caused by dif
 
 (ref:RNAcorrelations) Volcano plot showing p-values versus Pearson correlation coefficients, for the correlation between control - normalised log viability values for each stimulus and expression of the corresponding stimulus receptor, in matched patient samples. Expression calculated using transformed RNA counts (using VST method) of untreated CLL sample.
 
-```{r RNAcorrelations, fig.cap='(ref:RNAcorrelations)', message = FALSE,  echo = FALSE, fig.height=10, fig.width=7, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
+```{r RNAcorrelations, fig.cap='(ref:RNAcorrelations)', message = FALSE,  eval = FALSE, echo = FALSE, fig.height=10, fig.width=7, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 
 #VST
 vsd <- vst(dds_smp, blind=TRUE)
 
 #rename transformed counts
-assayNames(vsd)<-"transformedcounts"
-ColData<-as.data.frame(colData(dds_smp))
-tidy_RNA_data<-
-  vsd%>%
-  tidy()%>%
-  filter(gene%in%cytReceptors$ENSEMBLID)%>%
-  dplyr::rename(PatientID=sample)%>%
+assayNames(vsd) <- "transformedcounts"
+ColData <- as.data.frame(colData(dds_smp))
+tidy_RNA_data <-
+  vsd %>%
+  tidy() %>%
+  filter(gene %in% cytReceptors$ENSEMBLID) %>%
+  dplyr::rename(PatientID=sample) %>%
   left_join(cyt_and_receptors, by=c("gene"="ENSEMBLID"))
 
 RNA_Screen_data <-
   df %>%
-  filter(Drug=="DMSO", Cytokine%in%c("Resiquimod","IL-4" ,"TGF-b1","IL-1b",
+  dplyr::filter(Drug=="DMSO", Cytokine %in% c("Resiquimod","IL-4" ,"TGF-b1","IL-1b",
                                      "Interferon gamma","SDF-1a","sCD40L",
                                      "sCD40L+IL-4","soluble anti-IgM","CpG ODN",
                                      "IL-6","IL-10","IL-21","anti-IgM Beads",
                                      "HS-5 CM","IL-15","BAFF","IL-2")) %>%
-  filter(PatientID %in% unique(tidy_RNA_data$PatientID)) %>%
-  select(PatientID, Cytokine, Normalized) %>%
+  
+  dplyr::filter(PatientID %in% unique(tidy_RNA_data$PatientID)) %>%
+  
+  dplyr::select(PatientID, Cytokine, Normalized) %>%
+  
   left_join(tidy_RNA_data, by=c("PatientID", "Cytokine"))
+
+
 Cytokine_Receptor_combinations <-
   RNA_Screen_data %>%
-  group_by(Cytokine, Receptor)%>%
-  summarize(.groups = "keep") %>%
-  filter(!is.na(Receptor))
+  dplyr::group_by(Cytokine, Receptor) %>%
+  dplyr::summarize(.groups = "keep") %>%
+  dplyr::filter(!is.na(Receptor))
 
-Cytokine_Receptor_combinations$p.value<-as.numeric(NA)
-Cytokine_Receptor_combinations$pearson_R<-as.numeric(NA)
+Cytokine_Receptor_combinations$p.value <- as.numeric(NA)
+Cytokine_Receptor_combinations$pearson_R <- as.numeric(NA)
 
 for(i in 1:nrow(Cytokine_Receptor_combinations)) {
-  x=Cytokine_Receptor_combinations[i,]
-  Correlation_data_matrix<-RNA_Screen_data%>%
-    mutate(Cytokine_Receptor=paste0(Cytokine,":", Receptor))%>%
-    filter(Cytokine_Receptor==paste0(x[1],":",x[2]))%>%
-    select(Normalized, value)%>%
+  
+  x = Cytokine_Receptor_combinations[i,]
+  Correlation_data_matrix<-RNA_Screen_data %>%
+    mutate(Cytokine_Receptor=paste0(Cytokine,":", Receptor)) %>%
+    dplyr::filter(Cytokine_Receptor==paste0(x[1],":",x[2])) %>%
+    dplyr::select(Normalized, value) %>%
     as.matrix()
-  correlation_res<-cor.test(Correlation_data_matrix[,1],Correlation_data_matrix[,2], method = "pearson")
+  
+  correlation_res <- cor.test(Correlation_data_matrix[,1],Correlation_data_matrix[,2], method = "pearson")
   Cytokine_Receptor_combinations[which(Cytokine_Receptor_combinations$Cytokine==unlist(x[1])&Cytokine_Receptor_combinations$Receptor==unlist(x[2])),]$p.value=correlation_res$p.value
+  
   Cytokine_Receptor_combinations[which(Cytokine_Receptor_combinations$Cytokine==unlist(x[1])&Cytokine_Receptor_combinations$Receptor==unlist(x[2])),]$pearson_R<-correlation_res$estimate
+  
 }
 Cytokine_Receptor_combinations <- Cytokine_Receptor_combinations%>%
   mutate(adj.p.value=p.adjust(p.value, method="fdr"))
@@ -991,19 +1007,21 @@ CR_volcanoplot <-
   ggplot(Cytokine_Receptor_combinations,
          aes(x=pearson_R,
              y=-log10(adj.p.value)))+
-  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R>(-0.3)&pearson_R<0.3), color="grey")+
-  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.3)|pearson_R>0.3), color="red")+
-   geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.3)|pearson_R>0.3), nudge_x = 0.07, color="red", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5)+
-  geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.1)|pearson_R>0.1, !(pearson_R<(-0.3)|pearson_R>0.3)), nudge_x = 0.07, color="grey", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5)+
-  coord_cartesian(xlim=c(-0.45,0.45))+
-  geom_vline(xintercept = -0.3, linetype=3)+
-  geom_vline(xintercept = 0.3, linetype=3)+
-  theme_minimal()+
-  scale_x_continuous(breaks = c(-0.3,0,0.3))+
-  xlab("Pearson Correlation Coefficient")+
-  ylab("-log10(BH adjusted p-value)")+
+  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R>(-0.4)&pearson_R<0.4), color="grey")+
+  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.4)|pearson_R>0.4), color="red")+
+   geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.4)|pearson_R>0.4), nudge_x = 0.07, color="red", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5)+
+  geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.1)|pearson_R>0.1, !(pearson_R<(-0.4)|pearson_R>0.4)), nudge_x = 0.07, color="grey", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5) + 
+  coord_cartesian(xlim=c(-0.45,0.45)) +
+  geom_vline(xintercept = -0.4, linetype=3) +
+  geom_vline(xintercept = 0.4, linetype=3) +
+  theme_minimal() +
+  scale_x_continuous(breaks = c(-0.2,0,0.2)) +
+  xlab("Pearson Correlation Coefficient") +
+  ylab("-log10(BH adjusted p-value)") +
   t2
+
 CR_volcanoplot
+
 ```
 
 ### Multivariate analysis of gene - stimulus assosciations confirms IGHV status and trisomy 12 as key modulators of stimulus response
@@ -1013,9 +1031,9 @@ As input to the model, the response matrix was composed of the log transformed v
 
 Using the output of the regression, I generated predictor profiles for each stimulus. For 5 / 17 stimuli, there was at least one genetic predictor that met the cut-offs (a selection are shown in figure \@ref(fig:stimuliGeneAssosciationsMulti)).
 
-(ref:stimuliGeneAssosciationsMulti) Predictor profiles for IL4, CpG ODN and TGF$\beta$ depicting gene - stimulus associations determined using Gaussian linear modelling with L1-penalty. Bar plots (left) show size and sign of assigned coefficients named on the right. A positive coefficient indicates that when stimulated with given cytokine, the increase in viability is larger when the feature is present. Scatter plots (bottom) and corresponding heatmaps above show how the presence of selected genetic feature relate to the sample viabilities. Scatter plots show ranked log(viability) values for each sample and heatmaps show mutation status for each of the genetic predictors for corresponding sample in scatter plot. 
+(ref:stimuliGeneAssosciationsMulti) Predictor profiles for IL4 and CpG ODN  depicting gene - stimulus associations determined using Gaussian linear modelling with L1-penalty. Bar plots (left) show size and sign of assigned coefficients named on the right. A positive coefficient indicates that when stimulated with given cytokine, the increase in viability is larger when the feature is present. Scatter plots (bottom) and corresponding heatmaps above show how the presence of selected genetic feature relate to the sample viabilities. Scatter plots show ranked log(viability) values for each sample and heatmaps show mutation status for each of the genetic predictors for corresponding sample in scatter plot. 
 
-```{r stimuliGeneAssosciationsMulti, fig.cap='(ref:stimuliGeneAssosciationsMulti)', message = FALSE,  echo = FALSE, fig.height=9, fig.width=8.5, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
+```{r stimuliGeneAssosciationsMulti, fig.cap='(ref:stimuliGeneAssosciationsMulti)', message = FALSE,  echo = FALSE, fig.height=8, fig.width=8.5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 #Generate feature Matrix
 #select features from patient meta file
@@ -1106,7 +1124,7 @@ for (i in rownames(viabMatrix)){
 
 #Get predictor profiles for stimuli of interest
 
-heatMaps_cyt <- lassoPlot05(dataResult[c("IL-4","CpG ODN", "TGF-b1")] , 
+heatMaps_cyt <- lassoPlot05(dataResult[c("IL-4","CpG ODN")] , 
                           geneMatrix.complete, #use gene matrix for heatmap 
                           viabMatrix, #use viab matrix for scatter plot
                           freqCut = 0.75, #coefficients should be selected in <75% of bootstrapped model files
@@ -1127,7 +1145,6 @@ legends = makelegends(legendFor=c("G","I","M"),coldef)
 #assemble
 Fig3B_1 <- invisible(wrap_elements(arrangeGrob( grobs = heatMaps_cyt[1], ncol =1)))
 Fig3B_2 <- invisible(wrap_elements(arrangeGrob( grobs = heatMaps_cyt[2], ncol =1)))
-Fig3B_3 <- invisible(wrap_elements(arrangeGrob( grobs = heatMaps_cyt[3], ncol =1)))
 Fig3B_leg <- legends[["plot"]] %>% wrap_elements()
 
 
@@ -1137,17 +1154,16 @@ blankplot <-
   geom_blank() +
   theme(panel.background = element_blank())
 
-wrap_elements(Fig3B_1 + Fig3B_2 + Fig3B_3 +
+wrap_elements(Fig3B_1 + Fig3B_2 +
                 wrap_elements(blankplot + Fig3B_leg + 
                                 plot_layout(ncol=2, widths  = c(0.15,0.9))) +
-                plot_layout(ncol=1, heights = c(1.7,1.7,1.7,0.5)))
+                plot_layout(ncol=1, heights = c(1.7,1.7,0.5)))
 
 
 
 ```
 
 The multivariate analysis demonstrated that responses to IL4 and sCD40L + IL4, TLR and TGF$\beta$ were all affected by multiple genetic features. 
-
 For example, higher viability in response to IL4 stimulation was associated with trisomy 12 and unmutated IGHV. In contrast, IL4 generated little or no increase in viability in samples with a mutation in KRAS, NRAS or BRAF. These tumours benefited less from the anti-apoptotic effects of IL4, indicating that the ability of IL4 to increase viability could be dependent on signalling via Ras-Raf-MEK-ERK, which is already active in mutant samples. 
 
 ### Response to TLR stimulation is dependent on IGHV status, trisomy 12 and mutations in DNA Damage Response genes
@@ -1155,7 +1171,8 @@ The multivariate analysis highlighted that TLR stimulation by CpG ODN and Resiqu
 
 (ref:TLRGenes) Control-normalised log transformed viability values after treatment with Resiquimod (TLR 7/8), stratified by named genetic features. 
 
-```{r TLRGenes, fig.cap='(ref:TLRGenes)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 10,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+```{r TLRGenes, fig.cap='(ref:TLRGenes)', message = FALSE,  echo = FALSE, fig.height = 10, fig.width = 6,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+
 
 
 ATM <- 
@@ -1291,10 +1308,9 @@ IGHV status (along with Methylation Cluster, which is related to IGHV) and triso
 
 (ref:TLRIHGVtri12) Beeswarm-boxplot showing control-normalised log transformed viability values, after treatment with Resiquimod, stratified by trisomy 12 and IGHV status. p-values from Student’s t-tests. 
 
-```{r TLRIHGVtri12, fig.cap='(ref:TLRIHGVtri12)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+```{r TLRIHGVtri12, fig.cap='(ref:TLRIHGVtri12)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
-
-#filter for Resiquimod-only treatment, only show patients who are annoyated for IGHV and Trisomy12
+#filter for Resiquimod-only treatment, only show patients who are annotated for IGHV and Trisomy12
 df_patmeta %>% 
   dplyr::filter(Cytokine=="Resiquimod",
                 !is.na(trisomy12),
@@ -1328,7 +1344,7 @@ df_patmeta %>%
 
 In addition to trisomy 12, TLR stimulation also increased viability in samples with mutations in the DNA damage response pathway, namely del(11q), del(17p), and *ATM* and *TP53*. Del(17p) occurs in 7% of CLL cases and is associated with loss of TP53, a tumour suppressor gene involved in DNA damage and repair [@Zenz2010]. Del(11q) is more common (18% of cases) and is associated with loss of ATM, another protein involved in DNA repair[@Kipps2017]. This suggests that there may also be cross-talk between the TLR and DNA damage response pathway, and that this affects the outcome of TLR stimulation. 
 
-The effect of TLR stimulation on CLL viability is dependent on the molecular makeup of the tumour. The nature of TLR response may also be important in prognosis, underlined by our the observation in section \@ref(clustering) that a subgroup of patients (C3) shows slower disease progression, and is the only group in which TLR induces apoptosis. The role of TLR signalling in pathogenesis and prognosis may thus so far be under appreciated. 
+The effect of TLR stimulation on CLL viability is dependent on the molecular make-up of the tumour. The nature of TLR response may also be important in prognosis, underlined by our the observation in section \@ref(clustering) that a subgroup of patients (C3) shows slower disease progression, and is the only group in which TLR induces apoptosis. The role of TLR signalling in pathogenesis and prognosis may thus so far be under appreciated. 
 
 Collectively, this work represents the first large-scale attempt to profile the integrative effects of cell-extrinsic signals and cell-intrinsic features in lymphoma on a large scale. This systematic approach highlighted trisomy 12  as the most common feature to modulate responses. The rest of this chapter outlines my work to investigate the role of trisomy 12 in microenvironmental response. 
 
@@ -1345,7 +1361,7 @@ In the following, I outline my work to investigate the incompletely understood r
 
 (ref:tri12cytResponse) Control-normalised log transformed viability values after treatment with IL4, sCD40L + IL4 and TGF$\beta$, stratified by trisomy 12. 
 
-```{r tri12cytResponse, fig.cap='(ref:tri12cytResponse)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+```{r tri12cytResponse, fig.cap='(ref:tri12cytResponse)', message = FALSE,  echo = FALSE, fig.height = 3, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 #add genetic data to viability dataframe
 df_patmeta <- left_join(df, patMeta, by = "PatientID")
@@ -1358,7 +1374,7 @@ df_patmeta %>%
                 !is.na(trisomy12)) %>%
 
          
-  ggplot(aes(x=trisomy12,y=Log,color=(trisomy12)))+
+  ggplot(aes(x=trisomy12, y=Log,color=(trisomy12)))+
   geom_hline(yintercept = 0)+
   geom_boxplot()+
   geom_beeswarm(cex=1.5) +
@@ -1403,7 +1419,7 @@ id2gene <- dplyr::select(transAnno, ensembl_gene_id, hgnc_symbol)
 
 ```
 
-```{r SMAD3geneDosage, fig.cap='(ref:SMAD3geneDosage)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+```{r geneDosage, fig.cap='(ref:SgeneDosage)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 data <- plotCounts(dds_smp, gene="ENSG00000166949", #SMAD3
                    intgroup=c("trisomy12"), 
@@ -1455,16 +1471,8 @@ SMAD3pro =
   theme(aspect.ratio=1,  legend.position = "none") +
   stat_compare_means(method = "t.test", comparisons = list(c("1", "0")), size=3)
   
-     
-SMAD3rna + SMAD3pro
-
-```
-
-(Figure \@ref(fig:STATgeneDosage)).
-
-(ref:STATgeneDosage) 
-```{r STATgeneDosage, fig.cap='(ref:STATgeneDosage)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
-
+    
+#STAT 6
 
 stat_rna <- 
 lapply(c("ENSG00000166888", "ENSG00000170581"), function(x){
@@ -1526,21 +1534,12 @@ stat_pro = lapply(c("STAT6", "STAT2"), function(x){
   
 })
 
-(stat_rna[[1]] + stat_rna[[2]])/
-  (stat_pro[[1]] + stat_pro[[2]]) 
 
-```
-
-(Figure \@ref(fig:IRAK4geneDosage)).
-
-(ref:IRAK4geneDosage) 
-
-```{r IRAK4geneDosage, fig.cap='(ref:IRAK4geneDosage)', message = FALSE,  echo = FALSE, fig.height = 5, fig.width = 8,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 #IRAK4
 
 irak4_rna <- 
-lapply(c("ENSG00000198001","ENSG00000172936"),  function(x){
+lapply(c("ENSG00000198001"),  function(x){
     #Prep data for plot
     data <- plotCounts(dds_smp, gene=x, intgroup=c("trisomy12"), returnData=TRUE) %>%
       filter(trisomy12 %in% c("0", "1"))
@@ -1570,7 +1569,7 @@ lapply(c("ENSG00000198001","ENSG00000172936"),  function(x){
 })
 
 
-irak4_pro = lapply(c("IRAK4", "MYD88"), function(x){
+irak4_pro = lapply(c("IRAK4"), function(x){
      #Prepare data for plot
      df_tbl_prot <- wideFormat(multiomics_MAE[x,,"proteomics"] ) %>% as_tibble()
      colnames(df_tbl_prot)[2] <- "protein"
@@ -1599,8 +1598,10 @@ irak4_pro = lapply(c("IRAK4", "MYD88"), function(x){
   
 })
 
-(irak4_rna[[1]] + irak4_rna[[2]])/
-  (irak4_pro[[1]] + irak4_pro[[2]])
+(SMAD3pro + SMAD3rna)/
+(stat_rna[[1]] + stat_pro[[1]])/
+(stat_rna[[2]] + stat_pro[[2]])/ 
+(irak4_rna[[1]] + irak4_pro[[1]])
 
 ```
 
@@ -1700,12 +1701,12 @@ plotTab <- filter(df, Cytokine%in% c("Resiquimod", "sCD40L+IL-4", "TGF-b1"))
 plotTab %>%
   ggplot(aes(x=Cytokine,
              y=Log)) + 
-  geom_boxplot(fill=NA)+
-  geom_beeswarm(cex=0.3, alpha=0.4, color= lightergrey)+
+  geom_boxplot(fill=NA) +
+  geom_beeswarm(cex=0.3, alpha=0.4, color= lightergrey) +
   t2 +
   ylab("Log(Viability") + xlab("")+
   geom_point(data=dplyr::filter(plotTab, PatientID =="Pat_033"), aes(x=Cytokine, y=Log), colour=palblues[1], size=2) + 
-    geom_point(data=dplyr::filter(plotTab, PatientID =="Pat_114"), aes(x=Cytokine, y=Log), colour=palreds[8], size=2)+ scale_x_discrete(labels = c("Resiquimod" = "Resiquimod", "sCD40L+IL-4" = "sCD40L \n+ IL4", "TGF-b1" = "TGF-\u03B21"))
+    geom_point(data=dplyr::filter(plotTab, PatientID =="Pat_114"), aes(x=Cytokine, y=Log), colour=palreds[8], size=2) + scale_x_discrete(labels = c("Resiquimod" = "Resiquimod", "sCD40L+IL-4" = "sCD40L \n+ IL4", "TGF-b1" = "TGF-\u03B21"))
 
 
 ```
@@ -1717,6 +1718,7 @@ In the absence of gene amplification, I next checked patient samples A and B mig
 (ref:tri12PhenocopiesRNA) Raw RNA counts for SMAD3, IRAK4 and STAT6, stratified by trisomy 12 status. Patient sample A and B are indicated in blue and red, respectively. P values from Student's t-test. 
 
 ```{r tri12PhenocopiesRNA, fig.cap='(ref:tri12PhenocopiesRNA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 5, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
+
 genes <- c(
            "ENSG00000166888", #STAT6
            "ENSG00000198001", #IRAK4
@@ -1763,17 +1765,6 @@ These results collectively suggest that increased gene dosage of key genes in th
 Trisomy 12 has been well-studied at both the transcriptomic and proteomic level, and yet the cause of its recurrence in CLL  remains to be fully understood. Thus, I next decided to investigate the impact of trisomy 12 on the epigenetic landscape of CLL, which is less well studied. In particular, I wanted to investigate differential transcription factor activity in CLL, which would give an indicator of which pathways are differentially active. 
 
 I acquired two independent ATAC sequencing datasets. The first, generated in our lab, consisted of two WT and two trisomy 12 samples. The second, taken from @Rendeiro2017, comprised 43 WT and nine trisomy 12 samples. In the external dataset, trisomy 12 status was not annotated. To do this, we used the ATACseq reads to call trisomy 12 in samples that contained > 1.4 times more reads per peak (i.e. genomic region) on average in chromosome 12, compared to peaks on other chromosomes. 
-
-(Figure \@ref(fig:tri12annotation).
-
-(ref:tri12annotation) 
-
-```{r tri12annotation, fig.cap='(ref:tri12annotation)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-
-#Add representative examples? 
-
-```
 
 Next, we used the `R` package `diffTF` [@R-diffTF] to identify TFs that showed differential binding site accessibility between the WT and trisomy 12 samples (Figure \@ref(fig:diffTFexplainer). To run diffTF, we provided a list of 636 TFs, and the genomic locations of their bindings sites, taken from the HOCOMOCO v10 database [@HOCOMOCO]. For each TF,  the software calculates a distribution of fold changes comparing the number of ATACseq reads at each binding site in the trisomy 12 and WT samples. Each TF is assigned a weighted mean difference value, which quantifies the change in activity, and a p value.
 
@@ -2081,7 +2072,7 @@ To establish the functional impact of Spi-B and PU.1 inhibition in trisomy 12+ l
 
 (ref:SpiBshRNAKD) Knockdown of Spi-B and PU.1 led to growth restriction and cell death. Data shown is the mean of three technical replicates. While SU-DHL 5 was already growth impaired after Spi-B KD, SU-DHL 2 and SU-DHL 4 were only impaired after double knock-down. Double knockdown lead to rapid cell death in SU-DHL 5 (data not shown). Cell count normalised to seeded cell number of diffuse large b cell lymphoma cell lines after knockdown of Spi-B or double knockdown of Spi-B and PU.1 or shRNA as control. Figure and Caption from Bruch & Giles et al. 2021, data generated by Tina Bericoviv. 
 
-```{r SpiBshRNAKD, fig.cap='(ref:SpiBshRNAKD)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 7, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+```{r SpiBshRNAKD, fig.cap='(ref:SpiBshRNAKD)', message = FALSE,  echo = FALSE, fig.height=3, fig.width = 8, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
 
 
   SPIB_KD_Cellcounts %>% 
@@ -2091,15 +2082,15 @@ To establish the functional impact of Spi-B and PU.1 inhibition in trisomy 12+ l
   
   
   
-  ggplot(aes(x=Day, y=NormalizedCellCount, color=treatment, group=interaction( treatment)))+
+  ggplot(aes(x=Day, y=NormalizedCellCount, color=treatment, group=interaction( treatment))) +
   stat_summary(fun = mean,geom='line',aes(color=treatment), size=1) +
   stat_summary(fun=mean,geom='point', size=2) +
-  facet_wrap(~Cellline, scales="fixed")+
-  scale_y_log10()+
-  labs(y="Relative Cellcount")+
+  facet_wrap(~Cellline, scales="fixed") +
+  scale_y_log10() +
+  labs(y="Relative Cellcount") +
  t2+
   theme(legend.position = "bottom", legend.key = element_blank(), legend.title = element_text(face='bold', size=fontsize+4),  legend.text = element_text(size=fontsize+2), strip.background = element_blank(), strip.text = element_text(size=18, face="bold"))+
-      scale_color_manual(name = "Condition", values = c("darkgrey", colors[c(7,8,3)]), labels=c("scr_shRNA"="Control","PU.1-KD"="PU.1-Knockdown","SpiB-KD"="Spi-B-Knockdown","Double-KD"="Spi-B + PU.1 Double Knockdown" ))
+      scale_color_manual(name = "Condition", values = c("darkgrey", colors[c(7,8,3)]), labels=c("scr_shRNA"="Control","PU.1-KD"="PU.1-Knockdown", "SpiB-KD"="Spi-B-Knockdown", "Double-KD"="Spi-B + PU.1 Double Knockdown" ))
 
 
 ```
@@ -2114,10 +2105,11 @@ In this chapter, we perform a systematic survey of genetic determinants of micro
 
 All good to here
 Tomorrow 0 make this into a single section and remove the other part - save this into an extra time script [x] 
-Then go through and check self -citing and crediting and contributions and tenses 
+
 Then knit 
 Then adjust figures 
 Then dump things into methods and intro and discussion 
+Then go through and check self -citing and crediting and contributions and tenses 
 Then decide about how to manage discussion aprt 
 =should be able to sign off this chapter today or tomorrow 
 
@@ -2156,6 +2148,3 @@ ATAC seq analysi s
 TLR signalling: 
 REad [@Chatzouli2017]
 TLR stimulation can lead to both acitvation of MAPK and increase in viability or activation of apoptosis. If mutatiosn can affect which pathway is active, this poitns to aditoanl mechsnsim by which these mutations contribtue to CLL drive. It also points to TLR response as a useful prognostic marker.  
-
-so everything is here 
-focus on the content you have and finihsh - add additioanl if time 
