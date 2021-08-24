@@ -115,7 +115,7 @@ RNA data was taken from the PACE repository @PACE. For detailed explanaition of 
 _myself_ original complete 
 Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the `cor` functions of the [@R-stats] package with log transformed viability values which were normalised to untreated controls.
 
-#### Characterising stimulus responses across all samples
+#### Characterising stimulus responses across all samples {#stimulus-heatmap-method}
 _myself_ original complete (just check)
 For the heatmap in figure \@ref(fig:stimuliHeatmap), the viability data is represented as z scores. Log transformed viability values, normalised to DMSO controls, are row-scaled  according to the Median Absolute Deviance.  Limits were then applied to this row scaling factor for optimal visualisation. The matrix of z scores was plotted using the [@R-pheatmap] package. The ordering of the columns (patient samples) was obtained from the dendrogram that resulted from running `ConsensusClusterPlus`, from the [@R-ConsensusClusterPlus] package. The rows were ordered using the dendrogram order produced by `hclust` with default branch arrangement.
 
@@ -168,6 +168,19 @@ For the n=49 patient samples for which viability data and RNA–Seq data for mat
 
 #### Associations of ex-vivo stimulus responses with genomic features
 We tested for associations between stimulus viability assay results and genomic features by Student’s t-tests (two-sided, with equal variance). We tested somatic mutations (aggregated at the gene level), copy number aberrations and IGHV status. We restricted the analysis to features that were present in at least 3 patient samples (63 features). p-values were adjusted for multiple testing by applying the Benjamini-Hochberg procedure. 
+
+#### Analysis of differential gene dosage in trisomy 12 CLL {#gene-dosage-effects-method}
+_myself_ written for thesis 
+Section \@ref(gene-dosage-effects). For all RNA samples available in PACE (i.e. not just those that matched the samples in the screen), differential expression was called using the `DESeq2` package [@R-DESeq2], with the design formula ~trisomy12.  Raw RNA counts were visualised if the gene had BH-adjusted p < 0.1 and belonged to TGF$\beta$, JAK-STAT or TLR pathways genesets, as defined in the KEGG database [@Kegg] downloaded using the `msigdbr` package [@R-msigdbr]. Proteomic abundance data was also plotted, provided by Sophie Herbst [@HerbstThesis]. Proteomics data partially overlaps with RNAseq data. Protein quantification was performed as described in @HerbstThesis. 
+
+#### Generation of a Trisomy 12 classifier {#trisomy12-classifier-method}
+_edit and finish_ 
+Section \@ref(trisomy12-classifier). To build the classifier,  a binomial linear model with L1-penalty implemented in the `R` package `glmnet` [@R-glmnet], with mixing parameter alpha = 1, was used. To identify coefficients that predict trisomy 12 status, the viability matrix for all stimuli,  as described in section \@ref(stimulus-heatmap-method) was used, i.e. z scores of the control-normalised log-transformed viability values. 
+
+Matrix of genetic features (p=39), IGHV status (encoded as M = 1 and U = 0), and Methylation Cluster (encoded as 0, 0.5, 1) were used to identify multivariate predictors. All features were thus encoded on a similar scale to ensure equal treatment by lasso constraint in model fitting.  Genetic features with more than 20% missing values were excluded from the analysis, and samples without complete annotation for remaining features were removed, resulting in n = 129 samples. The matrix of control-normalised log-transformed viability values for these 129 samples was provided as the dependent variable. Using 3-fold cross-validation, the optimal penalty parameter $\lambda$  was selected so as to minimise the cross-validated R2. The reduction in cross-validated mean squared error compared to the null model was used as loss. The model was fitted for 30 bootstrapped repeats, and the resulting coefficients are the mean of those coefficients that were selected in >75% model fits. 
+
+The classifier was built using binomial regression, with lasso penalisation,  as implemented in the `R` package `glmnet` [@R-glmnet]. The feature matrix consisted of z scores of the viability values after treatment with each stimulus, and was used to predict the response (trisomy 12 status). I ran the model for 50 bootstrapped repeats, using  three-fold cross-validation and mean absolute error as loss. Resiquimod, sCD40L+IL4 and TGF$\beta$ were selected as coefficients that predict trisomy 12 status (Figure \@ref(fig:tri12Classfier), as would be expected bed on the observations in section \@ref(trisomy12-modulator).
+
 
 #### ATACseq processing 
 _with Ivan Berest_ original (update to paper) 
