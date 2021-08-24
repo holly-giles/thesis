@@ -93,37 +93,50 @@ For the ChIPseq analysis of SPIB binding sites, we accessed the data 37 from the
 
 ## Statistical Analysis 
 Mixutre of paper and original 
-Integrative data analysis of screening data, DNA and RNA sequencing, CNV and methylation profiles and follow up experiments was performed using R version 4 (REFERENCE R Core Team, 2018) with the RStudio interface (REFERENCE RStudio Team, 2016) and using packages that included [@DESeq2][REFERENCE], [@survival][REFERENCE], [@Glmnet][REFERENCE], [@ConsensusClusterPlus][REFERENCE], [@clusterProfiler][REFERENCE], [@ChIPseeker][REFERENCE], [@genomation][REFERENCE] and [@BloodCancerMultiOmics2017][REFERENCE] to perform univariate association tests, multivariate regression with and without lasso penalization, Cox regression, generalised linear modelling and clustering. 
+Integrative data analysis of screening data, DNA and RNA sequencing, CNV and methylation profiles and follow up experiments was performed using R version 4 (REFERENCE R Core Team, 2018) with the RStudio interface (REFERENCE RStudio Team, 2016) and using packages that included [@R-DESeq2], [@R-survival], [@R-glmnet], [@R-ConsensusClusterPlus], [@R-clusterProfiler], [@R-ChIPseeker], [@R-genomation] and [@R-BloodCancerMultiOmics2017] to perform univariate association tests, multivariate regression with and without lasso penalization, Cox regression, generalised linear modelling and clustering. 
 
-### Screening Data
+### Data processing
 #### Processing of screening data
 _with Peter-Martin Bruch_ Paper 
 To quantify the response of a patient sample to each treatment condition, we used viability relative to the control, i.e., the CellTiter Glo luminescence readout of the respective well divided by the median of luminescence readouts of the DMSO control wells on the same plate.
 
 #### Quality Assessment and Control 
 
+#### RNA data
+RNA data was taken from the PACE repository @PACE. For detailed explanaition of processing see @PACE. 
 
-#### Drug -drug and stimulus - stimulus correlations 
+#### ATACsequencing 
+
+#### Data from PACE
+
+
+### Analysis of Screening Data
+#### Drug-drug and stimulus - stimulus correlations 
 _myself_ original complete 
-Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the `cor` functions of the [@stats][REFERENCE] package with log transformed viability values which were normalised to untreated controls.
+Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the `cor` functions of the [@R-stats] package with log transformed viability values which were normalised to untreated controls.
 
 #### Characterising stimulus responses across all samples
 _myself_ original complete (just check)
-For the heatmap in figure \@ref(fig:stimuliHeatmap), the viability data is represented as z scores. Log transformed viability values, normalised to DMSO controls, are row-scaled  according to the Median Absolute Deviance.  Limits were then applied to this row scaling factor for optimal visualisation. The matrix of z scores was plotted using the [@pheatmap][REFERENCE] package. The ordering of the columns (patient samples) was obtained from the dendrogram that resulted from running `ConsensusClusterPlus`, from the [@ConsensusClusterPlus] [REFERENCE] package. The rows were ordered using the dendrogram order produced by `hclust` with default branch arrangement.
+For the heatmap in figure \@ref(fig:stimuliHeatmap), the viability data is represented as z scores. Log transformed viability values, normalised to DMSO controls, are row-scaled  according to the Median Absolute Deviance.  Limits were then applied to this row scaling factor for optimal visualisation. The matrix of z scores was plotted using the [@R-pheatmap] package. The ordering of the columns (patient samples) was obtained from the dendrogram that resulted from running `ConsensusClusterPlus`, from the [@R-ConsensusClusterPlus] package. The rows were ordered using the dendrogram order produced by `hclust` with default branch arrangement.
 
-#### Univariate gene - repsonse testing 
+#### Univariate analysis of gene - stimulus response assosciations 
+_myself_ writtten for thesis complete
+Section \@ref(univariate-gene-stimulus-associations). Two-sided Student's t-tests, with equal variance were performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63). A 10% FDR cut off was used to determine significance. 
 
-#### Penalised multivariate regression of gene - response 
-_myself_ original 
-For the plots in Figure 3B, we used a Gaussian linear model with L1-penalty. As the dependent variable, the normalised viability value was used for all stimuli. We used the same features as above, plus Methylation Cluster(coded as 0, 0.5, 1). As a measure of explained variance the reduction in cross-validated mean squared error relative to the null model was calculated. 
+#### Penalised multivariate regression of gene - stimulus assosciations {#multivariate-gene-stimulus-assosciations-method}
+_myself_ written for thesis (but some overlap with JCI) 
+Section \@ref(multivariate-gene-stimulus-assosciations).  A Gaussian linear model with L1-penalty implemented in the `R` package `glmnet` [@R-glmnet], with mixing parameter alpha = 1,was used to identify gene-stimulus associations. Matrix of genetic features (p=39), IGHV status (encoded as M = 1 and U = 0), and Methylation Cluster (encoded as 0, 0.5, 1) were used to identify multivariate predictors. All features were thus encoded on a similar scale to ensure equal treatment by lasso constraint in model fitting.  Genetic features with more than 20% missing values were excluded from the analysis, and samples without complete annotation for remaining features were removed, resulting in n = 129 samples. The matrix of control-normalised log-transformed viability values for these 129 samples was provided as the dependent variable. Using 3-fold cross-validation, the optimal penalty parameter $\lambda$  was selected so as to minimise the cross-validated R2. The reduction in cross-validated mean squared error compared to the null model was used as loss. The model was fitted for 30 bootstrapped repeats, and the resulting coefficients are the mean of those coefficients that were selected in >75% model fits. 
 
+ 
 #### Correlation of RNA-Receptor Expression with viability
+_myself_ original complete 
+RNA count data for matched samples was available for 49 patients and was transformed using the variance stabilising transformation. Stimulus - receptor pairs were defined using the available literature, see table \@ref(tab:receptorPairs).  For each stimulus, pearson correlation coefficient were calculated between the control-normalised log-transformed viability value of a sample and its expression of the corresponding stimulus receptor. 
 
 #### Linear modelling of drug - stimulus interactions 
 
 #### Modelling of drug - stimulus - gene interactions
 _myself_ original 
-To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package glmnet[REFERENCE]. As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
+To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package `glmnet`[@R-glmnet]. As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
 
 ### Follow up 
 #### Lympocyte doubling times
@@ -141,24 +154,24 @@ treatment initiation. Patients without treatment initiation during the observati
 patients who died before treatment initiation were censored at the latest follow-up contact."
 
 _myself_ original 
-For for the purpose of visualising Kaplan-Meier plots , optimal cut-points of staining levels were calculated using maximally selected rank statistics as computed by the package [@maxstat] [REFERENCE](Hothorn,2017). Based on these cut points, patients were split into two groups, and their survival data were plotted using the Kaplan-Meier method, using the R package [@survminer] [REFERENCE](Kassambara et al., 2019) . 
+For for the purpose of visualising Kaplan-Meier plots , optimal cut-points of staining levels were calculated using maximally selected rank statistics as computed by the `R` package `maxstat` [@R-maxstat]. Based on these cut points, patients were split into two groups, and their survival data were plotted using the Kaplan-Meier method, using the R package `survminer` [@R-survminer]. 
 
-For Cox proportional hazards regression, the  `coxph` function of the R package survival [REFERENCE] (Therneau, 2020) was used. Expand 
+For Cox proportional hazards regression, the  `coxph` function of the `R` package `survival` [@R-survival] was used. Expand 
 
 #### Penalised multivariate regression genetic predictors of cluster membership 
 _Myself_ original (edit so not similar to JCI)
-I used a multinomial linear model with L1-penalty, implemented in the [@cvglmnet] package[REFERENCE]. As the dependent variable, the cluster assignment for each patient was used. As input to the model ,genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39) and IGHV status (coded as 0-1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation. The resulting coefficients indicated associations between genetic features and each cluster. 
+I used a multinomial linear model with L1-penalty, implemented in the `glmnet` [@R-glmnet] package. As the dependent variable, the cluster assignment for each patient was used. As input to the model ,genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39) and IGHV status (coded as 0-1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation. The resulting coefficients indicated associations between genetic features and each cluster. 
  
 #### Gene expression and gene set enrichment analysis between clusters 
 _myself_ original
-For the n=49 patient samples for which viability data and RNA–Seq data for matching samples was available, the R package [@DESeq2][REFERENCE] was used to search for associations of these two data types.RNA-Seq read count data was regressed on to the patient clusters C3, C4 (design formula ~ IGHV.status + Cluster). Genes were ranked by their test statistics and Gene Set Enrichment Analysis (GSEA) (implementing the fgsea algorithm with the [@clusterProfiler] package[REFERENCE]) was applied to the ranked lists with the KEGG pathway gene set selections from the MSigDBdatabase[REFERENCE].  
+For the n=49 patient samples for which viability data and RNA–Seq data for matching samples was available, the `R` package `DESeq2` [@R-DESeq2] was used to search for associations of these two data types.RNA-Seq read count data was regressed on to the patient clusters C3, C4 (design formula ~ IGHV.status + Cluster). Genes were ranked by their test statistics and Gene Set Enrichment Analysis (GSEA) (implementing the fgsea algorithm with the `clusterProfiler` [@R-clusterProfiler] package) was applied to the ranked lists with the KEGG pathway gene set selections from the MSigDBdatabase[REFERENCE].  
 
 #### Associations of ex-vivo stimulus responses with genomic features
 We tested for associations between stimulus viability assay results and genomic features by Student’s t-tests (two-sided, with equal variance). We tested somatic mutations (aggregated at the gene level), copy number aberrations and IGHV status. We restricted the analysis to features that were present in at least 3 patient samples (63 features). p-values were adjusted for multiple testing by applying the Benjamini-Hochberg procedure. 
 
 #### ATACseq processing 
 _with Ivan Berest_ original (update to paper) 
-We downloaded CLL data[REFERENCE] from the European Genome-phenome Archive (EGA: EGAD00001002110). Original dataset had 88 ATAC-seq samples from 55 patients, however we used for the analysis only one sample per patient passing quality checks, resulting in 52 samples. We used an in-house constructed ATAC-seq processing pipeline[REFERENCE] to obtain final bam files mapped to the hg19 annotation genome that were corrected for CG bias. 
+We downloaded CLL data [@Rendeiro2016] from the European Genome-phenome Archive (EGA: EGAD00001002110). Original dataset had 88 ATAC-seq samples from 55 patients, however we used for the analysis only one sample per patient passing quality checks, resulting in 52 samples. We used an in-house constructed ATAC-seq processing pipeline [@Berest2019] to obtain final bam files mapped to the hg19 annotation genome that were corrected for CG bias. 
 
 #### Annotation of trisomy 12 status
 _with Ivan Berest_ original (update to paper) 
@@ -166,15 +179,15 @@ As trisomy 12 status was not included in the original metadata, we used a mean a
 
 #### diffTF analysis of TF activity in trisomy 12 CLL
 _with Ivan Berest_ original (update to paper) 
-FOr the larger ATACseq dataset, we ran analytical mode of diffTF[REFERENCE] pipeline to investigate differential TF activity between trisomy 12 and non-trisomy 12 patients using the HOCOMOCO v10 database [REFERENCE] with the following design formula: “~ Batch + Gender + IGHV status + trisomy12 status”. 
+FOr the larger ATACseq dataset, we ran analytical mode of diffTF [@R-diffTF] pipeline to investigate differential TF activity between trisomy 12 and non-trisomy 12 patients using the HOCOMOCO v10 database [@HOCOMOCO] with the following design formula: “~ Batch + Gender + IGHV status + trisomy12 status”. 
 
 for tirsomy 12 software uses the ATACseq counts at each of the binding sites across the genome to generate a distribution of fold changes between trisomy 12 and WT samples. This fold change distribution is compared to a background distribution of fold changes, calculated similarly using ATACseq counts for a GC-matched motif, that does not contain the TF binding motif. The TF is classified as differentially active between trisomy 12 and WT samples where these two distributions are significantly different. Each TF is assigned a weighted mean difference value, which quantifies the change in activity, and a p value. 
 
-For the smaller ATACseq dataset, ATAC-seq data generated from our CLL samples were processed similarly with the in-house ATAC-seq pipeline, as described previously[REFERENCE], with the only exception that we didn’t use CG bias correction step. We used a similarly analytical mode of diffTF with HOCOMOCO v10 database[REFERENCE] using the following parameters: minOverlap = 1; design formula = “~ Patient + Trisomy 12 status”.  
+For the smaller ATACseq dataset, ATAC-seq data generated from our CLL samples were processed similarly with the in-house ATAC-seq pipeline, as described previously [@Berest2019], with the only exception that we didn’t use CG bias correction step. We used a similarly analytical mode of diffTF with HOCOMOCO v10 database [@HOCOMOCO] using the following parameters: minOverlap = 1; design formula = “~ Patient + Trisomy 12 status”.  
 
 #### Functional enrichment analysis of SPIB ChIPseq data
 _myeslf_ original (update to paper) 
-We downloaded SPIB ChIPseq data[REFERENCE] from the NCBI GEO database[REFERENCE], accession GEO:GSE56857. We made use of the data for SPIB in the OCILY3 DLBCL cell line (GSM1370276). SPIB ChIP peaks were filtered for significance (q value<0.05). We used the annotatePeaks function from the package clusterProfiler[REFERENCE] to annotate the nearest gene for each ChIPpeak. We filtered peaks  within ±1kb of a TSS of a gene and performed over-representation of  KEGG and Reactome pathways (using the clusterProfiler package[REFERENCE])  amongst the resulting list of genes. 
+We downloaded SPIB ChIPseq data [REFERENCE] from the NCBI GEO database[REFERENCE], accession GEO:GSE56857. We made use of the data for SPIB in the OCILY3 DLBCL cell line (GSM1370276). SPIB ChIP peaks were filtered for significance (q value<0.05). We used the annotatePeaks function from the package clusterProfiler[REFERENCE] to annotate the nearest gene for each ChIPpeak. We filtered peaks  within ±1kb of a TSS of a gene and performed over-representation of  KEGG and Reactome pathways (using the clusterProfiler package[REFERENCE])  amongst the resulting list of genes. 
 
 #### Linear modelling of drug - stimulus interactions 
 _myself_ original 
