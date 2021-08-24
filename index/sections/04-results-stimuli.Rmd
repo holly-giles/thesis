@@ -2296,3 +2296,7 @@ We uncovered four such subgroup with distinct response profiles and molecular pr
 ## Discussion
 Gosia suggested discussing each results section individually? 
 
+## Contributions statement
+The author of this thesis performed statistical inference and regression modelling outlined in this chapter. In essence, she performed data visualisation, optimised and interpreted the clustering of the heatmap to identify four patient subgroups, and investigated the molecular and phenotypic profiles of the four subgroups. 
+
+Peter-Martin Bruch generated the viability screening data, and curated and analysed the clinical data on LDT and TTT. The genetic annotation data was taken from [@JCIpaper]. The heatmap in section was generated collectively with Peter-Martin Bruch, Wolfgang Huber and Sascha Dietrich, for the paper Giles & Bruch et al 2021.  The author also received support from Junyan Lu for the generation of the multivariate model, and from Peter-Martin Bruch and Sophie Herbst for the consensus clustering analysis. 
