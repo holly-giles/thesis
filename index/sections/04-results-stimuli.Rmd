@@ -1301,7 +1301,7 @@ The majority  of the stimuli increased  viability, underlining the supportive na
 
 IL4 and TLR7/8/9 agonists Resiquimod and CpG ODN induced the strongest responses, an indication of their potency in modulating CLL cell survival. Notably, TLR agonists increased viability in certain samples, in most cases IGHV-U, and decreased viability in others, mostly IGHV-M.  Both IL4 and TLR7/8/9 emerged as the key pathways in the screen, and play an important role throughout the results of this thesis. 
 
-### Microenvironmental response profiling identifies discrete patient subgroups
+### Microenvironmental response profiling identifies discrete patient subgroups {#clusters}
 To further investigate the variability in responses across the cohort, we visualised z scores of the log-transformed viabilities and performed consensus clustering on the resulting matrix to generate a heatmap of all stimuli responses across all samples (Figure \@ref(fig:stimuliHeatmap). 
 
 (ref:stimuliHeatmap) The heatmap matrix shows the viability measurements for 192 samples (columns) and 17 stimuli (rows). Viability was measured via ATP-based assay after 48h stimulation. The data are shown normalised to DMSO-treated controls, and scaled within each row according to the Median Absolute Deviation (MAD). Limits were applied to scaling factor for optimal visualisation. The colour bars to the right show sample annotations. Consensus Clustering was used to define column tree layout, using hierarchical clustering with the Euclidean metric. Figure from Bruch & Giles et al. 2021. 
