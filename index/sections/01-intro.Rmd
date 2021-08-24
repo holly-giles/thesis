@@ -96,6 +96,12 @@ The repertoire of immunoglobin molecules produced by the CLL cells of all patien
 ### Recurrent genetic features in CLL
 Genetic alterations in CLL can include chromosomal alterations, mutations, alterations in the expression of mi RNAs and epigenetic modifications.
 
+(for purpose of TLR sotry)
+These included del(11q) and *ATM* ,
+del(17p) and *TP53*, 
+*SF3B1*. 
+
+
 REading: 
 From Kipps et al: 
 38 Dohner H, et al. Genomic aberrations and survival in chronic lymphocytic leukemia. N. Engl. J. Med. 2000; 343:1910–1916. [PubMed: 11136261]
@@ -194,7 +200,7 @@ The CLL epigenome shows global hypomethylation combined with local hypermethylat
 Methylation signatures can classify distinct clinical CLL subgroups69,74. As these methylation patterns are a heritable trait, they have been used to ‘trace’ back to the type of normal B cell from which the CLL cells were derived75. These studies revealed that the CLL cells of different patients derive from a continuum of B cell maturation states, which are not restricted to discrete maturation stages. Nevertheless, CLL cells that use unmutated IGHV versus mutated IGHV generally have distinctive methylation patterns, which respectively approximate to those of pre-germinal centre versus post-germinal centre memory B cells, as depicted in FIG. 1. The diversity in the likely cells of origin of CLL cells highlights the biological and phenotypic heterogeneity of this disease. These findings also suggest that epigenetic programming that is dependent of transcription factors has a potentially important role in the development of CLL.
 
 
-### The incompletely understood role of trisomy12 
+### The incompletely understood role of trisomy12 {#intro-trisomy12}
 Bosch, F., Dalla-Favera, R. Chronic lymphocytic leukaemia: from genetics to treatment. Nat Rev Clin Oncol 16, 684–701 (2019). https://doi.org/10.1038/s41571-019-0239-8
 
 Trisomy 12 chronic lymphocytic leukemia expresses a unique set of activated and targetable pathways
@@ -296,7 +302,7 @@ Lymph nodes etc
 CLL cells depend on survival signals that they receive in lymphoid tissues from neighbouring non-neoplastic cells within the so-called cancer microenvironment. CLL cells follow chemokine gradients into lymph nodes, where they form ‘proliferation centres’ (REF. 77), as opposed to normal germinal centres. In these proliferation centres, the CLL cells contact non- malignant stromal cells, nurselike cells (also known as lymphoma-associated macrophages), T cells and mesenchymal-derived stromal cells (FIG. 4). Engagement with autoantigen may occur during this transit, thereby stimulating CLL cell activation and proliferation if sufficient T cell help is available. Only a few per cent of the CLL cells undergo proliferation at any one time; the remainder of the cells are either unstimulated or driven into anergy84. However, within such proliferation centres, all CLL cells are exposed to chemokines, integrins, cytokines and survival factors.
 
 
-### Microenvironmental pathways and cross-talk 
+### Microenvironmental pathways and cross-talk {#intro-ME-pathways}
 pathways esp IL4 and TLR    
 The microenvironment in CLL constitutes cross talk via soluble factors and cell-cell contacts, in the blood, bone marrow and lymph nodes.
 
@@ -360,6 +366,8 @@ incl ME -mediated and ibrutinib - IL4
 
 ### Studies of the microenivornment, and attempts to replicate the impact of the microenvironment 
 
+### ATAC sequncing as a proxy for TF activity justification {#intro-ATACseq}
+
 ### Measurement of outcomes? 
 LDT, TTT, TFT, OS 
 
@@ -374,9 +382,15 @@ In clinical trials, it is becoming more common to evaluate for MRD with 0.01% of
 ### Multiomics datasets to study CLL 
 The power of multi-omics approaches especially the use of ATAC sequencing and combining ATAC and RNA
  
-### Mathematical modelling 
+### Mathematical modelling {#intro-multivariate-modelling}
 Mathematical background in particular, lasso-regularised regression, and the caveats associated with feature selection
 wrt cluster assignment 
+
+use method, explain how it works 
+we need mor ltieracy about these things 
+discuovery of mulitple layers of biology rather thatn jsut using t tests
+
+how this can be used to build classfiers
 
 ### CLL as a model for studying tumour biology
 
