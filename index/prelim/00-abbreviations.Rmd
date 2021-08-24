@@ -40,6 +40,8 @@ output:
     STAT & & Signal transducer and activator of transcription \\
     SYK & & Spleen tyrosine kinase \\
     VST & & Variance Stabilising Transformation \\
+    WES & & Whole exome sequencing \\
+    WGS & & Whole genome sequencing \\
     WT & & Wild type \\
     ZAP70 & & Tyrosine-protein kinase ZAP-70 \\
 
