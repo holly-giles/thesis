@@ -85,9 +85,7 @@ ATAC-seq libraries were generated as described previously[REFERENCE]. Cell prepa
 ## Data availability
 European Genome-Phenome Archive (EGA) accession .... The data  for …. and computational analysis code used in this study are available from ….
 
-
-Additionally, we obtained CLL ATACseq data[REFERENCE] from the European Genome-phenome Archive (EGA: EGAD00001002110). 
-
+Additionally, we obtained CLL ATACseq data[REFERENCE] from the European Genome-phenome Archive (EGA: EGAD00001002110) and from (Bruch & Giles et al. 2021)
 For the ChIPseq analysis of SPIB binding sites, we accessed the data 37 from the NCBI GEO database 51, accession GEO: GSE56857. We made use of the data for SPIB in the OCILY3 DLBCL cell line (GSM1370276). 
 
 
