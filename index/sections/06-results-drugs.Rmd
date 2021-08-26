@@ -498,8 +498,186 @@ Different types of interaction
 
 ```{r drugStimulusDummyPLots, fig.cap='(ref:drugStimulusDummyPLots)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
-```
 
+dummydata <-
+  as.data.frame(list(c(1,2,3,4),
+                     c(0,0,0,0),
+                     c(-0.6,-0.6,0,-0.1), 
+                     c(0.6,0.6,0.1,-0.1), 
+                     c(0.5,-0.5,0.8,-0.8)), 
+                col.names=c("plot",
+                            "coord1", 
+                            "coord2", 
+                            "coord3", 
+                            "coord4")) %>% 
+  as_tibble() %>% 
+  
+  mutate(expected = coord2 + coord3, measured = coord4) %>% 
+  
+  pivot_longer(cols = coord1:measured, names_to = c("plot"), values_to="y.value", names_repair="unique" ) %>% 
+  
+  dplyr::rename(Plot = plot...1, x.value = plot...2) %>% 
+  
+  mutate(x.value = factor(x.value, levels = c("coord1", "coord2", "coord3", "coord4", "expected", "measured"))) %>% 
+  
+  #add annotation of interaction type
+  mutate(Plot = factor(Plot, 
+                       labels = c("stimulus inhibits drug", 
+                                  "drug inhibits stimulus", 
+                                  "synergistic pro-survival effect", 
+                                  "synergistic toxicity")))
+
+
+gg_dummy =
+  #for each interaction type, make a dummy plot
+  lapply(unique(dummydata$Plot), function(i){
+    
+    tmp <- dplyr::filter(dummydata, Plot==i )
+    
+    #get value for interaction
+    interaction = 
+      unlist(dplyr::select(dplyr::filter(tmp, x.value=="measured"), y.value)) - 
+      unlist(dplyr::select(dplyr::filter(tmp,x.value=="expected"), y.value))
+    
+    #plot dummy plot
+    gg_dummy <- 
+      ggplot(dplyr::filter(tmp, grepl('coord', x.value)), 
+             aes(x=x.value, y=y.value, group=Plot))+
+  
+  geom_hline(yintercept = 0, linetype=2, color="black")+
+  geom_point(colour=ifelse(interaction > 0, "#A6093D","#003DA5"), size=1)+
+  geom_line(colour=ifelse(interaction > 0, "#A6093D","#003DA5"), size=1)+
+  
+  geom_segment(data=dplyr::filter(tmp, grepl('expected', x.value)), aes(x = 3.5, y = y.value, xend = 4.5, yend = y.value), color="blue", size=2) +
+  geom_segment(data=dplyr::filter(tmp, grepl('measured', x.value)), aes(x = 3.5, y = y.value, xend = 4.5, yend = y.value), color="black", size=2)+
+  
+  theme_bw() +
+  t1 +
+  xlab("") + 
+  ylab("Log(Viability)") +
+  coord_cartesian(ylim = c(-1, 1)) +
+  scale_x_discrete(labels=c( "coord1"="DMSO", "coord2"="Drug","coord3"="Stimulus","coord4"="Drug +\nStimulus")) +
+    theme(axis.ticks.x= element_blank(),axis.ticks.y = element_blank(),
+          plot.tag=element_text(size = 20)) +
+      
+  scale_y_continuous(breaks = c(-1,0, 1))
+
+})
+
+
+#construct plot
+
+wrap_elements(
+  
+  gg_dummy[[1]] + 
+  labs(title=expression(paste("Positive ", beta["int"] ))) +
+  ylab("Antagonism")+
+
+  gg_dummy[[2]] +
+  labs(title=expression(paste("Negative ", beta["int"] )))+
+
+  gg_dummy[[3]] +
+  ylab("Synergism") +
+    
+  gg_dummy[[4]]+
+  
+  plot_layout(nrow=2) +
+  plot_annotation(tag_levels = "I")
+)
+
+
+
+
+
+```
+```{r drugStimulusDummyPLots, fig.cap='(ref:drugStimulusDummyPLots)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+
+dummydata <-
+  as.data.frame(list(c(1,2,3,4),
+                     c(0,0,0,0),
+                     c(-0.6,-0.6,0,-0.1), 
+                     c(0.6,0.6,0.1,-0.1), 
+                     c(0.5,-0.5,0.8,-0.8)), 
+                col.names=c("plot",
+                            "coord1", 
+                            "coord2", 
+                            "coord3", 
+                            "coord4")) %>% 
+  as_tibble() %>% 
+  
+  mutate(expected = coord2 + coord3, measured = coord4) %>% 
+  
+  pivot_longer(cols = coord1:measured, names_to = c("plot"), values_to="y.value", names_repair="unique" ) %>% 
+  
+  dplyr::rename(Plot = plot...1, x.value = plot...2) %>% 
+  
+  mutate(x.value = factor(x.value, levels = c("coord1", "coord2", "coord3", "coord4", "expected", "measured"))) %>% 
+  
+  #add annotation of interaction type
+  mutate(Plot = factor(Plot, 
+                       labels = c("stimulus inhibits drug", 
+                                  "drug inhibits stimulus", 
+                                  "synergistic pro-survival effect", 
+                                  "synergistic toxicity"))) %>%
+  mutate(type = ifelse(Plot %in% c("stimulus inhibits drug", "drug inhibits stimulus"), "antagonism", "synergism")) %>%
+  mutate(direction = ifelse(Plot %in% c("stimulus inhibits drug", "synergistic toxicity"), "negative", "positive"))
+
+#
+labs_type <- c("Antagonism", "Synergism")
+names(labs_type) <- c("antagonism", "synergism")
+
+labs_size <- c("Postive Bint", "Negative Bint")
+names(labs_size) <- c("positive", "negative")
+
+
+    
+    
+    #plot dummy plot
+ggplot(dplyr::filter(dummydata, grepl('coord', x.value)), 
+       aes(x=x.value, y=y.value, group = Plot))+
+  geom_hline(yintercept = 0, linetype=2, color="black")+
+  geom_point( size=1)+
+  geom_line( size=1)+
+  facet_grid(type~direction, labeller = labeller(type = labs_type, direction = labs_size))+
+  geom_segment(data=dplyr::filter(dummydata, grepl('expected', x.value)), aes(x = 3.5, y = y.value, xend = 4.5, yend = y.value), color="blue", size=2) +
+  geom_segment(data=dplyr::filter(dummydata, grepl('measured', x.value)), aes(x = 3.5, y = y.value, xend = 4.5, yend = y.value), color="black", size=2)+
+  theme_bw() +
+  t1 +
+  xlab("") + 
+  ylab("Log(Viability)") +
+  coord_cartesian(ylim = c(-1, 1)) +
+  scale_x_discrete(labels=c( "coord1"="DMSO", "coord2"="Drug","coord3"="Stimulus","coord4"="Drug +\nStimulus")) +
+    theme(axis.ticks.x= element_blank(),axis.ticks.y = element_blank(),
+          plot.tag=element_text(size = 20)) +
+      
+  scale_y_continuous(breaks = c(-1,0, 1))
+
+
+
+#put colour of interaction back in: 
+gg_dummy =
+  #for each interaction type, make a dummy plot
+  lapply(unique(dummydata$Plot), function(i){
+    
+    tmp <- dplyr::filter(dummydata, Plot==i )
+    
+    #get value for interaction
+    interaction = 
+      unlist(dplyr::select(dplyr::filter(tmp, x.value=="measured"), y.value)) - 
+      unlist(dplyr::select(dplyr::filter(tmp,x.value=="expected"), y.value))
+    
+    
+  #sort after ^  
+
+#colour=ifelse(interaction > 0, "#A6093D","#003DA5"),
+#colour=ifelse(interaction > 0, "#A6093D","#003DA5"),
+#construct plot
+
+
+
+
+```
 Wauntify how many fit into each category    
 (Figure \@ref(fig:barPlotInteractions)). 
 
