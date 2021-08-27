@@ -1066,6 +1066,31 @@ wrap_elements(Fig3B_1 + Fig3B_2 +
 
 The multivariate analysis demonstrated that responses to IL4 and sCD40L + IL4, TLR and TGF$\beta$ were all affected by multiple genetic features (Bruch & Giles et al. 2021). For example, higher viability in response to IL4 stimulation was associated with trisomy 12 and unmutated IGHV. In contrast, IL4 generated little or no increase in viability in samples with a mutation in KRAS, NRAS or BRAF. These tumours benefited less from the anti-apoptotic effects of IL4, indicating that the ability of IL4 to increase viability could be dependent on signalling via Ras-Raf-MEK-ERK, which is already active in mutant samples. 
 
+Discussion that Inhibition of ERK (p38) also increased IL4 protective effect 
+
+```{r ral_il4, fig.cap='(ref:ral_il4)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf', eval = FALSE}
+
+# Plot predictor profile for Ibrutinib + IL4
+
+left_join(df_complete, patMeta, by = "PatientID") %>% 
+  dplyr::filter(DCK%in% c("DMSO:IL-4", "Ralimetinib:IL-4")) %>%
+         
+  ggplot(aes(x=DCK,y=Log))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     size=3)+
+  xlab("Treatment") +
+  ylab("Log(Viability)") +
+  ggtitle("") +
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+
+  t2
+
+```
 ### Response to TLR stimulation is dependent on IGHV status, trisomy 12 and mutations in DNA Damage Response genes
 The multivariate analysis highlighted that TLR stimulation by CpG ODN and Resiquimod both showed the largest number of predictors, reflecting the multiple layers of biology involved here. These included del(11q) and *ATM* , del(17p) and *TP53*, IGHV status, trisomy 12 and *SF3B1* (Bruch & Giles et al. 2021). Amongst the screening cohort, TLR stimulation increased viability in certain samples and decreased in others. The clustering groups identified in  section \@ref(clustering) also showed highly divergent responses to TLR, and this related to disease progression, thus warranting a more detailed look at the underlying features modulating TLR response (Figure \@ref(fig:TLRGenes)). 
 
