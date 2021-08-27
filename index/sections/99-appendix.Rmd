@@ -1,5 +1,8 @@
 # Appendix {-}
-
+```{r loadDataAppendix}
+#drug-cyt-gene interactions
+load("data/coeff.long.mat_Fig6.RData") # from data for figure 6 in supplement
+```
 
 ## Figures {-}
 
@@ -10,6 +13,42 @@
 
 ```{r diffTFsmallvolPlot, fig.cap='(ref:diffTFsmallvolPlot)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 knitr::include_graphics("figures/graph.eps")
+```
+
+(ref:drugcytGeneIntAll) 
+
+
+```{r drugcytGeneIntAll, fig.cap='(ref:drugcytGeneIntAll)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+colnames(Cytokine_labels) <- c("Stimulus", "label")
+coeff.long.mat_Fig6 %>%
+  tidyr::separate(int, sep=" \\+ ", into=c("Drug", "Stimulus"), remove =FALSE)%>% 
+  left_join(Cytokine_labels, by = "Stimulus") %>%
+  dplyr::filter(coeff!=0) %>%
+  ggplot(aes(y=Drug, x=gene))+
+  geom_tile(aes(fill=coeff),color = "white")+
+  scale_fill_gradientn(colors=c(rep(palblues[1:4],each=2),"white", rep(palreds[5:8], each=2)),  limits=c(-0.8,.8))+
+  t1+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.ticks.x = element_blank(),
+        panel.background = element_rect(color = "black", fill=NA),
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        legend.key.height = unit(0.5, "cm"),
+        legend.key.width = unit(2, "cm"),
+        legend.title = element_text(face='bold', hjust = 0, size=fontsize+2),
+        legend.position = "bottom",
+        legend.key = element_blank(),
+        legend.text = element_text(size=fontsize),
+        legend.background = element_rect(color = NA),
+        strip.text.y.left = element_text(angle = 0, face="bold", size = 22),
+        strip.background = element_blank())+
+  labs(fill = expression(paste(beta, "-int")))+
+  scale_y_discrete(position = "right",limits=rev)+
+  scale_x_discrete(labels=c("KRAS,\nNRAS,\nBRAF"="RAS/RAF"))+
+   facet_grid(label~., scales = "free_y",  space="free_y", switch = "both")
 ```
 
 ## Tables {-}
