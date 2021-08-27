@@ -477,6 +477,60 @@ df <-
 
 ```
 
+```{r preWork06, message = FALSE}
+
+# define the base level per treatment_type as the "no"-treatment
+df$treatment_drug <- as.factor(df$treatment_drug)
+df$treatment_cytokine <- as.factor(df$treatment_cytokine)
+
+df$treatment_drug %<>% relevel("DMSO")
+df$treatment_cytokine %<>% relevel("No Cytokine")
+
+
+# inspect design matrix of interaction model
+# model.matrix(~treatment_drug + treatment_cytokine + treatment_drug:treatment_cytokine, df)
+
+# fit model with interaction
+fit <- lm(Viability ~ treatment_drug * treatment_cytokine, df)
+
+
+
+#extract p values
+
+pvalues <- summary(fit)$coefficients[,4]
+
+#order as a dataframe
+pvaldf <- as.data.frame(as.matrix(pvalues)) %>% 
+          setDT(keep.rownames = TRUE)
+          
+#rename columns
+colnames(pvaldf) <- c("treatment", "pvalue")
+
+#filter out single agent treatments
+singletreatments <- c(drugtreatments, cytokinetreatments, "(Intercept)")
+
+pvaldf <- dplyr::filter(pvaldf, !treatment %in% singletreatments)
+
+
+pvaldf <- 
+  pvaldf %>% 
+  #remove "treatment" prefix
+  mutate_at(vars(treatment), funs(as.character(gsub("treatment_drug", "", .)))) %>% 
+  mutate_at(vars(treatment), funs(as.character(gsub("treatment_cytokine", "", .))))
+  
+  #split drug:cytokine into two columns
+pvaldf <-   
+  data.frame(pvaldf, do.call(rbind, strsplit(pvaldf$treatment, split = ":", fixed = TRUE)))
+
+#renove treatment column
+pvaldf <- pvaldf[,c("pvalue","X1", "X2")]
+
+#rename columns
+colnames(pvaldf) <- c("pvalue","drug", "Cytokine")
+
+
+
+```
 
 ## Mapping drug - stimulus interactions
 ### Linear modelling quantifies interactions between drugs and stimuli
@@ -590,6 +644,9 @@ wrap_elements(
 
 
 ```
+
+
+
 ```{r drugStimulusDummyPLots, fig.cap='(ref:drugStimulusDummyPLots)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 
@@ -616,30 +673,31 @@ dummydata <-
   
   #add annotation of interaction type
   mutate(Plot = factor(Plot, 
-                       labels = c("stimulus inhibits drug", 
-                                  "drug inhibits stimulus", 
-                                  "synergistic pro-survival effect", 
-                                  "synergistic toxicity"))) %>%
-  mutate(type = ifelse(Plot %in% c("stimulus inhibits drug", "drug inhibits stimulus"), "antagonism", "synergism")) %>%
-  mutate(direction = ifelse(Plot %in% c("stimulus inhibits drug", "synergistic toxicity"), "negative", "positive"))
+                       labels = c("I", 
+                                  "II", 
+                                  "III", 
+                                  "IV"))) %>%
+  mutate(type = ifelse(Plot %in% c("I", "II"), "antagonism", "synergism")) %>%
+  mutate(direction = ifelse(Plot %in% c("I", "IV"), "negative", "positive"))
 
-#
+
 labs_type <- c("Antagonism", "Synergism")
 names(labs_type) <- c("antagonism", "synergism")
 
-labs_size <- c("Postive Bint", "Negative Bint")
+labs_size <- c(expression(paste("Postive", beta["int"] )), expression(paste("Negative ", beta["int"] )))
 names(labs_size) <- c("positive", "negative")
 
+dummydata$direction <- factor(dummydata$direction, 
+                       labels = c(expression(paste("Postive", beta["int"] )),
+                                 expression(paste("Negative ", beta["int"] ))))
 
-    
-    
-    #plot dummy plot
+#plot dummy plot
 ggplot(dplyr::filter(dummydata, grepl('coord', x.value)), 
-       aes(x=x.value, y=y.value, group = Plot))+
+       aes(x=x.value, y=y.value, group = Plot, color = direction))+
   geom_hline(yintercept = 0, linetype=2, color="black")+
-  geom_point( size=1)+
-  geom_line( size=1)+
-  facet_grid(type~direction, labeller = labeller(type = labs_type, direction = labs_size))+
+  geom_point(size=1)+
+  geom_line(size=1)+
+  facet_grid(type~direction)+
   geom_segment(data=dplyr::filter(dummydata, grepl('expected', x.value)), aes(x = 3.5, y = y.value, xend = 4.5, yend = y.value), color="blue", size=2) +
   geom_segment(data=dplyr::filter(dummydata, grepl('measured', x.value)), aes(x = 3.5, y = y.value, xend = 4.5, yend = y.value), color="black", size=2)+
   theme_bw() +
@@ -647,43 +705,93 @@ ggplot(dplyr::filter(dummydata, grepl('coord', x.value)),
   xlab("") + 
   ylab("Log(Viability)") +
   coord_cartesian(ylim = c(-1, 1)) +
-  scale_x_discrete(labels=c( "coord1"="DMSO", "coord2"="Drug","coord3"="Stimulus","coord4"="Drug +\nStimulus")) +
-    theme(axis.ticks.x= element_blank(),axis.ticks.y = element_blank(),
+  scale_x_discrete(labels = c( "coord1" = "DMSO", "coord2" = "Drug","coord3" = "Stimulus","coord4" = "Drug +\nStimulus")) +
+    theme(axis.ticks.x = element_blank(),axis.ticks.y = element_blank(),
           plot.tag=element_text(size = 20)) +
-      
-  scale_y_continuous(breaks = c(-1,0, 1))
+  scale_y_continuous(breaks = c(-1,0, 1)) +
+  scale_color_manual(values = c("#A6093D","#003DA5"))  + theme(legend.position = "none") +
+  geom_text(x = 1, y = 0.75, aes(label=Plot))
 
 
-
-#put colour of interaction back in: 
-gg_dummy =
-  #for each interaction type, make a dummy plot
-  lapply(unique(dummydata$Plot), function(i){
-    
-    tmp <- dplyr::filter(dummydata, Plot==i )
-    
-    #get value for interaction
-    interaction = 
-      unlist(dplyr::select(dplyr::filter(tmp, x.value=="measured"), y.value)) - 
-      unlist(dplyr::select(dplyr::filter(tmp,x.value=="expected"), y.value))
-    
-    
-  #sort after ^  
-
-#colour=ifelse(interaction > 0, "#A6093D","#003DA5"),
-#colour=ifelse(interaction > 0, "#A6093D","#003DA5"),
-#construct plot
-
-
-
-
+#labeller = labeller(type = labs_type, direction = label_swap))
 ```
-Wauntify how many fit into each category    
+
+Quantify how many fit into each category    
 (Figure \@ref(fig:barPlotInteractions)). 
 
 (ref:barPlotInteractions)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
 
 ```{r barPlotInteractions, fig.cap='(ref:barPlotInteractions)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+
+fit_as_df <- 
+  fit$coefficients %>% 
+  as.matrix() %>% 
+  as.data.frame() %>%
+  setDT(keep.rownames = TRUE) %>% 
+  as_tibble() %>% 
+  dplyr::rename(Condition = rn, comb_coefficient = V1) %>% 
+  dplyr::filter(grepl("drug", Condition)&grepl("cytokine", Condition)) %>% 
+  mutate(Condition = gsub("treatment_drug", "", Condition)) %>% 
+  mutate(Condition = gsub("treatment_cytokine", "", Condition)) %>% 
+  separate(Condition, c("Drug", "Cytokine"), sep=":")
+
+drug_fit_as_df <- 
+  fit$coefficients %>% 
+  as.matrix() %>%
+  as.data.frame() %>%
+  setDT(keep.rownames = TRUE) %>% 
+  as_tibble() %>% 
+  dplyr::rename(Drug = rn, drug_coefficent=V1) %>% 
+  dplyr::filter(grepl("drug", Drug)&!grepl("cytokine", Drug)) %>% 
+  mutate(Drug = gsub("treatment_drug", "", Drug))
+
+
+cyt_fit_as_df <-
+  fit$coefficients %>% 
+  as.matrix() %>% 
+  as.data.frame() %>%
+  setDT(keep.rownames = TRUE) %>% 
+  as_tibble() %>% 
+  dplyr::rename(Cytokine=rn, cyt_coefficent=V1) %>% 
+  dplyr::filter(!grepl("drug", Cytokine)&grepl("cytokine", Cytokine)) %>% 
+  mutate(Cytokine = gsub("treatment_cytokine", "", Cytokine))
+
+
+fit_combinations <-
+  left_join(fit_as_df, drug_fit_as_df, by = "Drug") %>% 
+  left_join(cyt_fit_as_df, by = "Cytokine") %>% 
+  mutate(predicted_coefficient=cyt_coefficent+drug_coefficent) %>% 
+  mutate(obs_coef=predicted_coefficient+comb_coefficient) %>%
+  left_join(mutate(pvaldf,drug=as.character(drug),Cytokine=as.character(Cytokine)), by=c("Drug"="drug", "Cytokine"="Cytokine")) %>% 
+  dplyr::filter(pvalue<=0.05) %>%
+  mutate(Category_Symbol=case_when(
+    comb_coefficient>=0&(obs_coef<cyt_coefficent|obs_coef<drug_coefficent)~ "I",  
+    comb_coefficient>=0&(obs_coef>cyt_coefficent&obs_coef>drug_coefficent)~ "III",
+    comb_coefficient<0&(obs_coef>cyt_coefficent|obs_coef>drug_coefficent)~ "II",  
+    comb_coefficient<0&(obs_coef<cyt_coefficent&obs_coef<drug_coefficent)~ "IV"
+    )) %>% 
+  mutate(Category=case_when(
+    Category_Symbol=="I"~ "Positive Antagonistic",  
+    Category_Symbol=="III"~ "Positive Synergistic",
+    Category_Symbol=="II"~ "Negative Antagonistic",  
+    Category_Symbol=="IV"~ "Negative Synergistic"
+    )) %>% 
+  mutate( Category=factor(Category, levels=c("Positive Antagonistic","Negative Antagonistic","Positive Synergistic","Negative Synergistic")))
+  
+
+fit_combinations %>% 
+  dplyr::group_by(Category) %>% 
+  tally() %>% 
+  
+ggplot(aes(x=Category, y=n, fill=Category))+
+  geom_bar(width = 1, stat = "identity")+
+  t1+
+  guides(fill="none")+
+  xlab("")+ ylab("Number of drug - stimulus pairs")+
+  scale_fill_manual(values = c("#A6093D","#003DA5","#A6093D","#003DA5"))
+
+
 
 ```
 
@@ -694,28 +802,302 @@ SHow all actual interactions
 
 (ref:drugStimulusIntMapt)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
 
-```{r drugStimulusIntMapt, fig.cap='(ref:drugStimulusIntMapt)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r drugStimulusIntMapt, fig.cap='(ref:drugStimulusIntMapt)', message = FALSE,  echo = FALSE, fig.width=12, fig.height = 8, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+#extract beta interaction values
+betavalues <- summary(fit)$coefficients[,1]
+
+#create matrix of beta values 
+betadf <- as.data.frame(as.matrix(betavalues)) %>%
+          setDT(keep.rownames = TRUE)
+
+#rename columns
+colnames(betadf) <- c("treatment", "betavalue")
+
+#remove beta values for drugs and cytokines alone
+betadf <- dplyr::filter(betadf, !treatment %in% singletreatments)
+
+#remove treatment prefix
+betadf <- betadf %>% 
+  mutate_at(vars(treatment), funs(as.character(gsub("treatment_drug", "", .)))) %>% 
+  mutate_at(vars(treatment), funs(as.character(gsub("treatment_cytokine", "", .))))
+
+#split drug:cytokine by colon
+betadf <- data.frame(betadf, do.call(rbind, strsplit(betadf$treatment, split = ":", fixed = TRUE)))
+
+#select columns of interest
+betadf <- betadf[,c("betavalue","X1", "X2")]
+
+#rename columns 
+colnames(betadf) <- c("betavalue","drug", "Cytokine")
+
+#set significance
+a <- 0.05
+
+#make a matrix of beta values, where  beta = 0 if corresponding p val is > than significance threshold 
+pvalmat <- xtabs(pvalue~drug+Cytokine, data=pvaldf)
+bvalmat <- xtabs(betavalue~drug+Cytokine, data=betadf)
+
+#check in same order
+bvalmat[,colnames(pvalmat)] 
+bvalmat[rownames(pvalmat),]
+
+bvalmat[pvalmat >= a] = 0
+
+#transform matrix 
+bvalmat <- t(bvalmat)
+
+tree <- 
+  pheatmap(bvalmat, silent = TRUE)
+
+
+cyt_order <- rownames(bvalmat[tree$tree_row[["order"]],])
+
+drug_order <- colnames(bvalmat[,tree$tree_col[["order"]]])
+
+
+
+  #append p values
+  left_join(betadf, pvaldf, by = c("drug", "Cytokine")) %>% 
+  #make beta value 0 if p value is < sig
+  mutate(betavalue = ifelse(pvalue<a, betavalue, 0)) %>% 
+  #put drugs in order of clustered heatmap
+  mutate(drug=factor(drug, levels = drug_order)) %>% 
+  
+  #put stimuli in order of clustered heatmap
+  mutate(Cytokine=factor(Cytokine, levels = rev(cyt_order))) %>% 
+  
+  #make heatmap with ggplot
+  ggplot(aes(x=drug, y=Cytokine))+
+  
+  geom_tile(aes(fill=betavalue),color = "grey")+
+  #set colour scale
+  scale_fill_gradientn(colors=c("#003DA5",  "white",  "#A6093D"), limits=c(-0.6,0.6))+
+  #set theme
+  t2+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.ticks.x =element_blank(),
+        panel.background = element_blank(), 
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        legend.key.height=unit(2.5, "cm"))+
+  labs(fill = expression(paste(beta["int"], "-value")))+
+  #add category
+  geom_text(data = fit_combinations, aes(x=Drug, label=Category_Symbol) )+
+  scale_y_discrete(labels=c("TGF-b1"="TGF-\u03B21", "sCD40L+IL-4"="sCD40L + IL4", "IL-1b"="IL1\u03B2", "IL-4"="IL4", "IL-6"="IL6","IL-15"="IL15","IL-10"="IL10", "IL-21"="IL21","IL-2"="IL2", "Interferon gamma"= "Interferon \u03B3", "SDF-1a"="SDF-1\u03B1"))
+  
+
 
 ```
 
 Discuss specific examples 
 (find two replacements for ibr and ifn gamma)
 Ibrutinib + IL4 Ibrutinib + IFNgamma, Ralimetinib + IFNgamma, Ibrutinib + Resiquimod  - show in grid graphic 
+big up interferon gamma 
+
 (Figure \@ref(fig:drugStimulusIntEx)). 
 
 (ref:drugStimulusIntEx)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
 
-```{r drugStimulusIntEx, fig.cap='(ref:drugStimulusIntEx)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r drugStimulusIntEx, fig.cap='(ref:drugStimulusIntEx)', message = FALSE,  echo = FALSE, fig.height=10, fig.width = 12, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
+
+
+#get lists of drugs and cytokines without baseline treatments
+thedrugs.only <- thedrugs %>% setdiff("DMSO") %>% sort()
+thecytokines.only <- thecytokines %>% setdiff("No Cytokine")%>% sort()
+
+# get a list of interactions for which p value of beta interaction is significant
+sign_conditions <-
+  pvaldf %>% 
+  dplyr::filter(pvalue<=0.05) %>% 
+  mutate(condition = paste0("treatment_drug:", 
+                            drug, 
+                            ":treatment_cytokine:",
+                            Cytokine))
+
+
+gg <- vector(mode="list", length=length(sign_conditions$condition))
+names(gg) <- sign_conditions$condition
+
+
+
+plotList <- 
+lapply(names(gg), function(i){
+  
+  #preparations for the interaction plot
+  drug <- dplyr::filter(sign_conditions, condition ==i)$drug
+  drugTreat <- paste("treatment_drug", drug, sep='')
+      
+  cyt <- dplyr::filter(sign_conditions, condition ==i)$Cytokine
+  cytokineTreat <-paste("treatment_cytokine", cyt, sep='')
+      
+      
+  Category <- fit_combinations[which(fit_combinations$Drug==drug &
+                               fit_combinations$Cytokine==cyt),]$Category
+  
+  #extract coefficients to plot
+
+  ## baseline effect
+  baseline <- fit$coefficients["(Intercept)"]
+
+  ## single treatment effect for type_1 = "a"
+  single_1 <- fit$coefficients[drugTreat]
+
+    ## single treatment effect for type_2 = "b"
+    single_2 <- fit$coefficients[cytokineTreat]
+
+    # interaction Viability
+    interaction <- fit$coefficients[paste(drugTreat, cytokineTreat, sep=':')]
+
+      
+    ## observed single treatment values
+    observed_single_1 <- baseline + single_1 
+    observed_single_2 <- baseline + single_2
+
+    ## observed double treatment value
+    observed_double <- baseline + single_1 + single_2 + interaction
+
+    ## predicted double treatment value (based only on single effects)
+    predicted_double <- baseline + single_1 + single_2
+
+
+    #prepare labels and aesthetics for plotting
+    # y_label <- case_when(cyt=="Interferon gamma"~"Interferon\ngamma",
+    #                      cyt=="soluble anti-IgM"~"soluble\nanti-IgM",
+    #                      TRUE~cyt)
+
+    xlabels <- c("DMSO", drug, 
+                 case_when(cyt=="IL-4"~"IL4",
+                           cyt=="Interferon gamma"~"Interferon \u03B3",
+                           cyt=="sCD40L+IL-4"~"sCD40L + IL4",
+                           cyt=="soluble anti-IgM"~"soluble\nanti-IgM",
+                           TRUE~cyt),
+                paste(drug, " +\n",
+                       case_when(cyt=="IL-4"~"IL4",
+                           cyt=="Interferon gamma"~"Interferon \u03B3",
+                           cyt=="sCD40L+IL-4"~"sCD40L + IL4",
+                           TRUE~cyt),
+                sep=""))
+      
+    segment_size <- 2
+    
+    
+    plotTab <-
+      df %>%
+      
+      dplyr::filter(treatment_drug %in% c("DMSO" , drug)) %>%
+
+      dplyr::filter(treatment_cytokine %in% c("No Cytokine", cyt)) %>%
+
+      dplyr::mutate(treatment_combination = 
+                  #if baseline treatment
+                  ifelse(treatment_drug=="DMSO" & 
+                         treatment_cytokine=="No Cytokine",
+                         "DMSO",
+                         #if drug only treatment
+                         ifelse(treatment_drug == drug & 
+                                treatment_cytokine =="No Cytokine",
+                                paste0("Drug=", drug),
+                                #if cytokine only treatment
+                                ifelse(treatment_drug == "DMSO" & 
+                                       treatment_cytokine == cyt,
+                                       paste0("Cytokine=", cyt),
+                                       #otherwise combinatorial treatment
+                                       paste0("Drug=", drug, "\nCytokine=", cyt))))) %>%
+  #make treatment_combination as a factor
+  mutate(treatment_combination = factor(treatment_combination, 
+                                        levels=c("DMSO", 
+                                                 paste0("Drug=", drug),
+                                                 paste0("Cytokine=", cyt),
+                                                 paste0("Drug=", drug, "\nCytokine=", cyt)
+                                                 )))
+  #make plot
+        
+        
+
+  ggplot(plotTab, aes(treatment_combination, Viability, group=PatientID)) +
+  
+  geom_hline(yintercept = 0, linetype=2, color="black")+
+
+  lemon::geom_pointline( size=1,   
+                         colour=ifelse(interaction > 0,
+                                       "#A6093D","#003DA5"), alpha=0.3) +
+  #add predicted viability with control treatment
+  geom_segment( size=segment_size,
+                aes(x=1-.2, xend=1+.2, y=baseline, yend=baseline),
+                colour = "black") +
+  #add predicted viability with drug only treatment
+  geom_segment( size=segment_size,
+                aes(x=2-.2, xend=2+.2, y=observed_single_1,yend=observed_single_1),
+                colour="black") +
+  #add predicted viability with cytokine only treatment
+  geom_segment( size=segment_size,
+                aes(x=3-.2, xend=3+.2, y=observed_single_2, yend=observed_single_2),
+                colour="black") +
+  #add predicted viability with both treatments
+  geom_segment( size=segment_size,
+                aes(x=4-.2, xend=4+.2, y=observed_double, yend=observed_double),
+                colour="black") +
+  #add predicted viability with both treatments, without interaction
+  geom_segment( size=segment_size,
+                aes(x=4-.2, xend=4+.2, y=predicted_double, 
+                    yend=predicted_double), color="blue") + 
+ 
+   #add category and combination as title
+    
+    
+    
+  ggtitle(paste( Category,": ", drug, " & ", 
+                 case_when(cyt=="IL-4"~"IL4",
+                           cyt=="Interferon gamma"~"Interferon \u03B3",
+                           cyt=="sCD40L+IL-4"~"sCD40L + IL4",
+                           TRUE~cyt), sep="")) + 
+  
+  #add theme
+  t2 + theme(axis.text.x = element_text(size=fontsize+5)) +
+    theme(plot.tag=element_text(size = 30))+
+  scale_x_discrete(labels = xlabels) +
+  ylab("Log (Viability)") + 
+  xlab("")
+
+
+  } ) 
+
+names(plotList) <- names(gg)
+
+
+(wrap_plots(plotList$`treatment_drug:Ibrutinib:treatment_cytokine:IL-4`) +
+  
+wrap_plots(plotList$`treatment_drug:Ibrutinib:treatment_cytokine:Interferon gamma`))/ 
+  
+(wrap_plots(plotList$`treatment_drug:Pyridone-6:treatment_cytokine:sCD40L+IL-4`) +
+  
+wrap_plots(plotList$`treatment_drug:Ralimetinib:treatment_cytokine:Interferon gamma`)) /
+  
+(wrap_plots(plotList$`treatment_drug:Ibrutinib:treatment_cytokine:CpG ODN`) +
+  
+wrap_plots(plotList$`treatment_drug:Luminespib:treatment_cytokine:soluble anti-IgM`)) + plot_annotation("A")
+  
 
 ```
 
 
-### IL4 and Interferon gamma induce resistance to Ibrutinib
-(Figure \@ref(fig:IbrRes)). 
+### IL4 induces resistance to BCR inhibitors and chemotherapeutics {#IL4resistance}
+(Figure \@ref(fig:IL4Res)). 
 
-(ref:IbrRes)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
+(ref:IL4Res)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
 
-```{r IbrRes, fig.cap='(ref:IbrRes)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r IL4Res, fig.cap='(ref:IL4Res)', message = FALSE,  echo = FALSE, fig.height=6.6, fig.width = 12, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+
+(wrap_plots(plotList$`treatment_drug:Idelalisib:treatment_cytokine:IL-4`) + wrap_plots(plotList$`treatment_drug:PRT062607:treatment_cytokine:IL-4`)) /
+  
+(wrap_plots(plotList$`treatment_drug:Everolimus:treatment_cytokine:IL-4`) +
+  
+wrap_plots(plotList$`treatment_drug:Selumetinib:treatment_cytokine:IL-4`))
 
 ```
 
@@ -728,6 +1110,130 @@ Ibrutinib + IL4 Ibrutinib + IFNgamma, Ralimetinib + IFNgamma, Ibrutinib + Resiqu
 
 ```{r drugGeneIntMap, fig.cap='(ref:drugGeneIntMap)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
+##################### List of mutations with >2 positive cases #############################
+selected_mutations <- 
+  patMeta %>% 
+  mutate(Ras_Raf = as.factor(ifelse(BRAF == 1 | KRAS == 1| NRAS == 1, 1, 0))) %>% 
+  dplyr::select(-BRAF, -KRAS, -NRAS) %>% 
+  dplyr::select( -gender, 
+                 -diagnosis, 
+                 ) %>%
+  pivot_longer(-PatientID, 
+               names_to = "Genetic_Alteration", 
+               values_to = "alteration_value") %>% 
+  dplyr::filter(alteration_value %in% c(1, "U")) %>% 
+  dplyr::group_by(Genetic_Alteration) %>% 
+  dplyr::count() %>% 
+  dplyr::filter(n>2) %>% 
+  dplyr::select(Genetic_Alteration) %>% 
+  unlist()
+
+##################### t tests and p-value adjustment ###############################  
+p_values <-
+  filter(df, Cytokine == "No Cytokine") %>%
+  ## Select columns from screening data 
+  dplyr::select(PatientID, Log, Drug) %>% 
+  
+  ## Join Screening data with metadata
+  left_join(patMeta, by = "PatientID") %>%
+  
+  ## Add Ras/Raf column, remove single columns
+  mutate(Ras_Raf=as.factor(ifelse(BRAF == 1 | KRAS == 1 | NRAS == 1, 1, 0))) %>% 
+  dplyr::select(-BRAF, -KRAS, -NRAS) %>% 
+## remove unused columns from metadata
+  dplyr::select( -gender, 
+                 -diagnosis, 
+                 -treatment) %>% 
+  
+  ## transform data to long format
+  pivot_longer(cols=c(-PatientID, -Log, -Drug), 
+               names_to = "Genetic_alt", 
+               values_to = "alt_value") %>% 
+  
+  ## filter to selected mutations (see above)
+  dplyr::filter(Genetic_alt %in% selected_mutations) %>% 
+  
+  
+  ## group by Drug and Genetic alteration  
+  dplyr::group_by(Drug, Genetic_alt) %>% 
+  
+  ## Perform t.test on every combination of Cytokine and genetic alteration
+  do(tidy(t.test(Log ~ alt_value, data = ., var.equal = T))) %>% 
+  
+  ## ungroup before adjusting p-value
+  ungroup() %>% 
+  
+  ## adjust p-values to multiple testing using BH method 
+  mutate(adj.p.value=p.adjust(p.value, method = "BH"))
+  
+################################## Order of cytokines by descending significance ############################
+Drug_order <-
+  p_values %>% 
+  dplyr::group_by(Drug) %>% 
+  dplyr::arrange(adj.p.value) %>% 
+  dplyr::filter(row_number() == 1) %>% 
+  ungroup() %>% 
+  dplyr::arrange(adj.p.value) %>% 
+  dplyr::select(Drug) %>% 
+  unlist()
+
+Genetic_alt_order <-
+  p_values %>% 
+  dplyr::group_by(Genetic_alt) %>% 
+  dplyr::arrange(adj.p.value) %>% 
+  dplyr::filter(row_number() == 1) %>% 
+  ungroup() %>% 
+  dplyr::arrange(adj.p.value) %>% 
+  dplyr::select(Genetic_alt) %>% 
+  unlist()
+
+############################# Define FDR cutoff #################################
+fdr = 0.1
+  
+############################################ Plot ########################################
+p_values %<>% 
+  mutate(Drug=factor(Drug, levels = Drug_order)) %>% 
+  mutate(Genetic_alt=factor(Genetic_alt, levels = Genetic_alt_order))
+  
+  ggplot(dplyr::filter(p_values, adj.p.value>fdr), 
+         aes(x = Drug, y = -log10(adj.p.value))) +
+  geom_point(color = "lightgrey", size = 3) +
+  geom_beeswarm(data = dplyr::filter(p_values, adj.p.value <= fdr), 
+                aes( color=Genetic_alt), size = 3, cex = 1.7) +
+  ##FDR line  
+  geom_hline(yintercept = -log10(fdr),linetype = "dashed", size=0.3)+
+  
+  ##Main Theme
+  t1 +
+  
+  theme(axis.text.x = element_text(angle = 45,
+                                   hjust = 1, 
+                                   vjust = 1),
+        axis.title.x=element_blank()) +
+  ##Legend Theme
+  theme(legend.position=c(0.65,0.65), 
+        legend.title = element_text(face='bold', hjust = 0, size=13), 
+        legend.key = element_blank(),  
+        legend.text = element_text(size=11)) +
+  guides(colour = guide_legend(nrow=7, title = "Mutations"), 
+         shape = guide_legend(ncol = 1)) +
+  scale_color_manual(name = "Mutations", values = colors, labels=c("IGHV.status"="IGHV status", 
+                                                                   "del9p"="del(9p)", 
+                                                                   "trisomy12"="trisomy 12", 
+                                                                   "gain17q"="gain(17q)", 
+                                                                   "gain2p"="gain(2p)",
+                                                                   "gain19p"="gain(19p)",
+                                                                   "gain19q"="gain(19q)",
+                                                                   "del7q"="del(7q)",
+                                                                   "del9q"="del(9q)", 
+                                                                   "del4p"= "del(4p)", 
+                                                                   "SPEN"="SPEN", 
+                                                                   "del11q"="del(11q)", 
+                                                                   "del1q" = "del(1q)")) +
+  scale_y_continuous(expression("BH-adjusted  "* italic(p)*"-value"), 
+                     breaks=seq(0, 10, 5),
+                     labels=math_format(expr=10^.x)(-seq(0,10,5))) 
+
 ```
 
 ### Multivariate analysis identifies genetic modualtors of drug response
@@ -738,6 +1244,8 @@ Ibrutinib + IL4 Ibrutinib + IFNgamma, Ralimetinib + IFNgamma, Ibrutinib + Resiqu
 
 ```{r drugGeneIntMulti, fig.cap='(ref:drugGeneIntMulti)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
+
+
 ```
 
 
@@ -747,6 +1255,9 @@ Ibrutinib + IL4 Ibrutinib + IFNgamma, Ralimetinib + IFNgamma, Ibrutinib + Resiqu
 (ref:drugGeneIntEx)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
 
 ```{r drugGeneIntEx, fig.cap='(ref:drugGeneIntEx)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+
+
 
 ```
 in a grid: 
