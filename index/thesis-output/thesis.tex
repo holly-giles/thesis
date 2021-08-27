@@ -296,6 +296,8 @@ I want to thank a few people.
     STAT & & Signal transducer and activator of transcription \\
     SYK & & Spleen tyrosine kinase \\
     VST & & Variance Stabilising Transformation \\
+    WES & & Whole exome sequencing \\
+    WGS & & Whole genome sequencing \\
     WT & & Wild type \\
     ZAP70 & & Tyrosine-protein kinase ZAP-70 \\
 
@@ -1473,6 +1475,13 @@ We uncovered four such subgroup with distinct response profiles and molecular pr
 
 Gosia suggested discussing each results section individually?
 
+\hypertarget{contributions-statement}{%
+\section{Contributions statement}\label{contributions-statement}}
+
+The author of this thesis performed statistical inference and regression modelling outlined in this chapter. In essence, she performed data visualisation, optimised and interpreted the clustering of the heatmap to identify four patient subgroups, and investigated the molecular and phenotypic profiles of the four subgroups.
+
+Peter-Martin Bruch generated the viability screening data, and curated and analysed the clinical data on LDT and TTT. The genetic annotation data was taken from (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}). The heatmap in section was generated collectively with Peter-Martin Bruch, Wolfgang Huber and Sascha Dietrich, for the paper Giles \& Bruch et al 2021. The author also received support from Junyan Lu for the generation of the multivariate model, and from Peter-Martin Bruch and Sophie Herbst for the consensus clustering analysis.
+
 \hypertarget{genetic-modulators-of-responses-to-microenvironmental-stimulation}{%
 \chapter{Genetic modulators of responses to microenvironmental stimulation}\label{genetic-modulators-of-responses-to-microenvironmental-stimulation}}
 
@@ -1766,8 +1775,8 @@ discuovery of mulitple layers of biology rather thatn jsut using t tests
 
 IL4 and KRAS - IL4 and ERK apthway reading
 
-\hypertarget{contributions-statement}{%
-\section{Contributions statement}\label{contributions-statement}}
+\hypertarget{contributions-statement-1}{%
+\section{Contributions statement}\label{contributions-statement-1}}
 
 The author of this thesis performed statistical inference and regression modelling outlined in this chapter. In essence, she performed the univariate and multivariate survey of genetic determinants of stimulus response. She identified trisomy 12 as a modulator of microenvironmental response, and conceptualised and performed the computational follow-up work on this finding, with support from Peter-Martin Bruch, Ivan Berest and Tina Becirovic.
 
@@ -1778,77 +1787,322 @@ In addition, the author received support on the following analysis work. Junyan 
 used I versus we and credited datasets, and my paper for figures and factrs - main analysis nad key finding, this hsould be routine
 Then outline in detail at the bottom
 
-\hypertarget{results}{%
-\chapter{Results}\label{results}}
-\begin{itemize}
-\item
-  Organize material and present results.
-\item
-  Use tables, figures (but prefer visual presentation):
-  \begin{itemize}
-  \item
-    Tables and figures should supplement (and not duplicate) the text.
-  \item
-    Tables and figures should be provided with legends.
-  \item
-    \emph{Figure \ref{fig:graph} shows how to include and reference graphics.
-    The graphic must be labelled before. Files must be in \textbf{.eps} format. You
-    can do this really easily in R Markdown with \texttt{knitr::include\_graphics()}}!
-  \item
-    Figures can be referenced with \texttt{\textbackslash{}@ref(fig:\textless{}name\textgreater{})}, where \texttt{\textless{}name\textgreater{}} is the
-    name of the code chunk.
-  \end{itemize}
-\end{itemize}
+\hypertarget{molecular-and-microenvironmental-modulators-of-drug-response-in-cll}{%
+\chapter{Molecular and microenvironmental modulators of drug response in CLL}\label{molecular-and-microenvironmental-modulators-of-drug-response-in-cll}}
+
+Intro text
+
+Process data
+
+\hypertarget{mapping-drug---stimulus-interactions}{%
+\section{Mapping drug - stimulus interactions}\label{mapping-drug---stimulus-interactions}}
+
+\hypertarget{linear-modelling-quantifies-interactions-between-drugs-and-stimuli}{%
+\subsection{Linear modelling quantifies interactions between drugs and stimuli}\label{linear-modelling-quantifies-interactions-between-drugs-and-stimuli}}
+
+Principle
+
+\emph{Equation \eqref{eq:drugCytInt} quantifies how the viability with any combination can be predicted:}
+\begin{equation}
+            log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{int}X_{drug}X_{stimulus} + \epsilon
+                                       \label{eq:drugCytInt}
+    \end{equation}
+\emph{where \(V\) is the viability with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\) \emph{and} \(\beta_{int}\) \emph{are coefficients for the drug, stimulus and combinatorial terms and} \(X_{drug}\) \emph{and} \(X_{stimulus}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus.} \(\epsilon\) \emph{is the vector of model residuals.}
+
+Different types of interaction\\
+(Figure \ref{fig:drugStimulusDummyPLots}).
+
+
 \begin{figure}
 
-{\centering \includegraphics[width=0.5\linewidth]{figures/graph} 
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/drugStimulusDummyPLots-1} 
 
 }
 
-\caption{Estimated residuals from model XXX3. ...}\label{fig:graph3}
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugStimulusDummyPLots}
 \end{figure}
-\begin{itemize}
-\item
-  Tables and graphics may appear in the text or in the appendix, especially if
-  there are many simulation results tabulated, but is also depends on the study
-  and number of tables resp. figures. The key graphs and tables must appear in
-  the text!
-\item
-  R Markdown can also supports math equations just like \emph{LaTeX}!
-  \begin{itemize}
-  \item
-    \emph{Equation \eqref{eq:SpecDens} represents the ACs of a stationary
-    stochastic process:}
-    \begin{equation}
-            f_y(\lambda) = (2\pi)^{-1} \sum_{j=-\infty}^{\infty}
-                           \gamma_j e^{-i\lambda j}
-                         =(2\pi)^{-1}\left(\gamma_0 + 2 \sum_{j=1}^{\infty}
-        \gamma_j \cos(\lambda j)\right)
-                                       \label{eq:SpecDens}
-    \end{equation}
-    \emph{where \(i=\sqrt{-1}\) is the imaginary unit, \(\lambda \in [-\pi, \pi]\) is the
-    frequency and the \(\gamma_j\) are the autocovariances of \(y_t\).}
-  \item
-    Equations can be referenced with \texttt{\textbackslash{}@ref(eq:\textless{}name\textgreater{})}, where name is defined
-    by adding \texttt{(\textbackslash{}\#eq:\textless{}name\textgreater{})} in the line immediately before \texttt{\textbackslash{}end\{equation\}}.
-  \end{itemize}
-\end{itemize}
-\hypertarget{review-of-results}{%
-\section{Review of Results}\label{review-of-results}}
-\begin{itemize}
-\item
-  Do the results support or do they contradict economic theory ?
-\item
-  What does the reader learn from the results?
-\item
-  Try to give an intuition for your results.
-\item
-  Provide robustness checks.
-\item
-  Compare to previous research.
-\end{itemize}
-\hypertarget{results-1}{%
-\chapter{Results}\label{results-1}}
+Quantify how many fit into each category\\
+(Figure \ref{fig:barPlotInteractions}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/barPlotInteractions-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:barPlotInteractions}
+\end{figure}
+\hypertarget{ID}{%
+\subsection{Linear modelling identifies drug - stimulus interactions of potential clinical importance}\label{ID}}
+
+SHow all actual interactions
+(Figure \ref{fig:drugStimulusIntMapt}).
+
+
+\begin{verbatim}
+             Cytokine
+drug                   BAFF       CpG ODN       HS-5 CM         IL-10
+  BAY-11-7085 -5.604631e-02 -3.181140e-01  1.492971e-03 -1.575975e-02
+  Everolimus   3.655902e-02  1.497761e-02  5.377161e-02  7.948169e-02
+  Fludarabine -2.337342e-02  1.903315e-01  6.711677e-02 -3.913832e-02
+  I-BET 762    4.216039e-02 -2.331726e-01 -7.116831e-02 -2.652204e-02
+  Ibrutinib   -2.625863e-02 -2.269246e-01  7.477386e-02  2.731021e-02
+  Idelalisib   8.275484e-03 -2.652441e-01  3.386327e-02  3.058002e-02
+  Luminespib  -2.482555e-01 -2.591311e-01 -3.940346e-01 -6.458359e-02
+  Nutlin-3a   -1.258362e-03  1.577514e-01  7.700330e-02  9.299536e-02
+  PRT062607   -6.653378e-02 -8.644230e-02  1.557073e-02 -8.013149e-03
+  Pyridone-6  -8.023060e-04 -8.100430e-03  2.925389e-02  3.243689e-02
+  Ralimetinib -3.093962e-02 -1.717127e-01  1.858811e-02 -1.073542e-02
+  Selumetinib  5.947874e-03 -1.304805e-01  7.060345e-02  2.145764e-02
+             Cytokine
+drug                  IL-15         IL-1b          IL-2         IL-21
+  BAY-11-7085 -5.816512e-03  2.152596e-02 -2.134484e-02  2.072687e-03
+  Everolimus   2.725033e-02  3.500697e-02 -2.677401e-03  3.495098e-02
+  Fludarabine -4.310581e-02  3.505833e-02 -2.214672e-02 -4.860353e-02
+  I-BET 762    9.141791e-04  2.740045e-03 -2.907140e-02 -2.523721e-02
+  Ibrutinib    5.752202e-02  1.849707e-03  4.678019e-02  3.710308e-02
+  Idelalisib   5.658295e-02  1.936971e-02  4.584077e-02  3.477902e-02
+  Luminespib  -6.061613e-02 -1.263584e-01 -6.993392e-02 -7.742445e-02
+  Nutlin-3a    1.046024e-01  2.482328e-02  1.463441e-01  7.912615e-02
+  PRT062607   -3.957221e-03 -2.216149e-02  5.916628e-03  8.482059e-03
+  Pyridone-6   5.308392e-02  1.514414e-02  3.040022e-02 -7.237789e-04
+  Ralimetinib  1.202065e-02 -2.568524e-03 -1.468196e-02 -4.467606e-02
+  Selumetinib  5.942633e-02  1.780087e-02  3.092410e-02  2.662341e-02
+             Cytokine
+drug                   IL-4          IL-6 Interferon gamma    Resiquimod
+  BAY-11-7085  2.235761e-02  4.554573e-02     5.434015e-02 -3.639915e-01
+  Everolimus   1.332949e-01  6.817609e-03     5.469766e-02  2.765104e-02
+  Fludarabine  3.953363e-01 -2.469675e-02     4.886592e-02  2.265297e-01
+  I-BET 762   -2.665207e-02 -2.262955e-02     1.357931e-02 -3.265356e-01
+  Ibrutinib    1.836975e-01  6.642272e-02     1.101352e-01 -2.509692e-01
+  Idelalisib   1.657969e-01  6.363235e-02     1.171099e-01 -2.064261e-01
+  Luminespib  -4.429811e-02 -3.220023e-03    -2.221338e-02 -7.116024e-02
+  Nutlin-3a    5.337703e-01  1.136707e-01     1.433726e-01  1.426722e-01
+  PRT062607    1.388865e-01 -1.097500e-02     2.337567e-02 -3.612143e-01
+  Pyridone-6  -2.305619e-02  6.847247e-02     6.271102e-02  1.349796e-03
+  Ralimetinib  7.075108e-02  2.282944e-03     2.190150e-01 -1.118603e-01
+  Selumetinib  1.174186e-01  6.322721e-02     8.349273e-02 -1.148979e-01
+             Cytokine
+drug                 sCD40L   sCD40L+IL-4        SDF-1a soluble anti-IgM
+  BAY-11-7085  2.049505e-02 -1.619583e-01  2.831627e-02    -6.597054e-03
+  Everolimus   5.178276e-02  1.386887e-01 -2.677009e-03     5.541420e-04
+  Fludarabine  1.020548e-02  3.687631e-01  5.075778e-02     3.435734e-02
+  I-BET 762    4.068479e-02  6.576262e-03 -4.944505e-03    -2.502231e-02
+  Ibrutinib   -4.740237e-03  8.873182e-02  2.038604e-02     1.260542e-02
+  Idelalisib   2.027841e-02  8.430112e-02 -2.252409e-05     2.338468e-02
+  Luminespib  -1.543305e-01 -3.482382e-01 -8.004006e-02    -4.275447e-01
+  Nutlin-3a    1.834396e-02  4.643749e-01  1.258999e-01     5.912671e-03
+  PRT062607   -8.838768e-02  1.457566e-01 -2.877775e-02    -6.326385e-02
+  Pyridone-6   3.934846e-02 -1.855970e-01  3.145554e-02    -6.082148e-03
+  Ralimetinib -1.691833e-04 -3.878371e-02  1.575747e-03    -2.273022e-02
+  Selumetinib  5.122307e-02  4.874905e-02 -2.510831e-02     2.421239e-02
+             Cytokine
+drug                 TGF-b1
+  BAY-11-7085 -4.509014e-03
+  Everolimus  -8.310092e-03
+  Fludarabine -4.636054e-02
+  I-BET 762   -9.396045e-02
+  Ibrutinib    1.958423e-02
+  Idelalisib   9.050594e-03
+  Luminespib  -8.478118e-02
+  Nutlin-3a   -1.529464e-02
+  PRT062607    2.369375e-03
+  Pyridone-6   3.081690e-02
+  Ralimetinib  1.357279e-02
+  Selumetinib  2.234705e-02
+\end{verbatim}
+\begin{verbatim}
+             Cytokine
+drug                   BAFF       CpG ODN       HS-5 CM         IL-10
+  BAY-11-7085 -5.604631e-02 -3.181140e-01  1.492971e-03 -1.575975e-02
+  Everolimus   3.655902e-02  1.497761e-02  5.377161e-02  7.948169e-02
+  Fludarabine -2.337342e-02  1.903315e-01  6.711677e-02 -3.913832e-02
+  I-BET 762    4.216039e-02 -2.331726e-01 -7.116831e-02 -2.652204e-02
+  Ibrutinib   -2.625863e-02 -2.269246e-01  7.477386e-02  2.731021e-02
+  Idelalisib   8.275484e-03 -2.652441e-01  3.386327e-02  3.058002e-02
+  Luminespib  -2.482555e-01 -2.591311e-01 -3.940346e-01 -6.458359e-02
+  Nutlin-3a   -1.258362e-03  1.577514e-01  7.700330e-02  9.299536e-02
+  PRT062607   -6.653378e-02 -8.644230e-02  1.557073e-02 -8.013149e-03
+  Pyridone-6  -8.023060e-04 -8.100430e-03  2.925389e-02  3.243689e-02
+  Ralimetinib -3.093962e-02 -1.717127e-01  1.858811e-02 -1.073542e-02
+  Selumetinib  5.947874e-03 -1.304805e-01  7.060345e-02  2.145764e-02
+             Cytokine
+drug                  IL-15         IL-1b          IL-2         IL-21
+  BAY-11-7085 -5.816512e-03  2.152596e-02 -2.134484e-02  2.072687e-03
+  Everolimus   2.725033e-02  3.500697e-02 -2.677401e-03  3.495098e-02
+  Fludarabine -4.310581e-02  3.505833e-02 -2.214672e-02 -4.860353e-02
+  I-BET 762    9.141791e-04  2.740045e-03 -2.907140e-02 -2.523721e-02
+  Ibrutinib    5.752202e-02  1.849707e-03  4.678019e-02  3.710308e-02
+  Idelalisib   5.658295e-02  1.936971e-02  4.584077e-02  3.477902e-02
+  Luminespib  -6.061613e-02 -1.263584e-01 -6.993392e-02 -7.742445e-02
+  Nutlin-3a    1.046024e-01  2.482328e-02  1.463441e-01  7.912615e-02
+  PRT062607   -3.957221e-03 -2.216149e-02  5.916628e-03  8.482059e-03
+  Pyridone-6   5.308392e-02  1.514414e-02  3.040022e-02 -7.237789e-04
+  Ralimetinib  1.202065e-02 -2.568524e-03 -1.468196e-02 -4.467606e-02
+  Selumetinib  5.942633e-02  1.780087e-02  3.092410e-02  2.662341e-02
+             Cytokine
+drug                   IL-4          IL-6 Interferon gamma    Resiquimod
+  BAY-11-7085  2.235761e-02  4.554573e-02     5.434015e-02 -3.639915e-01
+  Everolimus   1.332949e-01  6.817609e-03     5.469766e-02  2.765104e-02
+  Fludarabine  3.953363e-01 -2.469675e-02     4.886592e-02  2.265297e-01
+  I-BET 762   -2.665207e-02 -2.262955e-02     1.357931e-02 -3.265356e-01
+  Ibrutinib    1.836975e-01  6.642272e-02     1.101352e-01 -2.509692e-01
+  Idelalisib   1.657969e-01  6.363235e-02     1.171099e-01 -2.064261e-01
+  Luminespib  -4.429811e-02 -3.220023e-03    -2.221338e-02 -7.116024e-02
+  Nutlin-3a    5.337703e-01  1.136707e-01     1.433726e-01  1.426722e-01
+  PRT062607    1.388865e-01 -1.097500e-02     2.337567e-02 -3.612143e-01
+  Pyridone-6  -2.305619e-02  6.847247e-02     6.271102e-02  1.349796e-03
+  Ralimetinib  7.075108e-02  2.282944e-03     2.190150e-01 -1.118603e-01
+  Selumetinib  1.174186e-01  6.322721e-02     8.349273e-02 -1.148979e-01
+             Cytokine
+drug                 sCD40L   sCD40L+IL-4        SDF-1a soluble anti-IgM
+  BAY-11-7085  2.049505e-02 -1.619583e-01  2.831627e-02    -6.597054e-03
+  Everolimus   5.178276e-02  1.386887e-01 -2.677009e-03     5.541420e-04
+  Fludarabine  1.020548e-02  3.687631e-01  5.075778e-02     3.435734e-02
+  I-BET 762    4.068479e-02  6.576262e-03 -4.944505e-03    -2.502231e-02
+  Ibrutinib   -4.740237e-03  8.873182e-02  2.038604e-02     1.260542e-02
+  Idelalisib   2.027841e-02  8.430112e-02 -2.252409e-05     2.338468e-02
+  Luminespib  -1.543305e-01 -3.482382e-01 -8.004006e-02    -4.275447e-01
+  Nutlin-3a    1.834396e-02  4.643749e-01  1.258999e-01     5.912671e-03
+  PRT062607   -8.838768e-02  1.457566e-01 -2.877775e-02    -6.326385e-02
+  Pyridone-6   3.934846e-02 -1.855970e-01  3.145554e-02    -6.082148e-03
+  Ralimetinib -1.691833e-04 -3.878371e-02  1.575747e-03    -2.273022e-02
+  Selumetinib  5.122307e-02  4.874905e-02 -2.510831e-02     2.421239e-02
+             Cytokine
+drug                 TGF-b1
+  BAY-11-7085 -4.509014e-03
+  Everolimus  -8.310092e-03
+  Fludarabine -4.636054e-02
+  I-BET 762   -9.396045e-02
+  Ibrutinib    1.958423e-02
+  Idelalisib   9.050594e-03
+  Luminespib  -8.478118e-02
+  Nutlin-3a   -1.529464e-02
+  PRT062607    2.369375e-03
+  Pyridone-6   3.081690e-02
+  Ralimetinib  1.357279e-02
+  Selumetinib  2.234705e-02
+\end{verbatim}
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/drugStimulusIntMapt-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugStimulusIntMapt}
+\end{figure}
+Discuss specific examples
+(find two replacements for ibr and ifn gamma)
+Ibrutinib + IL4 Ibrutinib + IFNgamma, Ralimetinib + IFNgamma, Ibrutinib + Resiquimod - show in grid graphic
+big up interferon gamma
+
+(Figure \ref{fig:drugStimulusIntEx}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{thesis_files/figure-latex/drugStimulusIntEx-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugStimulusIntEx}
+\end{figure}
+\hypertarget{IL4resistance}{%
+\subsection{IL4 induces resistance to BCR inhibitors and chemotherapeutics}\label{IL4resistance}}
+
+(Figure \ref{fig:IL4Res}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/IL4Res-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:IL4Res}
+\end{figure}
+\hypertarget{genetic-modulators-of-drug-response}{%
+\section{Genetic modulators of drug response}\label{genetic-modulators-of-drug-response}}
+
+\hypertarget{univariate-analysis-identifies-genetic-modualtors-of-drug-response}{%
+\subsection{Univariate analysis identifies genetic modualtors of drug response}\label{univariate-analysis-identifies-genetic-modualtors-of-drug-response}}
+
+(Figure \ref{fig:drugGeneIntMap}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/drugGeneIntMap-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugGeneIntMap}
+\end{figure}
+\hypertarget{multivariate-analysis-identifies-genetic-modualtors-of-drug-response}{%
+\subsection{Multivariate analysis identifies genetic modualtors of drug response}\label{multivariate-analysis-identifies-genetic-modualtors-of-drug-response}}
+
+(Figure \ref{fig:drugGeneIntMulti}).
+
+
+
+\hypertarget{specific-examples}{%
+\subsection{Specific examples}\label{specific-examples}}
+
+(Figure \ref{fig:drugGeneIntEx}).
+
+
+
+in a grid:
+IBET-762 and trisomy 12
+Nutlin-3a and trisomy 12 and gene dosage effect of MDM2 in trisomy12 CLL
+Correlation of IBET-762 and Nutlin-3a
+Ralimetinib and trisomy 12
+
+\hypertarget{the-modulatory-effect-of-mutations-on-drug---stimuli-interactions}{%
+\section{The modulatory effect of mutations on drug - stimuli interactions:}\label{the-modulatory-effect-of-mutations-on-drug---stimuli-interactions}}
+
+\hypertarget{fitting-patient-specific-linear-models-identfies-drug---stimulus---gene-interactions}{%
+\subsection{Fitting patient-specific linear models identfies drug - stimulus - gene interactions}\label{fitting-patient-specific-linear-models-identfies-drug---stimulus---gene-interactions}}
+
+(Figure \ref{fig:drugCytGeneIntMap}).
+
+
+
+\hypertarget{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}{%
+\subsection{Patient - specific drug - stimulus interactions may have clinical significance}\label{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}}
+
+(Figure \ref{fig:drugCytGeneIntEx}).
+
+
+
+Responses to chemotherapeutic drugs in the context of TLR stimulation are modulated by del11q and ATM mutations,
+Trisomy12 enhances pro-survival synergy between Ralimetinib + IFNgamma
+Ralimetinib treatment increases the pro-survival effect of IL4, and this is further enhanced in NOTCH1 and Ras/Raf mutants
+Fludarabine and TLR
+Ibrutinib and IL4
+Discuss examples in drug- cyt -gene examples script
+
+\hypertarget{using-stimuli-responses-in-combination-with-genetic-profiles-to-predict-in-vivo-drug-response}{%
+\section{Using stimuli responses in combination with genetic profiles to predict in vivo drug response}\label{using-stimuli-responses-in-combination-with-genetic-profiles-to-predict-in-vivo-drug-response}}
+
+Can stimuli + genes predict drug response - this would be useful in the clinic. Especially if its just TLR/IL4 response, are specific signals useful?
+
+(Figure \ref{fig:drugCytGeneIntClinic}).
+
+
+
+\hypertarget{summary-2}{%
+\section{Summary}\label{summary-2}}
+
+\hypertarget{discussion-2}{%
+\section{Discussion}\label{discussion-2}}
+
+\hypertarget{contirbutions-statement}{%
+\section{Contirbutions Statement}\label{contirbutions-statement}}
+
+\hypertarget{results}{%
+\chapter{Results}\label{results}}
 \begin{itemize}
 \item
   Organize material and present results.
@@ -1902,8 +2156,8 @@ Then outline in detail at the bottom
     by adding \texttt{(\textbackslash{}\#eq:\textless{}name\textgreater{})} in the line immediately before \texttt{\textbackslash{}end\{equation\}}.
   \end{itemize}
 \end{itemize}
-\hypertarget{review-of-results-1}{%
-\section{Review of Results}\label{review-of-results-1}}
+\hypertarget{review-of-results}{%
+\section{Review of Results}\label{review-of-results}}
 \begin{itemize}
 \item
   Do the results support or do they contradict economic theory ?
@@ -1916,8 +2170,8 @@ Then outline in detail at the bottom
 \item
   Compare to previous research.
 \end{itemize}
-\hypertarget{discussion-2}{%
-\chapter{Discussion}\label{discussion-2}}
+\hypertarget{discussion-3}{%
+\chapter{Discussion}\label{discussion-3}}
 
 \newpage
 
@@ -2045,6 +2299,82 @@ Zenz, Thorsten, Daniel Mertens, Ralf Küppers, Hartmut Döhner, and Stephan Stil
 \hypertarget{tables}{%
 \section*{Tables}\label{tables}}
 \addcontentsline{toc}{section}{Tables}
+
+
+\begin{table}
+\centering
+\begin{tabular}{l|l|l|l}
+\hline
+Cytokine & Receptor & ENSEMBLID & Kegg\\
+\hline
+\cellcolor[HTML]{E2E868}{SDF-1a} & \cellcolor[HTML]{E2E868}{CXCR 4} & \cellcolor[HTML]{E2E868}{ENSG00000121966} & \cellcolor[HTML]{E2E868}{7852}\\
+\hline
+SDF-1a & CXCR 7 & ENSG00000144476 & 57007\\
+\hline
+\cellcolor[HTML]{E2E868}{IL-6} & \cellcolor[HTML]{E2E868}{IL-6 R} & \cellcolor[HTML]{E2E868}{ENSG00000160712} & \cellcolor[HTML]{E2E868}{3570}\\
+\hline
+IL-6 & IL-6 ST & ENSG00000134352 & 3572\\
+\hline
+\cellcolor[HTML]{E2E868}{IL-15} & \cellcolor[HTML]{E2E868}{IL-15 R alpha} & \cellcolor[HTML]{E2E868}{ENSG00000134470} & \cellcolor[HTML]{E2E868}{3601}\\
+\hline
+IL-15 & IL-2 R beta & ENSG00000100385 & 3560\\
+\hline
+\cellcolor[HTML]{E2E868}{IL-15} & \cellcolor[HTML]{E2E868}{IL-2 R gamma} & \cellcolor[HTML]{E2E868}{ENSG00000147168} & \cellcolor[HTML]{E2E868}{3561}\\
+\hline
+IL-21 & IL-21 R & ENSG00000103522 & 50615\\
+\hline
+\cellcolor[HTML]{E2E868}{IL-21} & \cellcolor[HTML]{E2E868}{IL-21 R gamma} & \cellcolor[HTML]{E2E868}{ENSG00000147168} & \cellcolor[HTML]{E2E868}{3561}\\
+\hline
+IL-2 & IL-2 R alpha & ENSG00000134460 & 3559\\
+\hline
+\cellcolor[HTML]{E2E868}{IL-2} & \cellcolor[HTML]{E2E868}{IL-2 R beta} & \cellcolor[HTML]{E2E868}{ENSG00000100385} & \cellcolor[HTML]{E2E868}{3560}\\
+\hline
+IL-2 & IL-2 R gamma & ENSG00000147168 & 3561\\
+\hline
+\cellcolor[HTML]{E2E868}{IL-10} & \cellcolor[HTML]{E2E868}{IL-10 R alpha} & \cellcolor[HTML]{E2E868}{ENSG00000110324} & \cellcolor[HTML]{E2E868}{3587}\\
+\hline
+IL-10 & IL-10 R beta & ENSG00000243646 & 3588\\
+\hline
+\cellcolor[HTML]{E2E868}{IL-4} & \cellcolor[HTML]{E2E868}{IL-4 R} & \cellcolor[HTML]{E2E868}{ENSG00000077238} & \cellcolor[HTML]{E2E868}{3566}\\
+\hline
+IL-4 & IL-2 R gamma & ENSG00000147168 & 3561\\
+\hline
+\cellcolor[HTML]{E2E868}{IL-4} & \cellcolor[HTML]{E2E868}{IL-13 R A1} & \cellcolor[HTML]{E2E868}{ENSG00000131724} & \cellcolor[HTML]{E2E868}{3597}\\
+\hline
+soluble anti-IgM & B cell receptor & ENSG00000275063 & 102723407\\
+\hline
+\cellcolor[HTML]{E2E868}{soluble anti-IgM} & \cellcolor[HTML]{E2E868}{CD79A} & \cellcolor[HTML]{E2E868}{ENSG00000105369} & \cellcolor[HTML]{E2E868}{973}\\
+\hline
+soluble anti-IgM & CD79B & ENSG00000007312 & 974\\
+\hline
+\cellcolor[HTML]{E2E868}{Resiquimod} & \cellcolor[HTML]{E2E868}{TLR 7} & \cellcolor[HTML]{E2E868}{ENSG00000196664} & \cellcolor[HTML]{E2E868}{51284 }\\
+\hline
+Resiquimod & TLR 8 & ENSG00000101916 & 51311\\
+\hline
+\cellcolor[HTML]{E2E868}{CpG ODN} & \cellcolor[HTML]{E2E868}{TLR9} & \cellcolor[HTML]{E2E868}{ENSG00000239732} & \cellcolor[HTML]{E2E868}{54106}\\
+\hline
+BAFF & BAFF R & ENSG00000159958 & 115650\\
+\hline
+\cellcolor[HTML]{E2E868}{BAFF} & \cellcolor[HTML]{E2E868}{TACI} & \cellcolor[HTML]{E2E868}{ENSG00000240505} & \cellcolor[HTML]{E2E868}{23495}\\
+\hline
+BAFF & BCMA & ENSG00000048462 & 608\\
+\hline
+\cellcolor[HTML]{E2E868}{IL-1b} & \cellcolor[HTML]{E2E868}{IL-1 R1} & \cellcolor[HTML]{E2E868}{ENSG00000115594} & \cellcolor[HTML]{E2E868}{3554}\\
+\hline
+IL-1b & IL-1 R2 & ENSG00000115590 & 7850\\
+\hline
+\cellcolor[HTML]{E2E868}{sCD40L} & \cellcolor[HTML]{E2E868}{CD40} & \cellcolor[HTML]{E2E868}{ENSG00000101017} & \cellcolor[HTML]{E2E868}{958}\\
+\hline
+Interferon gamma & IFN-gamma R1 & ENSG00000027697 & 3459\\
+\hline
+\cellcolor[HTML]{E2E868}{Interferon gamma} & \cellcolor[HTML]{E2E868}{IFN-gamma R2} & \cellcolor[HTML]{E2E868}{ENSG00000159128} & \cellcolor[HTML]{E2E868}{3460}\\
+\hline
+TGF-b1 & TGF-beta R1 & ENSG00000106799 & 7046\\
+\hline
+\cellcolor[HTML]{E2E868}{TGF-b1} & \cellcolor[HTML]{E2E868}{TGF-beta R2} & \cellcolor[HTML]{E2E868}{ENSG00000163513} & \cellcolor[HTML]{E2E868}{7048}\\
+\hline
+\end{tabular}
+\end{table}
 \begin{table}[ht]
     \begin{center}
         {\footnotesize
