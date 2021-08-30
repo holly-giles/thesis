@@ -1,10 +1,26 @@
 # Molecular and microenvironmental modulators of drug response in CLL
+So far, we have observed that the panel of stimuli have a range of ects on Cll vibaliyt, some higlhy potent. Form this analysis, IL4 and TLR pathways emerge as kye modualtors of CLL biology, in some genetic backgrounds hguley incresaing CLL viability. We have also observed hos these signals can be modualted by genetic features, underlying the fact that cancer biology is integratively influenec by cll-intrinsc and cell-extrisnic feautres. Trisomy 12 and IGHV status emerge as key modualtors that impact on resposnes to exernal signals. 
 
-Tasks for chapter 
+The microenvironment is known to reduce treatment efficacy within the protective niche [REFERENCE Ahn IE, Farooqui MZH, Tian X, et al. Depth and durability of response to ibrutinib in CLL: 5-year follow-up of a phase 2 study. Blood. 2018;131(21):2357–2366.
+Abstract/FREE Full TextGoogle Scholar]. Guided by this obesrvation, 
 
--go throuhg and check use of dataframes 
--se of cytokien names and gene names 
-(also in all chpater)
+In the second part of this chapter, we intergrate all three axes of the dataset, to ivnesrgatied how drug - microenivronment interactions can be further modulated by genetic features. 
+
+Outline method 
+
+INtor sentence 
+
+
+
+
+Tasks for chapter
+Sort figures [] 
+Write all text 
+Reread and check story and narrative
+Reference
+Credit and contirbutiosn statement 
+Dump in disucssion and intro as I go 
+Do a intro, discussion and methods dump 
 
 Intro text 
 
@@ -575,8 +591,7 @@ _where $V$ is the viability with a given treatment,_ $\beta_{drug}$, $\beta_{sti
 Different types of interaction     
 (Figure \@ref(fig:drugStimulusDummyPLots)). 
 
-(ref:drugStimulusDummyPLots)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
-
+(ref:drugStimulusDummyPLots) Graphical representation of the four drug - stimulus interaction categories. Categories are defined according to (i) the nature of the interaction (synergistic or antagonistic), and (ii) whether $\beta_{int}$ is positive or negative i.e. the viability with the combinatorial treatment is higher or lower than would be expected based on additive effects alone. x-axis shows treatment type, y-axis shows log transformed viability values. Red and blue lines depict representative treatment response patterns for given interaction type. To demonstrate the effect of each each interaction on the expected viability, blue and black horizontal lines represent the expected viability for combinatorial treatment based on additive effects alone (blue) and the actual viability accounting for additive effects and the interaction (black).  _Figure and caption from Bruch & Giles et al. 2021._ See Methods section \@ref(drug-stimulus-linear-model-method).
 
 
 ```{r drugStimulusDummyPLots, fig.cap='(ref:drugStimulusDummyPLots)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
@@ -647,7 +662,7 @@ ggplot(dplyr::filter(dummydata, grepl('coord', x.value)),
 Quantify how many fit into each category    
 (Figure \@ref(fig:barPlotInteractions)). 
 
-(ref:barPlotInteractions)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
+(ref:barPlotInteractions) Histogram showing the number of drug-stimulus interactions within each category, where p value for $\beta_{int}$ is <0.05.  _Figure and caption from Bruch & Giles et al. 2021._ See Methods section \@ref(drug-stimulus-linear-model-method).
 
 ```{r barPlotInteractions, fig.cap='(ref:barPlotInteractions)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -728,7 +743,7 @@ ggplot(aes(x=Category, y=n, fill=Category))+
 SHow all actual interactions
 (Figure \@ref(fig:drugStimulusIntMapt)). 
 
-(ref:drugStimulusIntMapt)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
+(ref:drugStimulusIntMapt) Heatmap of all $\beta_{int}$ values for all drug - stimulus combinations where p for $\beta_{int}$ <0.05, annotated with interaction type. Scale indicates size and sign of $\beta_{int}$. Rows and columns clustered according to hierarchical clustering.  _Figure and caption from Bruch & Giles et al. 2021._ See Methods section \@ref(drug-stimulus-linear-model-method). 
 
 ```{r drugStimulusIntMapt, fig.cap='(ref:drugStimulusIntMapt)', message = FALSE,  echo = FALSE, fig.width=12, fig.height = 8, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
@@ -828,7 +843,7 @@ big up interferon gamma
 
 (Figure \@ref(fig:drugStimulusIntEx)). 
 
-(ref:drugStimulusIntEx)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
+(ref:drugStimulusIntEx)  Examples of drug-stimulus interactions, for each category. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. (A+B) Ibrutinib, a clinically-used BTK inhibitor, is blocked by IL4 and IFN$\gamma$. (C) The JAK inhibitor pyridone-6 inhibits the pro-survival effect of sCD40L + IL4 stimulation. (D) The p38 inhibitor ralimetinib and IFN$\gamma$ show a synergistic pro-survival effect not seen in either single treatment. (E) TLR agonists, including CpG ODN (shown) increase sensitivity to BTK inhibition by ibrutinib, despite increasing viability in isolation. (F) Soluble anti-IgM sensitises CLL samples to HSP90 inhibition by luminespib. _Figure and caption from Bruch & Giles et al. 2021._ See Methods section \@ref(drug-stimulus-linear-model-method). 
 
 ```{r drugStimulusIntEx, fig.cap='(ref:drugStimulusIntEx)', message = FALSE,  echo = FALSE, fig.height=10, fig.width = 12, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
 
@@ -996,20 +1011,23 @@ lapply(names(gg), function(i){
 
 names(plotList) <- names(gg)
 
-
-(wrap_plots(plotList$`treatment_drug:Ibrutinib:treatment_cytokine:IL-4`) +
+design1 <-"
+  12
+  34
+  56"
   
-wrap_plots(plotList$`treatment_drug:Ibrutinib:treatment_cytokine:Interferon gamma`))/ 
+plotList$`treatment_drug:Ibrutinib:treatment_cytokine:IL-4` +
   
-(wrap_plots(plotList$`treatment_drug:Pyridone-6:treatment_cytokine:sCD40L+IL-4`) +
+plotList$`treatment_drug:Ibrutinib:treatment_cytokine:Interferon gamma` + 
   
-wrap_plots(plotList$`treatment_drug:Ralimetinib:treatment_cytokine:Interferon gamma`)) /
+plotList$`treatment_drug:Pyridone-6:treatment_cytokine:sCD40L+IL-4` +
   
-(wrap_plots(plotList$`treatment_drug:Ibrutinib:treatment_cytokine:CpG ODN`) +
+plotList$`treatment_drug:Ralimetinib:treatment_cytokine:Interferon gamma`+
   
-wrap_plots(plotList$`treatment_drug:Luminespib:treatment_cytokine:soluble anti-IgM`)) + plot_annotation("A")
+plotList$`treatment_drug:Ibrutinib:treatment_cytokine:CpG ODN` +
   
-
+plotList$`treatment_drug:Luminespib:treatment_cytokine:soluble anti-IgM` +  plot_annotation(tag_levels=c("A"))  + plot_layout(design=design1) 
+  
 ```
 
 
@@ -1441,7 +1459,7 @@ Ralimetinib and trisomy 12
 
 Also Appendix figure \@ref(fig:drugcytGeneIntAll) 
 
-(ref:drugCytGeneIntMap)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
+(ref:drugCytGeneIntMap)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id) Have to make sure this figure takes a whol page but doesnt float to the bottom
 
 ```{r drugCytGeneIntMap, fig.cap='(ref:drugCytGeneIntMap)', message = FALSE,  echo = FALSE, fig.height=18, fig.width = 9, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1526,14 +1544,14 @@ coeff.long.mat.ordered %>%
         legend.key = element_blank(),
         legend.text = element_text(size=fontsize),
         legend.background = element_rect(color = NA),
-        strip.text.y.left = element_text(size=22, angle = 0, face="bold"),
+        strip.text.y.left = element_text(size=18, angle = 0, face="bold"),
         strip.background = element_blank())+
   
   
   labs(fill = expression(beta["int"]))+
   scale_y_discrete(position = "right")+
   scale_x_discrete(labels = gene_labels) +
-  facet_grid(Stimulus~., scales = "free_y",  space="free_y", switch = "both", labeller =labeller( Stimulus=cyt_labels))
+  facet_grid(Stimulus~.,  scales = "free_y",  space="free_y", switch = "both", labeller =labeller( Stimulus=cyt_labels))
   
 
 ```
@@ -1585,7 +1603,7 @@ ighv.labs <- c("U" = "IGHV-U", "M" =  "IGHV-M")
                      paired = TRUE, 
                      comparisons = list(c(1,3), c(2,3)),
                      step.increase=0.2, 
-                     size=6) +
+                     size=3) +
   xlab("") +
   ylab("Log(Viability)") +
   #facet by trisomy 12 and IGHV status
@@ -1646,7 +1664,7 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Ibrutinib + IL-4"], ncol = 1)
                      paired = TRUE, 
                      comparisons = list(c(1,3), c(2,3)),
                      step.increase=0.2, 
-                     size=6) +
+                     size=3) +
   xlab("") +
   ylab("Log(Viability)") +
   #facet by trisomy 12 and IGHV status
@@ -1717,7 +1735,7 @@ left_join(df_complete, patMeta, by = "PatientID")%>%
                      label.y.npc = 0.8, 
                      paired = TRUE, 
                      step.increase=0.2, 
-                     size=6) +
+                     size=3) +
   xlab("") +
   ylab("Log(Viability)") +
   #facet by trisomy 12 and IGHV status
