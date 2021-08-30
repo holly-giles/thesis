@@ -1,5 +1,11 @@
 # Molecular and microenvironmental modulators of drug response in CLL
 
+Tasks for chapter 
+
+-go throuhg and check use of dataframes 
+-se of cytokien names and gene names 
+(also in all chpater)
+
 Intro text 
 
 ```{r, echo = FALSE}
@@ -604,18 +610,14 @@ dummydata <-
                                   "III", 
                                   "IV"))) %>%
   mutate(type = ifelse(Plot %in% c("I", "II"), "antagonism", "synergism")) %>%
-  mutate(direction = ifelse(Plot %in% c("I", "IV"), "negative", "positive"))
+  mutate(direction = ifelse(Plot %in% c("I", "III"), "positive", "negative"))
 
+my_labeller <- as_labeller(c("positive"="Positive~\u03B2[int]", "negative"="Negative~\u03B2[int]", "antagonism"="Antagonism", "synergism" = "Synergism"),
+                           default = label_parsed)
 
-labs_type <- c("Antagonism", "Synergism")
-names(labs_type) <- c("antagonism", "synergism")
-
-labs_size <- c(expression(paste("Postive", beta["int"] )), expression(paste("Negative ", beta["int"] )))
-names(labs_size) <- c("positive", "negative")
-
-dummydata$direction <- factor(dummydata$direction, 
-                       labels = c(expression(paste("Postive", beta["int"] )),
-                                 expression(paste("Negative ", beta["int"] ))))
+dummydata$direction <- factor(dummydata$direction, levels = c("positive","negative"))
+dummydata$type <- factor(dummydata$type, levels = c("antagonism","synergism"))
+                              
 
 #plot dummy plot
 ggplot(dplyr::filter(dummydata, grepl('coord', x.value)), 
@@ -623,7 +625,7 @@ ggplot(dplyr::filter(dummydata, grepl('coord', x.value)),
   geom_hline(yintercept = 0, linetype=2, color="black")+
   geom_point(size=1)+
   geom_line(size=1)+
-  facet_grid(type~direction)+
+  facet_grid(type~direction, labeller = my_labeller )+
   geom_segment(data=dplyr::filter(dummydata, grepl('expected', x.value)), aes(x = 3.5, y = y.value, xend = 4.5, yend = y.value), color="blue", size=2) +
   geom_segment(data=dplyr::filter(dummydata, grepl('measured', x.value)), aes(x = 3.5, y = y.value, xend = 4.5, yend = y.value), color="black", size=2)+
   theme_bw() +
@@ -639,7 +641,7 @@ ggplot(dplyr::filter(dummydata, grepl('coord', x.value)),
   geom_text(x = 1, y = 0.75, aes(label=Plot))
 
 
-#labeller = labeller(type = labs_type, direction = label_swap))
+
 ```
 
 Quantify how many fit into each category    
@@ -1553,7 +1555,6 @@ coeff.long.mat.ordered %>%
 grid.arrange(grobs = Lasso_Plots_Fig6["Fludarabine + CpG ODN"], ncol = 1)
 
 ```
-WHY ARE THERE SO MANY POINTS???
 
 ```{r Flu_CpG_ExB, fig.cap='(ref:Flu_CpG_ExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 6, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1565,7 +1566,8 @@ ighv.labs <- c("U" = "IGHV-U", "M" =  "IGHV-M")
 #join viability and genetic data tables
   left_join(df_complete, patMeta, by = "PatientID") %>% 
   #filter for drug:stimulus combinations of interest, make sure no NAs in genetic data
-  dplyr::filter(DCK%in%c("DMSO:CpG ODN","Fludarabine:CpG ODN","Fludarabine:No Cytokine"),
+  dplyr::filter(Drug_Concentration %in% c("High", "None"),
+    DCK%in%c("DMSO:CpG ODN","Fludarabine:CpG ODN","Fludarabine:No Cytokine"),
                 !is.na(trisomy12),
                 !is.na(IGHV.status)) %>%
     mutate(DCK=factor(DCK, levels=c("DMSO:CpG ODN","Fludarabine:No Cytokine","Fludarabine:CpG ODN"))) %>% 
@@ -1624,6 +1626,7 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Ibrutinib + IL-4"], ncol = 1)
   left_join(df_complete, patMeta, by = "PatientID")%>%
   #filter for drug:stimulus combinations of interest, make sure no NAs in genetic data
   dplyr::filter(DCK%in%c("DMSO:IL-4","Ibrutinib:IL-4","Ibrutinib:No Cytokine"),
+                Drug_Concentration %in% c("High", "None"),
                 !is.na(trisomy12),
                 !is.na(IGHV.status)) %>%
      mutate(DCK = factor(DCK, levels=c("DMSO:IL-4",
@@ -1686,28 +1689,48 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Nutlin-3a + CpG ODN"], ncol = 1)
 
 grid.arrange(grobs = Lasso_Plots_Fig6["Ralimetinib + IL-4"], ncol = 1)
 ```
+
+
 ```{r ral_il4_exB, fig.cap='(ref:ral_il4_exB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
-# Plot predictor profile for Ibrutinib + IL4
-
-left_join(df_complete, patMeta, by = "PatientID") %>%
-  dplyr::filter(DCK == "Ralimetinib:IL-4", !is.na(trisomy12)) %>%
-                  
-         
-  ggplot(aes(x=DCK,y=trisomy12))+
+left_join(df_complete, patMeta, by = "PatientID")%>%
+  #filter for drug:stimulus combinations of interest, make sure no NAs in genetic data
+  dplyr::filter(DCK%in%c("DMSO:IL-4","Ralimetinib:IL-4"),
+                Drug_Concentration %in% c("High", "None"),
+                !is.na(trisomy12)) %>%
+     mutate(DCK = factor(DCK, levels=c("DMSO:IL-4",
+                                      
+                                      "Ralimetinib:IL-4"))) %>%
+  
+  #plot treatment combination against viability 
+  ggplot(aes(x = DCK,y = Log,color= DCK))+
   geom_hline(yintercept = 0)+
   geom_boxplot()+
   geom_beeswarm(cex=1.5) +
   guides(color="none", shape="none")+
+  #add p values
   stat_compare_means(method = "t.test",
-                     label.x.npc = "center", 
-                     size=3)+
-  xlab("trisomy 12") +
+                     label.y.npc = 0.8, 
+                     paired = TRUE, 
+                     step.increase=0.2, 
+                     size=6) +
+  xlab("") +
   ylab("Log(Viability)") +
-  ggtitle("Ralimetinib + IL4") +
-  scale_color_manual(values=c(colors[1], colors[2])) + 
-
-  t2
+  #facet by trisomy 12 and IGHV status
+  facet_wrap(vars(trisomy12),
+             labeller = labeller(trisomy12 = tri12.labs))+
+  
+  scale_x_discrete(labels=c("DMSO:IL-4"="IL4",
+                           
+                            "Ralimetinib:IL-4"="Ralimetinib \n+ IL4"))+  
+    
+  scale_color_manual(values=c(colors[4], colors[5], colors[3])) + 
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))+
+  t2 +
+  theme(strip.background =element_rect(fill=NA),
+        strip.text = element_text(size=fontsize+4, face="bold"),
+        strip.text.y = element_text(angle = 0),
+        axis.text.x = element_text(size=fontsize+4, angle = 35, hjust = 1, vjust = 1)) 
 
 ```
 
