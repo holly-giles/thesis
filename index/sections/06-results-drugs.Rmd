@@ -564,7 +564,7 @@ colnames(pvaldf) <- c("pvalue","drug", "Cytokine")
 
 Principle
 
-_Equation \@ref(eq:drugCytInt) quantifies how the viability with any combination can be predicted:_
+Equation \@ref(eq:drugCytInt) quantifies how the viability with any combination can be predicted:
     \begin{equation}
             log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{int}X_{drug}X_{stimulus} + \epsilon
                                        (\#eq:drugCytInt)
@@ -730,7 +730,7 @@ SHow all actual interactions
 
 (ref:drugStimulusIntMapt)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
 
-```{r drugStimulusIntMapt, fig.cap='(ref:drugStimulusIntMapt)', message = FALSE,  echo = FALSE, fig.width=12, fig.height = 8, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r drugStimulusIntMapt, fig.cap='(ref:drugStimulusIntMapt)', message = FALSE,  echo = FALSE, fig.width=12, fig.height = 8, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
 #extract beta interaction values
 betavalues <- summary(fit)$coefficients[,1]
@@ -767,8 +767,8 @@ pvalmat <- xtabs(pvalue~drug+Cytokine, data=pvaldf)
 bvalmat <- xtabs(betavalue~drug+Cytokine, data=betadf)
 
 #check in same order
-bvalmat[,colnames(pvalmat)] 
-bvalmat[rownames(pvalmat),]
+bvalmat <- bvalmat[,colnames(pvalmat)] 
+bvalmat <- bvalmat[rownames(pvalmat),]
 
 bvalmat[pvalmat >= a] = 0
 
@@ -900,7 +900,7 @@ lapply(names(gg), function(i){
     xlabels <- c("DMSO", drug, 
                  case_when(cyt=="IL-4"~"IL4",
                            cyt=="Interferon gamma"~"Interferon \u03B3",
-                           cyt=="sCD40L+IL-4"~"sCD40L + IL4",
+                           cyt=="sCD40L+IL-4"~"sCD40L \n+ IL4",
                            cyt=="soluble anti-IgM"~"soluble\nanti-IgM",
                            TRUE~cyt),
                 paste(drug, " +\n",
@@ -1018,7 +1018,7 @@ wrap_plots(plotList$`treatment_drug:Luminespib:treatment_cytokine:soluble anti-I
 
 (ref:IL4Res)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
 
-```{r IL4Res, fig.cap='(ref:IL4Res)', message = FALSE,  echo = FALSE, fig.height=6.6, fig.width = 12, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r IL4Res, fig.cap='(ref:IL4Res)', message = FALSE,  echo = FALSE, fig.height=6.6, fig.width = 12, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
 
 
 (wrap_plots(plotList$`treatment_drug:Idelalisib:treatment_cytokine:IL-4`) + wrap_plots(plotList$`treatment_drug:PRT062607:treatment_cytokine:IL-4`)) /
@@ -1538,16 +1538,17 @@ coeff.long.mat.ordered %>%
 
 ```
 ### Patient - specific drug - stimulus interactions may have clinical significance
-(Figure \@ref(fig:Flu_CpG_ExA)). 
 
-(ref:Flu_CpG_ExA)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
+(Figure \@ref(fig:FluCpGExA)). 
 
-(Figure \@ref(fig:Flu_CpG_ExB)). 
+(ref:FluCpGExA)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
 
-(ref:Flu_CpG_ExB)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
+(Figure \@ref(fig:FluCpGExB)). 
+
+(ref:FluCpGExB)  _Figure from Bruch & Giles et al. 2021._ Method \@ref(id)
 
 
-```{r Flu_CpG_ExA, fig.cap='(ref:Flu_CpG_ExA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r FluCpGExA, fig.cap='(ref:FluCpGExA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 
 # Plot predictor profile for Ibrutinib + IL4
@@ -1556,7 +1557,7 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Fludarabine + CpG ODN"], ncol = 1)
 
 ```
 
-```{r Flu_CpG_ExB, fig.cap='(ref:Flu_CpG_ExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 6, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r FluCpGExB, fig.cap='(ref:FluCpGExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 6, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 
 #set facet labels 
@@ -1608,12 +1609,12 @@ ighv.labs <- c("U" = "IGHV-U", "M" =  "IGHV-M")
 
 ```
 
-(Figure \@ref(fig:ibr_il4_exA)).
-(ref:ibr_il4_exA)
-(Figure \@ref(fig:ibr_il4_exB)).
-(ref:ibr_il4_exB)
+(Figure \@ref(fig:ibrIl4ExA)).
+(ref:ibrIl4ExA)
+(Figure \@ref(fig:ibrIl4ExB)).
+(ref:fig:ibrIl4ExB)
 
-```{r ibr_il4_exA, fig.cap='(ref:ibr_il4_exA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r ibrIl4ExA, fig.cap='(ref:ibrIl4ExA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 # Plot predictor profile for Ibrutinib + IL4
 
@@ -1621,7 +1622,7 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Ibrutinib + IL-4"], ncol = 1)
 ```
 
 
-```{r ibr_il4_exB, fig.cap='(ref:ibr_il4_exB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 6, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r fig:ibrIl4ExB, fig.cap='(ref:fig:ibrIl4ExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 6, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
   left_join(df_complete, patMeta, by = "PatientID")%>%
   #filter for drug:stimulus combinations of interest, make sure no NAs in genetic data
@@ -1670,20 +1671,20 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Ibrutinib + IL-4"], ncol = 1)
 ```
 
 
-(Figure \@ref(fig:nutlin_cpg_ex)).
-(ref:nutlin_cpg_ex)
+(Figure \@ref(fig:nutlinCpgEx)).
+(ref:nutlinCpgEx)
 
-```{r nutlin_cpg_ex, fig.cap='(ref:nutlin_cpg_ex)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r nutlinCpgEx, fig.cap='(ref:nutlinCpgEx)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 # Plot predictor profile for Ibrutinib + IL4
 
 grid.arrange(grobs = Lasso_Plots_Fig6["Nutlin-3a + CpG ODN"], ncol = 1)
 ```
 
-(Figure \@ref(fig:ral_il4_ex)).
-(ref:ral_il4_ex)
+(Figure \@ref(fig:ralIl4ExA)).
+(ref:ralIl4ExA)
 
-```{r ral_il4_ex, fig.cap='(ref:ral_il4_ex)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r ralIl4ExA, fig.cap='(ref:ralIl4ExA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 # Plot predictor profile for Ibrutinib + IL4
 
@@ -1691,7 +1692,10 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Ralimetinib + IL-4"], ncol = 1)
 ```
 
 
-```{r ral_il4_exB, fig.cap='(ref:ral_il4_exB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+(Figure \@ref(fig:ralIl4ExB)).
+(ref:ralIl4ExB)
+
+```{r ralIl4ExB, fig.cap='(ref:ralIl4ExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
 left_join(df_complete, patMeta, by = "PatientID")%>%
   #filter for drug:stimulus combinations of interest, make sure no NAs in genetic data
