@@ -117,13 +117,14 @@ Pearson correlation coefficients were calculated for each drug - drug and stimul
 _myself_ original complete (just check)
 For the heatmap in figure \@ref(fig:stimuliHeatmap), the viability data is represented as z scores. Log transformed viability values, normalised to DMSO controls, are row-scaled  according to the Median Absolute Deviance.  Limits were then applied to this row scaling factor for optimal visualisation. The matrix of z scores was plotted using the [@R-pheatmap] package. The ordering of the columns (patient samples) was obtained from the dendrogram that resulted from running `ConsensusClusterPlus`, from the [@R-ConsensusClusterPlus] package. The rows were ordered using the dendrogram order produced by `hclust` with default branch arrangement.
 
-#### Univariate analysis of gene - stimulus response assosciations 
+#### Univariate analysis of gene - stimulus and gene - drug response assosciations {#univariate-gene-stimulus-associations-method}
 _myself_ writtten for thesis complete
-Section \@ref(univariate-gene-stimulus-associations). Two-sided Student's t-tests, with equal variance were performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63). A 10% FDR cut off was used to determine significance. 
+Section \@ref(univariate-gene-stimulus-associations) & \@ref(univariate-gene-drug-associations). Two-sided Student's t-tests, with equal variance were performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63/54). A 10% FDR cut off was used to determine significance. 
 
-#### Penalised multivariate regression of gene - stimulus assosciations {#multivariate-gene-stimulus-assosciations-method}
+#### Penalised multivariate regression of gene - stimulus and gene - drug assosciations {#multivariate-gene-stimulus-assosciations-method}
 _myself_ written for thesis (but some overlap with JCI) 
-Section \@ref(multivariate-gene-stimulus-assosciations).  A Gaussian linear model with L1-penalty implemented in the `R` package `glmnet` [@R-glmnet], with mixing parameter alpha = 1,was used to identify gene-stimulus associations. Matrix of genetic features (p=39), IGHV status (encoded as M = 1 and U = 0), and Methylation Cluster (encoded as 0, 0.5, 1) were used to identify multivariate predictors. All features were thus encoded on a similar scale to ensure equal treatment by lasso constraint in model fitting.  Genetic features with more than 20% missing values were excluded from the analysis, and samples without complete annotation for remaining features were removed, resulting in n = 129 samples. The matrix of control-normalised log-transformed viability values for these 129 samples was provided as the dependent variable. Using 3-fold cross-validation, the optimal penalty parameter $\lambda$  was selected so as to minimise the cross-validated R2. The reduction in cross-validated mean squared error compared to the null model was used as loss. The model was fitted for 30 bootstrapped repeats, and the resulting coefficients are the mean of those coefficients that were selected in >75% model fits. 
+Section \@ref(multivariate-gene-stimulus-assosciations) & \@ref(multivariate-gene-drug-assosciations).  
+ADAPT FOR DRUGS ALSO A Gaussian linear model with L1-penalty implemented in the `R` package `glmnet` [@R-glmnet], with mixing parameter alpha = 1,was used to identify gene-stimulus associations. Matrix of genetic features (p=39), IGHV status (encoded as M = 1 and U = 0), and Methylation Cluster (encoded as 0, 0.5, 1) were used to identify multivariate predictors. All features were thus encoded on a similar scale to ensure equal treatment by lasso constraint in model fitting.  Genetic features with more than 20% missing values were excluded from the analysis, and samples without complete annotation for remaining features were removed, resulting in n = 129 samples. The matrix of control-normalised log-transformed viability values for these 129 samples was provided as the dependent variable. Using 3-fold cross-validation, the optimal penalty parameter $\lambda$  was selected so as to minimise the cross-validated R2. The reduction in cross-validated mean squared error compared to the null model was used as loss. The model was fitted for 30 bootstrapped repeats, and the resulting coefficients are the mean of those coefficients that were selected in >75% model fits. 
 
  
 #### Correlation of RNA-Receptor Expression with viability
@@ -132,9 +133,9 @@ RNA count data for matched samples was available for 49 patients and was transfo
 
 #### Linear modelling of drug - stimulus interactions 
 
-#### Modelling of drug - stimulus - gene interactions
+#### Modelling of drug - stimulus - gene interactions {#drug-stimulus-gene-interactions-method}
 _myself_ original 
-To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package `glmnet`[@R-glmnet]. As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
+Section \@ref(drug-stimulus-gene-interactions). To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package `glmnet`[@R-glmnet]. As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
 
 ### Follow up 
 #### Lympocyte doubling times
@@ -200,9 +201,11 @@ For the smaller ATACseq dataset, ATAC-seq data generated from our CLL samples we
 _myeslf_ original (update to paper) 
 We downloaded SPIB ChIPseq data [REFERENCE] from the NCBI GEO database[REFERENCE], accession GEO:GSE56857. We made use of the data for SPIB in the OCILY3 DLBCL cell line (GSM1370276). SPIB ChIP peaks were filtered for significance (q value<0.05). We used the annotatePeaks function from the package clusterProfiler[REFERENCE] to annotate the nearest gene for each ChIPpeak. We filtered peaks  within ±1kb of a TSS of a gene and performed over-representation of  KEGG and Reactome pathways (using the clusterProfiler package[REFERENCE])  amongst the resulting list of genes. 
 
-#### Linear modelling of drug - stimulus interactions 
+#### Linear modelling of drug - stimulus interactions {#drug-stimulus-linear-model-method}
 _myself_ original 
-To identify drug-stimulus interactions, we fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn1. Drug - stimulus interaction coefficients and associated p values were extracted and used to define significant interactions.
+Section \@ref(drug-stimulus-linear-model) To identify drug-stimulus interactions, we fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn1. Drug - stimulus interaction coefficients and associated p values were extracted and used to define significant interactions.
+
+Incl defining interaction types
 
 #### Drug-Drug interaction assay
 
