@@ -1530,6 +1530,8 @@ Using the output of the regression, I generated predictor profiles for each stim
 \end{figure}
 The multivariate analysis demonstrated that responses to IL4 and sCD40L + IL4, TLR and TGF\(\beta\) were all affected by multiple genetic features (Bruch \& Giles et al.~2021). For example, higher viability in response to IL4 stimulation was associated with trisomy 12 and unmutated IGHV. In contrast, IL4 generated little or no increase in viability in samples with a mutation in KRAS, NRAS or BRAF. These tumours benefited less from the anti-apoptotic effects of IL4, indicating that the ability of IL4 to increase viability could be dependent on signalling via Ras-Raf-MEK-ERK, which is already active in mutant samples.
 
+Discussion that Inhibition of ERK (p38) also increased IL4 protective effect
+
 \hypertarget{response-to-tlr-stimulation-is-dependent-on-ighv-status-trisomy-12-and-mutations-in-dna-damage-response-genes}{%
 \subsection{Response to TLR stimulation is dependent on IGHV status, trisomy 12 and mutations in DNA Damage Response genes}\label{response-to-tlr-stimulation-is-dependent-on-ighv-status-trisomy-12-and-mutations-in-dna-damage-response-genes}}
 
@@ -1790,6 +1792,12 @@ Then outline in detail at the bottom
 \hypertarget{molecular-and-microenvironmental-modulators-of-drug-response-in-cll}{%
 \chapter{Molecular and microenvironmental modulators of drug response in CLL}\label{molecular-and-microenvironmental-modulators-of-drug-response-in-cll}}
 
+Tasks for chapter
+
+-go throuhg and check use of dataframes
+-se of cytokien names and gene names
+(also in all chpater)
+
 Intro text
 
 Process data
@@ -1802,7 +1810,7 @@ Process data
 
 Principle
 
-\emph{Equation \eqref{eq:drugCytInt} quantifies how the viability with any combination can be predicted:}
+Equation \eqref{eq:drugCytInt} quantifies how the viability with any combination can be predicted:
 \begin{equation}
             log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{int}X_{drug}X_{stimulus} + \epsilon
                                        \label{eq:drugCytInt}
@@ -1840,153 +1848,9 @@ SHow all actual interactions
 (Figure \ref{fig:drugStimulusIntMapt}).
 
 
-\begin{verbatim}
-             Cytokine
-drug                   BAFF       CpG ODN       HS-5 CM         IL-10
-  BAY-11-7085 -5.604631e-02 -3.181140e-01  1.492971e-03 -1.575975e-02
-  Everolimus   3.655902e-02  1.497761e-02  5.377161e-02  7.948169e-02
-  Fludarabine -2.337342e-02  1.903315e-01  6.711677e-02 -3.913832e-02
-  I-BET 762    4.216039e-02 -2.331726e-01 -7.116831e-02 -2.652204e-02
-  Ibrutinib   -2.625863e-02 -2.269246e-01  7.477386e-02  2.731021e-02
-  Idelalisib   8.275484e-03 -2.652441e-01  3.386327e-02  3.058002e-02
-  Luminespib  -2.482555e-01 -2.591311e-01 -3.940346e-01 -6.458359e-02
-  Nutlin-3a   -1.258362e-03  1.577514e-01  7.700330e-02  9.299536e-02
-  PRT062607   -6.653378e-02 -8.644230e-02  1.557073e-02 -8.013149e-03
-  Pyridone-6  -8.023060e-04 -8.100430e-03  2.925389e-02  3.243689e-02
-  Ralimetinib -3.093962e-02 -1.717127e-01  1.858811e-02 -1.073542e-02
-  Selumetinib  5.947874e-03 -1.304805e-01  7.060345e-02  2.145764e-02
-             Cytokine
-drug                  IL-15         IL-1b          IL-2         IL-21
-  BAY-11-7085 -5.816512e-03  2.152596e-02 -2.134484e-02  2.072687e-03
-  Everolimus   2.725033e-02  3.500697e-02 -2.677401e-03  3.495098e-02
-  Fludarabine -4.310581e-02  3.505833e-02 -2.214672e-02 -4.860353e-02
-  I-BET 762    9.141791e-04  2.740045e-03 -2.907140e-02 -2.523721e-02
-  Ibrutinib    5.752202e-02  1.849707e-03  4.678019e-02  3.710308e-02
-  Idelalisib   5.658295e-02  1.936971e-02  4.584077e-02  3.477902e-02
-  Luminespib  -6.061613e-02 -1.263584e-01 -6.993392e-02 -7.742445e-02
-  Nutlin-3a    1.046024e-01  2.482328e-02  1.463441e-01  7.912615e-02
-  PRT062607   -3.957221e-03 -2.216149e-02  5.916628e-03  8.482059e-03
-  Pyridone-6   5.308392e-02  1.514414e-02  3.040022e-02 -7.237789e-04
-  Ralimetinib  1.202065e-02 -2.568524e-03 -1.468196e-02 -4.467606e-02
-  Selumetinib  5.942633e-02  1.780087e-02  3.092410e-02  2.662341e-02
-             Cytokine
-drug                   IL-4          IL-6 Interferon gamma    Resiquimod
-  BAY-11-7085  2.235761e-02  4.554573e-02     5.434015e-02 -3.639915e-01
-  Everolimus   1.332949e-01  6.817609e-03     5.469766e-02  2.765104e-02
-  Fludarabine  3.953363e-01 -2.469675e-02     4.886592e-02  2.265297e-01
-  I-BET 762   -2.665207e-02 -2.262955e-02     1.357931e-02 -3.265356e-01
-  Ibrutinib    1.836975e-01  6.642272e-02     1.101352e-01 -2.509692e-01
-  Idelalisib   1.657969e-01  6.363235e-02     1.171099e-01 -2.064261e-01
-  Luminespib  -4.429811e-02 -3.220023e-03    -2.221338e-02 -7.116024e-02
-  Nutlin-3a    5.337703e-01  1.136707e-01     1.433726e-01  1.426722e-01
-  PRT062607    1.388865e-01 -1.097500e-02     2.337567e-02 -3.612143e-01
-  Pyridone-6  -2.305619e-02  6.847247e-02     6.271102e-02  1.349796e-03
-  Ralimetinib  7.075108e-02  2.282944e-03     2.190150e-01 -1.118603e-01
-  Selumetinib  1.174186e-01  6.322721e-02     8.349273e-02 -1.148979e-01
-             Cytokine
-drug                 sCD40L   sCD40L+IL-4        SDF-1a soluble anti-IgM
-  BAY-11-7085  2.049505e-02 -1.619583e-01  2.831627e-02    -6.597054e-03
-  Everolimus   5.178276e-02  1.386887e-01 -2.677009e-03     5.541420e-04
-  Fludarabine  1.020548e-02  3.687631e-01  5.075778e-02     3.435734e-02
-  I-BET 762    4.068479e-02  6.576262e-03 -4.944505e-03    -2.502231e-02
-  Ibrutinib   -4.740237e-03  8.873182e-02  2.038604e-02     1.260542e-02
-  Idelalisib   2.027841e-02  8.430112e-02 -2.252409e-05     2.338468e-02
-  Luminespib  -1.543305e-01 -3.482382e-01 -8.004006e-02    -4.275447e-01
-  Nutlin-3a    1.834396e-02  4.643749e-01  1.258999e-01     5.912671e-03
-  PRT062607   -8.838768e-02  1.457566e-01 -2.877775e-02    -6.326385e-02
-  Pyridone-6   3.934846e-02 -1.855970e-01  3.145554e-02    -6.082148e-03
-  Ralimetinib -1.691833e-04 -3.878371e-02  1.575747e-03    -2.273022e-02
-  Selumetinib  5.122307e-02  4.874905e-02 -2.510831e-02     2.421239e-02
-             Cytokine
-drug                 TGF-b1
-  BAY-11-7085 -4.509014e-03
-  Everolimus  -8.310092e-03
-  Fludarabine -4.636054e-02
-  I-BET 762   -9.396045e-02
-  Ibrutinib    1.958423e-02
-  Idelalisib   9.050594e-03
-  Luminespib  -8.478118e-02
-  Nutlin-3a   -1.529464e-02
-  PRT062607    2.369375e-03
-  Pyridone-6   3.081690e-02
-  Ralimetinib  1.357279e-02
-  Selumetinib  2.234705e-02
-\end{verbatim}
-\begin{verbatim}
-             Cytokine
-drug                   BAFF       CpG ODN       HS-5 CM         IL-10
-  BAY-11-7085 -5.604631e-02 -3.181140e-01  1.492971e-03 -1.575975e-02
-  Everolimus   3.655902e-02  1.497761e-02  5.377161e-02  7.948169e-02
-  Fludarabine -2.337342e-02  1.903315e-01  6.711677e-02 -3.913832e-02
-  I-BET 762    4.216039e-02 -2.331726e-01 -7.116831e-02 -2.652204e-02
-  Ibrutinib   -2.625863e-02 -2.269246e-01  7.477386e-02  2.731021e-02
-  Idelalisib   8.275484e-03 -2.652441e-01  3.386327e-02  3.058002e-02
-  Luminespib  -2.482555e-01 -2.591311e-01 -3.940346e-01 -6.458359e-02
-  Nutlin-3a   -1.258362e-03  1.577514e-01  7.700330e-02  9.299536e-02
-  PRT062607   -6.653378e-02 -8.644230e-02  1.557073e-02 -8.013149e-03
-  Pyridone-6  -8.023060e-04 -8.100430e-03  2.925389e-02  3.243689e-02
-  Ralimetinib -3.093962e-02 -1.717127e-01  1.858811e-02 -1.073542e-02
-  Selumetinib  5.947874e-03 -1.304805e-01  7.060345e-02  2.145764e-02
-             Cytokine
-drug                  IL-15         IL-1b          IL-2         IL-21
-  BAY-11-7085 -5.816512e-03  2.152596e-02 -2.134484e-02  2.072687e-03
-  Everolimus   2.725033e-02  3.500697e-02 -2.677401e-03  3.495098e-02
-  Fludarabine -4.310581e-02  3.505833e-02 -2.214672e-02 -4.860353e-02
-  I-BET 762    9.141791e-04  2.740045e-03 -2.907140e-02 -2.523721e-02
-  Ibrutinib    5.752202e-02  1.849707e-03  4.678019e-02  3.710308e-02
-  Idelalisib   5.658295e-02  1.936971e-02  4.584077e-02  3.477902e-02
-  Luminespib  -6.061613e-02 -1.263584e-01 -6.993392e-02 -7.742445e-02
-  Nutlin-3a    1.046024e-01  2.482328e-02  1.463441e-01  7.912615e-02
-  PRT062607   -3.957221e-03 -2.216149e-02  5.916628e-03  8.482059e-03
-  Pyridone-6   5.308392e-02  1.514414e-02  3.040022e-02 -7.237789e-04
-  Ralimetinib  1.202065e-02 -2.568524e-03 -1.468196e-02 -4.467606e-02
-  Selumetinib  5.942633e-02  1.780087e-02  3.092410e-02  2.662341e-02
-             Cytokine
-drug                   IL-4          IL-6 Interferon gamma    Resiquimod
-  BAY-11-7085  2.235761e-02  4.554573e-02     5.434015e-02 -3.639915e-01
-  Everolimus   1.332949e-01  6.817609e-03     5.469766e-02  2.765104e-02
-  Fludarabine  3.953363e-01 -2.469675e-02     4.886592e-02  2.265297e-01
-  I-BET 762   -2.665207e-02 -2.262955e-02     1.357931e-02 -3.265356e-01
-  Ibrutinib    1.836975e-01  6.642272e-02     1.101352e-01 -2.509692e-01
-  Idelalisib   1.657969e-01  6.363235e-02     1.171099e-01 -2.064261e-01
-  Luminespib  -4.429811e-02 -3.220023e-03    -2.221338e-02 -7.116024e-02
-  Nutlin-3a    5.337703e-01  1.136707e-01     1.433726e-01  1.426722e-01
-  PRT062607    1.388865e-01 -1.097500e-02     2.337567e-02 -3.612143e-01
-  Pyridone-6  -2.305619e-02  6.847247e-02     6.271102e-02  1.349796e-03
-  Ralimetinib  7.075108e-02  2.282944e-03     2.190150e-01 -1.118603e-01
-  Selumetinib  1.174186e-01  6.322721e-02     8.349273e-02 -1.148979e-01
-             Cytokine
-drug                 sCD40L   sCD40L+IL-4        SDF-1a soluble anti-IgM
-  BAY-11-7085  2.049505e-02 -1.619583e-01  2.831627e-02    -6.597054e-03
-  Everolimus   5.178276e-02  1.386887e-01 -2.677009e-03     5.541420e-04
-  Fludarabine  1.020548e-02  3.687631e-01  5.075778e-02     3.435734e-02
-  I-BET 762    4.068479e-02  6.576262e-03 -4.944505e-03    -2.502231e-02
-  Ibrutinib   -4.740237e-03  8.873182e-02  2.038604e-02     1.260542e-02
-  Idelalisib   2.027841e-02  8.430112e-02 -2.252409e-05     2.338468e-02
-  Luminespib  -1.543305e-01 -3.482382e-01 -8.004006e-02    -4.275447e-01
-  Nutlin-3a    1.834396e-02  4.643749e-01  1.258999e-01     5.912671e-03
-  PRT062607   -8.838768e-02  1.457566e-01 -2.877775e-02    -6.326385e-02
-  Pyridone-6   3.934846e-02 -1.855970e-01  3.145554e-02    -6.082148e-03
-  Ralimetinib -1.691833e-04 -3.878371e-02  1.575747e-03    -2.273022e-02
-  Selumetinib  5.122307e-02  4.874905e-02 -2.510831e-02     2.421239e-02
-             Cytokine
-drug                 TGF-b1
-  BAY-11-7085 -4.509014e-03
-  Everolimus  -8.310092e-03
-  Fludarabine -4.636054e-02
-  I-BET 762   -9.396045e-02
-  Ibrutinib    1.958423e-02
-  Idelalisib   9.050594e-03
-  Luminespib  -8.478118e-02
-  Nutlin-3a   -1.529464e-02
-  PRT062607    2.369375e-03
-  Pyridone-6   3.081690e-02
-  Ralimetinib  1.357279e-02
-  Selumetinib  2.234705e-02
-\end{verbatim}
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/drugStimulusIntMapt-1} 
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/drugStimulusIntMapt-1} 
 
 }
 
@@ -2016,7 +1880,7 @@ big up interferon gamma
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/IL4Res-1} 
+{\centering \includegraphics[width=0.8\linewidth]{thesis_files/figure-latex/IL4Res-1} 
 
 }
 
@@ -2045,14 +1909,28 @@ big up interferon gamma
 (Figure \ref{fig:drugGeneIntMulti}).
 
 
+\begin{figure}
 
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/drugGeneIntMulti-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugGeneIntMulti}
+\end{figure}
 \hypertarget{specific-examples}{%
 \subsection{Specific examples}\label{specific-examples}}
 
 (Figure \ref{fig:drugGeneIntEx}).
 
 
+\begin{figure}
 
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/drugGeneIntEx-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugGeneIntEx}
+\end{figure}
 in a grid:
 IBET-762 and trisomy 12
 Nutlin-3a and trisomy 12 and gene dosage effect of MDM2 in trisomy12 CLL
@@ -2067,15 +1945,93 @@ Ralimetinib and trisomy 12
 
 (Figure \ref{fig:drugCytGeneIntMap}).
 
+Also Appendix figure \ref{fig:drugcytGeneIntAll}
 
 
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/drugCytGeneIntMap-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugCytGeneIntMap}
+\end{figure}
 \hypertarget{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}{%
 \subsection{Patient - specific drug - stimulus interactions may have clinical significance}\label{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}}
 
-(Figure \ref{fig:drugCytGeneIntEx}).
+(Figure \ref{fig:FluCpGExA}).
 
 
 
+(Figure \ref{fig:FluCpGExB}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/FluCpGExA-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:FluCpGExA}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/FluCpGExB-1} 
+
+}
+
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:FluCpGExB}
+\end{figure}
+(Figure \ref{fig:ibrIl4ExA}).
+(ref:ibrIl4ExA)
+(Figure \ref{fig:ibrIl4ExB}).
+(ref:fig:ibrIl4ExB)
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/ibrIl4ExA-1} 
+
+}
+
+\caption{(ref:ibrIl4ExA)}\label{fig:ibrIl4ExA}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/fig:ibrIl4ExB-1} 
+
+}
+
+\caption{(ref:fig:ibrIl4ExB)}(\#fig:fig:ibrIl4ExB)
+\end{figure}
+(Figure \ref{fig:nutlinCpgEx}).
+(ref:nutlinCpgEx)
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/nutlinCpgEx-1} 
+
+}
+
+\caption{(ref:nutlinCpgEx)}\label{fig:nutlinCpgEx}
+\end{figure}
+(Figure \ref{fig:ralIl4ExA}).
+(ref:ralIl4ExA)
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/ralIl4ExA-1} 
+
+}
+
+\caption{(ref:ralIl4ExA)}\label{fig:ralIl4ExA}
+\end{figure}
+(Figure \ref{fig:ralIl4ExB}).
+(ref:ralIl4ExB)
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/ralIl4ExB-1} 
+
+}
+
+\caption{(ref:ralIl4ExB)}\label{fig:ralIl4ExB}
+\end{figure}
 Responses to chemotherapeutic drugs in the context of TLR stimulation are modulated by del11q and ATM mutations,
 Trisomy12 enhances pro-survival synergy between Ralimetinib + IFNgamma
 Ralimetinib treatment increases the pro-survival effect of IL4, and this is further enhanced in NOTCH1 and Ras/Raf mutants
@@ -2295,6 +2251,15 @@ Zenz, Thorsten, Daniel Mertens, Ralf Küppers, Hartmut Döhner, and Stephan Stil
 }
 
 \caption{Analysis of ATACseq dataset of two trisomy 12 and two non-trisomy 12 untreated CLL PMBC samples. The volcano plot depicts change in TF activity (x axis) versus BH-adjusted p-values (y axis) for 636 TFs, comparing trisomy 12 and non-trisomy 12 samples. The (\protect\hyperlink{ref-diffTF}{\textbf{diffTF?}}){[}REFERENCE{]} package was ran in analytical mode to calculate TF activity, measured as weighted mean difference. TFs are labeled if adjusted p-value \textless{} 0.01 and absolute weighted mean difference \textgreater{} 0.15.}\label{fig:diffTFsmallvolPlot}
+\end{figure}
+(ref:drugcytGeneIntAll)
+\begin{figure}
+
+{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/drugcytGeneIntAll-1} 
+
+}
+
+\caption{(ref:drugcytGeneIntAll)}\label{fig:drugcytGeneIntAll}
 \end{figure}
 \hypertarget{tables}{%
 \section*{Tables}\label{tables}}
