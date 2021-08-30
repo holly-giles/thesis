@@ -1792,11 +1792,25 @@ Then outline in detail at the bottom
 \hypertarget{molecular-and-microenvironmental-modulators-of-drug-response-in-cll}{%
 \chapter{Molecular and microenvironmental modulators of drug response in CLL}\label{molecular-and-microenvironmental-modulators-of-drug-response-in-cll}}
 
-Tasks for chapter
+So far, we have observed that the panel of stimuli have a range of ects on Cll vibaliyt, some higlhy potent. Form this analysis, IL4 and TLR pathways emerge as kye modualtors of CLL biology, in some genetic backgrounds hguley incresaing CLL viability. We have also observed hos these signals can be modualted by genetic features, underlying the fact that cancer biology is integratively influenec by cll-intrinsc and cell-extrisnic feautres. Trisomy 12 and IGHV status emerge as key modualtors that impact on resposnes to exernal signals.
 
--go throuhg and check use of dataframes
--se of cytokien names and gene names
-(also in all chpater)
+The microenvironment is known to reduce treatment efficacy within the protective niche {[}REFERENCE Ahn IE, Farooqui MZH, Tian X, et al.~Depth and durability of response to ibrutinib in CLL: 5-year follow-up of a phase 2 study. Blood. 2018;131(21):2357--2366.
+Abstract/FREE Full TextGoogle Scholar{]}. Guided by this obesrvation,
+
+In the second part of this chapter, we intergrate all three axes of the dataset, to ivnesrgatied how drug - microenivronment interactions can be further modulated by genetic features.
+
+Outline method
+
+INtor sentence
+
+Tasks for chapter
+Sort figures {[}{]}
+Write all text
+Reread and check story and narrative
+Reference
+Credit and contirbutiosn statement
+Dump in disucssion and intro as I go
+Do a intro, discussion and methods dump
 
 Intro text
 
@@ -1827,7 +1841,7 @@ Different types of interaction\\
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugStimulusDummyPLots}
+\caption{Graphical representation of the four drug - stimulus interaction categories. Categories are defined according to (i) the nature of the interaction (synergistic or antagonistic), and (ii) whether \(\beta_{int}\) is positive or negative i.e.~the viability with the combinatorial treatment is higher or lower than would be expected based on additive effects alone. x-axis shows treatment type, y-axis shows log transformed viability values. Red and blue lines depict representative treatment response patterns for given interaction type. To demonstrate the effect of each each interaction on the expected viability, blue and black horizontal lines represent the expected viability for combinatorial treatment based on additive effects alone (blue) and the actual viability accounting for additive effects and the interaction (black). \emph{Figure and caption from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:drugStimulusDummyPLots}
 \end{figure}
 Quantify how many fit into each category\\
 (Figure \ref{fig:barPlotInteractions}).
@@ -1839,7 +1853,7 @@ Quantify how many fit into each category\\
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:barPlotInteractions}
+\caption{Histogram showing the number of drug-stimulus interactions within each category, where p value for \(\beta_{int}\) is \textless0.05. \emph{Figure and caption from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:barPlotInteractions}
 \end{figure}
 \hypertarget{ID}{%
 \subsection{Linear modelling identifies drug - stimulus interactions of potential clinical importance}\label{ID}}
@@ -1854,7 +1868,7 @@ SHow all actual interactions
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugStimulusIntMapt}
+\caption{Heatmap of all \(\beta_{int}\) values for all drug - stimulus combinations where p for \(\beta_{int}\) \textless0.05, annotated with interaction type. Scale indicates size and sign of \(\beta_{int}\). Rows and columns clustered according to hierarchical clustering. \emph{Figure and caption from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:drugStimulusIntMapt}
 \end{figure}
 Discuss specific examples
 (find two replacements for ibr and ifn gamma)
@@ -1870,7 +1884,7 @@ big up interferon gamma
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugStimulusIntEx}
+\caption{Examples of drug-stimulus interactions, for each category. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. (A+B) Ibrutinib, a clinically-used BTK inhibitor, is blocked by IL4 and IFN\(\gamma\). (C) The JAK inhibitor pyridone-6 inhibits the pro-survival effect of sCD40L + IL4 stimulation. (D) The p38 inhibitor ralimetinib and IFN\(\gamma\) show a synergistic pro-survival effect not seen in either single treatment. (E) TLR agonists, including CpG ODN (shown) increase sensitivity to BTK inhibition by ibrutinib, despite increasing viability in isolation. (F) Soluble anti-IgM sensitises CLL samples to HSP90 inhibition by luminespib. \emph{Figure and caption from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:drugStimulusIntEx}
 \end{figure}
 \hypertarget{IL4resistance}{%
 \subsection{IL4 induces resistance to BCR inhibitors and chemotherapeutics}\label{IL4resistance}}
@@ -1884,7 +1898,7 @@ big up interferon gamma
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:IL4Res}
+\caption{Examples of IL4-induced resistance. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. Plots show IL4 + (A) Idelalisib (Pi3K), (B) PRT062607 (SYK) (C) Everolimus (mTOR), and (D) Selumetinib (p38 MAPK). \emph{Figure from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:IL4Res}
 \end{figure}
 \hypertarget{genetic-modulators-of-drug-response}{%
 \section{Genetic modulators of drug response}\label{genetic-modulators-of-drug-response}}
@@ -1954,7 +1968,7 @@ Also Appendix figure \ref{fig:drugcytGeneIntAll}
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugCytGeneIntMap}
+\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id} Have to make sure this figure takes a whol page but doesnt float to the bottom}\label{fig:drugCytGeneIntMap}
 \end{figure}
 \hypertarget{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}{%
 \subsection{Patient - specific drug - stimulus interactions may have clinical significance}\label{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}}
