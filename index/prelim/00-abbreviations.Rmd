@@ -19,6 +19,7 @@ output:
     FBS & & Fetal bovine serum \\
     FDR & & False discovery rate \\
     GSEA & & Gene set enrichment analysis  \\
+    IFN$\gamma$ & & Interferon$\gamma$   \\ 
     Ig & & Immunoglobulin \\
     IGHV & & Immunoglobulin heavy chain variable region \\
     IL & & Interleukin \\
