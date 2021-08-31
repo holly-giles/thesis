@@ -1,20 +1,13 @@
-# Molecular and microenvironmental modulators of drug response in CLL
-So far, we have observed that the panel of stimuli have a range of ects on Cll vibaliyt, some higlhy potent. Form this analysis, IL4 and TLR pathways emerge as kye modualtors of CLL biology, in some genetic backgrounds hguley incresaing CLL viability. We have also observed hos these signals can be modualted by genetic features, underlying the fact that cancer biology is integratively influenec by cll-intrinsc and cell-extrisnic feautres. Trisomy 12 and IGHV status emerge as key modualtors that impact on resposnes to exernal signals. 
+# Molecular and microenvironmental modulators of drug response in CLL {#chapter6}
 
-The microenvironment is known to reduce treatment efficacy within the protective niche [REFERENCE Ahn IE, Farooqui MZH, Tian X, et al. Depth and durability of response to ibrutinib in CLL: 5-year follow-up of a phase 2 study. Blood. 2018;131(21):2357–2366.
-Abstract/FREE Full TextGoogle Scholar]. Guided by this obesrvation, 
+The results in Chapters (\@ref(chapter4)) and \@ref(chapter5) provide a broad and systematic exploration of the effect of microenvironmental stimulation on _ex vivo_ CLL viability.  The IL4 and TLR pathways emerge as highly potent modulators of CLL biology, both activating pro-survival responses within the tumour cells in certain genetic backgrounds. The dataset has also revealed how these signals can be modulated by genetic features, underlining the fact that cancer biology is integratively influenced by cell-intrinsic and cell-extrinsic features. This analysis highlighted trisomy 12 and IGHV status as key modulators that impact on responses to external signals. 
 
-In the second part of this chapter, we intergrate all three axes of the dataset, to ivnesrgatied how drug - microenivronment interactions can be further modulated by genetic features. 
+As well as providing protective signals that support tumour growth, the microenvironment is also believed to reduce treatment efficacy within the protective niche [@Ahn2018]. Guided by this observation, I next wanted to investigate the impact of each of the stimuli on responses to the panel of drugs, and how this can be further modulated by genetic features. ADD a but more about microenvironment and drug response 
 
-Outline method 
-
-INtor sentence 
-
-
-
+In the first part of this chapter, to quantify the effect of each stimulus on drug toxicity, I focus on identifying drug - stimulus interactions. In the second part, I apply multivariate modelling to integrate all three axes of the dataset, to investigate how drug - microenvironment interactions can be further modulated by genetic features. These analyses benefit from linear regression and generalised linear modelling approaches, described in more detail in section \@ref(intro-multivariate-modelling). 
 
 Tasks for chapter
-Sort figures [] 
+Sort figures [x] 
 Write all text 
 Reread and check story and narrative
 Reference
@@ -22,7 +15,6 @@ Credit and contirbutiosn statement
 Dump in disucssion and intro as I go 
 Do a intro, discussion and methods dump 
 
-Intro text 
 
 ```{r, echo = FALSE}
 
@@ -476,8 +468,6 @@ makelegends <- function (legendFor, colors)
 
 ```
 
-
-Process data
 ```{r processData06}
 # List of Cytokines, Drugs and treatments 
   ##Drugs
@@ -577,8 +567,9 @@ colnames(pvaldf) <- c("pvalue","drug", "Cytokine")
 
 ## Mapping drug - stimulus interactions
 ### Linear modelling quantifies interactions between drugs and stimuli {#drug-stimulus-linear-model}
+Chapters \@ref(chapter4) and 5 \@ref(chapter5) demonstrate that each stimulus modulates CLL viability, impacting the rate of spontaneous apoptosis and activating pathways that increase or decrease baseline viability _ex vivo_. When a stimulus is co-applied with a drug, the stimulus will continue to impact upon baseline viability, concomitantly with the inhibitory effect of the drug on baseline viability. Assuming the drug and stimulus do not interact, the viability of the cells after treatment with both the stimulus and the drug will equate to the additive impact of both these compounds. 
 
-Principle
+In order to determine where a stimulus and drug are specifically interacting, I fitted a linear model (Equation \@ref(eq:drugCytInt)) to quantify how each stimulus modulates drug efficacy beyond its individual effect. The model accounts for both the additive effects of the drug and stimlus treatment, and additionally, an interaction term, named $\beta{int}$.  $\beta{int}$, the interaction factor,  quantifies how the combined treatment effect differs from the sum of the individual treatments. 
 
 Equation \@ref(eq:drugCytInt) quantifies how the viability with any combination can be predicted:
     \begin{equation}
@@ -586,10 +577,14 @@ Equation \@ref(eq:drugCytInt) quantifies how the viability with any combination 
                                        (\#eq:drugCytInt)
     \end{equation}
     
-_where $V$ is the viability with a given treatment,_ $\beta_{drug}$, $\beta_{stimulus}$ _and_ $\beta_{int}$ _are coefficients for the drug, stimulus and combinatorial terms and_ $X_{drug}$ _and_ $X_{stimulus}$  _are indicator variables (0 or 1) for the presence or absence of a drug/stimulus._ $\epsilon$ _is the vector of model residuals See also Methods section \@ref(drug-stimulus-linear-model-method)._
+_where $V$ is the viability with a given treatment,_ $\beta_{drug}$, $\beta_{stimulus}$ _and_ $\beta_{int}$ _are coefficients for the drug, stimulus and combinatorial terms and_ $X_{drug}$ _and_ $X_{stimulus}$  _are indicator variables (0 or 1) for the presence or absence of a drug/stimulus._ $\epsilon$ _is the vector of model residuals. See also Methods section \@ref(drug-stimulus-linear-model-method)._
     
-Different types of interaction     
-(Figure \@ref(fig:drugStimulusDummyPLots)). 
+Using this approach, I identified  45 drug-stimulus combinations (out of 204), where $\beta{int}$ had p<0.05, i.e. the stimulus had a specific effect on the efficacy of the drug. This highlighted the extent to which drug action can be modulated by cell-external signals _ex vivo_. 
+
+These interactions are of potential interest for clinical research and understanding drug response _in vivo_, and for laboratory studies of drug action. To establish which of these interactions may be important in these contexts, and which would be interesting to follow-up, we began by 
+classifying the drug - stimulus interactions into categories.  We defined four categories, based on whether the interaction was antagonistic or synergistic, i.e. the stimulus and drug acted in the same direction or in opposite directions, and based on the sign of $\beta{int}$ i.e. whether the combinatorial viability was higher or lower than would be expected based purely on additive effects (Figure \@ref(fig:drugStimulusDummyPLots). 
+
+
 
 (ref:drugStimulusDummyPLots) Graphical representation of the four drug - stimulus interaction categories. Categories are defined according to (i) the nature of the interaction (synergistic or antagonistic), and (ii) whether $\beta_{int}$ is positive or negative i.e. the viability with the combinatorial treatment is higher or lower than would be expected based on additive effects alone. x-axis shows treatment type, y-axis shows log transformed viability values. Red and blue lines depict representative treatment response patterns for given interaction type. To demonstrate the effect of each each interaction on the expected viability, blue and black horizontal lines represent the expected viability for combinatorial treatment based on additive effects alone (blue) and the actual viability accounting for additive effects and the interaction (black).  See Methods section \@ref(drug-stimulus-linear-model-method). _Figure and caption from Bruch & Giles et al. 2021._
 
@@ -659,8 +654,7 @@ ggplot(dplyr::filter(dummydata, grepl('coord', x.value)),
 
 ```
 
-Quantify how many fit into each category    
-(Figure \@ref(fig:barPlotInteractions)). 
+These categories encompassed the following interaction types. Type I defined positive antagonisms in which stimuli reversed drug action, leading to decreased drug efficacy and increased CLL viability.  This group highlights drug - stimulus interactions that could be relevant to treatment resistance pathways _in vivo_ . Type II negative antagonisms highlighted cases where the drug inhibited the stimulus, reducing the effect of the stimulus on baseline viability, and decreasing CLL viability. These interactions include drugs that provide potential therapies to target treatement - resistance pathways _in vivo_. Type III and type IV interactions cover synergies, in which the drug and stimulus increase the effect of the other. Type III positive synergies lead to increased CLL viability with the combinatorial treatment, whilst type IV negative synergies lead to increased drug efficacy and lower viability. In the latter case, these may highlight cases where drug efficacy is dependent on external pathways, and may be useful for understanding _ex vivo_ drug action. Figure \@ref(fig:barPlotInteractions) quantifies the number of interactions in each category. 
 
 (ref:barPlotInteractions) Histogram showing the number of drug-stimulus interactions within each category, where p value for $\beta_{int}$ is <0.05.   See Methods section \@ref(drug-stimulus-linear-model-method). _Figure and caption from Bruch & Giles et al. 2021._
 
@@ -739,9 +733,8 @@ ggplot(aes(x=Category, y=n, fill=Category))+
 ```
 
 
-### Linear modelling identifies drug - stimulus interactions of potential clinical importance  {#ID}
-SHow all actual interactions
-(Figure \@ref(fig:drugStimulusIntMapt)). 
+### Linear modelling identifies drug - stimulus interactions of potential clinical importance  {#drug-stimulus-interaction-examples}
+Using the linear modelling approach in combination with our classification system, we attempted to generate the first comprehensive map of drug - stimulus interactions in CLL (Figure \@ref(fig:drugStimulusIntMapt)). This map provides a resource through which to explore the impact of the microenvironment on the majority of drugs that are clinically-licenced in CLL. In addition, we aimed to demonstrate that combinatorial screening in combination with linear modelling is a powerful approach to study the impact of the microenvironment on drug response in cancer, which is often under-appreciated relative to the impact of mutations and genetic features. 
 
 (ref:drugStimulusIntMapt) Heatmap of all $\beta_{int}$ values for all drug - stimulus combinations where p for $\beta_{int}$ <0.05, annotated with interaction type. Scale indicates size and sign of $\beta_{int}$. Rows and columns clustered according to hierarchical clustering.  See Methods section \@ref(drug-stimulus-linear-model-method). _Figure and caption from Bruch & Giles et al. 2021._
 
@@ -836,14 +829,20 @@ drug_order <- colnames(bvalmat[,tree$tree_col[["order"]]])
 
 ```
 
-Discuss specific examples 
-(find two replacements for ibr and ifn gamma)
-Ibrutinib + IL4 Ibrutinib + IFNgamma, Ralimetinib + IFNgamma, Ibrutinib + Resiquimod  - show in grid graphic 
-big up interferon gamma 
+To complement this broad scale screening approach, I next examined each interaction individually, to determine which could be biologically or clinically interesting. Figure \@ref(fig:drugStimulusIntEx) depicts a selection of these.  
 
-(Figure \@ref(fig:drugStimulusIntEx)). 
+The most common interaction type were positive antagonistic interactions, in which stimuli reversed drug action. Amongst this group I noted  known resistance mechanisms including the inactivation of ibrutinib by IL4 signalling (Figure \@ref(fig:drugStimulusIntEx)A)[@Aguilar-Hernandez2016], indicating that the modelling and classification approach was successfully recapitulating known drug - resistance mechanisms. OUr broad-scale screening approached showed that IL4 induced resistance to a range of drugs, beyond ibrutinib, and showed the highest number of positive antagonistic interactions of all of the stimuli. In addition, we also observed previously unknown resistance pathways, including reduced efficacy of ibrutinib in the context of IFN$\gamma$ stimulation (Figure \@ref(fig:drugStimulusIntEx)B).
 
-(ref:drugStimulusIntEx)  Examples of drug-stimulus interactions, for each category. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. (A+B) Ibrutinib, a clinically-used BTK inhibitor, is blocked by IL4 and IFN$\gamma$. (C) The JAK inhibitor pyridone-6 inhibits the pro-survival effect of sCD40L + IL4 stimulation. (D) The p38 inhibitor ralimetinib and IFN$\gamma$ show a synergistic pro-survival effect not seen in either single treatment. (E) TLR agonists, including CpG ODN (shown) increase sensitivity to BTK inhibition by ibrutinib, despite increasing viability in isolation. (F) Soluble anti-IgM sensitises CLL samples to HSP90 inhibition by luminespib. See Methods section \@ref(drug-stimulus-linear-model-method).  _Figure and caption from Bruch & Giles et al. 2021._
+There were six cases of negative antagonisms, whereby drug action inhibited the pro-survival effect of the stimulus. As IL4 appeared to be the most potent ... of drug resistance, it was of greatest interest to identify drugs that may inhibit this pathway.  I noted that the Pan-JAK inhibitor pyridone-6 inhibited the increase in viability with sCD40L + IL4 stimulation  (Figure \@ref(fig:drugStimulusIntEx)C).
+
+We observed a single positive synergism, in which IFN$\gamma$ treatment in combination with ralimetinib, a p38 MAPK inhibitor, stimulated a large increase in viability that was not observed in each of the single treatments (Figure \@ref(fig:drugStimulusIntEx)D). This finding suggests  a potential inhibitory effect of p38 MAPK activity on signalling via IFN$\gamma$. [ADD TO THIS NOS THEORY]
+
+16 drug - stimulus combinations demonstrated negative synergistic interactions. This implied that the drug efficacy was somehow dependent upon, or increased by, activation of the stimulus pathway. For example, luminespib, a HSP90 inhibitor, showed higher efficacy with a number of stimuli, including soluble anti-IgM, indicating that _ex vivo_ measurements of luminespib action are likely to be affected by the presence or absence of microenvironmental signals \@ref(fig:drugStimulusIntEx)F). 
+
+Collectively, these results represent a comprehensive and systematic study of the influence of the microenvironment on drug efficacy in CLL. This work highlights key resistance pathways, strategies for targeting microenvironmental resistance, and underlines important pathways in _ex vivo_ studies of drug efficacy. In this thesis, I have selected some of the more interesting examples, such as resistance to Ibrutinib induced by IL4 and IFN$\gamma$, to investigate in more detail here and in Chapter \@ref(chapter7). This work also aims to serve as a resource for others, to provide a basis for further follow-up studies beyond the ones in this thesis. It also aims to provide a proof-of-principle highlighting the value of combinatorial screening, and linear modelling approaches, to study the impact of the microenvironment in cancers in general. All drug - sitmulus combinations and interactions can be explored on the [online shiny app](https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/), and the whole analysis can be replicated, or adapted, from the [online code repository](https://github.com/Huber-group-EMBL/CLLCytokineScreen2021).  
+
+
+(ref:drugStimulusIntEx)  Examples of drug-stimulus interactions, for each category. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. (A+B) ibrutinib, a clinically-used BTK inhibitor, is blocked by IL4 and IFN$\gamma$. (C) The JAK inhibitor pyridone-6 inhibits the pro-survival effect of sCD40L + IL4 stimulation. (D) The p38 inhibitor ralimetinib and IFN$\gamma$ show a synergistic pro-survival effect not seen in either single treatment. (E) TLR agonists, including CpG ODN (shown) increase sensitivity to BTK inhibition by ibrutinib, despite increasing viability in isolation. (F) Soluble anti-IgM sensitises CLL samples to HSP90 inhibition by luminespib. See Methods section \@ref(drug-stimulus-linear-model-method).  _Figure and caption from Bruch & Giles et al. 2021._
 
 ```{r drugStimulusIntEx, fig.cap='(ref:drugStimulusIntEx)', message = FALSE,  echo = FALSE, fig.height=10, fig.width = 12, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
 
@@ -1030,27 +1029,13 @@ plotList$`treatment_drug:Luminespib:treatment_cytokine:soluble anti-IgM` +  plot
   
 ```
 
-
-### IL4 induces resistance to BCR inhibitors and chemotherapeutics {#IL4resistance}
-(Figure \@ref(fig:IL4Res)). 
-
-(ref:IL4Res) Examples of IL4-induced resistance. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. Plots show IL4 + (A) Idelalisib (Pi3K), (B) PRT062607 (SYK) (C) Everolimus (mTOR), and (D) Selumetinib  (p38 MAPK). See Methods section \@ref(drug-stimulus-linear-model-method). _Figure from Bruch & Giles et al. 2021._
-
-```{r IL4Res, fig.cap='(ref:IL4Res)', message = FALSE,  echo = FALSE, fig.height=6.6, fig.width = 12, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
-
-
-(wrap_plots(plotList$`treatment_drug:Idelalisib:treatment_cytokine:IL-4`) + wrap_plots(plotList$`treatment_drug:PRT062607:treatment_cytokine:IL-4`)) /
-  
-(wrap_plots(plotList$`treatment_drug:Everolimus:treatment_cytokine:IL-4`) +
-  
-wrap_plots(plotList$`treatment_drug:Selumetinib:treatment_cytokine:IL-4`)) + plot_annotation(tag_levels = c("A"))
-
-```
-
 ## Genetic modulators of drug response 
 ### Univariate analysis identifies genetic modualtors of drug response {#univariate-gene-drug-associations}
+Most mutations in cancer have not be linked to drug response. CLL has provided an powerful model system in which to study the link between recurrent genetic features and drug response: liquid biopsies are easy to obtain and sequence, and screen _ex vivo_ and it is much easier than in many cancers to take samples over a time course. Previous work in our lab [@JCIpaper] has taken advantage of this, generating the largest survey of molecular determinants of response in CLL to date. 
 
-(Figure \@ref(fig:drugGeneIntMap)). 
+Before investigating the impact of mutations on drug - stimulus interactions,  I performed a similar analysis of genetic determinants of drug response, to confirm that my dataset recapitulates these findings. I used the genetic data, including all mutations, copy number variants and IGHV status for which there were greater than 3 cases in the cohort (n = 54), to perform t-tests to identify molecular features that impact on drug response (Figure \@ref(fig:drugGeneIntMap)). 
+
+This analysis recapitulated the findings of previous work [@JCIPaper], including the impact of IGHV status on responses to BCR inhibitors ibrutinib (BTK) and idelalisib (Pi3K), and the impact of TP53 and del(17p) mutations on Nutlin-3a (MDM2) and Fludarabine (Purine analogue). 
 
 (ref:drugGeneIntMap) Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested drug-gene associations. Tests performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n=54). Each circle represents a gene-stimulus association. Associations that meet 10% FDR cut off are indicated in colour, where the colour denotes the genetic feature. Method \@ref(univariate-gene-stimulus-associations-method) _Figure from Bruch & Giles et al. 2021._ 
 
@@ -1184,199 +1169,10 @@ p_values %<>%
 
 ```
 
-### Multivariate analysis identifies genetic modulators of drug response {#multivariate-gene-drug-assosciations}
 
-(Figure \@ref(fig:drugGeneIntMulti)). 
+In addition, it also highlighted the broad impact of trisomy 12 status on drug response _ex vivo_ (Figure \@ref(fig:drugGeneIntEx)). While trisomy 12 is known to accelerate disease progression, tumours with trisomy 12 are more treatable due to higher sensitivity to chemotherapeutics and ibrutinib. In my results, trisomy 12 increased sensitivity to all drugs except ------fludarabine, BAY-11-7085 and Everolimus. These included increased sensitivity to p38 MAPK inhibition by ralimetinib, agreeing with previous work demonstrating higher trisomy 12 sensitivity with a range of MEK and ERK inhibitors, suggesting an essential role for MEK/ERK signalling in trisomy 12 CLL [@JCIPaper]. Trisomy 12 samples also showed higher sensitivity to Nutlin-3a, an MDM2 inhibitor. Interesting, the MDM2 gene is located on chromosome 12, and is more abundant in trisomy 12 samples [ADD SUPP FIG], which may explain this.  I also noted increased trisomy 12 sensitivity to IBET-762, a BET inhibitor that has been shown to suppress transcriptional responses to cytokine signalling via JAK-STAT [REFERENCE]. If trisomy 12 samples are more dependent on cytokine signals, as the results in section \@ref(trisomy12-modulator) suggest, this makes sense. 
 
-(ref:drugGeneIntMulti) Example predictor profile for IBET-762, depicting drug - gene associations from multivariate modelling. Bar plots (left) show size and sign of assigned coefficients from Gaussian linear modelling. A positive coefficient indicates that drug has lower efficacy when feature is present. Scatter plots (bottom) and corresponding heatmaps above show how presence of selected genetic feature relates to sample viabilities. Scatter plots show ranked log(viability) values for each sample and heatmaps show mutation status for each predictor, for corresponding sample in scatter plot. See Methods section \@ref(multivariate-gene-stimulus-assosciations-method). _Figure from Bruch & Giles et al. 2021._ 
-
-```{r drugGeneIntMulti, fig.cap='(ref:drugGeneIntMulti)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-
-
-seaName <- paste("I-BET 762", "No Cytokine", sep = ":")
-        barValue <- rowMeans(coefficients_lasso[[seaName]])
-        freqValue <- rowMeans(abs(sign(coefficients_lasso[[seaName]])))
-        barValue <- barValue[abs(barValue) >= 0 & freqValue >= 0.5]
-        barValue <- barValue[order(barValue)]
-        
-        
-      
-        #for the heatmap and scatter plot below the heatmap
-        allData <- geneMatrix
-        viabValue <- unlist(viabMatrix[seaName,])
-        
-        tabValue <- allData[, names(barValue),drop=FALSE]
-        ord <- order(viabValue)
-        viabValue <- viabValue[ord]
-        tabValue <- tabValue[ord, ,drop=FALSE]
-        sampleIDs <- rownames(tabValue)
-        tabValue <- as.tibble(tabValue)
-        
-        
-        tabValue$Sample <- sampleIDs
-        
-        #Mark different rows for different scaling in heatmap
-        #annotate mutations by mutation, methylation or IGHV
-        matValue <- gather(tabValue, key = "Var",value = "Value", -Sample)
-        matValue$Type <- "mut"
-        
-        #for Methylation Cluster
-        matValue$Type[grep("Methylation",matValue$Var)] <- "meth"
-        
-        #for IGHV status
-        matValue$Type[grep("IGHV",matValue$Var)] <- "ighv"
-        
-        #change the scale of the value so that IGHV, Methylation and Mutation do not overlap
-        matValue[matValue$Type == "mut",]$Value = matValue[matValue$Type == "mut",]$Value + 10
-        matValue[matValue$Type == "meth",]$Value = matValue[matValue$Type == "meth",]$Value + 20
-        matValue[matValue$Type == "ighv",]$Value = matValue[matValue$Type == "ighv",]$Value + 30
-        
-        #change continuous to categorical
-        matValue$Value <- factor(matValue$Value,levels = sort(unique(matValue$Value)))
-        
-        
-        #change order of heatmap
-        matValue$Var <- factor(matValue$Var, levels = names(barValue))
-        matValue$Sample <- factor(matValue$Sample, levels = names(viabValue))
-        
-        #plot the heatmap NB mutated= 11 = black
-        p1 <- ggplot(matValue, aes(x=Sample, y=Var)) + 
-          geom_tile(aes(fill=Value), color = "white") + #ghost white
-          theme_bw()+
-          scale_y_discrete(expand=c(0,0)) + 
-          theme(axis.title.y = element_text( size=16),
-                axis.text.y=element_text(hjust=0, size=14), 
-                axis.ticks=element_blank(),
-                panel.border=element_rect(colour="gainsboro"),  
-                plot.title=element_text(face="bold", size = 18, margin = margin(t = -5, b = 1)), 
-                panel.background=element_blank(),
-                panel.grid.major=element_blank(), 
-                panel.grid.minor=element_blank()) + 
-          xlab("Mutation status for each patient") + 
-          ylab("") + 
-          scale_fill_manual(name="Mutated", 
-                            values=c(`10`= offwhite,  #WT
-                                     `11`="#373A36", #Mutant
-                                     `20`= offwhite, #LP
-                                     `20.5`= "#707372", #IP
-                                     `21` = "#A8A99E", #HP
-                                     `30` = offwhite, #IGHV-U
-                                     `31` = "#707372"), #IGHV-M
-                            guide=FALSE) + 
-          
-          ggtitle("IBET-762")
-        
-        
-        
-        
-        #Plot the bar plot on the left of the heatmap 
-        barDF = data.frame(barValue, nm=factor(names(barValue),levels=names(barValue)))
-        
-        p2 <- ggplot(data=barDF, aes(x=nm, y=barValue)) + 
-          geom_bar(stat="identity", 
-                   fill=ifelse(barValue<0,
-                               palblues[6],palreds[8]), 
-                   colour="black", 
-                   size=0.3) + 
-          scale_x_discrete(expand=c(0,0.5)) + 
-          scale_y_continuous(expand=c(0,0)) + 
-          coord_flip() + #changed from min(barValue) and max(barValue)
-          theme(panel.grid.major=element_blank(), 
-                panel.background=element_blank(), 
-                axis.ticks.y = element_blank(),
-                axis.ticks.x = element_blank(),
-                panel.grid.minor = element_blank(), 
-                axis.text=element_text(size=11, angle = 45, hjust = 1.5), 
-                panel.border=element_blank()) +
-          ylab("Size of predictor") + 
-          geom_vline(xintercept=c(0.5), 
-                     color="black", 
-                     size=0.6)
-        
-        #Plot the scatter plot under the heatmap
-        scatterDF = data.frame(X=factor(names(viabValue), 
-                                        levels=names(viabValue)), 
-                               Y=unlist(viabValue))
-        
-        p3 <- ggplot(scatterDF, aes(x=X, y=Y)) + 
-          geom_point(shape=21, 
-                     fill="dimgrey", 
-                     colour=colors[1], 
-                     size=1.2) + 
-          theme_bw() +
-          theme(panel.grid.minor=element_blank(), 
-                panel.grid.major.x=element_blank(), 
-                axis.ticks.x=element_blank(), 
-                axis.text.y=element_text(size=12), 
-                panel.border=element_rect(colour="dimgrey", size=0.1),
-                panel.background=element_rect(fill="white")) +
-          xlab("Log(Viability) for each sample")
-        
-        
-        #Assemble all the plots togehter
-        
-        # construct the gtable
-        wdths = c(0.2, 1.5, 0.2, 0.9*ncol(matValue), 2, 0.2)
-        hghts = c(0.2, 0.2, 0.0020*nrow(matValue), 0.16, 1, 0.2, 1.5)
-        gt = gtable(widths=unit(wdths, "in"), heights=unit(hghts, "in"))
-        
-        ## make grobs
-        gg1 = ggplotGrob(p1)
-        gg2 = ggplotGrob(p2)
-        gg3 = ggplotGrob(p3)
-        
-        
-        #make legend grob
-        legendFor = c("G", "I", "M")
-        
-        coldef<-list()
-        coldef["I"] <- list(c(offwhite,"#707372")) #U-CLL and M-CLL
-        coldef["M"] <- list(c(offwhite, "#707372", "#A8A99E")) #IP, HP, LP
-        coldef["G"] <- list(c(offwhite, "#373A36")) #WT and Mutated
-
-      
-        
-        legends = makelegends(legendFor=c("G","I", "M"),coldef)
-        gg4 <- legends[["plot"]]
-        
-        ## fill in the gtable
-        
-        #HEATMAP
-        #5:1 = "PREDICTORS"
-        gt = gtable_add_grob(gt, gtable_filter(gg1, "panel"), 3, 4) # add heatmap
-        gt = gtable_add_grob(gt, gtable_filter(gg1, "panel"), 3, 4) #add legend
-        gt = gtable_add_grob(gt, gtable_filter(gg1, "title"), 1, 4) #add title to plot
-        gt = gtable_add_grob(gt, gtable_filter(gg1, "axis-l"), 3, 5) # variable names
-        gt = gtable_add_grob(gt, gtable_filter(gg1, "xlab-b"), 2, 4) # axis title
-        
-        #BARPLOT
-        gt = gtable_add_grob(gt, gtable_filter(gg2, "panel"), 3, 2) # add barplot
-        gt = gtable_add_grob(gt, gtable_filter(gg2, "axis-b"), 4, 2) # y axis for barplot
-        gt = gtable_add_grob(gt, gtable_filter(gg2, "xlab-b"), 2, 2) # y lab for barplot
-        
-        
-        #SCATTER PLOT
-        gt = gtable_add_grob(gt, gtable_filter(gg3, "panel"), 5, 4) # add scatterplot
-        gt = gtable_add_grob(gt, gtable_filter(gg3, "xlab-b"), 6, 4) # x label for scatter plot
-        gt = gtable_add_grob(gt, gtable_filter(gg3, "axis-l"), 5, 3) #  axis for scatter plot
-        
-        #LEGEND
-        gt = gtable_add_grob(gt, gg4, 7, 4) #  legend
-        
-        #plot
-        grid.newpage()
-        grid.draw(gt)
-        
-
-
-```
-
-
-### Specific examples 
-(Figure \@ref(fig:drugGeneIntEx)). 
-
-(ref:drugGeneIntEx) Beeswarm-boxplots showing control-normalised log transformed viability values after treatment with (A) IBET-762, (B) Nutlin-3a and (C) Ralimetinib, stratified by trisomy 12.  _Figure from Bruch & Giles et al. 2021._ 
+(ref:drugGeneIntEx) Beeswarm-boxplots showing control-normalised log transformed viability values after treatment with (A) Ralimetinib, (B) Nutlin-3a and (C) IBET-762, stratified by trisomy 12.
 
 ```{r drugGeneIntEx, fig.cap='(ref:drugGeneIntEx)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1445,14 +1241,8 @@ df_patmeta %>%
 
   t2
 
-ibet_tri12 + nutlin_tri12 + ralimetinib_tri12
+ralimetinib_tri12 + nutlin_tri12 + ibet_tri12
 ```
-in a grid: 
-IBET-762 and trisomy 12
-Nutlin-3a and trisomy 12 and gene dosage effect of MDM2 in trisomy12 CLL
-Correlation of IBET-762 and Nutlin-3a
-Ralimetinib and trisomy 12
-
 ## The modulatory effect of mutations on drug - stimuli interactions {#drug-stimulus-gene-interactions} 
 ### Fitting patient-specific linear models identfies drug - stimulus - gene interactions 
 (Figure \@ref(fig:drugCytGeneIntMap)).
@@ -1782,6 +1572,15 @@ Can stimuli + genes predict drug response - this would be useful in the clinic. 
 ## Summary 
 
 ## Discussion 
+BET inhibitors and suprression of cytokine signalling : BET Bromodomain Inhibition Suppresses Transcriptional Responses to Cytokine-Jak-STAT Signaling in a Gene-specific Manner in Human Monocytes
+
+Nutline and IBET 
+nutlin-3ain trisomy 12 - MDM2 is higher 
+
+also IBET -
+these also correlate - its possible that they work via a simliar mechanism -ibet inhibits brd4 whcih is inhibtiing p53 targets, so p53 is more active in thesecels 
+
+https://www.nature.com/articles/s41467-020-20378-8
 
 ## Contirbutions Statement
 
