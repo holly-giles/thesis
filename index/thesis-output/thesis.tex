@@ -934,17 +934,18 @@ Pearson correlation coefficients were calculated for each drug - drug and stimul
 \emph{myself} original complete (just check)
 For the heatmap in figure \ref{fig:stimuliHeatmap}, the viability data is represented as z scores. Log transformed viability values, normalised to DMSO controls, are row-scaled according to the Median Absolute Deviance. Limits were then applied to this row scaling factor for optimal visualisation. The matrix of z scores was plotted using the (\protect\hyperlink{ref-R-pheatmap}{Kolde 2019}) package. The ordering of the columns (patient samples) was obtained from the dendrogram that resulted from running \texttt{ConsensusClusterPlus}, from the (\protect\hyperlink{ref-R-ConsensusClusterPlus}{M. Wilkerson and Waltman 2021}) package. The rows were ordered using the dendrogram order produced by \texttt{hclust} with default branch arrangement.
 
-\hypertarget{univariate-analysis-of-gene---stimulus-response-assosciations}{%
-\subsubsection{Univariate analysis of gene - stimulus response assosciations}\label{univariate-analysis-of-gene---stimulus-response-assosciations}}
+\hypertarget{univariate-gene-stimulus-associations-method}{%
+\subsubsection{Univariate analysis of gene - stimulus and gene - drug response assosciations}\label{univariate-gene-stimulus-associations-method}}
 
 \emph{myself} writtten for thesis complete
-Section \ref{univariate-gene-stimulus-associations}. Two-sided Student's t-tests, with equal variance were performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63). A 10\% FDR cut off was used to determine significance.
+Section \ref{univariate-gene-stimulus-associations} \& \ref{univariate-gene-drug-associations}. Two-sided Student's t-tests, with equal variance were performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63/54). A 10\% FDR cut off was used to determine significance.
 
 \hypertarget{multivariate-gene-stimulus-assosciations-method}{%
-\subsubsection{Penalised multivariate regression of gene - stimulus assosciations}\label{multivariate-gene-stimulus-assosciations-method}}
+\subsubsection{Penalised multivariate regression of gene - stimulus and gene - drug assosciations}\label{multivariate-gene-stimulus-assosciations-method}}
 
 \emph{myself} written for thesis (but some overlap with JCI)
-Section \ref{multivariate-gene-stimulus-assosciations}. A Gaussian linear model with L1-penalty implemented in the \texttt{R} package \texttt{glmnet} (\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}), with mixing parameter alpha = 1,was used to identify gene-stimulus associations. Matrix of genetic features (p=39), IGHV status (encoded as M = 1 and U = 0), and Methylation Cluster (encoded as 0, 0.5, 1) were used to identify multivariate predictors. All features were thus encoded on a similar scale to ensure equal treatment by lasso constraint in model fitting. Genetic features with more than 20\% missing values were excluded from the analysis, and samples without complete annotation for remaining features were removed, resulting in n = 129 samples. The matrix of control-normalised log-transformed viability values for these 129 samples was provided as the dependent variable. Using 3-fold cross-validation, the optimal penalty parameter \(\lambda\) was selected so as to minimise the cross-validated R2. The reduction in cross-validated mean squared error compared to the null model was used as loss. The model was fitted for 30 bootstrapped repeats, and the resulting coefficients are the mean of those coefficients that were selected in \textgreater75\% model fits.
+Section \ref{multivariate-gene-stimulus-assosciations} \& \ref{multivariate-gene-drug-assosciations}.\\
+ADAPT FOR DRUGS ALSO A Gaussian linear model with L1-penalty implemented in the \texttt{R} package \texttt{glmnet} (\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}), with mixing parameter alpha = 1,was used to identify gene-stimulus associations. Matrix of genetic features (p=39), IGHV status (encoded as M = 1 and U = 0), and Methylation Cluster (encoded as 0, 0.5, 1) were used to identify multivariate predictors. All features were thus encoded on a similar scale to ensure equal treatment by lasso constraint in model fitting. Genetic features with more than 20\% missing values were excluded from the analysis, and samples without complete annotation for remaining features were removed, resulting in n = 129 samples. The matrix of control-normalised log-transformed viability values for these 129 samples was provided as the dependent variable. Using 3-fold cross-validation, the optimal penalty parameter \(\lambda\) was selected so as to minimise the cross-validated R2. The reduction in cross-validated mean squared error compared to the null model was used as loss. The model was fitted for 30 bootstrapped repeats, and the resulting coefficients are the mean of those coefficients that were selected in \textgreater75\% model fits.
 
 \hypertarget{correlation-of-rna-receptor-expression-with-viability}{%
 \subsubsection{Correlation of RNA-Receptor Expression with viability}\label{correlation-of-rna-receptor-expression-with-viability}}
@@ -955,11 +956,11 @@ RNA count data for matched samples was available for 49 patients and was transfo
 \hypertarget{linear-modelling-of-drug---stimulus-interactions}{%
 \subsubsection{Linear modelling of drug - stimulus interactions}\label{linear-modelling-of-drug---stimulus-interactions}}
 
-\hypertarget{modelling-of-drug---stimulus---gene-interactions}{%
-\subsubsection{Modelling of drug - stimulus - gene interactions}\label{modelling-of-drug---stimulus---gene-interactions}}
+\hypertarget{drug-stimulus-gene-interactions-method}{%
+\subsubsection{Modelling of drug - stimulus - gene interactions}\label{drug-stimulus-gene-interactions-method}}
 
 \emph{myself} original
-To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package \texttt{glmnet}(\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}). As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used, using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
+Section \ref{drug-stimulus-gene-interactions}. To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package \texttt{glmnet}(\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}). As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used, using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
 
 \hypertarget{follow-up}{%
 \subsection{Follow up}\label{follow-up}}
@@ -1048,11 +1049,13 @@ For the smaller ATACseq dataset, ATAC-seq data generated from our CLL samples we
 \emph{myeslf} original (update to paper)
 We downloaded SPIB ChIPseq data {[}REFERENCE{]} from the NCBI GEO database{[}REFERENCE{]}, accession \url{GEO:GSE56857}. We made use of the data for SPIB in the OCILY3 DLBCL cell line (GSM1370276). SPIB ChIP peaks were filtered for significance (q value\textless0.05). We used the annotatePeaks function from the package clusterProfiler{[}REFERENCE{]} to annotate the nearest gene for each ChIPpeak. We filtered peaks within ±1kb of a TSS of a gene and performed over-representation of KEGG and Reactome pathways (using the clusterProfiler package{[}REFERENCE{]}) amongst the resulting list of genes.
 
-\hypertarget{linear-modelling-of-drug---stimulus-interactions-1}{%
-\subsubsection{Linear modelling of drug - stimulus interactions}\label{linear-modelling-of-drug---stimulus-interactions-1}}
+\hypertarget{drug-stimulus-linear-model-method}{%
+\subsubsection{Linear modelling of drug - stimulus interactions}\label{drug-stimulus-linear-model-method}}
 
 \emph{myself} original
-To identify drug-stimulus interactions, we fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn1. Drug - stimulus interaction coefficients and associated p values were extracted and used to define significant interactions.
+Section \ref{drug-stimulus-linear-model} To identify drug-stimulus interactions, we fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn1. Drug - stimulus interaction coefficients and associated p values were extracted and used to define significant interactions.
+
+Incl defining interaction types
 
 \hypertarget{drug-drug-interaction-assay}{%
 \subsubsection{Drug-Drug interaction assay}\label{drug-drug-interaction-assay}}
@@ -1506,7 +1509,7 @@ To begin, I ran a univariate analysis to compare viability values post-stimulati
 
 }
 
-\caption{Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested gene-stimulus associations. Tests performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63). Each circle represents a gene-stimulus association. Associations that meet 10\% FDR cut off are indicated in colour, where the colour denotes the genetic feature. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:stimuliGeneAssosciations}
+\caption{Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested gene-stimulus associations. Tests performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63). Each circle represents a gene-stimulus association. Associations that meet 10\% FDR cut off are indicated in colour, where the colour denotes the genetic feature. \emph{Figure from Bruch \& Giles et al.~2021.} See Methods section \ref{univariate-gene-stimulus-associations-method}.}\label{fig:stimuliGeneAssosciations}
 \end{figure}
 This analysis revealed the extent to which genetic features modulate microenvironmental response: for ten out of 17 stimuli, at least one genetic feature determined response and for six out of 17 stimuli, two or more genetic features significantly altered the response (Student's t-tests, FDR = 10\%, Bruch \& Giles et al.~2021). The most common features were IGHV status and trisomy 12. Del(11q) also affected response to several stimuli. Notably, del(13q) and del(17p), which like trisomy 12 and del(11q) are the most common aberrations in CLL and act as prognostic markers (\protect\hyperlink{ref-Dohner2000}{Döhner et al. 2000}), had no impact on the responses to the panel of stimuli.
 
@@ -1819,8 +1822,8 @@ Process data
 \hypertarget{mapping-drug---stimulus-interactions}{%
 \section{Mapping drug - stimulus interactions}\label{mapping-drug---stimulus-interactions}}
 
-\hypertarget{linear-modelling-quantifies-interactions-between-drugs-and-stimuli}{%
-\subsection{Linear modelling quantifies interactions between drugs and stimuli}\label{linear-modelling-quantifies-interactions-between-drugs-and-stimuli}}
+\hypertarget{drug-stimulus-linear-model}{%
+\subsection{Linear modelling quantifies interactions between drugs and stimuli}\label{drug-stimulus-linear-model}}
 
 Principle
 
@@ -1829,7 +1832,7 @@ Equation \eqref{eq:drugCytInt} quantifies how the viability with any combination
             log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{int}X_{drug}X_{stimulus} + \epsilon
                                        \label{eq:drugCytInt}
     \end{equation}
-\emph{where \(V\) is the viability with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\) \emph{and} \(\beta_{int}\) \emph{are coefficients for the drug, stimulus and combinatorial terms and} \(X_{drug}\) \emph{and} \(X_{stimulus}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus.} \(\epsilon\) \emph{is the vector of model residuals.}
+\emph{where \(V\) is the viability with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\) \emph{and} \(\beta_{int}\) \emph{are coefficients for the drug, stimulus and combinatorial terms and} \(X_{drug}\) \emph{and} \(X_{stimulus}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus.} \(\epsilon\) \emph{is the vector of model residuals See also Methods section \ref{drug-stimulus-linear-model-method}.}
 
 Different types of interaction\\
 (Figure \ref{fig:drugStimulusDummyPLots}).
@@ -1841,7 +1844,7 @@ Different types of interaction\\
 
 }
 
-\caption{Graphical representation of the four drug - stimulus interaction categories. Categories are defined according to (i) the nature of the interaction (synergistic or antagonistic), and (ii) whether \(\beta_{int}\) is positive or negative i.e.~the viability with the combinatorial treatment is higher or lower than would be expected based on additive effects alone. x-axis shows treatment type, y-axis shows log transformed viability values. Red and blue lines depict representative treatment response patterns for given interaction type. To demonstrate the effect of each each interaction on the expected viability, blue and black horizontal lines represent the expected viability for combinatorial treatment based on additive effects alone (blue) and the actual viability accounting for additive effects and the interaction (black). \emph{Figure and caption from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:drugStimulusDummyPLots}
+\caption{Graphical representation of the four drug - stimulus interaction categories. Categories are defined according to (i) the nature of the interaction (synergistic or antagonistic), and (ii) whether \(\beta_{int}\) is positive or negative i.e.~the viability with the combinatorial treatment is higher or lower than would be expected based on additive effects alone. x-axis shows treatment type, y-axis shows log transformed viability values. Red and blue lines depict representative treatment response patterns for given interaction type. To demonstrate the effect of each each interaction on the expected viability, blue and black horizontal lines represent the expected viability for combinatorial treatment based on additive effects alone (blue) and the actual viability accounting for additive effects and the interaction (black). See Methods section \ref{drug-stimulus-linear-model-method}. \emph{Figure and caption from Bruch \& Giles et al.~2021.}}\label{fig:drugStimulusDummyPLots}
 \end{figure}
 Quantify how many fit into each category\\
 (Figure \ref{fig:barPlotInteractions}).
@@ -1853,7 +1856,7 @@ Quantify how many fit into each category\\
 
 }
 
-\caption{Histogram showing the number of drug-stimulus interactions within each category, where p value for \(\beta_{int}\) is \textless0.05. \emph{Figure and caption from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:barPlotInteractions}
+\caption{Histogram showing the number of drug-stimulus interactions within each category, where p value for \(\beta_{int}\) is \textless0.05. See Methods section \ref{drug-stimulus-linear-model-method}. \emph{Figure and caption from Bruch \& Giles et al.~2021.}}\label{fig:barPlotInteractions}
 \end{figure}
 \hypertarget{ID}{%
 \subsection{Linear modelling identifies drug - stimulus interactions of potential clinical importance}\label{ID}}
@@ -1868,7 +1871,7 @@ SHow all actual interactions
 
 }
 
-\caption{Heatmap of all \(\beta_{int}\) values for all drug - stimulus combinations where p for \(\beta_{int}\) \textless0.05, annotated with interaction type. Scale indicates size and sign of \(\beta_{int}\). Rows and columns clustered according to hierarchical clustering. \emph{Figure and caption from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:drugStimulusIntMapt}
+\caption{Heatmap of all \(\beta_{int}\) values for all drug - stimulus combinations where p for \(\beta_{int}\) \textless0.05, annotated with interaction type. Scale indicates size and sign of \(\beta_{int}\). Rows and columns clustered according to hierarchical clustering. See Methods section \ref{drug-stimulus-linear-model-method}. \emph{Figure and caption from Bruch \& Giles et al.~2021.}}\label{fig:drugStimulusIntMapt}
 \end{figure}
 Discuss specific examples
 (find two replacements for ibr and ifn gamma)
@@ -1884,7 +1887,7 @@ big up interferon gamma
 
 }
 
-\caption{Examples of drug-stimulus interactions, for each category. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. (A+B) Ibrutinib, a clinically-used BTK inhibitor, is blocked by IL4 and IFN\(\gamma\). (C) The JAK inhibitor pyridone-6 inhibits the pro-survival effect of sCD40L + IL4 stimulation. (D) The p38 inhibitor ralimetinib and IFN\(\gamma\) show a synergistic pro-survival effect not seen in either single treatment. (E) TLR agonists, including CpG ODN (shown) increase sensitivity to BTK inhibition by ibrutinib, despite increasing viability in isolation. (F) Soluble anti-IgM sensitises CLL samples to HSP90 inhibition by luminespib. \emph{Figure and caption from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:drugStimulusIntEx}
+\caption{Examples of drug-stimulus interactions, for each category. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. (A+B) Ibrutinib, a clinically-used BTK inhibitor, is blocked by IL4 and IFN\(\gamma\). (C) The JAK inhibitor pyridone-6 inhibits the pro-survival effect of sCD40L + IL4 stimulation. (D) The p38 inhibitor ralimetinib and IFN\(\gamma\) show a synergistic pro-survival effect not seen in either single treatment. (E) TLR agonists, including CpG ODN (shown) increase sensitivity to BTK inhibition by ibrutinib, despite increasing viability in isolation. (F) Soluble anti-IgM sensitises CLL samples to HSP90 inhibition by luminespib. See Methods section \ref{drug-stimulus-linear-model-method}. \emph{Figure and caption from Bruch \& Giles et al.~2021.}}\label{fig:drugStimulusIntEx}
 \end{figure}
 \hypertarget{IL4resistance}{%
 \subsection{IL4 induces resistance to BCR inhibitors and chemotherapeutics}\label{IL4resistance}}
@@ -1898,13 +1901,13 @@ big up interferon gamma
 
 }
 
-\caption{Examples of IL4-induced resistance. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. Plots show IL4 + (A) Idelalisib (Pi3K), (B) PRT062607 (SYK) (C) Everolimus (mTOR), and (D) Selumetinib (p38 MAPK). \emph{Figure from Bruch \& Giles et al.~2021.} See Methods section \ref{drug-stimulus-linear-model-method}.}\label{fig:IL4Res}
+\caption{Examples of IL4-induced resistance. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. Plots show IL4 + (A) Idelalisib (Pi3K), (B) PRT062607 (SYK) (C) Everolimus (mTOR), and (D) Selumetinib (p38 MAPK). See Methods section \ref{drug-stimulus-linear-model-method}. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:IL4Res}
 \end{figure}
 \hypertarget{genetic-modulators-of-drug-response}{%
 \section{Genetic modulators of drug response}\label{genetic-modulators-of-drug-response}}
 
-\hypertarget{univariate-analysis-identifies-genetic-modualtors-of-drug-response}{%
-\subsection{Univariate analysis identifies genetic modualtors of drug response}\label{univariate-analysis-identifies-genetic-modualtors-of-drug-response}}
+\hypertarget{univariate-gene-drug-associations}{%
+\subsection{Univariate analysis identifies genetic modualtors of drug response}\label{univariate-gene-drug-associations}}
 
 (Figure \ref{fig:drugGeneIntMap}).
 
@@ -1915,10 +1918,10 @@ big up interferon gamma
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugGeneIntMap}
+\caption{Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested drug-gene associations. Tests performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n=54). Each circle represents a gene-stimulus association. Associations that meet 10\% FDR cut off are indicated in colour, where the colour denotes the genetic feature. Method \ref{univariate-gene-stimulus-associations-method} \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:drugGeneIntMap}
 \end{figure}
-\hypertarget{multivariate-analysis-identifies-genetic-modualtors-of-drug-response}{%
-\subsection{Multivariate analysis identifies genetic modualtors of drug response}\label{multivariate-analysis-identifies-genetic-modualtors-of-drug-response}}
+\hypertarget{multivariate-gene-drug-assosciations}{%
+\subsection{Multivariate analysis identifies genetic modulators of drug response}\label{multivariate-gene-drug-assosciations}}
 
 (Figure \ref{fig:drugGeneIntMulti}).
 
@@ -1929,7 +1932,7 @@ big up interferon gamma
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugGeneIntMulti}
+\caption{Example predictor profile for IBET-762, depicting drug - gene associations from multivariate modelling. Bar plots (left) show size and sign of assigned coefficients from Gaussian linear modelling. A positive coefficient indicates that drug has lower efficacy when feature is present. Scatter plots (bottom) and corresponding heatmaps above show how presence of selected genetic feature relates to sample viabilities. Scatter plots show ranked log(viability) values for each sample and heatmaps show mutation status for each predictor, for corresponding sample in scatter plot. See Methods section \ref{multivariate-gene-stimulus-assosciations-method}. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:drugGeneIntMulti}
 \end{figure}
 \hypertarget{specific-examples}{%
 \subsection{Specific examples}\label{specific-examples}}
@@ -1943,7 +1946,7 @@ big up interferon gamma
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:drugGeneIntEx}
+\caption{Beeswarm-boxplots showing control-normalised log transformed viability values after treatment with (A) IBET-762, (B) Nutlin-3a and (C) Ralimetinib, stratified by trisomy 12. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:drugGeneIntEx}
 \end{figure}
 in a grid:
 IBET-762 and trisomy 12
@@ -1951,8 +1954,8 @@ Nutlin-3a and trisomy 12 and gene dosage effect of MDM2 in trisomy12 CLL
 Correlation of IBET-762 and Nutlin-3a
 Ralimetinib and trisomy 12
 
-\hypertarget{the-modulatory-effect-of-mutations-on-drug---stimuli-interactions}{%
-\section{The modulatory effect of mutations on drug - stimuli interactions:}\label{the-modulatory-effect-of-mutations-on-drug---stimuli-interactions}}
+\hypertarget{drug-stimulus-gene-interactions}{%
+\section{The modulatory effect of mutations on drug - stimuli interactions}\label{drug-stimulus-gene-interactions}}
 
 \hypertarget{fitting-patient-specific-linear-models-identfies-drug---stimulus---gene-interactions}{%
 \subsection{Fitting patient-specific linear models identfies drug - stimulus - gene interactions}\label{fitting-patient-specific-linear-models-identfies-drug---stimulus---gene-interactions}}
@@ -1961,6 +1964,8 @@ Ralimetinib and trisomy 12
 
 Also Appendix figure \ref{fig:drugcytGeneIntAll}
 
+Have to make sure this figure takes a whol page but doesnt float to the bottom
+
 
 \begin{figure}
 
@@ -1968,7 +1973,7 @@ Also Appendix figure \ref{fig:drugcytGeneIntAll}
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id} Have to make sure this figure takes a whol page but doesnt float to the bottom}\label{fig:drugCytGeneIntMap}
+\caption{Heatmap depicting overview of genetic predictors of drug - stimulus interactions (each row represents the coefficients from fitting a single multivariate model, as in Figure \ref{fig:FluCpGExA}). Stimuli are shown on left, and corresponding drugs on right. Coloured fields indicate that \(\beta{int}\) for given drug and stimulus is modulated by corresponding genetic feature. Positive coefficients are shown in red, indicating a more positive \(\beta{int}\) if the feature is present. Only top 8 most commonly selected genetic features are shown. Drug - stimulus combinations with no genetic predictors of \(\beta{int}\) amongst top 8 shown are omitted for clarity. See Methods section \ref{drug-stimulus-gene-interactions-method}. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:drugCytGeneIntMap}
 \end{figure}
 \hypertarget{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}{%
 \subsection{Patient - specific drug - stimulus interactions may have clinical significance}\label{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}}
@@ -1986,7 +1991,7 @@ Also Appendix figure \ref{fig:drugcytGeneIntAll}
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:FluCpGExA}
+\caption{Predictor profile depicting genetic features that modulate the size of \(\beta{int}\) between fludarabine and CpG ODN. To generate predictor profile, linear model in Eqn. \eqref{eq:drugCytInt} was fitted in a sample - specific manner, to calculate drug-stimulus interaction coefficients (\(\beta{int}\)) for each patient sample. Ranked patient-specific \(\beta{int}\) values are shown in lower scatter plot. Associations between the size of \(\beta{int}\) and genetic features were identified using multivariate regression with L1 (lasso) regularisation, with gene mutations (p = 39) and IGHV status as predictors, and selecting coefficients that were chosen in \textgreater90\% of bootstrapped model fits. The horizontal bars on left show the size of fitted coefficients assigned to genetic features. Matrix above scatter plot indicates patient mutation status for the selected genetic features. Matrix fields correspond to points in scatter plot (ie patient data is aligned), to indicate how the size of \(\beta{int}\) varies with selected genetic feature. Grey lines indicate presence of genetic feature/IGHV mutated. See Methods section \ref{drug-stimulus-gene-interactions-method}. \emph{Figure and caption from Bruch \& Giles et al.~2021.}}\label{fig:FluCpGExA}
 \end{figure}
 \begin{figure}
 
@@ -1994,19 +1999,20 @@ Also Appendix figure \ref{fig:drugcytGeneIntAll}
 
 }
 
-\caption{\emph{Figure from Bruch \& Giles et al.~2021.} Method \ref{id}}\label{fig:FluCpGExB}
+\caption{Beeswarm boxplots of log(viability) values for fludarabine and CpG ODN single and combinatorial treatments, faceted by IGHV status and trisomy 12 status. P-values from paired Student's t-tests. \emph{Figure and caption from Bruch \& Giles et al.~2021.}}\label{fig:FluCpGExB}
 \end{figure}
 (Figure \ref{fig:ibrIl4ExA}).
-(ref:ibrIl4ExA)
+
+
 (Figure \ref{fig:ibrIl4ExB}).
-(ref:fig:ibrIl4ExB)
+(ref:fig:ibrIl4ExB) Beeswarm boxplots of log(viability) values for ibrutinib and IL4 single and combinatorial treatments, faceted by IGHV status and trisomy 12 status. P-values from paired Student's t-tests. \emph{Figure and caption from Bruch \& Giles et al.~2021.}
 \begin{figure}
 
 {\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/ibrIl4ExA-1} 
 
 }
 
-\caption{(ref:ibrIl4ExA)}\label{fig:ibrIl4ExA}
+\caption{Predictor profile depicting genetic features that modulate the size of \(\beta{int}\) between ibrutinib (BTK) and IL4. Plot generated as in Figure \ref{fig:FluCpGExA}. See also Methods section \ref{drug-stimulus-gene-interactions-method}. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:ibrIl4ExA}
 \end{figure}
 \begin{figure}
 
@@ -2017,34 +2023,35 @@ Also Appendix figure \ref{fig:drugcytGeneIntAll}
 \caption{(ref:fig:ibrIl4ExB)}(\#fig:fig:ibrIl4ExB)
 \end{figure}
 (Figure \ref{fig:nutlinCpgEx}).
-(ref:nutlinCpgEx)
+
 \begin{figure}
 
 {\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/nutlinCpgEx-1} 
 
 }
 
-\caption{(ref:nutlinCpgEx)}\label{fig:nutlinCpgEx}
+\caption{Predictor profile depicting genetic features that modulate the size of \(\beta{int}\) between Nutlin-3a (MDM2) and CpG ODN. Plot generated as in Figure \ref{fig:FluCpGExA}. See also Methods section \ref{drug-stimulus-gene-interactions-method}.}\label{fig:nutlinCpgEx}
 \end{figure}
 (Figure \ref{fig:ralIl4ExA}).
-(ref:ralIl4ExA)
+
 \begin{figure}
 
 {\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/ralIl4ExA-1} 
 
 }
 
-\caption{(ref:ralIl4ExA)}\label{fig:ralIl4ExA}
+\caption{Predictor profile depicting genetic features that modulate the size of \(\beta{int}\) between Ralimetinib (p38 MAPK) and IL4. Plot generated as in Figure \ref{fig:FluCpGExA}. See also Methods section \ref{drug-stimulus-gene-interactions-method}.}\label{fig:ralIl4ExA}
 \end{figure}
 (Figure \ref{fig:ralIl4ExB}).
-(ref:ralIl4ExB)
+
+
 \begin{figure}
 
 {\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/ralIl4ExB-1} 
 
 }
 
-\caption{(ref:ralIl4ExB)}\label{fig:ralIl4ExB}
+\caption{Beeswarm boxplots showing log-transformed viabilty values after treatment with IL4 and Ralimetinib + IL4, faceted by trisomy 12 status. P values from paired Student's t-tests.}\label{fig:ralIl4ExB}
 \end{figure}
 Responses to chemotherapeutic drugs in the context of TLR stimulation are modulated by del11q and ATM mutations,
 Trisomy12 enhances pro-survival synergy between Ralimetinib + IFNgamma
