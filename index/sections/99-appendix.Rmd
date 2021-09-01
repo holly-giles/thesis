@@ -51,6 +51,16 @@ coeff.long.mat_Fig6 %>%
    facet_grid(label~., scales = "free_y",  space="free_y", switch = "both")
 ```
 
+
+(ref:NutlinPredictors) ADD NUTLIN-3A Predictor profile
+
+
+```{r NutlinPredictors, fig.cap='(ref:NutlinPredictors)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+```
+
+
+
 ## Tables {-}
 
 (ref:receptorPairs) Table depicting stimulus and receptor pairs used in stimulus response - stimulus receptor expression analysis. 
