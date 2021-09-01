@@ -8,7 +8,7 @@ In the first part of this chapter, to quantify the effect of each stimulus on dr
 
 Tasks for chapter
 Sort figures [x] 
-Write all text 
+Write all text [x] 
 Reread and check story and narrative
 Reference
 Credit and contirbutiosn statement 
@@ -565,7 +565,7 @@ colnames(pvaldf) <- c("pvalue","drug", "Cytokine")
 
 ```
 
-## Mapping drug - stimulus interactions
+## Mapping drug - stimulus interactions {#mapping-interactions}
 ### Linear modelling quantifies interactions between drugs and stimuli {#drug-stimulus-linear-model}
 Chapters \@ref(chapter4) and 5 \@ref(chapter5) demonstrate that each stimulus modulates CLL viability, impacting the rate of spontaneous apoptosis and activating pathways that increase or decrease baseline viability _ex vivo_. When a stimulus is co-applied with a drug, the stimulus will continue to impact upon baseline viability, concomitantly with the inhibitory effect of the drug on baseline viability. Assuming the drug and stimulus do not interact, the viability of the cells after treatment with both the stimulus and the drug will equate to the additive impact of both these compounds. 
 
@@ -577,7 +577,7 @@ Equation \@ref(eq:drugCytInt) quantifies how the viability with any combination 
                                        (\#eq:drugCytInt)
     \end{equation}
     
-_where $V$ is the viability with a given treatment,_ $\beta_{drug}$, $\beta_{stimulus}$ _and_ $\beta_{int}$ _are coefficients for the drug, stimulus and combinatorial terms and_ $X_{drug}$ _and_ $X_{stimulus}$  _are indicator variables (0 or 1) for the presence or absence of a drug/stimulus._ $\epsilon$ _is the vector of model residuals. See also Methods section \@ref(drug-stimulus-linear-model-method)._
+_where $V$ is the predicted viability with a given treatment,_ $\beta_{drug}$, $\beta_{stimulus}$ _and_ $\beta_{int}$ _are coefficients for the drug, stimulus and combinatorial terms and_ $X_{drug}$ _and_ $X_{stimulus}$  _are indicator variables (0 or 1) for the presence or absence of a drug/stimulus._ $\epsilon$ _is the vector of model residuals. See also Methods section \@ref(drug-stimulus-linear-model-method)._
     
 Using this approach, I identified  45 drug-stimulus combinations (out of 204), where $\beta{int}$ had p<0.05, i.e. the stimulus had a specific effect on the efficacy of the drug. This highlighted the extent to which drug action can be modulated by cell-external signals _ex vivo_. 
 
@@ -831,7 +831,7 @@ drug_order <- colnames(bvalmat[,tree$tree_col[["order"]]])
 
 To complement this broad scale screening approach, I next examined each interaction individually, to determine which could be biologically or clinically interesting. Figure \@ref(fig:drugStimulusIntEx) depicts a selection of these.  
 
-The most common interaction type were positive antagonistic interactions, in which stimuli reversed drug action. Amongst this group I noted  known resistance mechanisms including the inactivation of ibrutinib by IL4 signalling (Figure \@ref(fig:drugStimulusIntEx)A)[@Aguilar-Hernandez2016], indicating that the modelling and classification approach was successfully recapitulating known drug - resistance mechanisms. OUr broad-scale screening approached showed that IL4 induced resistance to a range of drugs, beyond ibrutinib, and showed the highest number of positive antagonistic interactions of all of the stimuli. In addition, we also observed previously unknown resistance pathways, including reduced efficacy of ibrutinib in the context of IFN$\gamma$ stimulation (Figure \@ref(fig:drugStimulusIntEx)B).
+The most common interaction type were positive antagonistic interactions, in which stimuli reversed drug action. Amongst this group I noted  known resistance mechanisms including the inactivation of ibrutinib by IL4 signalling (Figure \@ref(fig:drugStimulusIntEx)A)[@Aguilar-Hernandez2016], indicating that the modelling and classification approach was successfully recapitulating known drug - resistance mechanisms. Our broad-scale screening approach showed that IL4 induced resistance to a range of drugs, beyond ibrutinib, and showed the highest number of positive antagonistic interactions of all of the stimuli. In addition, we also observed previously unknown resistance pathways, including reduced efficacy of ibrutinib in the context of IFN$\gamma$ stimulation (Figure \@ref(fig:drugStimulusIntEx)B). [ADD FOLLOW UP / STAT1 experiment]
 
 There were six cases of negative antagonisms, whereby drug action inhibited the pro-survival effect of the stimulus. As IL4 appeared to be the most potent ... of drug resistance, it was of greatest interest to identify drugs that may inhibit this pathway.  I noted that the Pan-JAK inhibitor pyridone-6 inhibited the increase in viability with sCD40L + IL4 stimulation  (Figure \@ref(fig:drugStimulusIntEx)C).
 
@@ -1029,7 +1029,7 @@ plotList$`treatment_drug:Luminespib:treatment_cytokine:soluble anti-IgM` +  plot
   
 ```
 
-## Genetic modulators of drug response 
+## Genetic modulators of drug response {#mapping-genetic-modulators}
 ### Univariate analysis identifies genetic modualtors of drug response {#univariate-gene-drug-associations}
 Most mutations in cancer have not be linked to drug response. CLL has provided an powerful model system in which to study the link between recurrent genetic features and drug response: liquid biopsies are easy to obtain and sequence, and screen _ex vivo_ and it is much easier than in many cancers to take samples over a time course. Previous work in our lab [@JCIpaper] has taken advantage of this, generating the largest survey of molecular determinants of response in CLL to date. 
 
@@ -1244,12 +1244,28 @@ df_patmeta %>%
 ralimetinib_tri12 + nutlin_tri12 + ibet_tri12
 ```
 ## The modulatory effect of mutations on drug - stimuli interactions {#drug-stimulus-gene-interactions} 
-### Fitting patient-specific linear models identfies drug - stimulus - gene interactions 
-(Figure \@ref(fig:drugCytGeneIntMap)).
+### Patient-specific linear modelling identifies drug - stimulus - gene interactions 
+In sections \@ref(mapping-interactions) & \@ref(mapping-genetic-modulators), I observed the effects of microenvironmental signals and molecular features on drug response independently. I next aimed to investigate their collective effect on _in vitro_ drug efficacy in CLL, by quantifying the extent to which genetic driver mutations modulated the interactions between stimuli and drugs (Bruch & Giles et al. 2021).
 
-Also Appendix figure \@ref(fig:drugcytGeneIntAll) 
+I began by conceptualising methods to quantify the collective effect of the drugs, stimuli and genetic features on CLL viability and biology.  I decided to adapt the linear model in Equation \@ref(eq:drugCytInt), by fitting this model in a patient sample - specific manner:  
 
-Have to make sure this figure takes a whol page but doesnt float to the bottom
+Equation \@ref(eq:drugCytGeneInt) quantifies how the viability with any combination can be predicted:
+    \begin{equation}
+            log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{patient}X_{patient} + \beta_{drug-stimulus}X_{drug}X_{stimulus} + \beta_{drug-patient}X_{drug}X_{patient} + \beta_{stimulus-patient}X_{stimulus}X_{patient} +\beta_{int}X_{drug}X_{stimulus}X_{patient} + \epsilon
+                                       (\#eq:drugCytGeneInt)
+    \end{equation}
+    
+_where $V$ is the predicted viability of a patient sample with a given treatment,_ $\beta_{drug}$, $\beta_{stimulus}$,$\beta_{int}$, $\beta_{drug-stimulus}$,$\beta_{drug-patient}$,$\beta_{drug-stimulus}$ _and_ $\beta_{int}X_{drug}$ _are regression coefficients for the drug, stimulus, patient sample and combinatorial terms and_ $X_{drug}$, $X_{stimulus}$ _and_ $X_{patient}$ _are indicator variables (0 or 1) for the presence or absence of a drug/stimulus/patient sample._ $\epsilon$ _is the vector of model residuals. See also Methods section \@ref(drug-stimulus-gene-interactions-method)._
+
+This generates a higher order interaction term $\beta_{int}X_{drug}X_{stimulus}X_{patient}$. This term represents a _patient sample-specific_ $\beta{int}$ for each drug - stimulus combination, quantifying the size of an interaction between a drug and stimulus in each patient genetic background. 
+
+With these patient sample-specific $\beta{int}$ terms, it was possible to search for associations between the size of $\beta_{int}$) and genetic features. The aim was to screen for molecular features that increased or decreased the size of a drug - stimulus interactions, using multivariate regression with L1 (lasso) regularisation.
+
+As input to the model, the response matrix was composed of the sample - specific $\beta_{int}$ values for each drug-stimulus combination. To generate the feature matrix (137 samples versus 40 features), I excluded genetic features for which >20\% of the values were missing, and  patient samples with incomplete annotation. As predictors, I included genetic mutations and CNVs (p=39) and IGHV status (coded as 0-1). I ran lasso regression, as implemented in the `R` package `glmnet`[@R-glmnet], using three-fold cross-validation with misclassification error as loss. The resulting predictors are the mean of those coefficients that were selected in at least 90% of 30 bootstrapped repeats. 
+
+This analysis revealed that 60/204 drug - stimulus interactions were modulated by at least one genetic feature (Figure \@ref(fig:drugCytGeneIntMap),  Appendix Figure \@ref(fig:drugcytGeneIntAll)). A positive coefficient here indicates that the presence of the genetic feature is associated with more positive $\beta{int}$, in other words, the viability with the drug and stimulus is higher than expected in the presence of the genetic feature. 
+
+*Have to make sure this figure takes a whole page but doesn't float to the bottom*
 
 (ref:drugCytGeneIntMap) Heatmap depicting overview of genetic predictors of drug - stimulus interactions (each row represents the coefficients from fitting a single multivariate model, as in Figure \@ref(fig:FluCpGExA)). Stimuli are shown on left, and corresponding drugs on right. Coloured fields indicate that $\beta{int}$ for given drug and stimulus is modulated by corresponding genetic feature. Positive coefficients are shown in red, indicating a more positive $\beta{int}$ if the feature is present. Only top 8 most commonly selected genetic features are shown. Drug - stimulus combinations with no genetic predictors of $\beta{int}$ amongst top 8 shown are omitted for clarity. See Methods section \@ref(drug-stimulus-gene-interactions-method). _Figure from Bruch & Giles et al. 2021._
 
@@ -1347,15 +1363,15 @@ coeff.long.mat.ordered %>%
   
 
 ```
-### Patient - specific drug - stimulus interactions may have clinical significance
 
-(Figure \@ref(fig:FluCpGExA)). 
+Applying this broad scale screening approach established some wider trends. Firstly, Trisomy 12 and IGHV status impacted the largest number of drug - stimulus interactions,indicating that their impact on stimulus and drug response individually also extends to drug-stimulus interactions. Secondly, out of all the stimuli, IL4 and sCD40L + IL4-based interactions were modulated by the largest number of features. IL4 alone increased viability uniformly accross genetic backgrounds; its interaction with drugs may be more influenced by genetic features. Notably, the presence of  trisomy 12  acted to increase IL4-induced drug resistance, in almost all drugs for which $\beta{int}$>0.05.  Interestingly, the presence of TP53 and del(17q) reduced the degree to which IL4 induced resistance to the chemotherapeutics Nutlin-3a and Fludarabine, most likely because both these mutations already induce resistance alone. 
+
+### Patient - specific drug - stimulus interactions may have clinical significance
+This broad scale screening approach was not perfect in itself. Modelling can only go so far, and it is likeyl that some cases identified here are artefacts of the modelling approach. Therefore, I decided to investigate each individual case one - by - one to establish which drug - stimulus - gene interactions are the most biologically interesting. This analysis highlighted several drug - stimulus - gene interactions that may have clinical importance and warrant further investigation.
+
+The first of these concerned the interaction between fludarabine and CpG ODN. The value of $\beta_{int}$ for fludarabine and CpG ODN was modulated by six genetic factors; most strongly by IGHV status, del(11q) and trisomy 12 (Figure \@ref(fig:FluCpGExA)).
 
 (ref:FluCpGExA) Predictor profile depicting genetic features that modulate the size of $\beta{int}$ between fludarabine and CpG ODN. To generate predictor profile, linear model in Eqn.  \@ref(eq:drugCytInt) was fitted in a sample - specific manner, to calculate drug-stimulus interaction coefficients ($\beta{int}$) for each patient sample. Ranked patient-specific $\beta{int}$ values are shown in lower scatter plot. Associations between the size of $\beta{int}$ and genetic features were identified using multivariate regression with L1 (lasso) regularisation, with gene mutations (p = 39) and IGHV status as predictors, and selecting coefficients that were chosen in >90% of bootstrapped model fits. The horizontal bars on left show the size of fitted coefficients assigned to genetic features. Matrix above scatter plot indicates patient mutation status for the selected genetic features. Matrix fields correspond to points in scatter plot (ie patient data is aligned), to indicate how the size of $\beta{int}$ varies with selected genetic feature. Grey lines indicate presence of genetic feature/IGHV mutated. See Methods section \@ref(drug-stimulus-gene-interactions-method). _Figure and caption from Bruch & Giles et al. 2021._
-
-(Figure \@ref(fig:FluCpGExB)). 
-
-(ref:FluCpGExB)  Beeswarm boxplots of log(viability) values for fludarabine and CpG ODN single and combinatorial treatments, faceted by IGHV status and trisomy 12 status. P-values from paired Student’s t-tests. _Figure and caption from Bruch & Giles et al. 2021._
 
 
 ```{r FluCpGExA, fig.cap='(ref:FluCpGExA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
@@ -1366,6 +1382,10 @@ coeff.long.mat.ordered %>%
 grid.arrange(grobs = Lasso_Plots_Fig6["Fludarabine + CpG ODN"], ncol = 1)
 
 ```
+
+To look in more detail at what this means, I visualised sample repsonses to CpG ODN and fludarabine, stratified by IGHV status and trisomy 12 (Figure \@ref(fig:FluCpGExB)). In IGHV-M non-trisomy 12 samples, TLR stimulation increased fludarabine efficacy. In samples that were either IGHV-U or trisomy 12+, TLR stimulation induced resistance to fludarabine. TLR stimuuation _ex vivo_ can increase or decrease viability, depending on the genetic background and this also impacts on drug response. It would be useful to establish whether these dynamics are replicated within the _in vivo_ niche. 
+
+(ref:FluCpGExB)  Beeswarm boxplots of log(viability) values for fludarabine and CpG ODN single and combinatorial treatments, faceted by IGHV status and trisomy 12 status. P-values from paired Student’s t-tests. _Figure and caption from Bruch & Giles et al. 2021._
 
 ```{r FluCpGExB, fig.cap='(ref:FluCpGExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 6, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1419,12 +1439,63 @@ ighv.labs <- c("U" = "IGHV-U", "M" =  "IGHV-M")
 
 ```
 
-(Figure \@ref(fig:ibrIl4ExA)).
+TLR-induced drug resistance in certain genetic backgrounds extended to other chemotherapeutic drugs. Nutlin-3a is an MDM2 inhibitor, which in our dataset shows higher efficacy in certain backgrounds including IGHV-U, trisomy12, and del(11q) (Figure \@ref(fig:drugGeneIntMap), Figure \@ref(fig:drugGeneIntEx), Appendix Figure \@ref(fig:NutlinPredictors)). Despite this, TLR stimulation reduces Nutlin-3a toxicity in these same genetic backgrounds, such that treatment with Nutlin-3a and CpG ODN is more toxic to IGHV-M, non-trisomy 12 and non-del(11q) samples i.e. the opposite(Figure \@ref(fig:nutlinCpgEx), Figure \@ref(fig:TLRCpGIGHVdel11q)).  This observation underlines the need to observe drug activity _in vitro_ in the context of microenvironmental signals, in CLL and in other cancers. 
+
+(ref:nutlinCpgEx) Predictor profile depicting genetic features that modulate the size of $\beta{int}$ between Nutlin-3a (MDM2) and CpG ODN.  Plot generated as in Figure \@ref(fig:FluCpGExA). See also Methods section \@ref(drug-stimulus-gene-interactions-method). 
+
+
+```{r nutlinCpgEx, fig.cap='(ref:nutlinCpgEx)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+
+# Plot predictor profile for Nutlin + CpG ODN
+
+grid.arrange(grobs = Lasso_Plots_Fig6["Nutlin-3a + CpG ODN"], ncol = 1)
+
+```
+
+
+(ref:TLRCpGIGHVdel11q) Beeswarm-boxplot showing control-normalised log transformed viability values, after treatment with CpG ODN + Nutlin-3a, stratified by del(11q) and IGHV status. p-values from Student’s t-tests. _Figure from (Bruch & Giles et al. 2021)_
+
+```{r TLRCpGIGHVdel11q, fig.cap='(ref:TLRCpGIGHVdel11q)', message = FALSE,  echo = FALSE, fig.height = 4, fig.width = 6,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+
+ left_join(df_complete, patMeta, by = "PatientID") %>%
+  dplyr::filter(Cytokine=="CpG ODN",
+                Drug== "Nutlin-3a",
+                Drug_Concentration== "High", 
+                !is.na(del11q),
+                !is.na(IGHV.status)) %>%
+         
+  ggplot(aes(x=interaction(del11q, IGHV.status),
+                    y=Log,
+                    color=(del11q)))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  scale_x_discrete(labels=c("0.M"="IGHV-M\n WT",
+                            "0.U"="IGHV-U\n WT",
+                            "1.M"="IGHV-M\n del(11q)",
+                            "1.U"="IGHV-U\n del(11q)"))+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "center", 
+                     comparisons = list( c(1,2), c(3,4), c(1,3)),
+                     size=3)+
+  xlab("") +
+  ylab("Log(Viability)") +
+  ggtitle("Nutlin-3a + CpG ODN") +
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+
+  t1+
+  theme(axis.text.x = element_text(angle = 45, vjust =1))
+
+
+```
+
+The modelling approach also identified interactions, where the differential size of $\beta{int}$ was driven by the single treatment effect, rather than the combination. For example, if a drug is more efficacious in a certain genetic background, but a stimulus nonetheless eradicates drug toxicity, the size of the interaction will be larger in this genetic background.  This is because the increase in expected viability in these samples (quantified by $\beta{int}) would be even higher than in other genetic backgrounds. This is the case  with Ibrutinib + IL4 for instance.  Ibrutinib showed higher efficacy in trisomy 12 and IGHV-U samples and IL4 induced complete resistance to ibrutinib independently of genetic background. Thus in trisomy 12 and IGHV-U samples treated with ibrutinib, the increase in viability in the context of IL4 stimulation is larger than in non-trisomy 12 and IGHV-M samples, and thus these features are assigned positive coefficients. This highlights the breadth of IL4-induced resistance to ibrutinib in CLL across genetic backgrounds, even where genetic features would indicate that ibrutinib efficacy should be high, and underlines the importance of understanding the activity of this resistance pathway _in vivo_ (Figure \@ref(fig:ibrIl4ExA), Figure \@ref(fig:ibrIl4ExB).
+
 (ref:ibrIl4ExA) Predictor profile depicting genetic features that modulate the size of $\beta{int}$ between ibrutinib (BTK) and IL4. Plot generated as in Figure \@ref(fig:FluCpGExA). See also Methods section \@ref(drug-stimulus-gene-interactions-method). _Figure from Bruch & Giles et al. 2021._
 
 
-(Figure \@ref(fig:ibrIl4ExB)).
-(ref:fig:ibrIl4ExB) Beeswarm boxplots of log(viability) values for ibrutinib and IL4 single and combinatorial treatments, faceted by IGHV status and trisomy 12 status. P-values from paired Student’s t-tests. _Figure and caption from Bruch & Giles et al. 2021._
+(ref:ibrIl4ExB) Beeswarm boxplots of log(viability) values for ibrutinib and IL4 single and combinatorial treatments, faceted by IGHV status and trisomy 12 status. P-values from paired Student’s t-tests. _Figure and caption from Bruch & Giles et al. 2021._
 
 ```{r ibrIl4ExA, fig.cap='(ref:ibrIl4ExA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1434,7 +1505,7 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Ibrutinib + IL-4"], ncol = 1)
 ```
 
 
-```{r fig:ibrIl4ExB, fig.cap='(ref:fig:ibrIl4ExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 6, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+```{r fig:ibrIl4ExB, fig.cap='(ref:ibrIl4ExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 6, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
   left_join(df_complete, patMeta, by = "PatientID")%>%
   #filter for drug:stimulus combinations of interest, make sure no NAs in genetic data
@@ -1483,93 +1554,13 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Ibrutinib + IL-4"], ncol = 1)
 ```
 
 
-(Figure \@ref(fig:nutlinCpgEx)).
-(ref:nutlinCpgEx) Predictor profile depicting genetic features that modulate the size of $\beta{int}$ between Nutlin-3a (MDM2) and CpG ODN.  Plot generated as in Figure \@ref(fig:FluCpGExA). See also Methods section \@ref(drug-stimulus-gene-interactions-method). 
-
-
-```{r nutlinCpgEx, fig.cap='(ref:nutlinCpgEx)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-# Plot predictor profile for Ibrutinib + IL4
-
-grid.arrange(grobs = Lasso_Plots_Fig6["Nutlin-3a + CpG ODN"], ncol = 1)
-```
-
-(Figure \@ref(fig:ralIl4ExA)).
-(ref:ralIl4ExA) Predictor profile depicting genetic features that modulate the size of $\beta{int}$ between Ralimetinib (p38 MAPK) and IL4.  Plot generated as in Figure \@ref(fig:FluCpGExA). See also Methods section \@ref(drug-stimulus-gene-interactions-method). 
-
-```{r ralIl4ExA, fig.cap='(ref:ralIl4ExA)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-# Plot predictor profile for Ibrutinib + IL4
-
-grid.arrange(grobs = Lasso_Plots_Fig6["Ralimetinib + IL-4"], ncol = 1)
-```
-
-(Figure \@ref(fig:ralIl4ExB)).
-
-(ref:ralIl4ExB) Beeswarm boxplots showing log-transformed viabilty values after treatment with IL4 and Ralimetinib + IL4, faceted by trisomy 12 status. P values from paired Student's t-tests. 
-
-```{r ralIl4ExB, fig.cap='(ref:ralIl4ExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-left_join(df_complete, patMeta, by = "PatientID")%>%
-  #filter for drug:stimulus combinations of interest, make sure no NAs in genetic data
-  dplyr::filter(DCK%in%c("DMSO:IL-4","Ralimetinib:IL-4"),
-                Drug_Concentration %in% c("High", "None"),
-                !is.na(trisomy12)) %>%
-     mutate(DCK = factor(DCK, levels=c("DMSO:IL-4",
-                                      
-                                      "Ralimetinib:IL-4"))) %>%
-  
-  #plot treatment combination against viability 
-  ggplot(aes(x = DCK,y = Log,color= DCK))+
-  geom_hline(yintercept = 0)+
-  geom_boxplot()+
-  geom_beeswarm(cex=1.5) +
-  guides(color="none", shape="none")+
-  #add p values
-  stat_compare_means(method = "t.test",
-                     label.y.npc = 0.8, 
-                     paired = TRUE, 
-                     step.increase=0.2, 
-                     size=3) +
-  xlab("") +
-  ylab("Log(Viability)") +
-  #facet by trisomy 12 and IGHV status
-  facet_wrap(vars(trisomy12),
-             labeller = labeller(trisomy12 = tri12.labs))+
-  
-  scale_x_discrete(labels=c("DMSO:IL-4"="IL4",
-                           
-                            "Ralimetinib:IL-4"="Ralimetinib \n+ IL4"))+  
-    
-  scale_color_manual(values=c(colors[4], colors[5], colors[3])) + 
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))+
-  t2 +
-  theme(strip.background =element_rect(fill=NA),
-        strip.text = element_text(size=fontsize+4, face="bold"),
-        strip.text.y = element_text(angle = 0),
-        axis.text.x = element_text(size=fontsize+4, angle = 35, hjust = 1, vjust = 1)) 
-
-```
-
-Responses to chemotherapeutic drugs in the context of TLR stimulation are modulated by del11q and ATM mutations,
-Trisomy12 enhances pro-survival synergy between Ralimetinib + IFNgamma
-Ralimetinib treatment increases the pro-survival effect of IL4, and this is further enhanced in NOTCH1 and Ras/Raf mutants
-Fludarabine and TLR
-Ibrutinib and IL4
-Discuss examples in drug- cyt -gene examples script 
-
-## Using stimuli responses in combination with genetic profiles to predict in vivo drug response 
-Can stimuli + genes predict drug response - this would be useful in the clinic. Especially if its just TLR/IL4 response, are specific signals useful?
-
-(Figure \@ref(fig:drugCytGeneIntClinic)). 
-
-(ref:drugCytGeneIntClinic) Method \@ref(id)
-
-```{r drugCytGeneIntClinic, fig.cap='(ref:drugCytGeneIntClinic)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
-```
 
 ## Summary 
+This work represents the first large - scale attempt to integrate the effects of mutations and the microenvironment in drug response in lymphoma, and to the best of my knowledge, in other cancers. The results provide a proof-of-principle of using combinatorial screening, molecular profiling and statistical modelling can generate more complex biological insights to guide further clinical studies. 
+
+More specifically, these results identify a number of key drug-resistance pathways, including the impact of IFN$\gamma$ on ibrutinib. I highlight the importance of the NOS pathway in IL4 and IFN$\gamma$ inhibitor of apoptosis. I also show how some of these resistance pathways are context-dependent. In particular, the ability of TLR stimulation to induce resistance to chemotherapeutics is modulated by many genetic feautres. THis warrants further follow-up. 
+
+Overall these findings illustrate how the presence of known genetic alterations determines how drugs and external stimuli interact with each other.
 
 ## Discussion 
 BET inhibitors and suprression of cytokine signalling : BET Bromodomain Inhibition Suppresses Transcriptional Responses to Cytokine-Jak-STAT Signaling in a Gene-specific Manner in Human Monocytes
@@ -1582,5 +1573,12 @@ these also correlate - its possible that they work via a simliar mechanism -ibet
 
 https://www.nature.com/articles/s41467-020-20378-8
 
-## Contirbutions Statement
+NOS pathway 
+
+TLR - wahts going on in vivo, is it reallyhaving thhis bipolar effect in vivo
+Flduarabine response - does this help to explain - more work needed 
+
+IL4-induced resistance- this is clearly importnat accross a rnage of drufs adn genetic background, more needed in vivo, possible combintatorial therapies 
+
+## Contributions Statement
 
