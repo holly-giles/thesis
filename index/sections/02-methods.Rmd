@@ -131,7 +131,11 @@ ADAPT FOR DRUGS ALSO A Gaussian linear model with L1-penalty implemented in the 
 _myself_ original complete 
 RNA count data for matched samples was available for 49 patients and was transformed using the variance stabilising transformation. Stimulus - receptor pairs were defined using the available literature, see table \@ref(tab:receptorPairs).  For each stimulus, pearson correlation coefficient were calculated between the control-normalised log-transformed viability value of a sample and its expression of the corresponding stimulus receptor. 
 
-#### Linear modelling of drug - stimulus interactions 
+#### Linear modelling of drug - stimulus interactions {#drug-stimulus-linear-model-method}
+_myself_ original 
+Section \@ref(drug-stimulus-linear-model) To identify drug-stimulus interactions, we fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn1. Drug - stimulus interaction coefficients and associated p values were extracted and used to define significant interactions.
+
+Incl defining interaction types
 
 #### Modelling of drug - stimulus - gene interactions {#drug-stimulus-gene-interactions-method}
 _myself_ original 
@@ -201,11 +205,9 @@ For the smaller ATACseq dataset, ATAC-seq data generated from our CLL samples we
 _myeslf_ original (update to paper) 
 We downloaded SPIB ChIPseq data [REFERENCE] from the NCBI GEO database[REFERENCE], accession GEO:GSE56857. We made use of the data for SPIB in the OCILY3 DLBCL cell line (GSM1370276). SPIB ChIP peaks were filtered for significance (q value<0.05). We used the annotatePeaks function from the package clusterProfiler[REFERENCE] to annotate the nearest gene for each ChIPpeak. We filtered peaks  within ±1kb of a TSS of a gene and performed over-representation of  KEGG and Reactome pathways (using the clusterProfiler package[REFERENCE])  amongst the resulting list of genes. 
 
-#### Linear modelling of drug - stimulus interactions {#drug-stimulus-linear-model-method}
-_myself_ original 
-Section \@ref(drug-stimulus-linear-model) To identify drug-stimulus interactions, we fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn1. Drug - stimulus interaction coefficients and associated p values were extracted and used to define significant interactions.
 
-Incl defining interaction types
+
+
 
 #### Drug-Drug interaction assay
 
