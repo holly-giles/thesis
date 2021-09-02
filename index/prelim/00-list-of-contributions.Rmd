@@ -1,0 +1,48 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# List of other contributions and achievements {-}
+
+#### Conference Talks and Posters {-}
+I have additionally presented the work in this thesis at the following meetings  
+\begin{itemize}
+    \item  Peter-Martin Bruch\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Mueller-Tidow, Thorsten Zenz, Wolfgang Huber, Sascha Dietrich et al. \textit{in preparation.}  "Mapping drug-microenvironment-genetic interplay in CLL reveals trisomy 12 as a modulator of microenvironment."\textbf{\textit{bioRxiv}}. [doi: 10.1101/2021.07.23.453514](https://doi.org/10.1101/2021.07.23.453514)
+\end{itemize}
+
+
+#### Courses and Conferences {-}
+During my PhD, I attended the following courses and conferences: 
+ 
+\begin{itemize}
+    \item Berest, Ivan\ast, Christian Arnold\ast, Armando Reyes-Palomares, Giovanni Palla, Kasper Dindler Rasmussen, \textbf{\underline{Holly Giles}}, and Peter-Martin Bruch et al. 2019. "Quantification Of Differential Transcription Factor Activity And Multiomics-Based Classification Into Activators And Repressors: DiffTF". \textit{Cell Reports} 29 (10): 3147-3159.e12. [doi: 10.1016/j.celrep.2019.10.106](https://doi.org/10.1016/j.celrep.2019.10.106)
+    
+  \item Lu, Junyan\ast, Ester Cannizzaro\ast, Fabienne Meier-Abt, Sebastian Scheinost, Peter-Martin Bruch, \textbf{\underline{Holly A. R. Giles}}, and Almut Lütge et al. 2021. "Multi-Omics Reveals Clinically Relevant Proliferative Drive Associated With Mtor-MYC-OXPHOS Activity In Chronic Lymphocytic Leukemia". \textbf{\textit{Nature Cancer}}. [doi: 10.1038/s43018-021-00216-6](https://doi.org/10.1038/s43018-021-00216-6)
+\end{itemize}
+
+#### Software {-}
+During my PhD, I have been committed to open science and have published the following software: 
+\begin{itemize}
+    \item \textbf{\underline{Giles, Holly A. R.}} & Peter M. Bruch, 2021. CLLCytokineScreen2021: Complete data and executable scripts to reproduce the figures and analysis presented in Bruch & Giles et al. 2021. https://github.com/Huber-group-EMBL/CLLCytokineScreen2021
+    
+  \item \textbf{\underline{Giles, Holly A. R.}} 2021. CLLCytokineScreen2021Shiny: Shiny app to explore the dataset presented in Bruch & Giles et al. 2021. https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/
+\end{itemize}
+
+#### Responsibilities
+\begin{itemize}
+     \item \textbf{Coordinator, EMBL PhD Symposium 2018} My role as Coordinator involved managing a team of 30 PhD students to plan and implement a large-scale conference, with over 220 attendees and a budget of over \euro{60000}. 
+    
+  \item \textbf{External Consultant, Merck KGaA} In this role I advised Merck regarding the implementation of the project proposal I submitted as part of Team Healthy Lives at the 2018 Merck Innovation Cup..
+\end{itemize}
+
+
+#### Awards 
+\begin{itemize}
+    \item \textbf{Joachim-Herz Add-on Fellowship for Interdisplinary Life Science 2019}, \euro{12000} In 2019 I was awarded the Joachim-Herz Add-on Fellowship funds interdisciplinary research and qualification (e.g. stays at a research lab and participation in conferences) over a period of two years. 
+    
+  \item \textbf{Merck Innovation Cup}, \euro{5000} As part of a team of six, I competed in the anniversary edition of the Merck Innovation Cup, winning first prize in the Healthy Lives category (€5,000), for our business proposal for a new pharmaceutical product to improve our preparedness for future viral pandemics.
+\end{itemize}
+
+
+$\EUR$
