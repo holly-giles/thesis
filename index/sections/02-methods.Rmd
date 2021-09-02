@@ -133,9 +133,17 @@ RNA count data for matched samples was available for 49 patients and was transfo
 
 #### Linear modelling of drug - stimulus interactions {#drug-stimulus-linear-model-method}
 _myself_ original 
-Section \@ref(drug-stimulus-linear-model) To identify drug-stimulus interactions, we fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn1. Drug - stimulus interaction coefficients and associated p values were extracted and used to define significant interactions.
+Section \@ref(drug-stimulus-linear-model) Linear models were fitted for each drug - stimulus combination, to extract a $\beta{int}$ term and assossciated p value for each combinatorial treatment. Linear model was fitted using equation \@ref(eq:drugCytInt), using the `lm` function of the `R` package stats [@R-stats]:
+    \begin{equation}
+            log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{int}X_{drug}X_{stimulus} + \epsilon
+                                       (\#eq:drugCytInt)
+    \end{equation}
+    
+_where $V$ is the predicted viability with a given treatment,_ $\beta_{drug}$, $\beta_{stimulus}$ _and_ $\beta_{int}$ _are coefficients for the drug, stimulus and combinatorial terms and_ $X_{drug}$ _and_ $X_{stimulus}$  _are indicator variables (0 or 1) for the presence or absence of a drug/stimulus._ $\epsilon$ _is the vector of model residuals. Equation from Bruch & Giles et al. 2021._
 
-Incl defining interaction types
+To fit model, the matrix of log-transformed viability values, for control, single and combinatorial treatments was used. Interactions were defined as significant if p value for $\beta{int}$ < 0.05. The matrix of significant $\beta{int}$ was then plotted as a heatmap, with the package `pheatmap`[@R-pheatmap] where the rows (stimuli) and columns (drugs) were ordered according to the dendrogram order produced by `hclust` [@R-stats] using default branch arrangement.
+
+To define the four interaction categories, drug - stimulus combinations were first divided with respect to the sign of $\beta{int}$, whereby a positive $\beta{int}$ indicates that the viability with combinatorial treatment is higher than would be expected based on additive effects alone and vice versa. The groups were further divided into synergies and antagonisms according to the values of the model coefficients ($\beta{drug}$, $\beta{stimulus}$ and $\beta{int}$). Synergisms were assigned when coefficients for single treatments ($\beta{drug}$ and $\beta{stimulus}$) were both greater than, or both less than, the observed coefficient for the combinatorial treatment (i.e. $\beta{drug}$ + $\beta{stimulus}$ + $\beta{int}$). For positive antagonisms, $\beta{drug}$ + $\beta{stimulus}$ + $\beta{int}$ was less than either $\beta{drug}$ or $\beta{stimulus}$. For negative antagonisms,  $\beta{drug}$ + $\beta{stimulus}$ + $\beta{int}$ was greater than either $\beta{drug}$ or $\beta{stimulus}$. All drug - stimulus interactions, for which p value for $\@beta{int}$ <0.05 fit into one of these groups. 
 
 #### Modelling of drug - stimulus - gene interactions {#drug-stimulus-gene-interactions-method}
 _myself_ original 
@@ -144,7 +152,7 @@ Section \@ref(drug-stimulus-gene-interactions). To identify drug - stimulus inte
 ### Follow up 
 #### Lympocyte doubling times
 _Herbst et al., 2020c_ - update
-"Patients which had lymphocyte counts available for less than 4 timepoints between the sample
+"Patients which had lymphocyte counts available for less than 4 time points between the sample
 collection date and the time of the next treatment and patients currently in treatment were ex-cluded. Thus, ... patients with enough data remained.  Lymphocyte growth rates were calculated by fitting a linear model to the log10 transformed lymphocyte counts of all timepoints between the sample collection date and the time of the next treatment versus the period of time."
 
 #### Survival analyses 
