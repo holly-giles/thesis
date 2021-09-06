@@ -109,13 +109,15 @@ RNA data was taken from the PACE repository @PACE. For detailed explanaition of 
 
 
 ### Analysis of Screening Data
-#### Drug-drug and stimulus - stimulus correlations 
+#### Drug-drug and stimulus - stimulus correlations {#correlations}
 _myself_ original complete 
-Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the `cor` functions of the [@R-stats] package with log transformed viability values which were normalised to untreated controls.
+Section \@ref(cytokine-profiling). Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the `cor` functions of the [@R-stats] package with log transformed viability values which were normalised to untreated controls.
 
 #### Characterising stimulus responses across all samples {#stimulus-heatmap-method}
 _myself_ original complete (just check)
-For the heatmap in figure \@ref(fig:stimuliHeatmap), the viability data is represented as z scores. Log transformed viability values, normalised to DMSO controls, are row-scaled  according to the Median Absolute Deviance.  Limits were then applied to this row scaling factor for optimal visualisation. The matrix of z scores was plotted using the [@R-pheatmap] package. The ordering of the columns (patient samples) was obtained from the dendrogram that resulted from running `ConsensusClusterPlus`, from the [@R-ConsensusClusterPlus] package. The rows were ordered using the dendrogram order produced by `hclust` with default branch arrangement.
+Section \@ref(clusters). For the heatmap in figure \@ref(fig:stimuliHeatmap), the viability data is represented as z scores. Log transformed viability values, normalised to DMSO controls, are row-scaled  according to the Median Absolute Deviance.  Limits were then applied to this row scaling factor for optimal visualisation. The matrix of z scores was plotted using the [@R-pheatmap] package. The ordering of the columns (patient samples) was obtained from the dendrogram that resulted from running `ConsensusClusterPlus`, from the [@R-ConsensusClusterPlus] package. The rows were ordered using the dendrogram order produced by `hclust` with default branch arrangement.
+
+ADD detial on clustering 
 
 #### Univariate analysis of gene - stimulus and gene - drug response assosciations {#univariate-gene-stimulus-associations-method}
 _myself_ writtten for thesis complete
@@ -150,14 +152,14 @@ _myself_ original
 Section \@ref(drug-stimulus-gene-interactions). To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package `glmnet`[@R-glmnet]. As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
 
 ### Follow up 
-#### Lympocyte doubling times
+#### Lympocyte doubling times {#LDT-method}
 _Herbst et al., 2020c_ - update
-"Patients which had lymphocyte counts available for less than 4 time points between the sample
+Section \@ref(cluster-survival). "Patients which had lymphocyte counts available for less than 4 time points between the sample
 collection date and the time of the next treatment and patients currently in treatment were ex-cluded. Thus, ... patients with enough data remained.  Lymphocyte growth rates were calculated by fitting a linear model to the log10 transformed lymphocyte counts of all timepoints between the sample collection date and the time of the next treatment versus the period of time."
 
-#### Survival analyses 
+#### Survival analyses {#survival-method}
 _myself_ original 
-Survival analyses were performed using TTT, TFT and OS as metrics.  Follow-up information to calculate OS was available for all 192 CLL patients. For 188 of 192 CLL patients treatment information after sample collection was available. 
+Section \@ref(cluster-survival).  Survival analyses were performed using TTT, TFT and OS as metrics.  Follow-up information to calculate OS was available for all 192 CLL patients. For 188 of 192 CLL patients treatment information after sample collection was available. 
 
 _Herbst et al_
 ”Time to next treatment (TTT) was calculated from the date of sample collection to subsequent
@@ -169,13 +171,13 @@ For for the purpose of visualising Kaplan-Meier plots , optimal cut-points of st
 
 For Cox proportional hazards regression, the  `coxph` function of the `R` package `survival` [@R-survival] was used. Expand 
 
-#### Penalised multivariate regression genetic predictors of cluster membership 
+#### Penalised multivariate regression genetic predictors of cluster membership {#cluster-genetics-method}
 _Myself_ original (edit so not similar to JCI)
-I used a multinomial linear model with L1-penalty, implemented in the `glmnet` [@R-glmnet] package. As the dependent variable, the cluster assignment for each patient was used. As input to the model ,genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39) and IGHV status (coded as 0-1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation. The resulting coefficients indicated associations between genetic features and each cluster. 
+Section \@ref(genetics-method). I used a multinomial linear model with L1-penalty, implemented in the `glmnet` [@R-glmnet] package. As the dependent variable, the cluster assignment for each patient was used. As input to the model ,genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39) and IGHV status (coded as 0-1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation. The resulting coefficients indicated associations between genetic features and each cluster. 
  
-#### Gene expression and gene set enrichment analysis between clusters 
+#### Gene expression and gene set enrichment analysis between clusters {#cluster-rna-method}
 _myself_ original
-For the n=49 patient samples for which viability data and RNA–Seq data for matching samples was available, the `R` package `DESeq2` [@R-DESeq2] was used to search for associations of these two data types.RNA-Seq read count data was regressed on to the patient clusters C3, C4 (design formula ~ IGHV.status + Cluster). Genes were ranked by their test statistics and Gene Set Enrichment Analysis (GSEA) (implementing the fgsea algorithm with the `clusterProfiler` [@R-clusterProfiler] package) was applied to the ranked lists with the KEGG pathway gene set selections from the MSigDBdatabase[REFERENCE].  
+Section \@ref(cluster-rna). For the n=49 patient samples for which viability data and RNA–Seq data for matching samples was available, the `R` package `DESeq2` [@R-DESeq2] was used to search for associations of these two data types.RNA-Seq read count data was regressed on to the patient clusters C3, C4 (design formula ~ IGHV.status + Cluster). Genes were ranked by their test statistics and Gene Set Enrichment Analysis (GSEA) (implementing the fgsea algorithm with the `clusterProfiler` [@R-clusterProfiler] package) was applied to the ranked lists with the KEGG pathway gene set selections from the MSigDBdatabase[REFERENCE].  
 
 #### Associations of ex-vivo stimulus responses with genomic features
 We tested for associations between stimulus viability assay results and genomic features by Student’s t-tests (two-sided, with equal variance). We tested somatic mutations (aggregated at the gene level), copy number aberrations and IGHV status. We restricted the analysis to features that were present in at least 3 patient samples (63 features). p-values were adjusted for multiple testing by applying the Benjamini-Hochberg procedure. 
