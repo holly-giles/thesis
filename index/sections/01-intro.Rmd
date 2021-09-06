@@ -4,7 +4,7 @@ Give a bit of time each day for next few weeks, then full tie when chapter 5 and
 Continue to go through add the next papers
 Then go throuhg each section, do a lit review, and read what i need for each, add the text and references and kkep going 
 Should then be easy to tie this together 
-
+Herbst Thesis 
 
 
 ```{r loadLibraries, echo = FALSE}
@@ -287,6 +287,8 @@ Research on leukaemia cell survival signalling pathways, such as those governed 
 
 ## The tumour microenvironment in CLL 
 ### The concept of the protective niche 
+As well as providing protective signals that support tumour growth, the microenvironment is also believed to reduce treatment efficacy within the protective niche [@Ahn2018] <- what other evidence is htere that it affects drug response, posisbly add back into section 6 
+
 
 \@ref(fig:microenvironmentTissues) _Adapted from Davids et al 2012_
 
@@ -365,7 +367,7 @@ incl ME -mediated and ibrutinib - IL4
 ### Ex-vivo drug sensitivity screens
 
 ### Studies of the microenivornment, and attempts to replicate the impact of the microenvironment 
-
+cancer biology is integratively influenced by cell-intrinsic and cell-extrinsic features<- evidence, and jsutify why we need to knwo more about this 
 ### ATAC sequncing as a proxy for TF activity justification {#intro-ATACseq}
 
 ### Measurement of outcomes? 
@@ -386,12 +388,16 @@ The power of multi-omics approaches especially the use of ATAC sequencing and co
 Mathematical background in particular, lasso-regularised regression, and the caveats associated with feature selection
 wrt cluster assignment 
 
-use method, explain how it works 
+Also use of bliss and other interactin methods? 
+
+use method, explain how it works, use line plots: https://stattrek.com/multiple-regression/interaction.aspx
 we need mor ltieracy about these things 
 discuovery of mulitple layers of biology rather thatn jsut using t tests
 
 how this can be used to build classfiers
 
+
+caviats - screenign approach, wont find everything, rigid (as in drug - cyt -gene interactions), if two things are coerrelated, one could be srhuk to ze or both share weighting 
 ### CLL as a model for studying tumour biology
 
 ## Aims of this thesis
