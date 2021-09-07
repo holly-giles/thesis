@@ -57,6 +57,8 @@ coeff.long.mat_Fig6 %>%
 
 ```{r NutlinPredictors, fig.cap='(ref:NutlinPredictors)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
+ggplot(mtcars)
+
 ```
 
 
