@@ -111,7 +111,7 @@ RNA data was taken from the PACE repository @PACE. For detailed explanaition of 
 ### Analysis of Screening Data
 #### Drug-drug and stimulus - stimulus correlations {#correlations}
 _myself_ original complete 
-Section \@ref(cytokine-profiling). Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the `cor` functions of the [@R-stats] package with log transformed viability values which were normalised to untreated controls.
+Section \@ref(cytokine-profiling). Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the `cor` functions of the [@R-base] package with log transformed viability values which were normalised to untreated controls.
 
 #### Characterising stimulus responses across all samples {#stimulus-heatmap-method}
 _myself_ original complete (just check)
@@ -135,7 +135,7 @@ RNA count data for matched samples was available for 49 patients and was transfo
 
 #### Linear modelling of drug - stimulus interactions {#drug-stimulus-linear-model-method}
 _myself_ original 
-Section \@ref(drug-stimulus-linear-model) Linear models were fitted for each drug - stimulus combination, to extract a $\beta{int}$ term and assossciated p value for each combinatorial treatment. Linear model was fitted using equation \@ref(eq:drugCytInt), using the `lm` function of the `R` package stats [@R-stats]:
+Section \@ref(drug-stimulus-linear-model) Linear models were fitted for each drug - stimulus combination, to extract a $\beta{int}$ term and assossciated p value for each combinatorial treatment. Linear model was fitted using equation \@ref(eq:drugCytInt), using the `lm` function of the `R` package stats [@R-base]:
     \begin{equation}
             log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{int}X_{drug}X_{stimulus} + \epsilon
                                        (\#eq:drugCytInt)
@@ -143,14 +143,30 @@ Section \@ref(drug-stimulus-linear-model) Linear models were fitted for each dru
     
 _where $V$ is the predicted viability with a given treatment,_ $\beta_{drug}$, $\beta_{stimulus}$ _and_ $\beta_{int}$ _are coefficients for the drug, stimulus and combinatorial terms and_ $X_{drug}$ _and_ $X_{stimulus}$  _are indicator variables (0 or 1) for the presence or absence of a drug/stimulus._ $\epsilon$ _is the vector of model residuals. Equation from Bruch & Giles et al. 2021._
 
-To fit model, the matrix of log-transformed viability values, for control, single and combinatorial treatments was used. Interactions were defined as significant if p value for $\beta{int}$ < 0.05. The matrix of significant $\beta{int}$ was then plotted as a heatmap, with the package `pheatmap`[@R-pheatmap] where the rows (stimuli) and columns (drugs) were ordered according to the dendrogram order produced by `hclust` [@R-stats] using default branch arrangement.
+To fit model, the matrix of log-transformed viability values, for control, single and combinatorial treatments was used. Interactions were defined as significant if p value for $\beta{int}$ < 0.05. The matrix of significant $\beta{int}$ was then plotted as a heatmap, with the package `pheatmap`[@R-pheatmap] where the rows (stimuli) and columns (drugs) were ordered according to the dendrogram order produced by `hclust` [@R-base] using default branch arrangement.
 
-To define the four interaction categories, drug - stimulus combinations were first divided with respect to the sign of $\beta{int}$, whereby a positive $\beta{int}$ indicates that the viability with combinatorial treatment is higher than would be expected based on additive effects alone and vice versa. The groups were further divided into synergies and antagonisms according to the values of the model coefficients ($\beta{drug}$, $\beta{stimulus}$ and $\beta{int}$). Synergisms were assigned when coefficients for single treatments ($\beta{drug}$ and $\beta{stimulus}$) were both greater than, or both less than, the observed coefficient for the combinatorial treatment (i.e. $\beta{drug}$ + $\beta{stimulus}$ + $\beta{int}$). For positive antagonisms, $\beta{drug}$ + $\beta{stimulus}$ + $\beta{int}$ was less than either $\beta{drug}$ or $\beta{stimulus}$. For negative antagonisms,  $\beta{drug}$ + $\beta{stimulus}$ + $\beta{int}$ was greater than either $\beta{drug}$ or $\beta{stimulus}$. All drug - stimulus interactions, for which p value for $\@beta{int}$ <0.05 fit into one of these groups. 
+To define the four interaction categories, drug - stimulus combinations were first divided with respect to the sign of $\beta{int}$, whereby a positive $\beta{int}$ indicates that the viability with combinatorial treatment is higher than would be expected based on additive effects alone and vice versa. The groups were further divided into synergies and antagonisms according to the values of the model coefficients ($\beta{drug}$, $\beta{stimulus}$ and $\beta{int}$). Synergisms were assigned when coefficients for single treatments ($\beta{drug}$ and $\beta{stimulus}$) were both greater than, or both less than, the observed coefficient for the combinatorial treatment (i.e. $\beta{drug}$ + $\beta{stimulus}$ + $\beta{int}$). For positive antagonisms, $\beta{drug}$ + $\beta{stimulus}$ + $\beta{int}$ was less than either $\beta{drug}$ or $\beta{stimulus}$. For negative antagonisms,  $\beta{drug}$ + $\beta{stimulus}$ + $\beta{int}$ was greater than either $\beta{drug}$ or $\beta{stimulus}$. All drug - stimulus interactions, for which p value for $\beta{int}$ <0.05 fit into one of these groups. 
 
 #### Modelling of drug - stimulus - gene interactions {#drug-stimulus-gene-interactions-method}
 _myself_ original 
 Section \@ref(drug-stimulus-gene-interactions). To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package `glmnet`[@R-glmnet]. As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used,  using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
 
+Equation \@ref(eq:drugCytGeneInt) quantifies how the viability with any combination can be predicted:
+    \begin{equation}
+            log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{patient}X_{patient} + \beta_{drug-stimulus}X_{drug}X_{stimulus} + \beta_{drug-patient}X_{drug}X_{patient} + \beta_{stimulus-patient}X_{stimulus}X_{patient} +\beta_{int}X_{drug}X_{stimulus}X_{patient} + \epsilon
+                                       (\#eq:drugCytGeneInt)
+    \end{equation}
+    
+_where $V$ is the predicted viability of a patient sample with a given treatment,_ $\beta_{drug}$, $\beta_{stimulus}$,$\beta_{int}$, $\beta_{drug-stimulus}$,$\beta_{drug-patient}$,$\beta_{drug-stimulus}$ _and_ $\beta_{int}X_{drug}$ _are regression coefficients for the drug, stimulus, patient sample and combinatorial terms and_ $X_{drug}$, $X_{stimulus}$ _and_ $X_{patient}$ _are indicator variables (0 or 1) for the presence or absence of a drug/stimulus/patient sample._ $\epsilon$ _is the vector of model residuals. See also Methods section \@ref(drug-stimulus-gene-interactions-method). Equation from Bruch & Giles et al. 2021._
+
+This generates a higher order interaction term $\beta_{int}X_{drug}X_{stimulus}X_{patient}$. This term represents a _patient sample-specific_ $\beta{int}$ for each drug - stimulus combination, quantifying the size of an interaction between a drug and stimulus in each patient genetic background. 
+
+With these patient sample-specific $\beta{int}$ terms, it was possible to search for associations between the size of $\beta_{int}$) and genetic features. The aim was to screen for molecular features that increased or decreased the size of a drug - stimulus interactions, using multivariate regression with L1 (lasso) regularisation.
+
+As input to the model, the response matrix was composed of the sample - specific $\beta_{int}$ values for each drug-stimulus combination. To generate the feature matrix (137 samples versus 40 features), I excluded genetic features for which >20\% of the values were missing, and  patient samples with incomplete annotation. As predictors, I included genetic mutations and CNVs (p=39) and IGHV status (coded as 0-1). I ran lasso regression, as implemented in the `R` package `glmnet`[@R-glmnet], using three-fold cross-validation with misclassification error as loss. The resulting predictors are the mean of those coefficients that were selected in at least 90% of 30 bootstrapped repeats. 
+
+
+^elaborate? 
 ### Follow up 
 #### Lympocyte doubling times {#LDT-method}
 _Herbst et al., 2020c_ - update
