@@ -1594,6 +1594,9 @@ NOS pathway
 TLR - wahts going on in vivo, is it reallyhaving thhis bipolar effect in vivo
 Flduarabine response - does this help to explain - more work needed 
 
+In Vitro Sensitivity of CLL Cells to Fludarabine May Be Modulated by the Stimulation of Toll-like Receptors
+Eleonora Fonte
+
 IL4-induced resistance- this is clearly important accross a rnage of drufs adn genetic background, more needed in vivo, possible combintatorial therapies
 
 in other cancers we shoudl integrate drugs - stimul and genetics 
@@ -1601,6 +1604,19 @@ in other cancers we shoudl integrate drugs - stimul and genetics
 flurdarabine and Cpg, different outcomes in IGHV M and U patients 
 
 the imrpotatnce of IL4 in all patietn backgrounds 
+
+
+TLR Signaling Is Activated in Lymph Node–Resident CLL Cells and Is Only Partially Inhibited by Ibrutinib
+Eman L. Dadashian
+https://cancerres.aacrjournals.org/content/79/2/360.short
+
+There are models to investigate ibrutinib resistance in vivo, but they are lacking in for ME: 
+ Development and characterization of prototypes for in vitro and in vivo mouse models of ibrutinib-resistant CLL
+Burcu Aslan
+
+
+also check out discussion from :https://www.sciencedirect.com/science/article/pii/S0006497119402206
+
 
 ## Contributions Statement
 The author of this thesis performed the statistical inference and regression modelling outlined in this chapter. In essence, she conceptualised and performed the linear modelling and multivariate modelling in Equations .... In addition, she  performed univariate analysis of genetic determinants of drug response and data visualisation and investigation of hits. 
