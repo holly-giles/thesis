@@ -22,6 +22,11 @@ library(ggplot2)
 (theoretical background)
 ## CLL Disease biology 
 
+Newest review:  
+Chronic Lymphocytic Leukemia
+Nicholas Chiorazzi  1 , Shih-Shih Chen  1 , Kanti R Rai  2
+PMID: 32229611 PMCID: PMC7849345 (available on 2023-02-01) DOI: 10.1101/cshperspect.a035220 
+
 ### Disease Characteristcs
 CD5, CD19, CD23+, lowlevelsofCD20 
 
@@ -59,6 +64,15 @@ The
 
 ### IGHV status and the role of BCR signalling
 
+is evelated in teh lymph node: 
+HErndown et al
+
+https://ashpublications.org/blood/article/117/2/563/28102/The-lymph-node-microenvironment-promotes-B-cell
+
+
+both ighv types in vivo : 
+
+Expression of the BCR gene set did not appear to be significantly different between the 2 CLL subtypes. This was surprising, given the concept that M-CLL cells are anergized and reportedly do not respond to BCR stimulation in vitro.16  In contrast, our data suggested that in vivo, at least in the LN microenvironment, M-CLL cells do react to BCR engagement. To investigate this discrepancy, we stimulated PB CLL cells from 8 representative patients (4 UM-CLL, 4 M-CLL) using anti-IgM monoclonal antibody in vitro, and analyzed stimulation-induced gene expression changes. Across both CLL subtypes, 60 genes were up-regulated at least 2-fold (P < .01) within 6 hours of activation, and we summarized these into a “CLL-BCR signature” (Figure 3A). Almost all of the BCR target genes were more strongly up-regulated in UM-CLL than in M-CLL patients. Next we used flow cytometry to measure SYK activation in PB-derived CLL cells in response to BCR activation in vitro (Figure 3B-C). CLL cells of both subtypes and normal naive B cells showed rapid phosphorylation of SYK in response to IgM cross-linking, and at 8 and 15 minutes there was no difference between CLL cells of either subtype and normal B cells. However, at 45 minutes from BCR engagement, UM-CLL cells showed significantly higher p-SYK levels than M-CLL (P = .013). This prolonged activation of the signaling cascade in UM-CLL confirms reports by others,10  and can explain the stronger expression of BCR target genes in UM-CLL patients. Thus, PB-derived CLL cells of both subtypes are responsive to BCR engagement, activate SYK, and up-regulate BCR target genes.
 
 Reading: 
 REview: 
@@ -131,6 +145,24 @@ These included del(11q) and *ATM* ,
 del(17p) and *TP53*, 
 *SF3B1*. 
 
+
+Messmer et al 2005: 
+The clinical course of B-CLL patients varies widely. Patients can have stable disease, in terms of leukemic cell load and clinical symptoms, for a decade or longer (8). Several molecular correlates of poor clinical outcome have emerged in recent years. The absence of mutations in the Ig variable region genes of B-CLL clones has significant prognostic value, correlating with a poor outcome (9, 10). Expression of ζ chain–associated protein 70 kDa (ZAP-70) mRNA or protein (11, 12) and the presence of CD38 on the leukemic cell surface also presage poor outcome (9, 13–16). Several cytogenetic abnormalities (in particular, deletions at 17p13 and 11q22–23) are associated with unfavorable clinical courses, whereas a deletion at 13q14, in the absence of other abnormalities, bodes a slightly better clinical outcome (17). Finally, the doubling time of circulating B-CLL cells has prognostic value (18, 19) that may be applied in a clinically useful proliferation index (20, 21).
+
+8. Rai, K.R., and Patel, D.V. 1995. Chronic lymphocytic leukemia. In Hematology: basic principles and practice. R. Hoffman, E. Benz, and S. Shattil, editors. Churchill Livingstone. New York, New York, USA. 1308–1321.
+9. Damle RN, et al. Ig V gene mutation status and CD38 expression as novel prognostic indicators in chronic lymphocytic leukemia. Blood. 1999;94:1840–1847. [PubMed] [Google Scholar]
+10. Hamblin TJ, Davis Z, Gardiner A, Oscier DG, Stevenson FK. Unmutated Ig V(H) genes are associated with a more aggressive form of chronic lymphocytic leukemia. Blood. 1999;94:1848–1854. [PubMed] [Google Scholar]
+11. Wiestner A, et al. ZAP-70 expression identifies a chronic lymphocytic leukemia subtype with unmutated immunoglobulin genes, inferior clinical outcome, and distinct gene expression profile. Blood. 2003;101:4944–4951. [PubMed] [Google Scholar]
+12. Crespo M, et al. ZAP-70 expression as a surrogate for immunoglobulin-variable-region mutations in chronic lymphocytic leukemia. N. Engl. J. Med. 2003;348:1764–1775. [PubMed] [Google Scholar]
+13. Jelinek DF, et al. Analysis of clonal B-cell CD38 and immunoglobulin variable region sequence status in relation to clinical outcome for B-chronic lymphocytic leukaemia. Br. J. Haematol. 2001;115:854–861. [PubMed] [Google Scholar]
+14. Krober A, et al. V(H) mutation status, CD38 expression level, genomic aberrations, and survival in chronic lymphocytic leukemia. Blood. 2002;100:1410–1416. [PubMed] [Google Scholar]
+15. Hamblin TJ, et al. CD38 expression and immunoglobulin variable region mutations are independent prognostic variables in chronic lymphocytic leukemia, but CD38 expression may vary during the course of the disease. Blood. 2002;99:1023–1029. [PubMed] [Google Scholar]
+16. Ghia P, et al. The pattern of CD38 expression defines a distinct subset of chronic lymphocytic leukemia (CLL) patients at risk of disease progression. Blood. 2003;101:1262–1269. [PubMed] [Google Scholar]
+17. Dohner H, et al. Genomic aberrations and survival in chronic lymphocytic leukemia. N. Engl. J. Med. 2000;343:1910–1916. [PubMed] [Google Scholar]
+18. Montserrat E, Sanchez-Bisono J, Vinolas N, Rozman C. Lymphocyte doubling time in chronic lymphocytic leukaemia: analysis of its prognostic significance. Br. J. Haematol. 1986;62:567–575. [PubMed] [Google Scholar]
+19. Molica S, Alberti A. Prognostic value of the lymphocyte doubling time in chronic lymphocytic leukemia. Cancer. 1987;60:2712–2716. [PubMed] [Google Scholar]
+20. Simonsson B, Nilsson K. 3H-thymidine uptake in chronic lymphocytic leukaemia cells. Scand. J. Haematol. 1980;24:169–173. [PubMed] [Google Scholar]
+21. Simonsson B, Nilsson K, Terenius L, Glimelius B. Biochemical characteristics of chronic lymphocytic leukaemia. Glucocorticoid receptors, B and T lymphocyte surface markers, concanavalin A-induced agglutination and thymidine incorporation. Scand. J. Haematol. 1978;21:379–389. [PubMed] [Google Scholar]
 
 REading: 
 From Kipps et al: 
@@ -231,6 +263,14 @@ Methylation signatures can classify distinct clinical CLL subgroups69,74. As the
 
 
 ### The incompletely understood role of trisomy12 {#intro-trisomy12}
+Exploiting biological diversity and genomic aberrations in chronic lymphocytic leukemia
+Martina Seiffert
+, Sascha Dietrich
+, Alexander Jethwa
+, Hanno Glimm
+, Peter Lichter
+& Thorsten Zenz
+
 Bosch, F., Dalla-Favera, R. Chronic lymphocytic leukaemia: from genetics to treatment. Nat Rev Clin Oncol 16, 684–701 (2019). https://doi.org/10.1038/s41571-019-0239-8
 
 Trisomy 12 chronic lymphocytic leukemia expresses a unique set of activated and targetable pathways
@@ -316,47 +356,424 @@ We can now target the distinctive phenotypic or physiological features of CLL wi
 Research on leukaemia cell survival signalling pathways, such as those governed by interactions between leukaemia cells and cells or secreted factors within the microenvironment (FIG. 4), might identify pathways that are not affected by BCR inhibitors. For example, BCR inhibitors, such as ibrutinib, cannot block ROR1-dependent WNT5A signalling, which enhances CLL cell proliferation, migration and survival93; as such, antibodies that block ROR1-dependent signalling could potentially have synergistic activity when used in combination with BCR inhibitors203. Furthermore, the interaction between CLL cells and accessory cells in the microenvironment might enhance CLL cell expression of anti-apoptotic proteins other than BCL-2, such as MCL1, thereby contributing to therapy resistance. As such, the therapeutic use of a selective BCL-2 antagonist, such as venetoclax, might be more effective when used in combination with BCL-2 inhibitors161,162, which also interfere with the homing of CLL cells to the microenvironment. Conceivably, combination target therapy with agents that have synergistic activity will provide highly effective and potentially curative treatment of patients with CLL.
 
 ## The tumour microenvironment in CLL 
-Plan: read the burger review [x] 
-Read the thesis [x] 
-Copy in the important text and papers [x] 
-Do a final scan on google scholar = comprehensive 
-Read the important bits, copy the text
-Copy what's important into dicsussion / other parts ot the text 
 
 
-^today 
-Write
+Good progress 
+TOmorrow morning: 
+read for cell-cell contacts and colsuble facotrs, then sue sturcutre to writ ethis section
+Read for carssin and modelling in virore review then write 
 
-Repeat for each other section 
+Afternoon: 
+drugs response
 
-Also:
-include background on each pathway? or jsut a table? 
+Weekend: 
+reference 
 
-Reviews: 
-Newest revieww: 
-https://jhoonline.biomedcentral.com/articles/10.1186/s13045-021-01134-x 
+Next weeek: 
+full week to write other sections 
 
-Best review: Microenvironment interactions and B-cell receptor signaling in Chronic Lymphocytic Leukemia: Implications for disease pathogenesis and treatment☆
-lElisa ten HackenJan A.Burge 2016
-
-https://www.nature.com/articles/nrc3774
-The tumour microenvironment in B cell lymphomas
-David W. Scott & Randy D. Gascoyne
-
-Other reviews: 
-The microenvironment in mature B-cell malignancies: a target for new treatment strategies  
-Jan A. Burger,Blood (2009) 114 (16): 3367–3375.
-https://doi.org/10.1182/blood-2009-06-225326
-
-The microenvironment in chronic lymphocytic leukemia (CLL) and other B cell malignancies: Insight into disease biology and new targeted therapies 2014
-Jan A.Burger
-John G.Gribben
-https://doi.org/10.1016/j.semcancer.2013.08.011
-
-Nurture versus Nature: The Microenvironment in Chronic Lymphocytic Leukemia
-Jan A. Burger 2011
+Week after: 
+full wekk to check / add / proof 
 
 
+### The concept of the protective niche 
+#### Definition
+In addition to genetic aberrations, the tumour microenvironment is an important driver of disease pathogenesis in CLL. The term microenvironment encompasses the set of non-neoplastic cells within the lyphoid tissues, including the blood, bone marrow and lymph nodes, that provide survival signals to the tumour, leading to clonal expansion and drug resistance [@Burger2014][REFERENCE].  
+
+Over the last two decades, significant progress has been made in unravelling the complex cross talk that occurs between CLL cells and their microenvironment, and many of the important cellular and molecular components have been defined and studied. The malignant B cells circulate through the blood in a resting state, and follow checmokine gradients towards the lymph nodes to form "profileration centres", similar to germinal centres [@Herishanu2011][REFERENCE]. Studies using detuerated water lablelling have shown that up to 3% of the clone is actively proliferating within the lymph node [@MEssmer, Herndon]. Here they engange in a dialoge with mesenchymal stromal cells, nurselike cells (NLC) (or lymphoma-associated macrophages (LAM)), in concert with T cells, natural killer cells and components of the extracellular matrix [@Burger2014][REFERENCE]. Cell-cell contacts and soluble factors, including chemokines, integrins, cytokines and survival factors mediate this cross-talk, scentring on a number of important pathways including B cell receptor signalling and tissue homing chemokine receptors. FIGURE Cross-talk with teh non-neoplastic cells in the lymph node  shapes the transcriptiomic profile of the malginant B cells, and leads to upreagulation of the BCR pathway within the tumour cells [Herishaun 2011, mittal 2014] a central driver of CLL pathogenesis [BCR pathway in CLL]].  "(Auto-) antigens and/or autonomous mechanisms activate the B-cell receptor (BCR) and its downstream signaling cascade in secondary lymphatic tissues, playing a central pathogenetic role in CLL." [@tenHacken2016] The bone marrow is also knwon to be improtnat, though possibly more in protecitve form the cytotocs effects of thearpy than in profileration, as eivdecned by the fact that there is little CLL cell turnover within the marrow, whilst ex vivo BMSCs protect against drug toxicity.  [vanGent 2008 REFERENCE BMCSs] Gene expression changes are also less porunouced within the bone marrow, compared to the lymphe node.  [herdnon et al ]
+
+
+#### Evidence of importance
+The importance of the microenvironment in CLL pathogensis was first recognised in studies that showed CLL cells rapidly undergo apoptosis *in vitro*, whilst *ex vivo* CLL survival can be extended by stimulation or by co-cultere with nurse-like cells (NLCs) or mesenchymal bone marrow stromal cells (BMSCs) [Burger et al., 2000, Kurtova et al., 2009, Collins et al., 1989,Deaglio and Malavasi 2009, PUrroy] [REFERENCE]. This observation indicated that the ability of CLL to accumulate *in vivo* may be heavily dependent upon external stimulation, rather than purely cell-intrinsic features of the tumour. Since then, *in vitro* studies have also shown a number of cell types and soluble factors belonging to the microenvironment are capable of protecting the tumour cells from drugs and chemotherapeutic agents [ADD STUDIES FROM BELOW]. Many CLL patients continue harbour minimal residual disease, which eventually leads to relapse: it is believed that the tumour microenvironment provides a safe haven for the malignant B cells to shield from the effects of therapy, enabling this MRD [FIND A REFERENCE]. 
+
+### Pathways in microenvrionmental cross-talk
+Thus, components of the lymph nodes and bone marrow play a cirtical role in CLL pathogenesis.The cellcular compoents of these tissues are well-defined: 
+1. Nurse-like cell and mesenchymal stromal cells
+NLCs are dreived from monocytes: their critical role in CLL was first demosntrated by the observation that peripheral blood-derived monocytes differentiate into NLCs, and that these cells prolong CLL cell survival *ex vivo*. They are also found withithe lymphoid tissues of CLL patients, and activate  BCR and (NF-κB) signaling pathways, simular to that cell in CLL cells isoalted directly form lymph nodes.  Cross-talk is thought to occur via the induction of chemotaxis via chemokines C-X-C motif ligand 12 (CXCL12) [32] and CXCL13 [34], and via expression of TNF family members B-cell activating factor (BAFF) and a proliferation-inducing ligand (APRIL) [37].NLCs have also been shown to increase disease progression within CLL mouse models. 
+
+Nurse-like cell and mesenchymal stromal cells are .... MEsenchymal stem cells are also important. T cells and NK cells play a role in 
+
+Collectively these cell types interact via cell-cell contacts and souble factors. Cell-cell 
+
+
+
+Soluble factors. 
+
+
+^read the reeiw and write about these
+
+
+
+
+
+Burger et al. first described a critical involvement of monocytes in supporting CLL with the 
+observation  that  PB  monocytes  co-cultured  with  CLL  cells  differentiate  into  ‘nurse-like  cells’ 
+that prolong leukemic cell survival (Burger et al. 2000). This in vitro model system has been 
+extensively used to examine the mechanisms by which monocytes and macrophages support 
+leukemia  cells.  For  example,  NLCs  attract  and  enhance  CLL  cell  survival  via  secretion  of 
+chemokines CXCL12 and CXCL13, as well as through BAFF and APRIL expression (Burger 
+et al. 2000; Nishio et al. 2005; Burkle et al. 2007)
+
+
+NLCs represent a critical component of the CLL microenvironment (Figure 1 and Table 1). 
+NLCs are cells of monocytic origin, which spontaneously differentiate in vitro from 
+monocytes in high-density cultures of CLL peripheral blood mononuclear cells [32] and 
+which can be found in situ in lymphoid organs from CLL patients [33, 34]. Gene expression 
+profile analyses of CLL cells after CLL-NLC co-culture showed that NLCs activate the 
+BCR and nuclear factor kappa B (NF-κB) signaling pathways in CLL cells [35]; similar 
+gene signatures were identified in CLL cells isolated from lymph nodes of patients [36], 
+demonstrating that NLCs are a valid model for studying the CLL microenvironment. NLCs 
+induce chemotaxis and promote survival of CLL cells through secretion of chemokines C-X-
+C motif ligand 12 (CXCL12) [32] and CXCL13 [34], and expression of TNF family 
+members B-cell activating factor (BAFF) and a proliferation-inducing ligand (APRIL) [37], 
+and they promote CLL disease progression in vivo in mouse models of CLL [38, 39]
+
+[32.] Burger JA, Tsukada N, Burger M, Zvaifler NJ, Dell’Aquila M, Kipps TJ. Blood-derived nurse-like cells protect chronic lymphocytic leukemia B cells from spontaneous apoptosis through stromal cell-derived factor-1. Blood. 2000;96:2655–2663. [PubMed] [Google Scholar]
+
+33. Tsukada N, Burger JA, Zvaifler NJ, Kipps TJ. Distinctive features of “nurselike” cells that differentiate in the context of chronic lymphocytic leukemia. Blood. 2002;99:1030–1037. [PubMed] [Google Scholar]
+
+34. Burkle A, Niedermeier M, Schmitt-Graff A, Wierda WG, Keating MJ, Burger JA. Overexpression of the CXCR5 chemokine receptor, and its ligand, CXCL13 in B-cell chronic lymphocytic leukemia. Blood. 2007;110:3316–3325. [PubMed] [Google 
+Scholar]
+35. Burger JA, Quiroga MP, Hartmann E, Burkle A, Wierda WG, Keating MJ, Rosenwald A. High-level expression of the T-cell chemokines CCL3 and CCL4 by chronic lymphocytic leukemia B cells in nurselike cell cocultures and after BCR stimulation. Blood. 2009;113:3050–3058. [PMC free article] [PubMed] [Google Scholar]
+36. Herishanu Y, Perez-Galan P, Liu D, Biancotto A, Pittaluga S, Vire B, Gibellini F, Njuguna N, Lee E, Stennett L, Raghavachari N, Liu P, McCoy JP, Raffeld M, Stetler-Stevenson M, Yuan C, Sherry R, Arthur DC, Maric I, White T, Marti GE, Munson P, Wilson WH, Wiestner A. The lymph node microenvironment promotes B-cell receptor signaling, NF-kappaB activation, and tumor proliferation in chronic lymphocytic leukemia. Blood. 2011;117:563–574.
+
+
+From LLD phd thesis: 
+Burger et al. first described a critical involvement of monocytes in supporting CLL with the 
+observation  that  PB  monocytes  co-cultured  with  CLL  cells  differentiate  into  ‘nurse-like  cells’ 
+that prolong leukemic cell survival (Burger et al. 2000). This in vitro model system has been 
+extensively used to examine the mechanisms by which monocytes and macrophages support 
+leukemia  cells.  For  example,  NLCs  attract  and  enhance  CLL  cell  survival  via  secretion  of 
+chemokines CXCL12 and CXCL13, as well as through BAFF and APRIL expression (Burger 
+et al. 2000; Nishio et al. 2005; Burkle et al. 2007)
+
+Nurse like cells: chronic lymphocytic leukemia associated macrophages
+Frédéric Boissard https://doi.org/10.3109/10428194.2014.991731 
+
+
+each type: 
+[@tenHacken2016]
+1. Nurselike cells and mesenchymal stromal cells
+NLCs represent a critical component of the CLL microenvironment (Figure 1 and Table 1). 
+NLCs are cells of monocytic origin, which spontaneously differentiate in vitro from 
+monocytes in high-density cultures of CLL peripheral blood mononuclear cells [32] and 
+which can be found in situ in lymphoid organs from CLL patients [33, 34]. Gene expression 
+profile analyses of CLL cells after CLL-NLC co-culture showed that NLCs activate the 
+BCR and nuclear factor kappa B (NF-κB) signaling pathways in CLL cells [35]; similar 
+gene signatures were identified in CLL cells isolated from lymph nodes of patients [36], 
+demonstrating that NLCs are a valid model for studying the CLL microenvironment. NLCs 
+induce chemotaxis and promote survival of CLL cells through secretion of chemokines C-X-
+C motif ligand 12 (CXCL12) [32] and CXCL13 [34], and expression of TNF family 
+members B-cell activating factor (BAFF) and a proliferation-inducing ligand (APRIL) [37], 
+and they promote CLL disease progression in vivo in mouse models of CLL [38, 39]
+
+[32.] Burger JA, Tsukada N, Burger M, Zvaifler NJ, Dell’Aquila M, Kipps TJ. Blood-derived nurse-like cells protect chronic lymphocytic leukemia B cells from spontaneous apoptosis through stromal cell-derived factor-1. Blood. 2000;96:2655–2663. [PubMed] [Google Scholar]
+
+33. Tsukada N, Burger JA, Zvaifler NJ, Kipps TJ. Distinctive features of “nurselike” cells that differentiate in the context of chronic lymphocytic leukemia. Blood. 2002;99:1030–1037. [PubMed] [Google Scholar]
+
+34. Burkle A, Niedermeier M, Schmitt-Graff A, Wierda WG, Keating MJ, Burger JA. Overexpression of the CXCR5 chemokine receptor, and its ligand, CXCL13 in B-cell chronic lymphocytic leukemia. Blood. 2007;110:3316–3325. [PubMed] [Google 
+Scholar]
+35. Burger JA, Quiroga MP, Hartmann E, Burkle A, Wierda WG, Keating MJ, Rosenwald A. High-level expression of the T-cell chemokines CCL3 and CCL4 by chronic lymphocytic leukemia B cells in nurselike cell cocultures and after BCR stimulation. Blood. 2009;113:3050–3058. [PMC free article] [PubMed] [Google Scholar]
+36. Herishanu Y, Perez-Galan P, Liu D, Biancotto A, Pittaluga S, Vire B, Gibellini F, Njuguna N, Lee E, Stennett L, Raghavachari N, Liu P, McCoy JP, Raffeld M, Stetler-Stevenson M, Yuan C, Sherry R, Arthur DC, Maric I, White T, Marti GE, Munson P, Wilson WH, Wiestner A. The lymph node microenvironment promotes B-cell receptor signaling, NF-kappaB activation, and tumor proliferation in chronic lymphocytic leukemia. Blood. 2011;117:563–574.
+
+
+From LLD phd thesis: 
+Burger et al. first described a critical involvement of monocytes in supporting CLL with the 
+observation  that  PB  monocytes  co-cultured  with  CLL  cells  differentiate  into  ‘nurse-like  cells’ 
+that prolong leukemic cell survival (Burger et al. 2000). This in vitro model system has been 
+extensively used to examine the mechanisms by which monocytes and macrophages support 
+leukemia  cells.  For  example,  NLCs  attract  and  enhance  CLL  cell  survival  via  secretion  of 
+chemokines CXCL12 and CXCL13, as well as through BAFF and APRIL expression (Burger 
+et al. 2000; Nishio et al. 2005; Burkle et al. 2007)
+
+Nurse like cells: chronic lymphocytic leukemia associated macrophages
+Frédéric Boissard https://doi.org/10.3109/10428194.2014.991731 
+
+2. Mesenchymal stromal cells
+Mesenchymal stromal cells, such as bone marrow stromal cells (BMSCs), are “feeder” 
+layers for normal hematopoietic progenitor cells and contribute to normal bone marrow 
+architecture. Mesenchymal stromal cells are also commonly found in secondary lymphatic 
+tissues of CLL patients [47], where they provide survival and migration signals to CLL cells 
+(Figure 1 and Table 1). CLL cells are protected from spontaneous and drug-induced 
+apoptosis by direct contact with BMSCs [48, 49], and they are able to co-opt and disrupt 
+normal bone marrow architecture [50]. Stromal cells constitutively secrete chemokines, 
+which organize CLL-cell trafficking and tissue homing [51], and provide additional signals 
+that support CLL survival and promote drug resistance. BMSCs induce up-regulation of 
+aggressive disease markers in CLL cells, including ZAP70 and CD38, as well as down-
+regulation of C-X-C motif receptor 4 (CXCR4) [52]. BMSCs have also been recently shown 
+to down-modulate CD20 expression from the surface of CLL cells [53], with implications 
+for resistance to anti-CD20 antibody treatment. In addition, stromal cells promote 
+glutathione synthesis in CLL cells [54], and induce glycolysis through NOTCH-mediated c-
+MYC activation, thus promoting cell survival and drug resistance [55]
+
+47. Ruan J, Hyjek E, Kermani P, Christos PJ, Hooper AT, Coleman M, Hempstead B, Leonard JP, Chadburn A, Rafii S. Magnitude of stromal hemangiogenesis correlates with histologic subtype of non-Hodgkin’s lymphoma. Clinical cancer research: an official journal of the American Association for Cancer Research. 2006;12:5622–5631. [PubMed] [Google Scholar]
+48. Lagneaux L, Delforge A, Bron D, De Bruyn C, Stryckmans P. Chronic lymphocytic leukemic B cells but not normal B cells are rescued from apoptosis by contact with normal bone marrow stromal cells. Blood. 1998;91:2387–2396. [PubMed] [Google Scholar]
+49. Kurtova AV, Balakrishnan K, Chen R, Ding W, Schnabl S, Quiroga MP, Sivina M, Wierda WG, Estrov Z, Keating MJ, Shehata M, Jager U, Gandhi V, Kay NE, Plunkett W, Burger JA. Diverse marrow stromal cells protect CLL cells from spontaneous and drug-induced apoptosis: development of a reliable and reproducible system to assess stromal cell adhesion-mediated drug resistance. Blood. 2009;114:4441–4450. [PMC free article] [PubMed] [Google Scholar]
+50. Janel A, Dubois-Galopin F, Bourgne C, Berger J, Tarte K, Boiret-Dupre N, Boisgard S, Verrelle P, Dechelotte P, Tournilhac O, Berger MG. The chronic lymphocytic leukemia clone disrupts the bone marrow microenvironment. Stem cells and development. 2014;23:2972–2982. [PubMed] [Google Scholar]
+51. Burger JA, Ghia P, Rosenwald A, Caligaris-Cappio F. The microenvironment in mature B-cell malignancies: a target for new treatment strategies. Blood. 2009;114:3367–3375. [PMC free article] [PubMed] [Google Scholar]
+52. Purroy N, Abrisqueta P, Carabia J, Carpio C, Palacio C, Bosch F, Crespo M. Co-culture of primary CLL cells with bone marrow mesenchymal cells, CD40 ligand and CpG ODN promotes proliferation of chemoresistant CLL cells phenotypically comparable to those proliferating in vivo. Oncotarget. 2015;6:7632–7643. [PMC free article] [PubMed] [Google Scholar]
+53. Marquez ME, Hernandez-Uzcategui O, Cornejo A, Vargas P, Da Costa O. Bone marrow stromal mesenchymal cells induce down regulation of CD20 expression on B-CLL: implications for rituximab resistance in CLL. British journal of haematology. 2015;169:211–218. [PubMed] [Google Scholar]
+54. Zhang W, Trachootham D, Liu J, Chen G, Pelicano H, Garcia-Prieto C, Lu W, Burger JA, Croce CM, Plunkett W, Keating MJ, Huang P. Stromal control of cystine metabolism promotes cancer cell survival in chronic lymphocytic leukaemia. Nature cell biology. 2012;14:276–286. [PMC free article] [PubMed] [Google Scholar]
+55. Jitschin R, Braun M, Qorraj M, Saul D, Le Blanc K, Zenz T, Mougiakakos D. Stromal cell-mediated glycolytic switch in CLL-cells involves Notch-c-Myc signaling. Blood. 2015 Epub ahead of print. [PubMed] [Google Scholar]
+
+LLD Phd THesis: 
+The majority of studies investigating the role of stromal cells in CLL have been performed 
+using BMSCs. These cells provide attachment and growth factors in in vitro co-cultures with 
+CLL  cells  via  the  CXCR4-CXCL12  axis,  and  protect  CLL  cells  from  spontaneous  and  drug-
+induced apoptosis (Panayiotidis et al. 1996; Lagneaux et al. 1998; Burger et al. 1999; Kurtova 
+et  al.  2009).  Other  cytokines,  chemokines,  proangiogenic  factors,  and  extracellular  matrix 
+components secreted by mesenchymal cells promote CLL cell migration and survival. These 
+include integrins b1 and b2, vascular cell adhesion molecule 1 (VCAM1), VEGF, and MMP9 
+(Lagneaux et al. 1998; de la Fuente et al. 2002; Ringshausen et al. 2004; Redondo-Munoz et 
+al. 2006; Gehrke et al. 2011). Importantly, the interaction between CLL cells and stromal cells 
+results  in  the  activation  of  both  cell  types  and  induces  the  release  of  C-C  motif  chemokine 
+ligand (CCL) 3 (CCL3) and CCL4 by CLL cells for the recruitment of other leukocytes like T-
+cells (Burger et al. 2009; Ding et al. 2009).
+
+Panayiotidis P, Jones D, Ganeshaguru K, Foroni L, Hoffbrand AV. 1996. Human bone marrow 
+stromal  cells  prevent  apoptosis  and  support  the  survival  of  chronic  lymphocytic 
+leukaemia cells in vitro. Br J Haematol 92: 97-103.
+
+Burger JA, Burger M, Kipps TJ. 1999. Chronic lymphocytic leukemia B cells express functional 
+CXCR4  chemokine  receptors  that  mediate  spontaneous  migration  beneath  bone 
+marrow stromal cells. Blood 94: 3658-3667. 
+
+Kurtova AV, Balakrishnan K, Chen R, Ding W, Schnabl S, Quiroga MP, Sivina M, Wierda WG, 
+Estrov Z, Keating MJ et al. 2009. Diverse marrow stromal cells protect CLL cells from 
+spontaneous and drug-induced apoptosis: development of a reliable and reproducible 
+system  to  assess  stromal  cell  adhesion-mediated  drug  resistance.  Blood  114:  4441-
+4450
+
+de la Fuente MT, Casanova B, Moyano JV, Garcia-Gila M, Sanz L, Garcia-Marco J, Silva A, 
+Garcia-Pardo A. 2002. Engagement of alpha4beta1 integrin by fibronectin induces in 
+vitro resistance of B chronic lymphocytic leukemia cells to fludarabine. J Leukoc Biol 
+71: 495-502.
+
+Ringshausen  I,  Dechow  T,  Schneller  F,  Weick  K,  Oelsner  M,  Peschel  C,  Decker  T.  2004. 
+Constitutive  activation  of  the  MAPkinase  p38  is  critical  for  MMP-9  production  and 
+survival of B-CLL cells on bone marrow stromal cells. Leukemia 18: 1964-1970.
+
+Redondo-Munoz J, Escobar-Diaz E, Samaniego R, Terol MJ, Garcia-Marco JA, Garcia-Pardo 
+A. 2006. MMP-9 in B-cell chronic lymphocytic leukemia is up-regulated by alpha4beta1 
+integrin  or  CXCR4  engagement  via  distinct  signaling  pathways,  localizes  to 
+podosomes, and is involved in cell invasion and migration. Blood 108: 3143-3151.
+
+Gehrke  I,  Gandhirajan  RK,  Poll-Wolbeck  SJ,  Hallek  M,  Kreuzer  KA.  2011.  Bone  marrow 
+stromal  cell-derived  vascular  endothelial  growth  factor  (VEGF)  rather  than  chronic 
+lymphocytic leukemia (CLL) cell-derived VEGF is essential for the apoptotic resistance 
+of cultured CLL cells. Mol Med 17: 619-627.
+
+c) Endothelial cells and follicular dendritic cells
+Additional cellular elements in the CLL microenvironment include endothelial cells and 
+follicular dendritic cells (FDCs) (Figure 1 and Table 1), which are essential for tissue 
+homing and CLL retention to tissues. Adhesion to microvascular endothelial cells promotes 
+CLL survival, activation and drug resistance [59–63]. CLL cells bind to β1 and β2 integrins 
+[62] and to BAFF and APRIL on the surface of microvascular endothelial cells [60]. In 
+addition, endothelin 1 (ET-1) engagement on CLL cells by endothelin subtype A receptor 
+(ETAR) on endothelial cells promotes CLL survival and drug resistance, which can be 
+blocked by ETAR inhibition [63]. In vitro culture with FDCs rescues CLL cells from 
+spontaneous apoptosis by direct cell contact, dependent on ligation of CD44 on CLL cells 
+and subsequent up-regulation of myeloid cell leukemia 1 (MCL1), a member of the BCL2 
+family of anti-apoptotic proteins [64]. 
+
+59. Badoux X, Bueso-Ramos C, Harris D, Li P, Liu Z, Burger J, O’Brien S, Ferrajoli A, Keating MJ, Estrov Z. Cross-talk between chronic lymphocytic leukemia cells and bone marrow endothelial cells: role of signal transducer and activator of transcription 3. Human pathology. 2011;42:1989–2000. [PMC free article] [PubMed] [Google Scholar]
+60. Cols M, Barra CM, He B, Puga I, Xu W, Chiu A, Tam W, Knowles DM, Dillon SR, Leonard JP, Furman RR, Chen K, Cerutti A. Stromal endothelial cells establish a bidirectional crosstalk with chronic lymphocytic leukemia cells through the TNF-related factors BAFF, APRIL, and CD40L. Journal of immunology. 2012;188:6071–6083. [PMC free article] [PubMed] [Google Scholar]
+61. Hamilton E, Pearce L, Morgan L, Robinson S, Ware V, Brennan P, Thomas NS, Yallop D, Devereux S, Fegan C, Buggins AG, Pepper C. Mimicking the tumour microenvironment: three different co-culture systems induce a similar phenotype but distinct proliferative signals in primary chronic lymphocytic leukaemia cells. British journal of haematology. 2012;158:589–599. [PubMed] [Google Scholar]
+62. Maffei R, Fiorcari S, Bulgarelli J, Martinelli S, Castelli I, Deaglio S, Debbia G, Fontana M, Coluccio V, Bonacorsi G, Zucchini P, Narni F, Torelli G, Luppi M, Marasca R. Physical contact with endothelial cells through beta1- and beta2- integrins rescues chronic lymphocytic leukemia cells from spontaneous and drug-induced apoptosis and induces a peculiar gene expression profile in leukemic cells. Haematologica. 2012;97:952–960. [PMC free article] [PubMed] [Google Scholar]
+63. Maffei R, Bulgarelli J, Fiorcari S, Martinelli S, Castelli I, Valenti V, Rossi D, Bonacorsi G, Zucchini P, Potenza L, Vallisa D, Gattei V, Poeta GD, Forconi F, Gaidano G, Narni F, Luppi M, Marasca R. Endothelin-1 Promotes Survival and Chemoresistance in Chronic Lymphocytic Leukemia B Cells through ETA Receptor. PloS one. 2014;9:e98818. [PMC free article] [PubMed] [Google Scholar]
+64. Pedersen IM, Kitada S, Leoni LM, Zapata JM, Karras JG, Tsukada N, Kipps TJ, Choi YS, Bennett F, Reed JC. Protection of CLL B cells by a follicular dendritic cell line is dependent on induction of Mcl-1. Blood. 2002;100:1795–1801. [PubMed] [Google Scholar]
+65. Granziero L, Circosta P, Scielzo C, Frisaldi E, Stella S, Geuna M, Giordano S, Ghia P, Caligaris-Cappio F. CD100/Plexin-B1 interactions sustain proliferation and survival of normal and leukemic CD5+ B lymphocytes. Blood. 2003;101:1962–1969. 
+
+
+D) NK CELLS AND T CELLS 
+Interactions between CD40-expressing B cells and CD40 ligand (CD40L) on activated 
+CD4+ T cells are critical in the context of antigen presentation and induction of normal B-
+cell responses [67]. Similarly, activation of malignant B cells by CD40 ligation promotes 
+survival of CLL cells [68]
+[68] 68. Kitada S, Zapata JM, Andreeff M, Reed JC. Bryostatin and CD40-ligand enhance apoptosis resistance and induce expression of cell survival genes in B-cell chronic lymphocytic leukaemia. British journal of haematology. 1999;106:995–1004.
+
+ver the years, several studies have also reported defective NK-cell 
+function. Human leukocyte antigen G (HLA-G) molecule overexpression in the plasma of 
+CLL patients [78] induces NK-cell apoptosis and impairs NK-cell mediated cytotoxicity. 
+Reduced NK-cell cytotoxicity has been associated to low expression levels of the activating 
+receptors natural killer cell p30-related protein (NKp30) [79, 80] and natural killer group 2 
+member D (NKGD2) [81]; NK cells can also produce soluble BAFF, which interferes with 
+NK-cell mediated CLL cell lysis after rituximab administration [82], and show reduced 
+responses to the activating soluble BCL2-associated athanogene 6 (BAG6) ligand produced 
+by CLL cells [79]. Taken together, these findings indicate that both the T and NK-cell 
+compartments have overall reduced effector activities, which can explain the evasion of 
+CLL cells from immune-mediated destruction.
+
+78. Rizzo R, Audrito V, Vacca P, Rossi D, Brusa D, Stignani M, Bortolotti D, D’Arena G, Coscia M, Laurenti L, Forconi F, Gaidano G, Mingari MC, Moretta L, Malavasi F, Deaglio S. HLA-G is a component of the chronic lymphocytic leukemia escape repertoire to generate immune suppression: impact of the HLA-G 14 base pair (rs66554220) polymorphism. Haematologica. 2014;99:888–896. [PMC free article] [PubMed] [Google Scholar]
+79. Reiners KS, Topolar D, Henke A, Simhadri VR, Kessler J, Sauer M, Bessler M, Hansen HP, Tawadros S, Herling M, Kronke M, Hallek M, Pogge von Strandmann E. Soluble ligands for NK cell receptors promote evasion of chronic lymphocytic leukemia cells from NK cell anti-tumor activity. Blood. 2013;121:3658–3665. [PMC free article] [PubMed] [Google Scholar]
+80. Veuillen C, Aurran-Schleinitz T, Castellano R, Rey J, Mallet F, Orlanducci F, Pouyet L, Just-Landi S, Coso D, Ivanov V, Carcopino X, Bouabdallah R, Collette Y, Fauriat C, Olive D. Primary B-CLL resistance to NK cell cytotoxicity can be overcome in vitro and in vivo by priming NK cells and monoclonal antibody therapy. J Clin Immunol. 2012;32:632–646. [PubMed] [Google Scholar]
+81. Huergo-Zapico L, Acebes-Huerta A, Gonzalez-Rodriguez AP, Contesti J, Gonzalez-Garcia E, Payer AR, Villa-Alvarez M, Fernandez-Guizan A, Lopez-Soto A, Gonzalez S. Expansion of NK cells and reduction of NKG2D expression in chronic lymphocytic leukemia. Correlation with progressive disease. PloS one. 2014;9:e108326. [PMC free article] [PubMed] [Google Scholar]
+82. Wild J, Schmiedel BJ, Maurer A, Raab S, Prokop L, Stevanovic S, Dorfel D, Schneider P, Salih HR. Neutralization of (NK-cell-derived) B-cell activating factor by Belimumab restores sensitivity of chronic lymphoid leukemia cells to direct and Rituximab-induced NK lysis. Leukemia. 2015 Epub ahead of print. 
+
+#### Cell-cell contacts
+
+
+
+
+#### Soluble factors 
+
+
+
+
+#### Modelling these element
+MAny studies have attempted to model this cross-talk, throuhg various means. Each method has its advatnages. One strategy is to investigate indiciduale pathways in isolation, by stimulating CLL samples *ex vivo* in order to elucidate their impact on CLL survival and drug response. SO far, thsi mhas mostly been through low
+
+-throuhgput stuides, looking at one signal at a time. REFRENCE STUDIES, read reivew and crassini paper
+
+Other studies have sought to investgiate the whole repetoire of souble facotrs at once, by culturing stromal cells to generate conditioned mediuum in whcih CLL can be treated. 
+
+Lookin at stimuli in isolation makes it posisble to link casue and effect. Whats missing, however, is a systematic and broads-cale study of these pathways. In praticluar many lack an understanidng within an hetergoenous cohort. 
+
+Looking at simuli in isoaltion haas th eidadavangta teht the indluece of cell-cell contacts is lsot. THus many studies have sought to culute CLL cells with non-neoplatcis compoents on fhte mcironevironment, including stomral cells form teh bone marrow [cite paeprs] and T cells, or NLCs. USch stuides have proved invalubel in generating a more in vivo like conidtions, but make it harder to dissect indiviudal mechanisms/ 
+
+Finally other studies have attempted to model morerealsitically still, with some studies using scaffolds to mimic the strucutre, as well as cellular composition of the Mciroenvronietomnet, or other have generated in vivo models / 
+
+these have all contributed to an incereadin undertsanding of the improtance o the ME, leading to strategies to target. HOWever whats missing is/// 
+
+
+
+Review of ways to modeL : 
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7773937/ MUST READ 
+Modeling the Leukemia Microenviroment In Vitro
+Cristina Scielzo and Paolo Ghia
+
+What's the studies that have been done? what other approachs have people used
+1. individual pathways 
+This paper has study of each indificual pathway
+One strategy is to supplement CLL cell mono-cultures with specific signalling molecules known to be present in the respective niches to analyse their impact
+on cancer cells (Crassini et al., 2017). However, the addition of selected stimuli only probes the
+influence of specific pathways and cannot recapitulate the complexity of the microenvironment.
+
+Kyle Crassini, Yandong Shen, Stephen Mulligan & O. Giles Best (2016): Modeling the chronic lymphocytic leukemia microenvironment in vitro, Leukemia & Lymphoma, DOI: 10.1080/10428194.2016.1204654 To link to this article: http://dx.doi.org/10.1080/10428194.2016.1204654
+
+What similar screening studies have been performed: 
+
+AML paper :
+
+We hypothesized that a systematic analysis of factors within the leukemia microenvironment might provide an opportunity to find more broadly effective therapeutic targets in AML. By using a unique ex vivo screen, we evaluated cytokine-driven pathways that are critical in promoting or suppressing AML cell growth. Among the 94 cytokines tested, only a few—including IL-1, GM-CSF, IL-3, M-CSF, G-CSF, and TNF-α—profoundly stimulated growth; members of the TGF-β family suppressed the growth of AML cells. These results suggest that select secreted proteins in the microenvironment influence the expansion of leukemic progenitors. In addition, this study offers a platform to systematically evaluate a large number of extrinsic factors to identify pathways critical for disease survival using primary AML patient specimens.
+
+In a malignancy as genetically heterogeneous as AML, our use of in vitro functional screening to identify a unifying pattern of cytokine and growth-factor-driven pathway activation underscores the value of this type of assay in interrogating similar dilemmas in other genetically and molecularly complex malignancies. Furthermore, targeting aberrantly activated pathways in the tumor extrinsic environment may offer strategies to circumvent or mitigate the disease.
+
+siRNA KDs of cytokine genes to see impact on cross talk, secpficlaly T cell synapse formation: 
+https://www.sciencedirect.com/science/article/pii/S0006497119427663
+Functional Screening Studies Identify Combinational Activity of PD-L1 and CD200 In Mediating Dysfunctional T Cell Immunological Synapse Formation In Chronic Lymphocytic Leukemia
+
+
+NExt: 
+2. entire soluble factor repetoire: 
+study the influence of soluble components on CLL cells.
+For this, conditioned medium is produced from cells from the microenvironment and transferred
+to CLL mono-cultures. This model focuses on understanding the influence of the entire soluble
+microenvironment, rather than on dissecting individual pathways in an isolated setting.
+
+Studies using this: 
+
+HS5CM and drug response : 
+
+3. Cell-cell contacts
+Models using conditioned media take soluble factors into account, yet, they neglect the direct
+interactions through cell-cell contact, which are essential for leukemia cells (Bakker et al., 2016).
+Therefore, models using co-cultures of CLL and microenvironmental cells are indispensable to
+gain a more complete picture on the impact of non-malignant cells on leukemia cells. 
+
+Use different cell types: 
+a) T cells One major interaction partner of CLL cells are T-cells. Such studies have
+revealed that especially stimulation with CD40L and IL-21 contributes to T-cell induced prolif-
+eration of CLL cells (Pascutti et al., 2013). Instead of the direct usage of T-cells, CD40L can
+be expressed on the surface of fibroblasts to induce CD40-mediated signalling in CLL (Crassini
+et al., 2017). Even though the CD40/CD40L system is commonly used to simulate the microen-
+vironment, it again only relies on a single pathway to activate CLL cells.
+
+b) Nurse-like cells 
+Nurse-like cells have been first described by Burger et al. (2000) and protect CLL cells
+from spontaneous apoptosis. The cells spontaneously outgrow from cultures of peripheral blood
+mononuclear cells (PBMCs) and are of monocytic origin (Ten Hacken and Burger, 2016). Their
+protective effect on CLL cells has especially been attributed to the activation of BCR and NFκB
+within CLL cells upon co-culturing with nurse-like cells (Burger et al., 2009)
+cite: 
+Burger, J. A., Quiroga, M. P., Hartmann, E., B ̈urkle, A., Wierda, W. G., Keating, M. J. and
+Rosenwald, A. (2009). High-level expression of the T-cell chemokines CCL3 and CCL4 by
+chronic lymphocytic leukemia B cells in nurselike cell cocultures and after BCR stimulation.
+Blood 113, 3050–8.
+
+d) mimic the bone marrow wtih BMSCs: 
+To recapitulate the interactions of CLL with the bone marrow microenvironment, especially
+the influence of BMSCs needs to be taken into account. The first approaches into this direction
+have been taken by co-culturing primary mesenchymal stem cells (MSCs), isolated from bone
+marrow aspirates of donors, with CLL cells. These experiments have shown that MSCs generally
+protect CLL cells from spontaneous apoptosis ex-vivo through soluble factors and direct cell-cell
+contact (Lagneaux et al., 1998; Panayiotidis et al., 1996; Plander et al., 2011). As primary
+material is not readily available for all research groups and primary cells are in general more
+challenging to handle, multiple bone marrow derived stroma cell lines have been established from
+murine or human donors (Kurtova et al., 2009). Two of the most commonly used human bone
+marrow stroma cell lines are HS-5 and NKTert (Kawano et al., 2003; Roecklein and Torok-Storb,
+1995). Both cell lines have been shown to provide protection to CLL cells from spontaneous
+apoptosis, however, the effect of NKTert cells was especially pronounced (Balakrishnan et al.,
+2015; Cheng et al., 2014; Fiorcari et al., 2013; Guo et al., 2017; Kurtova et al., 2009; Vangapandu
+et al., 2018; Zhang et al., 2012). The cell lines have been widely used in many research studies
+and helped to gain valuable insights into how CLL and the bone marrow microenvironment
+interact. However, investigators should always be aware that these cell lines only represent
+artificial systems and that the obtained results should always be validated in other models
+
+cell - cell contact is essential for leukemia cells: 
+Bakker, E., Qattan, M., Mutti, L., Demonacos, C. and Krstic-Demonacos, M. (2016). The role
+of microenvironment and immunity in drug response in leukemia. Biochimica et Biophysica
+Acta 1863, 414–426
+
+Mimicking the tumour microenvironment: three different co-culture systems induce a similar phenotype but distinct proliferative signals in primary chronic lymphocytic leukaemia cells
+Emma Hamilton, Laurence Pearce, Liam Morgan, Sophie Robinson, Vicki Ware, Paul Brennan, N. Shaun B. Thomas, Deborah Yallop, Stephen Devereux, Chris Fegan, Andrea G. S. Buggins, Chris Pepper
+First published: 19 June 2012
+https://doi.org/10.1111/j.1365-2141.2012.09191.x
+
+
+
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4747215/
+Cross-talk between chronic lymphocytic leukemia (CLL) tumor B cells and mesenchymal stromal cells (MSCs): implications for neoplastic cell survival
+Valentina Trimarco,#1,2 Elisa Ave,#1,2 Monica Facco,1,2 Giorgia Chiodin,1,2 Federica Frezzato,1,2 Veronica Martini,1,2 Cristina Gattazzo,1,2 Federica Lessi,1 Carlo Alberto Giorgi,1 Andrea Visentin,1 Monica Castelli,1 Filippo Severin,1,2 Renato Zambello,1,2 Francesco Piazza,1,2 Gianpietro Semenzato,1,2 and Livio Trentin1
+
+with scaffolds: 
+Three-dimensional porous composite scaffolds for in vitro marrow microenvironment simulation to screen leukemia drug
+
+Zhi-Yu Shang5,1, Hao Sun5,2, Hong-Fei Xiang5,3, Jun Zhang6,1, Miao Yu1,4, Huai-Song Zhao1, Chun-Ting Zhao2 and Yun-Ze Long6,1
+
+in vivo: 
+in vivo in mice: 
+Modeling tumor–host interactions of chronic lymphocytic leukemia in xenografted mice to study tumor biology and evaluate targeted therapy
+
+ S E M Herman, X Sun, E M McAuley, M M Hsieh, S Pittaluga, M Raffeld, D Liu, K Keyvanfar, C M Chapman, J Chen, J J Buggy, G Aue, J F Tisdale, P Pérez-Galán & A Wiestner 
+
+See sectionn on mouse models of ME: 
+https://ashpublications.org/blood/article/124/7/1010/33626/Mouse-models-in-the-study-of-chronic-lymphocytic
+
+https://ashpublications.org/blood/article/119/21/4971/29934/Human-extramedullary-bone-marrow-in-mice-a-novel
+Human extramedullary bone marrow in mice: a novel in vivo model of genetically controlled hematopoietic microenvironment 
+
+THe type of BCR signalling is important: 
+Mimicking the tumour microenvironment of chronic lymphocytic leukaemia in vitro critically depends on the type of B-cell receptor stimulation
+
+    Ans Rombout, Sofie Lust, Fritz Offner, Evelien Naessens, Bruno Verhasselt & Jan Philippé
+
+whats misisng here is a one by one dissection. 
+
+with genetics
+NF-κB activation in chronic lymphocytic leukemia: A point of convergence of external triggers and intrinsic lesions
+https://www.sciencedirect.com/science/article/pii/S1044579X16300311?casa_token=IfC4bm0pVrYAAAAA:AaCfeETGlSJRllAPIzQOcv8a48vvnFmr9V125WI6_9ggFeUTbq3dr-1628CN3NXw3li9oQlgVw
+
+
+
+#### CUtting edge in vivo knowlsege? 
+
+
+### The impact  of the microenvrionemtn on drug response
+
+#### Examples
+
+#### Modelling 
 Structure:
 The ME is this
 It is important because
@@ -420,7 +837,17 @@ lymphocytic leukemia. Blood 117: 563-574.
 
 Messmer  BT,  Messmer  D,  Allen  SL,  Kolitz  JE,  Kudalkar  P,  Cesar  D,  Murphy  EJ,  Koduru  P, 
 Ferrarini M, Zupo S et al. 2005. In vivo measurements document the dynamic cellular 
-kinetics of chronic lymphocytic leukemia B cells. J Clin Invest 115: 755-764.
+kinetics of chronic lymphocytic leukemia B cells. J Clin Invest 115: 755-764.:
+
+. The prevailing view of B-CLL is that it is an accumulative disease (5)
+
+evidence supporting clonal evolution (7) suggest that this view may be too simplistic.
+
+These analyses demonstrated that the leukemic cells of each patient had definable and often substantial birth rates, varying from 0.1% to greater than 1.0% of the entire clone per day. Those patients with birth rates greater than 0.35% per day were much more likely to exhibit active or to develop progressive disease than those with lower birth rates Thus, B-CLL is not a static disease that results simply from accumulation of long-lived lymphocytes.
+
+5. Dameshek W. Chronic lymphocytic leukemia: an accumulative disease of immunolgically incompetent lymphocytes. Blood. 1967;29(Suppl.):566–584. [PubMed] [Google Scholar]
+
+7. Marti GE, et al. Evolution of leukemic heterogeneity of human B-CLL lymphocytes between and within patients. Curr. Top. Microbiol. Immunol. 1992;182:303–311. [PubMed] [Google Scholar]
 
 from Lemm phd thesis: 
 
@@ -444,6 +871,26 @@ importance  of  the  microenvironment  in  CLL  cell  recirculation  through  th
 microenvironment.  
 
 Woyach  et  al.,  2014,  Brown  et  al.,  2014b
+
+Herndon 2017: 
+
+Based on findings that CLL cells in LNs have increased expression of B-cell activation genes, we tested the hypothesis that the fraction of “newly born” cells would be highest in the LNs. Using a deuterium oxide (2H) in vivo labeling method in which patients consumed deuterated (heavy) water (2H2O), we determined CLL cell kinetics in concurrently obtained samples from LN, PB, and BM. The LN was identified as the anatomical site harboring the largest fraction of newly born cells, compared to PB and BM. In fact, the calculated birth rate in the LN reached as high a 3.3% of the clone per day. Subdivision of the bulk CLL population by flow cytometry identified the subpopulation with the CXCR4dimCD5bright phenotype as containing the highest proportion of newly born cells within each compartment, including the LN, identifying this subclonal population as an important target for novel treatment approaches.
+
+WOkr suggests that different cell pos[ublaitiosn contain different degrees of actively dividng cells 
+orignal by Mesmer
+
+From HErndon et al: 
+Proliferative or newly born CLL cells have been detected in PB, BM and LN, albeit of different clone sizes and with the use of different methodologies.10-13:
+
+
+identified distinct CLL subpopulations that contain variable fractions of these newly born cells.10-13
+
+
+10. Messmer BT, Messmer D, Allen SL, Kolitz JE, Kudalkar P, Cesar D, et al. In vivo measurements document the dynamic cellular kinetics of chronic lymphocytic leukemia B cells. J Clin Invest. 2005 Mar;115(3):755–764. [PMC free article] [PubMed] [Google Scholar]
+11. Defoiche J, Debacq C, Asquith B, Zhang Y, Burny A, Bron D, et al. Reduction of B cell turnover in chronic lymphocytic leukaemia. Br J Haematol. 2008 Oct;143(2):240–247. [PubMed] [Google Scholar]
+12. Hayes GM, Busch R, Voogt J, Siah IM, Gee TA, Hellerstein MK, et al. Isolation of malignant B cells from patients with chronic lymphocytic leukemia (CLL) for analysis of cell proliferation: Validation of a simplified method suitable for multi-center clinical studies. Leuk Res. 2009 Oct 23; [PMC free article] [PubMed] [Google Scholar]
+13. van Gent R, Kater AP, Otto SA, Jaspers A, Borghans JA, Vrisekoop N, et al. In vivo dynamics of stable chronic lymphocytic leukemia inversely correlate with somatic hypermutation levels and suggest no major leukemic turnover in bone marrow. Cancer Res. 2008 Dec 15;68(24):10137–10144. [PubMed] [Google Scholar]
+
 
 
 _description of the ME macro-scale_
@@ -496,15 +943,57 @@ Blood (2011) 117 (2): 377–378.
 https://doi.org/10.1182/blood-2010-11-314468
 
 Direct in vivo evidence for increased proliferation of CLL cells in lymph nodes compared to bone marrow and peripheral blood
-T M Herndon
+T M Herndon :
 
+tjis study takes matched PB. BM, LN samples and uses surface receptors to prove that profileration is highest in lymph node 
+
+Based on findings that CLL cells in LNs have increased expression of B-cell activation genes, we tested the hypothesis that the fraction of “newly born” cells would be highest in the LNs. Using a deuterium oxide (2H) in vivo labeling method in which patients consumed deuterated (heavy) water (2H2O), we determined CLL cell kinetics in concurrently obtained samples from LN, PB, and BM. The LN was identified as the anatomical site harboring the largest fraction of newly born cells, compared to PB and BM. In fact, the calculated birth rate in the LN reached as high a 3.3% of the clone per day. Subdivision of the bulk CLL population by flow cytometry identified the subpopulation with the CXCR4dimCD5bright phenotype as containing the highest proportion of newly born cells within each compartment, including the LN, identifying this subclonal population as an important target for novel treatment approaches.
+
+Herndon: 
+We recently showed that gene expression profiles of CLL cells in LNs are similar to those of activated, proliferating B-cells, while gene expression profiles of CLL cells present in the PB are similar to those of resting memory B-cells.14, 15
+
+14. Herishanu Y, Perez-Galan P, Liu D, Biancotto A, Pittaluga S, Vire B, et al. The lymph node microenvironment promotes B-cell receptor signaling, NF-kappaB activation, and tumor proliferation in chronic lymphocytic leukemia. Blood. 2011 Jan 13;117(2):563–574. [PMC free article] [PubMed] [Google Scholar]
+15. Klein U, Tu Y, Stolovitzky GA, Mattioli M, Cattoretti G, Husson H, et al. Gene Expression Profiling of B Cell Chronic Lymphocytic Leukemia Reveals a Homogeneous Phenotype Related to Memory B Cells. J Exp Med. 2001;194(11):1625–1638. [PMC free article] [PubMed] [Google Scholar]
 
 _bone marrow_
 the lymph node and the bone marrow Burger, J. A. and O’Brien, S. (2018). Evolution of CLL treatment — from chemoimmunotherapy to targeted and individualized therapy. Nature Reviews Clinical Oncology 15, 510–527 <- this isnt really the most direct 
 
 
 The bone marrow microenvironment and leukemia: biology and therapeutic targeting
-Edward Allan R Sison
+Edward Allan R Sison:
+
+Multiple studies have demonstrated that interaction with the bone marrow stromal microenvironment contributes to the survival of leukemia cells. One explanation for this phenomenon is the interaction between the cell surface receptors CXCR4 and CXCL12.  ie these are critical 
+
+leukemia cells migrate to microscopic niches within the bone marrow, which leads to increased proliferation and survival.
+
+Hematopoiesis occurs through a complex interplay between hematopoietic stem and progenitor cells, and supporting cells present in the bone marrow.
+
+on healthy bone marrow: 
+Supporting cells within each bone marrow niche produce soluble factors, molecules and ligands that interact with molecules and ligands on the surface of HSCs and hematopoietic progenitor cells (HPCs). 
+
+ For example, very late adhesion molecule-4 (VLA-4) ligand, vascular cell adhesion molecule-1 (VCAM-1) and E-selectin are molecules expressed by bone marrow endothelial cells [1]. Through ligand–receptor interactions, these molecules help to mediate adhesion of HSCs to the endothelium, and therefore help to retain HSCs within the bone marrow. 
+ 
+ Multiple studies have demonstrated that the interaction between CXCR4 and CXCL12 plays a critical role in the regulation of hematopoiesis. Newer studies have also suggested that this chemokine/receptor relationship is an important pathway in hematologic malignancies.
+ 
+ Multiple studies have demonstrated that interaction with bone marrow stromal cells contributes to the survival of leukemia cells both in vitro and in vivo.
+ 
+ Several studies have demonstrated that the survival of primary leukemic blasts can be supported by bone marrow stroma mono layers. One such study found that blasts from patients with B-lineage acute lymphoblastic leukemia (ALL) had an enormous survival advantage when cocultured with stroma versus when cultured in media alone [9]. Further experiments demonstrated that this survival advantage was contact-dependent, as blasts cultured in physical contact with stroma had higher rates of proliferation than blasts grown in permeable cell culture inserts hanging in a stroma-containing well or blasts grown in media alone [10]. These experiments suggest that both soluble factors and direct cell-cell interactions are critical in leukemia cell survival.
+ 
+ troma can also protect malignant cells from chemotherapy-induced death.
+ 
+  series of elegant experiments utilizing in vivo imaging demonstrated that leukemic cells specifically disrupt the niches of normal HSCs [18].
+  
+  8. Colmone A, Amorim M, Pontier AL, Wang S, Jablonski E, Sipkins DA. Leukemic cells create bone marrow niches that disrupt the behavior of normal hematopoietic progenitor cells. Science. 2008;322(5909):1861–1865. [PubMed] [Google Scholar]
+:
+  The host tissue microenvironment influences malignant cell proliferation and metastasis, but little is known about how tumor-induced changes in the microenvironment affect benign cellular ecosystems. Applying dynamic in vivo imaging to a mouse model, we show that leukemic cell growth disrupts normal hematopoietic progenitor cell (HPC) bone marrow niches and creates abnormal microenvironments that sequester transplanted human CD34+ (HPC-enriched) cells. CD34+ cells in leukemic mice declined in number over time and failed to mobilize into the peripheral circulation in response to cytokine stimulation. Neutralization of stem cell factor (SCF) secreted by leukemic cells inhibited CD34+ cell migration into malignant niches, normalized CD34+ cell numbers, and restored CD34+ cell mobilization in leukemic mice. These data suggest that the tumor microenvironment causes HPC dysfunction by usurping normal HPC niches and that therapeutic inhibition of HPC interaction with tumor niches may help maintain normal progenitor cell function in the setting of malignancy. 
+
+
+13. van Gent R, Kater AP, Otto SA, Jaspers A, Borghans JA, Vrisekoop N, et al. In vivo dynamics of stable chronic lymphocytic leukemia inversely correlate with somatic hypermutation levels and suggest no major leukemic turnover in bone marrow. Cancer Res. 2008 Dec 15;68(24):10137–10144. [PubMed] [Google Scholar]
+
+myabe protective againstdrugs but not invovled in poriflertation? 
+
+from herdnon et al: 
+Thus, the LN microenvironment appears to have a stronger effect on CLL cell activation than the BM microenvironment. <- this shows ene expression changes are not as strong in BM dereived cell sversus LN derived cells 
 
 _description on a micro scale (ie cell types)_
 [@tenHacken2016]
@@ -684,6 +1173,10 @@ CLL cells from immune-mediated destruction.
 
 
 _cutting edge of whats known about how it operates in vivo_ 
+A role of the tissue microenvironment in the pathogenesis of CLL is hypothesized based on in vitro observations, but its contribution in vivo remains ill-defined. Not much is knwon, Herishanu paper attempts to look at samples direclty form in vivo tissues and map gene expression:
+To elucidate the effects of tumor-host interactions in vivo, we purified tumor cells from 24 treatment-naive patients. Samples were obtained concurrently from blood, bone marrow, and/or LN and analyzed by gene expression profiling. 
+
+
 NLC cells in vivo:[@tenHacken2019]
 cNLCs an be found in situ in lymphoid organs from CLL patients [33, 34]. Gene expression 
 profile analyses of CLL cells after CLL-NLC co-culture showed that NLCs activate the 
@@ -754,20 +1247,25 @@ knitr::include_graphics("figures/microenvironmentTissues.eps")
 
 ```
 
-Post-lunch:
-add remaining papers below 
-Read and copy and paste things
-Start writing tomorrow 
 
 ### Microenvironmental pathways and cross-talk {#intro-ME-pathways}
+
+_BCr signalling is central_ 
+
+REveiws: 
 Review of pathways and what is missing: (use anything from this)
-Proliferative Signals in Chronic Lymphocytic Leukemia; What Are We Missing?
-Marco V. Haselager, 1 , 2 , 3 , 4 Arnon P. Kater, 3 , 4 , 5 and Eric Eldering 
+_Proliferative Signals in Chronic Lymphocytic Leukemia; What Are We Missing?_
+_Marco V. Haselager, 1 , 2 , 3 , 4 Arnon P. Kater, 3 , 4 , 5 and Eric Eldering_
 
 _these then interact via cell cell contacts and pathways_
 Importance of Crosstalk Between Chronic Lymphocytic Leukemia Cells and the Stromal Microenvironment: Direct Contact, Soluble Factors, and Extracellular Vesicles
 Nathan Dubois,1 Emerence Crompot,1 Nathalie Meuleman,1,2 Dominique Bron,1,2 Laurence Lagneaux,1 and Basile Stamatopoulos
 review of soluble factors and cell cell contacts coming from stomral cells 
+
+
+best reveiw dividing cell-cell contacts and soluble factors: 
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7466743/
+
 
 _cell-cell contacts_
 gneaux, L., Delforge, A., Bron, D., De Bruyn, C. and Stryckmans, P. (1998). Chronic lym-
@@ -779,7 +1277,7 @@ bone marrow stromal cells prevent apoptosis and support the survival of chronic 
 leukaemia cells in vitro. British Journal of Haematology 92, 97–103
 
 Herbst, S. A., Kim, V., Schitter, E., Roider, T., Bruch, P., Kolb, C., Knoll, M., Lu, J., H ̈ullein,
-J., von Kalle, C., Lutz, C., Dreger, P., M ̈uller-Tidow, C., Zenz, T., Huber, W. and Dietrich,
+J., von Kalle, C., Lutz, C., Dreger, P., M uller-Tidow, C., Zenz, T., Huber, W. and Dietrich,
 S. (2020a). The Influence of the Bone Marrow Niche on Drug Response Phenotypes of Blood
 Cancers. Manuscript in preparation.
 
@@ -787,9 +1285,6 @@ By providing these signals from the microenvironment to CLL cells cultured ex-vi
 apoptosis can be prevented. Thus, it has been shown that BMSCs, one of the most important
 interaction partners of B-cells in the bone marrow niche (Murphy, 2012), can rescue CLL cells
 from spontaneous apoptosis (Herbst et al., 2020a; Lagneaux et al., 1998; Panayiotidis et al.,1996
-
-best reveiw dividing cell-cell contacts and soluble factors: 
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7466743/
 
 _soluble factors_ 
 a refernce or two on each of the pathways included <- get from Peter 
@@ -813,22 +1308,19 @@ Finally, Notch signalling in response to Jagged, or Hedgehog signalling in respo
 97. De Falco F, et al. Notch signaling sustains the expression of Mcl-1 and the activity of eIF4E to promote cell survival in CLL. Oncotarget. 2015;6:16559–16572. [PMC free article] [PubMed] [Google Scholar]
 
 [77] The lymph node microenvironment promotes B-cell receptor signaling, NF-κB activation, and tumor proliferation in chronic lymphocytic leukemia 2011 10.1182/blood-2010-05-284984
-_cell-cell contacts_
 
 
-
-_soluble factors_
 what are the pahtwyas, what studies have been doen 
 Whats knwonc about each pathway: Modeling the chronic lymphocytic leukemia microenvironment in vitro
 Kyle Crassini, Yandong Shen, Stephen Mulligan & O. Giles Best (2016): Modeling the chronic lymphocytic leukemia microenvironment in vitro, Leukemia & Lymphoma, DOI: 10.1080/10428194.2016.1204654 To link to this article: http://dx.doi.org/10.1080/10428194.2016.1204654
 
 pathways esp IL4 and TLR    
 The microenvironment in CLL constitutes cross talk via soluble factors and cell-cell contacts, in the blood, bone marrow and lymph nodes.
-_BCr signalling is central_ 
-_other pathways_
-_cellcell contacts_
 
-_soluble factors_ 
+TLR: 
+ Expression and function of toll like receptors in chronic lymphocytic leukaemia cells
+Marta Muzio  1 , Cristina Scielzo, Maria T S Bertilaccio, Michela Frenquelli, Paolo Ghia, Federico Caligaris-Cappio
+
 
 For each - cover pathways activated and source 
 within proliferation centres, all CLL cells are exposed to chemokines, integrins, cytokines and survival factors (such as tumour necrosis factor (TNF) ligand super-family member 13B (also known as BAFF) or TNF ligand superfamily member 13 (also known as APRIL)), which activate canonical nuclear factor-κB (NF-κB)90, before they exit to the blood. Activation of NF-κB can induce the expression of mir-155, which enhances BCR signalling and activation by reducing the expression of INPP5D, which encodes SHIP1 (REF. 65). Cytokines that are secreted by T cells, such as IL-4, can upregulate surface IgM, which potentially facilitates the interaction of the CLL cell with autoantigen91. In addition, the elaboration of various WNT proteins by cells in the microenvironment can activate canonical and non-canonical WNT signalling pathways92,93. Activation of the tyrosine-kinase-like transmembrane receptor ROR1 by WNT5A can induce the activation of RAC1 and RHOA, and thereby enhance CLL cell proliferation and promote migration in response to chemokines93; in part, for this reason, high-level CLL cell expression of ROR1 is associated with accelerated disease progression94. Finally, Notch signalling in response to Jagged, or Hedgehog signalling in response to Sonic Hedgehog or Desert Hedgehog, can provide pro-survival stimulation for at least a subset of patients with CLL, particularly those with trisomy 12 (REFS 95–97).
@@ -887,7 +1379,6 @@ The functional in vitro response to CD40 ligation reflects a different clinical 
 TLR Signaling Is Activated in Lymph Node–Resident CLL Cells and Is Only Partially Inhibited by Ibrutinib
 Eman L. Dadashian
 https://cancerres.aacrjournals.org/content/79/2/360.short
-
 
 
 
@@ -1311,10 +1802,33 @@ Chemotherapy—Chemotherapy has been the mainstay of therapy for the past 50 yea
 Chemoimmunotherapy—Phase III clinical trials have validated the benefit of anti-CD20 monoclonal antibodies, such as rituximab, obinutuzumab or ofatumumab, in combination with chemotherapy for the treatment of patients with CLL. In one trial (the CLL8 trial of the German CLL Study Group), patients who received fludarabine and cyclophosphamide with rituximab had higher response rates and a longer median progression-free survival (PFS) than patients who were treated with fludarabine and cyclophosphamide133. In a separate study (the CLL11 trial), patients >65 years of age with medical comorbidities who were treated with chlorambucil and either obinutuzumab or rituximab had improved response rates and longer median PFS than patients who were treated with chlorambucil alone134. However, the median PFS was significantly longer for patients who received obinutuzumab (26.7 months) than in those who received rituximab (11.1 months). In a third phase III trial, median PFS significantly improved from 13.1 months for patients treated with chlorambucil to only 22.4 months for patients treated with chlorambucil and ofatumumab135. As a consequence of these three trials, the US FDA approved the use of rituximab, obinutuzumab or ofatumumab in combination with chemotherapy for the first-line treatment of patients with CLL. The FDA also approved the use of ofatumumab as a single agent for the treatment of patients with relapsed or refractory disease based on data from a phase II study136.
 
 _cutting edge of drug - cyt gene interactions_ 
+ Chronic lymphocytic leukemia and mantle cell lymphoma: crossroads of genetic and microenvironment interactions
+Xose S Puente  1   2 , Pedro Jares  2   3   4 , Elias Campo  2   3   4
+Affiliations
+
+    PMID: 29666114 DOI: 10.1182/blood-2017-10-764373 
 
 
 ### New Targeted therapies
 in particular Ibrutinib and idelalisib 
+
+Targeted Therapy in Chronic Lymphocytic Leukemia
+Thomas J Kipps  1 , Michael Y Choi
+PMID: 31764118 PMCID: PMC7039327 DOI: 10.1097/PPO.0000000000000416 
+
+Role of Bruton's tyrosine kinase in B cells and malignancies
+Simar Pal Singh  1   2   3 , Floris Dammeijer  1   3   4 , Rudi W Hendriks  5
+PMID: 29455639 PMCID: PMC5817726 DOI: 10.1186/s12943-018-0779-z 
+
+Critical molecular pathways in CLL therapy
+Gerardo Ferrer  1 , Emili Montserrat  2
+PMID: 30134797 PMCID: PMC6016889 DOI: 10.1186/s10020-018-0001-1 
+
+From Biology to Therapy: The CLL Success Story
+Deyan Y Yosifov  1   2 , Christine Wolf  1   2 , Stephan Stilgenbauer  1   3 , Daniel Mertens  1   2
+Affiliations
+
+    PMID: 31723816 PMCID: PMC6746030 DOI: 10.1097/HS9.0000000000000175 
 
 [@Kipps2017]
 Three main classes of drugs that each can inhibit BCR signalling have been evaluated in patients with CLL: BTK inhibitors, PI3K inhibitors and spleen tyrosine kinase (SYK) inhibitors86,143. CLL cells with unmutated IGHV seem to be more sensitive to inhibitors of BCR signalling than CLL cells with mutated IGHV144, but whether inhibitors, such as ibrutinib, are more effective in patients with CLL and unmutated IGHV, remains to be validated in clinical trials.
@@ -1412,11 +1926,24 @@ how this can be used to build classfiers
 
 
 caviats - screenign approach, wont find everything, rigid (as in drug - cyt -gene interactions), if two things are coerrelated, one could be srhuk to ze or both share weighting 
+
+
 ### CLL as a model for studying tumour biology
 it makes a good model to dissect interply between extrinc triggers and internal lesions: 
 https://www.sciencedirect.com/science/article/pii/S1044579X16300311?casa_token=IfC4bm0pVrYAAAAA:AaCfeETGlSJRllAPIzQOcv8a48vvnFmr9V125WI6_9ggFeUTbq3dr-1628CN3NXw3li9oQlgVw
 
 NF-κB activation in chronic lymphocytic leukemia: A point of convergence of external triggers and intrinsic lesions
+
+
+
+CLL is a success sotry in deciphering the complex biology leading to successful new therapies: 
+ From Biology to Therapy: The CLL Success Story
+Deyan Y Yosifov  1   2 , Christine Wolf  1   2 , Stephan Stilgenbauer  1   3 , Daniel Mertens  1   2
+PMID: 31723816 PMCID: PMC6746030 DOI: 10.1097/HS9.0000000000000175 
+
+ Chronic lymphocytic leukemia: from molecular pathogenesis to novel therapeutic strategies
+Julio Delgado  1 , Ferran Nadeu  2 , Dolors Colomer  3 , Elias Campo  4
+ PMID: 33054046 PMCID: PMC7556519 DOI: 10.3324/haematol.2019.236000 
 
 ## Aims of this thesis
 
@@ -1428,3 +1955,11 @@ Many of the figures, adn their cpations are taken directly from the amunscript. 
 
 
 Reading list before defence0: 
+
+
+BCR signalling: 
+ Role of Bruton's tyrosine kinase in B cells and malignancies
+Pal Singh 
+PMID: 29455639 PMCID: PMC5817726 DOI: 10.1186/s12943-018-0779-z 
+
+EVeidnce that in vivo, there is nt much difference in the way M and U reposnd to BCr signalling: https://ashpublications.org/blood/article/117/2/563/28102/The-lymph-node-microenvironment-promotes-B-cell
