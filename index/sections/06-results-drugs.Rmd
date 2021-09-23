@@ -1599,6 +1599,14 @@ Eleonora Fonte
 
 IL4-induced resistance- this is clearly important accross a rnage of drufs adn genetic background, more needed in vivo, possible combintatorial therapies
 
+
+in vivo IL4 evidence: 
+from T-cells in chronic lymphocytic leukemia: Guardians or drivers of disease?
+Philipp M. Roessner & Martina Seiffert 
+
+Leukemia volume 34, pages 2012–2024 (2020)
+In 2005, Görgün and colleagues investigated T-cell function in CLL. Gene expression profiling (GEP) of sorted T-cells from peripheral blood mononuclear cells (PBMCs) of CLL patients suggested that CD4+ T-cells are skewed toward a Th2 phenotype due to decreased expression of c-Jun NH2-terminal kinase (JNK) and p38 mitogen-activated protein kinase (MAPK) pathway-related genes [12]. This is supported by an increased number of interleukin (IL)-4 secreting CD4+ T-cells in PBMCs of CLL patients in comparison to cells of healthy controls (HC). Studies using the immunocompetent Eµ-TCL1 mouse model of CLL and after adoptive transfer of TCL1 leukemia (TCL1 AT) into BL/6 wild-type (WT) mice revealed more IL-4 secretion of CD4+ T-cells in comparison to control mice [13, 14]. Similarly, conditioned medium of CLL cells was able to induce secretion of IL-4 in allogeneic mixed lymphocyte reactions (MLR) of healthy individuals, suggesting that soluble factors secreted by CLL cells trigger Th2 T-cell polarization in vitro [15].
+
 in other cancers we shoudl integrate drugs - stimul and genetics 
 
 flurdarabine and Cpg, different outcomes in IGHV M and U patients 
