@@ -2014,6 +2014,11 @@ discuovery of mulitple layers of biology rather thatn jsut using t tests
 
 IL4 and KRAS - IL4 and ERK apthway reading 
 
+
+BCR singalling - which is important iwtih IHGV and tirsomy 12, is evleated in teh LN accoridng to gene sigantures: 
+https://ashpublications.org/blood/article/117/2/563/28102/The-lymph-node-microenvironment-promotes-B-cell
+
+
 ## Contributions statement
 The author of this thesis performed statistical inference and regression modelling outlined in this chapter. In essence, she performed the univariate and multivariate survey of genetic determinants of stimulus response. She identified trisomy 12 as a modulator of microenvironmental response, and conceptualised and performed the computational follow-up work on this finding, with support from Peter-Martin Bruch, Ivan Berest and Tina Becirovic. 
 
