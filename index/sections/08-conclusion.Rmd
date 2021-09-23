@@ -17,6 +17,11 @@ tlr and fludarabine:
 n Vitro Sensitivity of CLL Cells to Fludarabine May Be Modulated by the Stimulation of Toll-like Receptors
 Eleonora Fonte
 
+
+ Expression and function of toll like receptors in chronic lymphocytic leukaemia cells
+Marta Muzio  1 , Cristina Scielzo, Maria T S Bertilaccio, Michela Frenquelli, Paolo Ghia, Federico Caligaris-Cappio
+
+
 Other ME singals startify patients: The functional in vitro response to CD40 ligation reflects a different clinical outcome in patients with chronic lymphocytic leukemia https://www.nature.com/articles/leu2011149
 
 
