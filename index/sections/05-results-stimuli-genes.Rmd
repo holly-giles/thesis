@@ -1101,7 +1101,7 @@ The multivariate analysis highlighted that TLR stimulation by CpG ODN and Resiqu
 
 ATM <- 
 df_patmeta %>% 
-  dplyr::filter(Cytokine=="Resiquimod") %>%
+  dplyr::filter(Cytokine == "Resiquimod") %>%
       filter(!is.na(ATM)) %>%
          
   ggplot(aes(x=ATM,y=Log,color=(ATM)))+
