@@ -1,6 +1,20 @@
 # Discussion
+TLR and SPIB - perhaps they orperate via nfkb - manymutations centre on nfkb1:
+https://pubmed.ncbi.nlm.nih.gov/25733685/
+also nfkb1 is higher in trisomy 12 at rna and protein level 
 
 
+
+Also check out my ideas on NOS 
+
+
+TLR couldbeprognostics 
+the fact taht MYD88 mutations in TLR signalling are excluvisvely in IGHVM patients suggests they are only of advantage in IGHVM -perhaps they make TLR signalling pro-sruvival(or at least not toxic) 
+
+ In addition, the MYD88 gene is mutated in ~3% of patients with CLL, exclusively those with IGHV-M CLL40,41 (Fig. 2; Table 1). MYD88, a cytosolic protein adaptor involved in the Toll-like receptor (TLR) pathway, has pleiotropic functions in B cells, including NF-κB activation.
+ 
+ only tirsomy 12 and MYD88 mutations are linked to a distinct epigenetic profile: 
+ https://www.nature.com/articles/s41591-018-0028-4
 
 
 TLR modulation could be prognostic - it is modualted by ATM and del11q- this coudl explain: 
