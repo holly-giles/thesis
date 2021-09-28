@@ -5,6 +5,8 @@ output:
 ---
 # Data
 
+give a proper overview od the approach, the cytokines and drugs and the dataset, try not too write too much 
+
 
 ```{r setup02, echo = FALSE, message = FALSE, warning = FALSE}
 #libraries
@@ -125,7 +127,16 @@ df$Drug <- factor(df$Drug, levels=orderDrug)
 
 
 ## Characteristics of stimuli used in the screen
-### Stimulus responses
+### The panel of stimuli {#stimuli-info}
+
+### Stimulus pathways
+(ref:microenvironmentCrosstalk) _Adapted from: Weistner et al 2015_
+
+```{r microenvironmentCrosstalk, fig.cap='(ref:microenvironmentOverview)', out.width = "60%", echo = FALSE}
+
+knitr::include_graphics("figures/microenvironmentCrosstalk.eps")
+
+```
 
 ### Stimulus - Stimulus Correlations
 
