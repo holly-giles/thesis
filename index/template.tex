@@ -30,6 +30,7 @@
 \usepackage{xcolor}
 \usepackage[gen]{eurosym}
 \usepackage{breqn} %to break up equations accross multiple lines, where neccesary 
+\usepackage{helvet} %to set font as helvetica 
 
 $if(highlighting-macros)$
 $highlighting-macros$
@@ -37,7 +38,10 @@ $endif$       % For being able to set `echo = TRUE` in code chunk options, and t
 
 %--------------------------------------------
 % define line spacing = 1.5
-\renewcommand{\baselinestretch}{1.5}
+\renewcommand{\baselinestretch}{1.2}
+
+%define font
+\renewcommand{\familydefault}{\sfdefault}
 
 % define position of graphics
 \floatsetup[figure]{capposition=bottom}
@@ -70,7 +74,7 @@ $endif$
 
 % Added by CII
 \usepackage{caption}
-\captionsetup{width=5in}
+\captionsetup{width=5in,font={small}}
 % End of CII addition
 
 % Added by CII
@@ -273,7 +277,7 @@ $endif$
 % edit here to affect style of main document 
 %\mainmatter % here the regular arabic numbering starts
 \newpage
-\pagestyle{plain}
+\pagestyle{plain} % use this to set the heading style 
 \setcounter{page}{1}    % start page numbering anew
 \pagenumbering{arabic}  % page numbers in arabic style
 
