@@ -18,5 +18,10 @@ index/thesis.Rmd
 index/.RData
 index/thesis.log
 index/thesis.tex
-
+index/sections/intro-complete-in-progress.Rmd
+index/thesis.aux
+index/thesis.lof
+index/thesis.lot
+index/thesis.out
+index/thesis.toc
 
