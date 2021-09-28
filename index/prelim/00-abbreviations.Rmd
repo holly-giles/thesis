@@ -10,13 +10,17 @@ output:
     AUC & & Area under curve \\
     BCR & & B-cell receptor \\
     BH & & Benjamini-Hochberg \\
+    BMSC & & Mesenchymal bone marrow stromal cell \\
     BTK & & Bruton’s tyrosine kinase \\
+    CD40L & & CD40 Ligand \\
     CDF & & Cumulative Distribution Function \\
     CLL & & Chronic lymphocytic leukemia \\
     CNV & & Copy number variation \\
     CpG ODN & & CpG oligodeoxynucleotides \\
-    ERK/MAPK signalling & & Mitogen-activated protein kinase signalling \\
+    DNA & & Deoxyribonucleic acid  \\
+    ERK & & Ras-dependent extracellular signal-regulated kinase \\
     FBS & & Fetal bovine serum \\
+    FDC & & Follicular dendritic cell \\
     FDR & & False discovery rate \\
     GSEA & & Gene set enrichment analysis  \\
     IFN$\gamma$ & & Interferon$\gamma$   \\ 
@@ -25,21 +29,31 @@ output:
     IL & & Interleukin \\
     JAK & & Janus kinase \\
     M-CLL & & CLL with somatic hypermutations in IGHV loci \\
+    U-CLL & & CLL without somatic hypermutations in IGHV loci \\
+    MAPK & & Mitogen-activated protein kinase  \\
+    MSCs & & Mesenchymal stromal cells  \\
     NF$\kappa$B & & Nuclear factor kappa-light-chain-enhancer of activated B cells \\
+    NLC & & nurselike cell  \\
     NOTCH & & Neurogenic locus notch  \\
     OS & & Overall survival \\
     PBMC & & Peripheral blood mononuclear cells \\
     PCA & & Principal component analysis \\
+    PKC & & Protein kinase C \\
+    PLC-$\gamma$2 & & phospholipase C $\gamma$ 2 \\
     PI3K & & Phosphoinositide 3-kinase \\
-    U-CLL & & CLL without somatic hypermutations in IGHV loci \\
-    TGF$\beta$ & & Transforming growth factor $\beta$ \\
-    TF & & Transcription factor \\
-    TLR & & Toll-like receptor \\ 
-    TSS & & Transcription start site \\
-    TTT & & Time to next treatment \\
+    RNA & & Ribonucleic acid  \\
+    SDF1$\alpha$ & & Stromal Cell-Derived Factor-1 alpha  \\
     SF3B1 & & Splicing factor 3B subunit 1 \\
     STAT & & Signal transducer and activator of transcription \\
     SYK & & Spleen tyrosine kinase \\
+    TF & & Transcription factor \\
+    TGF$\beta$ & & Transforming growth factor $\beta$ \\
+    Th cell & & T-helper cell \\
+    TLR & & Toll-like receptor \\ 
+    TSS & & Transcription start site \\
+    TTFT & & Time to first treatment \\
+    TTT & & Time to next treatment \\
+    U-CLL & & CLL without somatic hypermutations in IGHV loci \\
     VST & & Variance Stabilising Transformation \\
     WES & & Whole exome sequencing \\
     WGS & & Whole genome sequencing \\
