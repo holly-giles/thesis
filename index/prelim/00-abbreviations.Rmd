@@ -6,18 +6,25 @@ output:
 # List of Abbreviations {-}
 
 \begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
+    AML & & Acute myeloid leukaemia \\
     AKT & & Protein kinase B \\
+    ATACseq & & Assay for Transposase-Accessible Chromatin using sequencing \\
+    ATP & & Adenosine triphosphate \\
     AUC & & Area under curve \\
+    BAFF & & B cell-activating factor \\
     BCR & & B-cell receptor \\
     BH & & Benjamini-Hochberg \\
     BMSC & & Mesenchymal bone marrow stromal cell \\
     BTK & & Bruton’s tyrosine kinase \\
     CD40L & & CD40 Ligand \\
     CDF & & Cumulative Distribution Function \\
+    ChIPseq & & Chromatin immunoprecipitation sequencing \\
     CLL & & Chronic lymphocytic leukemia \\
     CNV & & Copy number variation \\
     CpG ODN & & CpG oligodeoxynucleotides \\
+    DMSO & & Dimethyl sulfoxide  \\
     DNA & & Deoxyribonucleic acid  \\
+    DNAseq & & DNA sequencing \\
     ERK & & Ras-dependent extracellular signal-regulated kinase \\
     FBS & & Fetal bovine serum \\
     FDC & & Follicular dendritic cell \\
@@ -31,6 +38,7 @@ output:
     M-CLL & & CLL with somatic hypermutations in IGHV loci \\
     U-CLL & & CLL without somatic hypermutations in IGHV loci \\
     MAPK & & Mitogen-activated protein kinase  \\
+    MRD & & Minimal residual disease  \\
     MSCs & & Mesenchymal stromal cells  \\
     NF$\kappa$B & & Nuclear factor kappa-light-chain-enhancer of activated B cells \\
     NLC & & nurselike cell  \\
@@ -42,6 +50,7 @@ output:
     PLC-$\gamma$2 & & phospholipase C $\gamma$ 2 \\
     PI3K & & Phosphoinositide 3-kinase \\
     RNA & & Ribonucleic acid  \\
+    RNAseq & & RNA sequencing \\
     SDF1$\alpha$ & & Stromal Cell-Derived Factor-1 alpha  \\
     SF3B1 & & Splicing factor 3B subunit 1 \\
     STAT & & Signal transducer and activator of transcription \\
