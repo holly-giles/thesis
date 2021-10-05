@@ -3,9 +3,8 @@ output:
   pdf_document: default
   html_document: default
 ---
-explain methylation grouping 
-# *Ex-vivo* sensitivity to microenvironmental stimulation in primary CLL cells {#chapter4}
 
+# *Ex-vivo* sensitivity to microenvironmental stimulation in primary CLL cells {#chapter4}
 ```{r, echo = FALSE}
 
 knitr::opts_chunk$set(
@@ -1093,7 +1092,7 @@ df_complete <- df_complete %>%
 
 ```
 
-Our assay quantified the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples. The 17 stimuli were selected based on evidence in the literature that each stimulus had been shown to impact on CLL viability *in vitro*,  aiming to minimise redundancy among the compounds (see also Section \@ref(stimuli-info)) [@Giles2021]. Many studies have applied various methods to model the impact of microenvironmental signalling on CLL, and each method has its strengths (see also Section \@ref(modelling-microenvironment)). Our assay represents a reductionist model of microenvironmental signalling, making it possible to dissect the effect of individual soluble factors within the protective niche on baseline viability.
+Our assay quantified the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples. The 17 stimuli were selected based on evidence in the literature that each stimulus had been shown to impact on CLL viability *in vitro*,  aiming to minimise redundancy among the compounds (see also Section \@ref(stimuli-info)) [@Giles2021]. Many studies have applied various methods to model the impact of microenvironmental signalling on CLL, and each method has its strengths (see also Section \@ref(modelling-microenvironment-intro)). Our assay represents a reductionist model of microenvironmental signalling, making it possible to dissect the effect of individual soluble factors within the protective niche on baseline viability.
 
 This chapter details my analysis of the phenotypic effects of stimuli on CLL viability, leading to the identification of four patient subgroups that differ in their stimulus response profiles. This chapter also covers the clinical and molecular characterisation of these four subgroups.
 
@@ -1101,11 +1100,11 @@ The results presented in this chapter centre on viability values of CLL PMBCs sa
 
 ## Prolifing responses to the panel of stimuli
 ### *ex vivo* assay demonstrated functional diversity of cytokines and microenvironmental stimuli {#cytokine-profiling}
-To being the analysis, I started by investigating heterogeneity amongst responses to the stimuli. I calculated Pearson correlation coefficients for each stimulus pair, using the log-transformed normalised viabilities [@Giles2021]. The resulting coefficients were ordered using hierarchical clustering and visualised in a symmetrical heatmap (Figure \@ref(fig:stimuliCorrelations)). 
+To begin the analysis, I started by investigating heterogeneity amongst responses to the stimuli. I calculated Pearson correlation coefficients for each stimulus pair, using the log-transformed normalised viabilities [@Giles2021]. The resulting coefficients were ordered using hierarchical clustering and visualised in a symmetrical heatmap (Figure \@ref(fig:stimuliCorrelations)). 
 
 In the resulting heatmap,  several clusters of stimuli could be identified, including a larger group corresponding to agonists of TLR and Nf$\kappa$B pathways and a smaller group encompassing IL4 and TLR stimuli.
 
-(ref:stimuliCorrelations) Heatmap of Pearson correlation coefficients. Coefficients for each pair of stimuli were calculated using log transformed viability values normalised to untreated control, and ordered according to hierarchical clustering. See Methods section \@ref(correlations). _Figure adapted from Bruch & Giles et al. 2021._
+(ref:stimuliCorrelations) Heatmap of Pearson correlation coefficients. Coefficients for each pair of stimuli were calculated using log transformed viability values normalised to untreated control, and ordered according to hierarchical clustering. See Methods section \@ref(correlations). _Figure adapted from @Giles2021 ._
 
 ```{r stimuliCorrelations, fig.cap='(ref:stimuliCorrelations)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1307,7 +1306,7 @@ IL4 and TLR7/8/9 agonists Resiquimod and CpG ODN induced the strongest responses
 ### Microenvironmental response profiling identifies discrete patient subgroups {#clusters}
 To further investigate the variability in responses across the cohort, we next generated a heatmap of all stimuli responses across all samples, using z-scores for optimal visualisation. We performed consensus clustering on the resulting heatmap to group patients according to their response profiles (Figure \@ref(fig:stimuliHeatmap)). 
 
-(ref:stimuliHeatmap) The heatmap matrix shows the viability measurements for 192 samples (columns) and 17 stimuli (rows). The data are shown z-scores of log-transformed, control-normalised viability values. The colour bars to the right show sample annotations. Consensus Clustering was used to define column tree layout, using hierarchical clustering with the Euclidean metric. See Methods section \@ref(stimulus-heatmap-method). _Figure from Bruch & Giles et al. 2021._ 
+(ref:stimuliHeatmap) The heatmap matrix shows the viability measurements for 192 samples (columns) and 17 stimuli (rows). The data are shown z-scores of log-transformed, control-normalised viability values. The colour bars to the right show sample annotations. Consensus Clustering was used to define column tree layout, using hierarchical clustering with the Euclidean metric. See Methods section \@ref(stimulus-heatmap-method). _Figure from @Giles2021 _ 
 ```{r heatmapPrep, echo = FALSE}
 
 ########### Viability matrix ################
@@ -1496,26 +1495,13 @@ stimuliHeatmap
 
 ```
 
+The consensus clustering method generates robust hierarchical clustering by subsampling from the matrix of values (in this case, the viability z-scores). Using subsampling, it is possible to calculate a "consensus matrix" which indicates the proportion of times each pair of values  occupy the same cluster when subsampled together. This is repeated for different numbers of clusters, denoted by k, allowing the user to select the optimal number  of clusters for a given dataset. 
 
-^ all good to here
-still need to: 
--go efficiently through text and just sharpen up once more 
--optimise figures 
--code check
--writ eout systemtic list, and do in evenings 
-^use pdf with edits 
-= this chapter is really strong 
--send off for feedback
+I ran consensus clustering on the matrix of z-scores for different values of k, and arranged the corresponding heatmaps accordingly.  Figure \@ref(fig:stimuliHeatmap shows the arrangement for k = 4.  Comparing the heatmaps, I concluded on the existence of four robust clusters within the cohort (add these to appendix?). Each cluster shows a unique response profile to the panel of stimuli. 
 
-Consensus clustering allows a user to subsample from the matrix of values (in this case, the viabilty z-scores), to generate hierarchical clustering for a given number of clusters, k. From this, it is possible to calculate a consensus matrix for each value of k, indicating the proportion of times each pair of values  occupy the same cluster when subsampled together. 
+To validate the choice of four clusters, I additionally visualised summaries of the consensus matrices for each value of k, to quantify the degree of confidence in the clusters for each k (Figure \@ref(fig:consensusClusteringA)).
 
-The user can then select an optimal value of k. 
-
-I visualised the clustered heatmap in Figure \@ref(fig:stimuliHeatmap) for different values of k, and concluded on the existence of four robust clusters within the cohort (add these to appendix?). Each cluster shows a  unique response profile to the panel of stimuli. We termed the clusters C1 to C4: C1 and C2 were enriched for IGHV-U whilst the samples in C3 and C4 were mostly IGHV-M.
-
-To validate the choice of four clusters, I visualised the summaries of the consensus matrix, using the `ConsensusClusterPlus` package [@ConsensusClusterPlus], to quantify the degree of confidence in the clusters for different values of k.
-
-(ref:consensusClusteringA) Summaries of the CDFs of the consensus matrices. Consensus CDF graphic showing the CDFs of the consensus matrix for k = 2 - 7, as indicated in the legend, estimated using 100 bin histogram (left). Relative change in area under the CDF curve, for k = 2 - 7, to compare k with k - 1. In the case of k = 2, there is no k - 1, so the total area is plotted. Line shows relative increase in consensus between each value of k (right). See Methods section \@ref(stimulus-heatmap-method).
+(ref:consensusClusteringA) (left) CDFs of the consensus matrices for k = 2 - 7, as indicated in the legend, estimated using 100 bin histogram. (right) Relative change in area under the CDF curve, for k = 2 - 7, to compare k with k - 1. In the case of k = 2, there is no k - 1, so the total area is plotted. Line shows relative increase in consensus between each value of k. See Methods section \@ref(stimulus-heatmap-method).
 
 
 ```{r consensusClusteringA, fig.cap='(ref:consensusClusteringA)', fig.show = "hold" , out.width = '45%', echo = FALSE, eval = TRUE}
@@ -1527,7 +1513,7 @@ knitr::include_graphics("figures/consensus009.eps")
 ```
 
 
-The graph of the CDFs of the consensus matrix for each k  indicated that the CDF reaches a maximum and cluster confidence is maximised at k = 7 , though above k = 4 there is little appreciable increase. Figure \@ref(fig:consensusClusteringA). This is confirmed in the graph showing relative change in the area under the CDF curve, showing there is only a small increase in consensus between k = 4 and k =5, supporting the choice of k = 4. The cluster tracking plot depicts how each patient sample is assigned for each value of k. For k = 4, the plot indicates that  C3 and 4 in particular are highly stable (Figure \@ref(fig:consensusClusteringB)). 
+The graph of the CDFs of the consensus matrix for each k indicated that the CDF reaches a maximum and cluster confidence is maximised at k = 7, though above k = 4 there is little appreciable increase (Figure \@ref(fig:consensusClusteringA)). This is confirmed in the graph showing relative change in the area under the CDF curve, showing there is only a small increase in consensus between k = 4 and k = 5, supporting the choice of k = 4. The cluster tracking plot depicts how each patient sample is assigned for each value of k. For k = 4, the plot indicates that  C3 and 4 in particular are highly stable (Figure \@ref(fig:consensusClusteringB)). 
 
 (ref:consensusClusteringB) Assignment of patient samples (columns), to each cluster, for k = 1 - 7 (rows) to demonstrate stability of cluster membership. Cluster colour for k = 4 match those in heatmap in \@ref(fig:stimuliHeatmap). See Methods section \@ref(stimulus-heatmap-method).
 
@@ -1539,9 +1525,9 @@ knitr::include_graphics("figures/consensus010.eps")
 
 ## Functional characterisation of patient clusters
 ###  C1 - C4 showed distinct response profiles with the panel of stimuli
-The heatmap in Figure \@ref(fig:stimuliHeatmap) demonstrated that each cluster responded differently to the panel of stimuli. 
+Consensus clustering identified four patient subgroups, which each responded differently to the panel of stimuli. This raised the possibility that responses to microenvironmental stimulation are linked to cell-intrinsic features, and could be prognostic. Thus, I next aimed to characterise the phenotypic and molecular differences between these four clusters. 
 
-Amongst the IGHV-U enriched  C1 and C2, both showed strong, positive responses to IL4 and TLR7/8/9 stimulation.  C2 could be distinguished by stronger responses to the stimuli overall, in particular to NF$\kappa$B agonists IL1$\beta$,  anti-IgM, BAFF and sCD40L. Amongst the IGHV-M enriched clusters, C3 showed weaker responses to the majority of stimuli, and C4 was defined by a negative response to TLR7/8/9 stimulation (Bruch & Giles et al. 2021). Figure \@ref(fig:clusterStimuliResponse) summarises these findings in  more detail, showing responses stratified by cluster for a subset of the stimuli.
+I began by investigating the differences between the response profiles of each cluster. I refer to the four clusters as C1 to C4: C1 and C2 were enriched for IGHV-U whilst the samples in C3 and C4 were mostly IGHV-M. Amongst the IGHV-U enriched  C1 and C2, both showed strong, positive responses to IL4 and TLR7/8/9 stimulation.  C2 could be distinguished by stronger responses to the stimuli overall, in particular to NF$\kappa$B agonists IL1$\beta$,  anti-IgM, BAFF and sCD40L. Amongst the IGHV-M enriched clusters, C3 showed weaker responses to the majority of stimuli, and C4 was defined by a negative response to TLR7/8/9 stimulation (Bruch & Giles et al. 2021). Figure \@ref(fig:clusterStimuliResponse) summarises these findings in  more detail, showing responses stratified by cluster for a subset of the stimuli.
 
 (ref:clusterStimuliResponse) Log-transformed normalised viability values, stratified by cluster, for each stimulus. Stimuli activating the same pathway are grouped together. P-values from Student't t-test. _Figure adapted from (Bruch & Giles et al. 2021). _
 
@@ -1592,9 +1578,9 @@ dev.off()
 ```
 
 ### The clusters show differences in disease dynamics {#cluster-survival}
-To validate the potential biological significance of these four clusters, we investigated whether the groups showed differential *in vivo* disease progression (Bruch & Giles et al. 2021). The study design was such that not all patients in the cohort were treatment - free, which confounded the analysis. For that reason, lymphocyte doubling time (LDT) and time to next treatment (TTT) were used to quantify CLL proliferative capacity, independently of treatment. 
+To validate the potential biological significance of these four clusters, we investigated whether the groups showed differential *in vivo* disease progression (Bruch & Giles et al. 2021). The study design was such that not all patients in the cohort were treatment - free, which confounded the analysis. For that reason, lymphocyte doubling time (LDT)^[LDT indicates  the rate a which malignant B cells accumulate, and is an independent biomarker that correlates with overall survival (OS) [@Baumann2021].] and time to next treatment (TTT)^[TTT reflects the duration of time between the initiation of one therapy and the start of the next treatment [@Campbell2020; @Delgado2021]. This measurement accounts for the period of treatment, along with the period in which the disease and/or symptoms are controlled.] were used to quantify CLL proliferative capacity, independently of treatment. 
 
-C1 and C2 showed a shorter LDT than C3 and C4, which is expected due to the differential proportions of IGHV-U and M patient samples in these groups (Figure \@ref(fig:clusterLDTTTT)A). Notably, within the IGHV-M enriched clusters  C3 and C4, samples in C3 showed a significantly shorter LDT (Student’s t-test, p-value =  0.025). 
+C1 and C2 showed a shorter LDT than C3 and C4, which is expected due to the differential proportions of IGHV-U and M patient samples in these groups (Figure \@ref(fig:clusterLDTTTT)A). Notably, within the IGHV-M enriched clusters C3 and C4, samples in C3 showed a significantly shorter LDT (Student’s t-test, p-value =  0.025). 
 
 To further validate this, we observed that TTT in the IGHV-M enriched C3 was significantly shorter than C4 and comparable to the progression dynamics of IGHV-U enriched C1 and 2 (Figure \@ref(fig:clusterLDTTTT)B). 
 
@@ -1768,11 +1754,11 @@ C3vsC4_p_mv <- coxph_coeff[3,5] %>% round(3)
 ### The clusters showed differential responses to drugs *in vitro*
 The potential clinical relevance of the clusters was underlined by my observation that the samples within each group showed differential responses to drugs *in vitro* (Figure \@ref(fig:clusterDrugResponse)). 
 
-As expected, the IGHV-U enriched clusters C1 and 2 were more sensitive to BCR inhibition by ibrutinib, idelalisib and PRT062607, than C3 and 4. Between C1 and C2, C2 was more sensitive to a number of the drugs, including idelalisib (SYK) (p-value = 0.012), everolimus (mTOR) (p-value = 0.02) and the chemotherapeutics fludarabine (p-value = 0.031) and nutlin-3a (p-value = 0.042). Amongst C3 and C4, C3 showed lower sensitivity to everolimus (p-value = 0.051) and to fludarabine (p-value < 0.001) and nutlin-3a (p-value = 0.01). This aligns with the observation that patients in C3 have a poorer prognosis, despite most of these samples annotated as IGHV-M. C4 also showed a positive repsonse to Nf$\kappa$B  inhibition by BAY-11-7085, and p38 MAPK inhibition by Ralimetinib.
+As expected, the IGHV-U enriched clusters C1 and 2 were more sensitive to BCR inhibition by ibrutinib, idelalisib and PRT062607, than C3 and 4. Between C1 and C2, C2 was more sensitive to a number of the drugs, including idelalisib (SYK) (p-value = 0.012), everolimus (mTOR) (p-value = 0.02) and the chemotherapeutics fludarabine (p-value = 0.031) and nutlin-3a (p-value = 0.042). Amongst C3 and C4, C3 showed lower sensitivity to everolimus (p-value = 0.051) and to fludarabine (p-value < 0.001) and nutlin-3a (p-value = 0.01). This aligns with the observation that patients in C3 have a poorer prognosis, despite the fact  most of these samples were annotated as IGHV-M. C4 also showed a positive response to Nf$\kappa$B  inhibition by BAY-11-7085, and p38 MAPK inhibition by ralimetinib.
 
-Such differential drug response patterns suggests that microenvironmental response may reflect disease-specific CLL biology, in the same way as molecular profiling,  and thus may have the potential to guide therapy decisions in future. 
+Such differential drug response patterns suggests that microenvironmental response may reflect disease-specific CLL biology.
 
-(ref:clusterDrugResponse) Log-transformed normalised viability values, stratified by cluster, for each drug. Drugs targeting the same pathway are grouped together. P-values from Student't t-test. 
+(ref:clusterDrugResponse) Log-transformed normalised viability values, stratified by cluster, for each drug. Drugs targeting the same pathway are grouped together. P-values from Student's t-test. 
 
 ```{r clusterDrugResponse, fig.cap='(ref:clusterDrugResponse)', out.width = "60%", fig.height = 9, fig.width = 6,  fig.align="center", echo = FALSE}
 
@@ -1814,7 +1800,7 @@ df_complete %>%
 
 
 ### The clusters are enriched for different genetic features {#cluster-genetics}
-Next we assessed differences in the molecular profiles of samples within each cluster. Visually, it appeared that certain clusters were enriched or depleted for various genetic features recurrent in CLL (Figure \@ref(fig:clusterMatrix)).  
+Next I assessed differences in the molecular profiles of samples within each cluster. Visually, it appeared that certain clusters were enriched or depleted for various genetic features recurrent in CLL (Figure \@ref(fig:clusterMatrix)).  
 
 (ref:clusterMatrix) Distribution of selected genetic features (rows) within each cluster for all patient samples (columns). Where a patient sample is not annotated for a feature, this is marked in white.  
 
@@ -1876,9 +1862,15 @@ geneticMatrix
 
 ```
 
-To quantify this, I ran a multinomial model, with lasso regularisation, to predict cluster membership (C1 -4) based on the matrix of genetic features for all the patient samples (Bruch & Giles et al 2021). The model assigned coefficients to genetic features, where a positive coefficient indicated that this feature was enriched in the cluster, and a negative coefficient indicated it was depleted. 
+To quantify whether each cluster was enriched or depleted for certain genetic features, I used a multinomial modelling approach, with lasso penalisation (for more background on generalised linear models, see section @\ref(intro-multivariate-modelling)[@Giles2021]. 
 
-The approach used 3-fold cross validation, selecting the optimal model using lamda min.  To ensure that the resulting coefficients were robust, we selected  coefficients that satisfied certain cut-offs. Coefficients were selected if they were assigned in > 60% of 50 bootstrapped repeats, and were larger than 0.35. Figure \@ref(fig:clusterEnrichment) shows the mean coefficients and associated standard deviation, for each genetic feature that met these criteria in each cluster. 
+I ran the multinomial model to assign coefficients to genetic features that were associated with each cluster, C1 to C4. Running the regression with lasso regularisation meant that only genetic features that were enriched or depleted in a cluster were selected by the model, and coefficients for all other genetic features (n = 39) were shrunk towards 0. 
+
+To run the model, I generated a feature matrix, consisting of the genetic data for  patient samples with complete annotation, and a discrete response matrix, which included the cluster assigned to each patient. I used the function `cv.glmnet` from the `R` package `glmnet` [@R-glmnet] to generate the model, using 3-fold cross validation, and selecting the optimal model using $\lambda{min}$. 
+
+Each cluster was thus assigned a set of genetic coefficients. To ensure that these were robust, I applied certain cut-offs. I ran 50 bootstrapped repeats, and removed coefficients if they were not selected in at least 60% of cases. Additionally, I applied a minimum value of 0.35. 
+
+Figure \@ref(fig:clusterEnrichment) shows the resulting mean coefficients. A positive coefficient indicated that this feature was enriched in the cluster, and a negative coefficient indicated it was depleted. The associated standard deviations are also indicated. 
 
 
 (ref:clusterEnrichment) Multinomial regression with lasso penalisation to identify enrichment or depletion of genetic features within each cluster. Matrix of genetic features  (p=39), and IGHV status (encoded as M = 1 and U = 0) were used to identify multivariate predictors of cluster assignment.  x axis shows genetic predictors, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and  error bars represent the mean ± standard deviation.  Genetic features with >20% missing values were excluded, and only patients with complete annotation were included in the model (n=137). See Methods section \@ref(cluster-genetics-method). _Figure from Bruch & Giles et al 2021. _
@@ -2041,15 +2033,15 @@ clusterEnrichment
 ```
 
 
-As we expected, IGHV status was the main feature that predicted cluster membership. Beyond IGHV status, trisomy 12 and *SF3B1* mutations were enriched in C2, which showed enhanced responses to many stimuli. C4, which was associated with slow in-vivo progression, showed depletion of *TP53*, *ATM*, RAS/RAF mutations and gain8q. 
+As expected, IGHV status was the main feature that predicted cluster membership. Beyond IGHV status, trisomy 12 and *SF3B1* mutations were enriched in C2, which showed enhanced responses to many stimuli. C4, which was associated with slow in-vivo progression, showed depletion of *TP53*, *ATM*, mutations in *RAS* and *RAF* and gain(8q). 
 
 
 ### GSEA of DE genes between subgroups {#cluster-rna}
-In addition to genetic features, I investigated differential expression of genes within each cluster. For n = 49 samples, RNAseq data was available for matched PBMC samples. I focused on the difference between clusters 3 and 4, for which 21 RNAseq samples were available (Bruch & Giles et al. 2021). 
+In addition to genetic features, I investigated differential expression of genes within each cluster. For n = 49 samples, RNAseq data was available for matched PBMC samples. I focused on the difference between  C3 and C4, for which 21 RNAseq samples were available (Bruch & Giles et al. 2021). 
 
-To quantify differential gene expression, I began by filtering out immunoglobulin genes, including genes at the heavy, light and kappa loci that encode the antigen receptor of B cells. The clusters each show differential enrichment of IGHV-M and U samples, and thus the differential expression analysis would otherwise be dominated by immunoglobulin genes that are well known to affected by this biomarker. 
+To quantify differential gene expression, I began by filtering out immunoglobulin genes, including genes at the heavy, light and kappa loci that encode the antigen receptor of B cells. The clusters each show differential enrichment of IGHV-M and U samples, and thus the differential expression analysis would otherwise be dominated by immunoglobulin genes that are affected by this biomarker. 
 
-I followed the Deseq2 protocol using a design formula to quantify the difference between clusters, and accounting for the confounding effect of IGHV status.  87 genes were differentially expressed (adjusted p < 0.05) between C3 and 4 (Figure \@ref(fig:clusterDE)).
+I followed the `DESeq2` protocol [@R-DESeq2] using a design formula to quantify the difference between clusters, and accounting for the confounding effect of IGHV status.  87 genes were differentially expressed (adjusted p < 0.05) between C3 and 4 (Figure \@ref(fig:clusterDE)).
 
 (ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. X axis indicates log2 fold change values, calculated using the `DESeq2` package [@DESeq2], y axis gives corresponding -log10(adjusted p value). P values adjusted using BH method. Genes are labelled where adjusted p < 0.05. Methods section \@ref(cluster-rna-method)  _Figure from Bruch & Giles et al. 2021._
 
@@ -2192,7 +2184,7 @@ clusterDE
 ```
 
 
-To assign biological meaning to the differentially expressed genes, I quantified the enrichment of Hallmark pathways amongst the genes. I ranked the genes based on the Wald statistic, and then ran GSEA was using the fgsea algorithm (Figure \@ref(fig:clusterGSEA)) (Bruch & Giles et al. 2021).
+To assign biological meaning to the differentially expressed genes, I quantified the enrichment of Hallmark pathways amongst the genes. I ranked the genes based on the Wald statistic, and then ran GSEA using the fgsea algorithm (Figure \@ref(fig:clusterGSEA)) (Bruch & Giles et al. 2021).
 
 Several pathways were upregulated amongst samples in C3, compared to C4, indicating that these pathways may relate in some way to the shorter TTT and LDT of patients within this cluster. Pathways associated with higher disease aggression were regulated in C3 including genesets relating to  stress response (Unfolded Protein Response, UV Response Up, P53 Pathway),  metabolism (Oxidative Phosphorylation) and proliferation (G2M Checkpoint, MYC Targets V1, MTORC1 Signaling, E2F Targets) (Figure \@ref(fig:GSEApathways)). 
 
@@ -2291,20 +2283,12 @@ GSEApathways
 
 ```
 
-## Additional Analysis
-Can microenvironmental response aid prognostic models? Run a Multivariate model to predict survival/drug response with genetic matrix and stimuli response matrix?
-
 ## Summary
-The screen represents an attempt to comprehensively dissect the impact of individual microenvironmental pathways on CLL viability. Our assay has enabled us to highlight key, broad spectrum signals such as IL4. Our heterogeneous cohort also reveals pathways that operate in subsets of patients, such as TLR. IL4 and TLR represent the key pathways that we focus on throughout the rest of this thesis.
+The screen enabled a systematic study of the impact of individual microenvironmental pathways on CLL viability. The assay highlighted potent pro-survival signals that are active across heterogeneous genetic backgrounds, such as IL4, and others that operate in subsets of patients, such as TLR. IL4 and TLR represent the key pathways that we focus on throughout the rest of this thesis.
 
-In addition, this approach enables us to use microenvironmental response profiles, as an alternative to molecular profiling, to look for the existence of subgroups. 
-
-We uncovered four such subgroup with distinct response profiles and molecular properties and clinical outcomes, suggesting that microenvironmental response holds biologically significant information that may be relevant to prognosis and treatment decision making. 
-
-## Discussion
-Gosia suggested discussing each results section individually? 
+In addition, this screen demonstrates the ability of microenvironmental response profiling, to distinguish disease subgroups. The assay revealed four subgroups with distinct response profiles and molecular properties and clinical outcomes, suggesting that microenvironmental response holds biologically significant information that may be relevant to prognosis and treatment decision making. 
 
 ## Contributions statement
 The author of this thesis performed statistical inference and regression modelling outlined in this chapter. In essence, she performed data visualisation, optimised and interpreted the clustering of the heatmap to identify four patient subgroups, and investigated the molecular and phenotypic profiles of the four subgroups. 
 
-Peter-Martin Bruch generated the viability screening data, and curated and analysed the clinical data on LDT and TTT. The genetic annotation data was taken from [@JCIpaper]. The heatmap in section was generated collectively with Peter-Martin Bruch, Wolfgang Huber and Sascha Dietrich, for the paper Bruch & Giles et al 2021.  The author also received support from Junyan Lu for the generation of the multivariate model, and from Peter-Martin Bruch and Sophie Herbst for the consensus clustering analysis. 
+Peter-Martin Bruch generated the viability screening data, and curated and analysed the clinical data on LDT and TTT. The genetic annotation data was taken from @JCIpaper. The heatmap in section was generated collectively with Peter-Martin Bruch, Wolfgang Huber and Sascha Dietrich, for the paper @Giles2021.  The author also received support from Junyan Lu for the generation of the multivariate model, and from Peter-Martin Bruch and Sophie Herbst for the consensus clustering analysis. 
