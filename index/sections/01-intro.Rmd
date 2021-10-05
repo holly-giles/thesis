@@ -208,7 +208,7 @@ The development of rational strategies to target the microenvironment requires a
 
 Previous work in our lab probed drug activity in CLL peripheral blood mononuclear cell  (PBMC) samples in the context of BMSC co-culture in a large-scale screen of 81 CLL patients [@HerbstThesis]. Similar larger scale systematic studies of drug – microenvironment interactions, particularly in the context of molecular features, are required.
 
-### Modelling the tumour microenvironment
+### Modelling the tumour microenvironment {#modelling-microenvironment-intro}
 A major goal of current research in CLL is to unravel the complexity of CLL-microenvironment cross-talk and its role in drug response. Many studies have applied a range of strategies to mimic the pro-survival effect of the microenvironment, each with their own advantages [@Crassini2017; @Scielzo2020].
 
 **Stimulation with soluble factors** 
