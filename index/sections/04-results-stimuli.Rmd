@@ -51,10 +51,6 @@ library(ggh4x)
 
 ```{r loadData04, eval = TRUE}
 
-#data("df", "patMeta", "LDT", "survT", "dds_smp")
-#df_complete <- df
-
-
 #Data
 #df: tibble containing all screening viability data
 load( "data/df.RData")
@@ -74,8 +70,52 @@ load("data/dds_smp.RData")
 
 ```
 
+```{r processData04, echo = FALSE}
+
+#Subset data to Cytokine only treatments, no drugs 
+#add cytokine names to df and df_complete 
+
+df <- dplyr::filter(df, Drug == "DMSO", Cytokine != "No Cytokine") %>% 
+  dplyr::mutate(Cytokine = as.character(Cytokine)) %>%
+  dplyr::mutate(Cytlabel = ifelse(Cytokine == "IL-2", "IL2",
+                            ifelse(Cytokine == "IL-4", "IL4",
+                                   ifelse(Cytokine == "IL-6", "IL6", 
+                                          ifelse(Cytokine == "IL-10", "IL10",
+                                                 ifelse(Cytokine == "IL-10", "IL10",
+                                                        ifelse(Cytokine == "IL-21", "IL21",
+                                                               ifelse(Cytokine == "sCD40L+IL-4","sCD40L + IL4",
+                                                                      ifelse(Cytokine == "IL-15", "IL15",
+                                                                             ifelse(Cytokine == "Interferon gamma","Interferon \u03B3",
+                                                                                    ifelse(Cytokine == "SDF-1a","SDF-1\u03B1",
+                                                                                           ifelse(Cytokine == "IL-1b","IL-1\u03B2",
+                                                                                                  ifelse(Cytokine == "TGF-b1","TGF\u03B2", Cytokine))))))))))))) %>%
+  
+  dplyr::mutate(Cytokine = factor(Cytokine))
+
+
+df_complete <- df_complete %>%
+  dplyr::mutate(Cytokine = as.character(Cytokine)) %>%
+  dplyr::mutate(Cytlabel = ifelse(Cytokine == "IL-2", "IL2",
+                            ifelse(Cytokine == "IL-4", "IL4",
+                                   ifelse(Cytokine == "IL-6", "IL6", 
+                                          ifelse(Cytokine == "IL-10", "IL10",
+                                                 ifelse(Cytokine == "IL-10", "IL10",
+                                                        ifelse(Cytokine == "IL-21", "IL21",
+                                                               ifelse(Cytokine == "sCD40L+IL-4","sCD40L + IL4",
+                                                                      ifelse(Cytokine == "IL-15", "IL15",
+                                                                             ifelse(Cytokine == "Interferon gamma","Interferon \u03B3",
+                                                                                    ifelse(Cytokine == "SDF-1a","SDF-1\u03B1",
+                                                                                           ifelse(Cytokine == "IL-1b","IL-1\u03B2",
+                                                                                                  ifelse(Cytokine == "TGF-b1","TGF\u03B2", Cytokine))))))))))))) %>%
+  
+  dplyr::mutate(Cytokine = factor(Cytokine))
+
+
+```
+
 ```{r echo = FALSE, eval = TRUE}
-#REMOVE ONCE I HAVE PACKAGE - MAKE SURE THEMES ARE UPDATED 
+
+#load themes 
 ### ggplot themes
 
 fontsize = 11
@@ -102,7 +142,7 @@ t1 <-
   strip.text = element_text(size = fontsize)
 )
 
-t2 <- t1+
+t2 <- t1 +
   theme( axis.text.x  = element_text(angle=0, size=11, hjust = 0.5, vjust = 1))
 
 ## theme for legends
@@ -164,7 +204,7 @@ darkergrey <- "#707372"
 
 na_color="#f0f0f0"
 
-
+#load functions 
 
 
 #*Sum coefficients:* to drop all features from multinomial regression that don't meet specified cut off criteria, and gather coefficients for all remaining other features, for all repeats of the regression. Accepts a matrix `coefMat`, plus numeric values for `coefCut`, the minimum value of that the average coefficient should be, and `freqCut`, the minimum proportion of repeats that a coefficient should be significant.  
@@ -1046,65 +1086,19 @@ rankedBarPlot=function(d,myc,cc,title){
 
 ```
 
-```{r processData04, echo = FALSE}
-#REMOVE
-#Subset data to Cytokine only treatments, no drugs 
-#Remake dataframe, then can load with this premade in future
-
-df <- dplyr::filter(df, Drug == "DMSO", Cytokine != "No Cytokine") %>% 
-  dplyr::mutate(Cytokine = as.character(Cytokine)) %>%
-  dplyr::mutate(Cytlabel = ifelse(Cytokine == "IL-2", "IL2",
-                            ifelse(Cytokine == "IL-4", "IL4",
-                                   ifelse(Cytokine == "IL-6", "IL6", 
-                                          ifelse(Cytokine == "IL-10", "IL10",
-                                                 ifelse(Cytokine == "IL-10", "IL10",
-                                                        ifelse(Cytokine == "IL-21", "IL21",
-                                                               ifelse(Cytokine == "sCD40L+IL-4","sCD40L + IL4",
-                                                                      ifelse(Cytokine == "IL-15", "IL15",
-                                                                             ifelse(Cytokine == "Interferon gamma","Interferon \u03B3",
-                                                                                    ifelse(Cytokine == "SDF-1a","SDF-1\u03B1",
-                                                                                           ifelse(Cytokine == "IL-1b","IL-1\u03B2",
-                                                                                                  ifelse(Cytokine == "TGF-b1","TGF\u03B2", Cytokine))))))))))))) %>%
-  
-  dplyr::mutate(Cytokine = factor(Cytokine))
-
-
-df_complete <- df_complete %>%
-  dplyr::mutate(Cytokine = as.character(Cytokine)) %>%
-  dplyr::mutate(Cytlabel = ifelse(Cytokine == "IL-2", "IL2",
-                            ifelse(Cytokine == "IL-4", "IL4",
-                                   ifelse(Cytokine == "IL-6", "IL6", 
-                                          ifelse(Cytokine == "IL-10", "IL10",
-                                                 ifelse(Cytokine == "IL-10", "IL10",
-                                                        ifelse(Cytokine == "IL-21", "IL21",
-                                                               ifelse(Cytokine == "sCD40L+IL-4","sCD40L + IL4",
-                                                                      ifelse(Cytokine == "IL-15", "IL15",
-                                                                             ifelse(Cytokine == "Interferon gamma","Interferon \u03B3",
-                                                                                    ifelse(Cytokine == "SDF-1a","SDF-1\u03B1",
-                                                                                           ifelse(Cytokine == "IL-1b","IL-1\u03B2",
-                                                                                                  ifelse(Cytokine == "TGF-b1","TGF\u03B2", Cytokine))))))))))))) %>%
-  
-  dplyr::mutate(Cytokine = factor(Cytokine))
-
-
-
-
-
-```
-
 Our assay quantified the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples. The 17 stimuli were selected based on evidence in the literature that each stimulus had been shown to impact on CLL viability *in vitro*,  aiming to minimise redundancy among the compounds (see also Section \@ref(stimuli-info)) [@Giles2021]. Many studies have applied various methods to model the impact of microenvironmental signalling on CLL, and each method has its strengths (see also Section \@ref(modelling-microenvironment-intro)). Our assay represents a reductionist model of microenvironmental signalling, making it possible to dissect the effect of individual soluble factors within the protective niche on baseline viability.
 
 This chapter details my analysis of the phenotypic effects of stimuli on CLL viability, leading to the identification of four patient subgroups that differ in their stimulus response profiles. This chapter also covers the clinical and molecular characterisation of these four subgroups.
 
-The results presented in this chapter centre on viability values of CLL PMBCs samples treated with our panel of stimuli. CLL cells do not proliferate *in vitro*, but rather undergo spontaneous apoptosis [@Collins1989]. Treatment with various stimuli, or co-culture with NLCs or BMSCs can extend survival of CLL PBMCs *ex vivo* [@Collins1989; @Burger2000; @Kurtova2009; @DeaglioMalavasi2009; @Purroy2015]. To measure the individual phenotypes generated by each of our stimuli,  we thus quantified viability by comparing ATP counts in treated samples, with those in DMSO wells, after 48 hours.  A positive viability value indicates that the sample viability was increased relative to control.  Values shown have additionally been log-transformed for the purposes of statistical analysis. 
+The results presented in this chapter centre on viability values of CLL PMBCs samples treated with our panel of stimuli. CLL cells do not proliferate *in vitro*, but rather undergo spontaneous apoptosis [@Collins1989]. Treatment with various stimuli, or co-culture with NLCs or BMSCs can extend survival of CLL PBMCs *ex vivo* [@Collins1989; @Burger2000; @Kurtova2009; @Deaglio2009; @Purroy2015]. To measure the individual phenotypes generated by each of our stimuli,  we thus quantified viability by comparing ATP counts in treated samples, with those in DMSO wells, after 48 hours.  A positive viability value indicates that the sample viability was increased relative to control.  Values shown have additionally been log-transformed for the purposes of statistical analysis. 
 
 ## Prolifing responses to the panel of stimuli
-### *ex vivo* assay demonstrated functional diversity of cytokines and microenvironmental stimuli {#cytokine-profiling}
+### *ex vivo* assay demonstrates functional diversity of cytokines and microenvironmental stimuli {#cytokine-profiling}
 To begin the analysis, I started by investigating heterogeneity amongst responses to the stimuli. I calculated Pearson correlation coefficients for each stimulus pair, using the log-transformed normalised viabilities [@Giles2021]. The resulting coefficients were ordered using hierarchical clustering and visualised in a symmetrical heatmap (Figure \@ref(fig:stimuliCorrelations)). 
 
 In the resulting heatmap,  several clusters of stimuli could be identified, including a larger group corresponding to agonists of TLR and Nf$\kappa$B pathways and a smaller group encompassing IL4 and TLR stimuli.
 
-(ref:stimuliCorrelations) Heatmap of Pearson correlation coefficients. Coefficients for each pair of stimuli were calculated using log transformed viability values normalised to untreated control, and ordered according to hierarchical clustering. See Methods section \@ref(correlations). _Figure adapted from @Giles2021 ._
+(ref:stimuliCorrelations) Heatmap of Pearson correlation coefficients of each pair of stimuli, based on log transformed viability values. See Methods section \@ref(correlations). _Figure adapted from @Giles2021 ._
 
 ```{r stimuliCorrelations, fig.cap='(ref:stimuliCorrelations)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
 
@@ -1166,11 +1160,9 @@ ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
   guides(fill = guide_colorbar(barwidth = 5, barheight = 1,
                 title.position = "top", title.hjust = 0.2))
 
-
-
 ```
 
-However, whilst certain stimuli clustered into groups, very few stimulus pairs showed any significant correlation. 98.5% of stimulus pairs showed little correlation (R < 0.6), including those that targeted similar downstream pathways, indicating a high degree of functional diversity amongst soluble factors in the CLL microenvironment. For example, JAK-STAT agonists such as IL4 and IL6 showed little correlation (Figure \@ref(fig:correlationsScatter)A). 
+However, whilst certain stimuli clustered into groups, very few stimulus pairs showed any significant correlation. Almost all stimulus pairs showed little correlation (R < 0.6), including those that targeted similar downstream pathways, indicating a high degree of functional diversity amongst soluble factors in the CLL microenvironment. For example, JAK-STAT agonists such as IL4 and IL6 showed little correlation (Figure \@ref(fig:correlationsScatter)A). 
 
 Only two stimulus pairs showed correlations where R > 0.6, and in both cases these targeted near identical receptors or downstream pathways. These included CpG ODN (TLR 9) and Resiquimod (TLR 7 and 8) (Figure \@ref(fig:correlationsScatter)B), and IL4 and IL4 + CD40L which primarily target JAK3 - STAT6.
 
@@ -1189,14 +1181,14 @@ colnames(tlrData) <- c("PatientID", "Resiquimod", "CpG")
 
 tlr <-
   ggplot(data = tlrData,  aes(x = Resiquimod, y = CpG)) +
-  geom_point(colour="black", size=2) + 
+  geom_point(colour=colors[1], size=2) + 
   geom_smooth(method='lm', se=FALSE, color = "#707372") +
   #ggtitle("Resiquimod (TLR7) and \nCpG ODN (TLR8/9)") +
   t2 +
   annotate(x=-0.60, y=1.9,
            label = paste("R = ", round(cor(tlrData$Resiquimod, 
                                            tlrData$CpG, use="all.obs", method="pearson"),2)), 
-           geom="text", size=5)
+           geom="text", size=5) + ylab("CpG ODN")
 
 
 ilData <- filter(df,Cytokine %in% c("IL-4", "IL-6")) %>%
@@ -1208,10 +1200,10 @@ colnames(ilData) <- c("PatientID", "IL4", "IL6")
 
 il <-
   ggplot(data = ilData,  aes(x = IL4, y = IL6)) +
-  geom_point(colour="black", size=2) + 
+  geom_point(colour=colors[1], size=2) + 
   geom_smooth(method='lm', se=FALSE, color = "#707372") +
   #ggtitle("IL4 and IL6 \n (JAK-STAT)") +
-  t2 + xlim(c(0,1.1)) +
+  t2 + 
   annotate(x=0.3, y=0.3,
            label = paste("R = ", round(cor(ilData$IL4, 
                                            ilData$IL6, use="all.obs", method="pearson"),2)), 
@@ -1226,7 +1218,7 @@ il <-
 Having observed that microenvironmental stimulation induced diverse phenotypes between patient samples, I next aimed to visualise a global overview of these phenotypes.  I plotted log-transformed viability values normalised to DMSO controls for all patient samples and all stimuli (Figure \@ref(fig:stimuliBeeswarms), [@Giles2021]). 
 
 
-(ref:stimuliBeeswarms) Log transformed viabilities after treatment with each stimulus. IGHV status is indicated. Simuli are grouped by corresponding pathway. _Figure adapted from @Giles2021._  
+(ref:stimuliBeeswarms) Log transformed viabilities after treatment with each stimulus. Stimuli are grouped by corresponding pathway, and responses are stratified by IGHV status. _Figure adapted from @Giles2021 ._  
 
 ```{r stimuliBeeswarms, fig.cap='(ref:stimuliBeeswarms)',  fig.align="center", fig.width = 10, fig.height = 4,  echo = FALSE, dev = "png", out.width = '100%'}
 
@@ -1299,14 +1291,14 @@ clusterStimuliTab %>%
 ```
 
 
-Figure \@ref(fig:stimuliBeeswarms) shows that the majority  of the stimuli increased  viability, underlining the supportive nature of the microenvironment in CLL. However, three out of 17 reduced CLL viability relative to control, namely IL6, TGF$\beta$ and TLR 7/8/9 agonists in IGHV-mutated (IGHV-M) samples. 
+Figure \@ref(fig:stimuliBeeswarms) shows that the majority  of the stimuli increased  viability, underlining the supportive nature of the microenvironment in CLL. However, four out of 17 reduced CLL viability relative to control, namely IL6, TGF$\beta$ and TLR 7/8/9 agonists CpG ODN and Resiquimod in IGHV-mutated (IGHV-M) samples. 
 
 IL4 and TLR7/8/9 agonists Resiquimod and CpG ODN induced the strongest responses, an indication of their potency in modulating CLL cell survival. Notably, TLR agonists increased viability in certain samples, in most cases IGHV-U, and decreased viability in others, mostly IGHV-M.  Our assay identified IL4 and TLR7/8/9 as key players in CLL-microenvironment cross-talk, and thus remain central throughout the results of this thesis. 
 
 ### Microenvironmental response profiling identifies discrete patient subgroups {#clusters}
 To further investigate the variability in responses across the cohort, we next generated a heatmap of all stimuli responses across all samples, using z-scores for optimal visualisation. We performed consensus clustering on the resulting heatmap to group patients according to their response profiles (Figure \@ref(fig:stimuliHeatmap)). 
 
-(ref:stimuliHeatmap) The heatmap matrix shows the viability measurements for 192 samples (columns) and 17 stimuli (rows). The data are shown z-scores of log-transformed, control-normalised viability values. The colour bars to the right show sample annotations. Consensus Clustering was used to define column tree layout, using hierarchical clustering with the Euclidean metric. See Methods section \@ref(stimulus-heatmap-method). _Figure from @Giles2021 _ 
+(ref:stimuliHeatmap) The heatmap matrix shows viability measurements for 192 samples (columns) and 17 stimuli (rows). The data are shown z-scores of log-transformed, control-normalised viability values. The colour bars to the right show sample annotations. Consensus clustering was used to define column tree layout, using hierarchical clustering with the Euclidean metric. See Methods section \@ref(stimulus-heatmap-method). _Figure from @Giles2021 _ 
 ```{r heatmapPrep, echo = FALSE}
 
 ########### Viability matrix ################
@@ -1358,18 +1350,6 @@ mycolors <- c("#A1BE1F", #green
               "#303030", #black
               "#A8A99E", #grey
               "#007B53") #dark green
-
-#results = HGConsensusClusterPlus(d = viab.mat.lims, 
-#                               maxK = 7, 
-#                               reps = 10000, 
-#                               pItem = 0.8, 
-#                               pFeature = 1,  
-#                               clusterAlg = "myclusterfunction",
-#                               distance = "myDistFunc", 
-#                               seed = 1386,
-#                               plot = 'png',
-#                               innerLinkage = "complete", 
-#                               finalLinkage = "complete")
 
 load("data/consensusclustering.RData")
 
@@ -1512,9 +1492,6 @@ knitr::include_graphics("figures/consensus009.eps")
 
 ```
 
-
-The graph of the CDFs of the consensus matrix for each k indicated that the CDF reaches a maximum and cluster confidence is maximised at k = 7, though above k = 4 there is little appreciable increase (Figure \@ref(fig:consensusClusteringA)). This is confirmed in the graph showing relative change in the area under the CDF curve, showing there is only a small increase in consensus between k = 4 and k = 5, supporting the choice of k = 4. The cluster tracking plot depicts how each patient sample is assigned for each value of k. For k = 4, the plot indicates that  C3 and 4 in particular are highly stable (Figure \@ref(fig:consensusClusteringB)). 
-
 (ref:consensusClusteringB) Assignment of patient samples (columns), to each cluster, for k = 1 - 7 (rows) to demonstrate stability of cluster membership. Cluster colour for k = 4 match those in heatmap in \@ref(fig:stimuliHeatmap). See Methods section \@ref(stimulus-heatmap-method).
 
 ```{r consensusClusteringB, fig.cap='(ref:consensusClusteringB)', fig.align="center", out.width = '45%', echo = FALSE, eval = TRUE}
@@ -1523,16 +1500,20 @@ knitr::include_graphics("figures/consensus010.eps")
 
 ```
 
+The graph of the CDFs of the consensus matrix for each k indicated that the CDF reaches a maximum and cluster confidence is maximised at k = 7, though above k = 4 there is little appreciable increase (Figure \@ref(fig:consensusClusteringA)). This is confirmed in the graph showing relative change in the area under the CDF curve, showing there is only a small increase in consensus between k = 4 and k = 5, supporting the choice of k = 4. The cluster tracking plot depicts how each patient sample is assigned for each value of k. For k = 4, the plot indicates that  C3 and 4 in particular are highly stable (Figure \@ref(fig:consensusClusteringB)). 
+
+
+
 ## Functional characterisation of patient clusters
-###  C1 - C4 showed distinct response profiles with the panel of stimuli
+###  C1 - C4 show distinct response profiles with the panel of stimuli
 Consensus clustering identified four patient subgroups, which each responded differently to the panel of stimuli. This raised the possibility that responses to microenvironmental stimulation are linked to cell-intrinsic features, and could be prognostic. Thus, I next aimed to characterise the phenotypic and molecular differences between these four clusters. 
 
 I began by investigating the differences between the response profiles of each cluster. I refer to the four clusters as C1 to C4: C1 and C2 were enriched for IGHV-U whilst the samples in C3 and C4 were mostly IGHV-M. Amongst the IGHV-U enriched  C1 and C2, both showed strong, positive responses to IL4 and TLR7/8/9 stimulation.  C2 could be distinguished by stronger responses to the stimuli overall, in particular to NF$\kappa$B agonists IL1$\beta$,  anti-IgM, BAFF and sCD40L. Amongst the IGHV-M enriched clusters, C3 showed weaker responses to the majority of stimuli, and C4 was defined by a negative response to TLR7/8/9 stimulation (Bruch & Giles et al. 2021). Figure \@ref(fig:clusterStimuliResponse) summarises these findings in  more detail, showing responses stratified by cluster for a subset of the stimuli.
 
-(ref:clusterStimuliResponse) Log-transformed normalised viability values, stratified by cluster, for each stimulus. Stimuli activating the same pathway are grouped together. P-values from Student't t-test. _Figure adapted from (Bruch & Giles et al. 2021). _
+(ref:clusterStimuliResponse) Log-transformed normalised viability values stratified by cluster, for each stimulus. Stimuli activating the same pathway are grouped together. P-values from Student's t-test. _Figure adapted from @Giles2021. _
 
 
-```{r clusterStimuliResponse, fig.cap='(ref:clusterStimuliResponse)', out.width = "100%", fig.height = 5, fig.width = 15, echo = FALSE, dev = "cairo_pdf"}
+```{r clusterStimuliResponse, fig.cap='(ref:clusterStimuliResponse)', out.width = "100%", fig.height = 7, fig.width = 15, echo = FALSE, dev = "cairo_pdf"}
 
 
 example_cyt <- c("IL-1b","Resiquimod", "TGF-b1","soluble anti-IgM",   "BAFF", "CpG ODN","sCD40L+IL-4","IL-4","IL-21", "Interferon gamma")
@@ -1558,7 +1539,7 @@ df %>%
 
 clusterProfiling<- mutate(clusterProfiling, Cytokine=factor(Cytokine, levels=example_cyt))
 
-cairo_pdf("/Users/holly/clusterProfiles.pdf", height = 5, width = 15)       
+      
 ggplot(clusterProfiling, aes(x=Cluster, y= Log,color = Cluster)) +
 
   geom_hline(yintercept = 0)+
@@ -1569,12 +1550,12 @@ ggplot(clusterProfiling, aes(x=Cluster, y= Log,color = Cluster)) +
   theme(strip.text = element_text(size = 8)) +
   guides(color="none")+
   #facet_nested(. ~ pathway + Cytokine, scales = "free" ) +
-  facet_nested_wrap(. ~ pathway + Cytlabel, scales = "free", nrow = 1) +
+  facet_nested_wrap(. ~ pathway + Cytlabel, scales = "free", nrow = 2) +
   ylab("Log(Viability)")+
   coord_cartesian(clip="off") +
   stat_compare_means(method = "t.test", comparisons = list(c(1,2), c(3,4)), step.increase = c(0), label = "p.signif")
 
-dev.off()
+
 ```
 
 ### The clusters show differences in disease dynamics {#cluster-survival}
@@ -1582,10 +1563,10 @@ To validate the potential biological significance of these four clusters, we inv
 
 C1 and C2 showed a shorter LDT than C3 and C4, which is expected due to the differential proportions of IGHV-U and M patient samples in these groups (Figure \@ref(fig:clusterLDTTTT)A). Notably, within the IGHV-M enriched clusters C3 and C4, samples in C3 showed a significantly shorter LDT (Student’s t-test, p-value =  0.025). 
 
-To further validate this, we observed that TTT in the IGHV-M enriched C3 was significantly shorter than C4 and comparable to the progression dynamics of IGHV-U enriched C1 and 2 (Figure \@ref(fig:clusterLDTTTT)B). 
+To further validate this, we observed that TTT in the IGHV-M enriched C3 was significantly shorter than C4 (p-value =  0.005) and comparable to the progression dynamics of IGHV-U enriched C1 and 2 (Figure \@ref(fig:clusterLDTTTT)B). 
 
 
-(ref:clusterLDTTTT) (A)  Lymphocyte doubling time (LDT) stratified by cluster, p-values from Student's t-test.  (B) Kaplan-Meier curves to show TTT for each cluster. p-values from univariate Cox proportional hazard models comparing IGHV-U enriched C1 with C2, and IGHV-M enriched C3 with C4. See Methods sections \@ref(LDT-method) and \@ref(survival-method). _Figure from Bruch & Giles et al. 2021._
+(ref:clusterLDTTTT) (A)  LDT stratified by cluster, p-values from Student's t-test.  (B) Kaplan-Meier curves to show TTT for each cluster. p-values from univariate Cox proportional hazard models comparing IGHV-U enriched C1 with C2, and IGHV-M enriched C3 with C4. See Methods sections \@ref(LDT-method) and \@ref(survival-method). _Figure from @Giles2021 ._
 
 
 ```{r clusterLDT,  echo = FALSE}
@@ -1607,8 +1588,6 @@ clusterLDT <-
   ylab("LDT in years") +
   t2 +
   stat_compare_means(method="t.test", comparisons = list(c(1,2), c(3,4)), size=4)
-
-
 
 
 ```
@@ -1651,7 +1630,7 @@ C3vsC4_p <- coxph_summ$coefficients[3,5] %>% round(3)
 
 
 
-```{r clusterLDTTTT, fig.cap='(ref:clusterLDTTTT)',  echo = FALSE, fig.height = 5, fig.width = 8, out.width = "100%"}
+```{r clusterLDTTTT, fig.cap='(ref:clusterLDTTTT)',  echo = FALSE, fig.height = 5, fig.width = 9, out.width = "100%"}
 
 ##Run survfit on TTT
 fit.TTT <- survfit(Surv(TTT, treatedAfter)~Cluster, clusters.surv)
@@ -1703,7 +1682,7 @@ clusterLDT + clusterTTT +  plot_layout(design = thedesign) + plot_annotation(tag
 
 The difference in disease progression between the clusters indicated that microenvironmental response represents an additional biological layer, holding information relevant to disease dynamics.  To validate that these clusters were not simply an indication of any underlying genetic features, we checked whether the observed differences in progression dynamics could be explained by other prognostic markers (Bruch & Giles et al. 2021).
 
-A multivariate Cox proportional hazard model accounting for IGHV status, trisomy 12 and TP53 in addition to the cluster assignment indicated an independent prognostic value for cluster assignment between C3 and C4 (p= 0.039, Table \@ref(tab:clusterCox)).
+A multivariate Cox proportional hazard model accounting for IGHV status, trisomy 12 and TP53 in addition to the cluster assignment indicated an independent prognostic value for cluster assignment between C3 and C4 (p = 0.039, Table \@ref(tab:clusterCox)).
 
 (ref:clusterCox) Table depicting results of multivariate Cox proportional hazard model to test prognostic value of key genetic features and clusters using TTT and C3 as reference. See Methods section \@ref(survival-method). _Table adapted from Bruch & Giles et al. 2021._
 
@@ -1751,16 +1730,16 @@ C3vsC4_p_mv <- coxph_coeff[3,5] %>% round(3)
 
 ```
 
-### The clusters showed differential responses to drugs *in vitro*
+### The clusters show differential responses to drugs *in vitro*
 The potential clinical relevance of the clusters was underlined by my observation that the samples within each group showed differential responses to drugs *in vitro* (Figure \@ref(fig:clusterDrugResponse)). 
 
-As expected, the IGHV-U enriched clusters C1 and 2 were more sensitive to BCR inhibition by ibrutinib, idelalisib and PRT062607, than C3 and 4. Between C1 and C2, C2 was more sensitive to a number of the drugs, including idelalisib (SYK) (p-value = 0.012), everolimus (mTOR) (p-value = 0.02) and the chemotherapeutics fludarabine (p-value = 0.031) and nutlin-3a (p-value = 0.042). Amongst C3 and C4, C3 showed lower sensitivity to everolimus (p-value = 0.051) and to fludarabine (p-value < 0.001) and nutlin-3a (p-value = 0.01). This aligns with the observation that patients in C3 have a poorer prognosis, despite the fact  most of these samples were annotated as IGHV-M. C4 also showed a positive response to Nf$\kappa$B  inhibition by BAY-11-7085, and p38 MAPK inhibition by ralimetinib.
+As expected, the IGHV-U enriched clusters C1 and 2 were more sensitive to BCR inhibition by ibrutinib, idelalisib and PRT062607, than C3 and 4. Between C1 and C2, C2 was more sensitive to a number of the drugs, including idelalisib (SYK) (p = 0.012), everolimus (mTOR) (p = 0.02) and the chemotherapeutics fludarabine (p = 0.031) and nutlin-3a (p = 0.042). Amongst C3 and C4, C3 showed lower sensitivity to everolimus (p = 0.051) and to fludarabine (p < 0.001) and nutlin-3a (p = 0.01). This aligns with the observation that patients in C3 have a poorer prognosis, despite the fact  most of these samples were annotated as IGHV-M. C4 also showed a positive response to Nf$\kappa$B  inhibition by BAY-11-7085, and p38 MAPK inhibition by ralimetinib.
 
 Such differential drug response patterns suggests that microenvironmental response may reflect disease-specific CLL biology.
 
 (ref:clusterDrugResponse) Log-transformed normalised viability values, stratified by cluster, for each drug. Drugs targeting the same pathway are grouped together. P-values from Student's t-test. 
 
-```{r clusterDrugResponse, fig.cap='(ref:clusterDrugResponse)', out.width = "60%", fig.height = 9, fig.width = 6,  fig.align="center", echo = FALSE}
+```{r clusterDrugResponse, fig.cap='(ref:clusterDrugResponse)', out.width = "60%", fig.height = 8, fig.width = 6,  fig.align="center", echo = FALSE}
 
 symnum.args <- list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))
 
@@ -1780,10 +1759,10 @@ df_complete %>%
                 Drugpathway = factor(Drugpathway, levels = c("BCR", "mTOR", "DNA Damage Response","MAPK","NF\u03BAB"))) %>%
   
 
-  ggplot(aes(x=Cluster, y= Log,color = Cluster)) +
+  ggplot(aes(x=Cluster, y= Log, color = Cluster)) +
   geom_hline(yintercept = 0)+
   geom_boxplot(aes(x=Cluster, y= Log, color = Cluster))+
-  geom_beeswarm(aes(x=Cluster, y= Log, color = Cluster), size = 2)+
+  geom_beeswarm(aes(x=Cluster, y= Log, color = Cluster), size = 1)+
   scale_color_manual(values=colors[1:4])+
   t2 + theme(strip.background =element_rect(fill=lightergrey))+
     theme(strip.text = element_text(size = 8)) +
@@ -1802,7 +1781,7 @@ df_complete %>%
 ### The clusters are enriched for different genetic features {#cluster-genetics}
 Next I assessed differences in the molecular profiles of samples within each cluster. Visually, it appeared that certain clusters were enriched or depleted for various genetic features recurrent in CLL (Figure \@ref(fig:clusterMatrix)).  
 
-(ref:clusterMatrix) Distribution of selected genetic features (rows) within each cluster for all patient samples (columns). Where a patient sample is not annotated for a feature, this is marked in white.  
+(ref:clusterMatrix) Distribution of selected genetic features (rows) within each cluster for all patient samples (columns). White indicates patient sample is not annotated for that feature.
 
 ```{r clusterMatrix, fig.cap='(ref:clusterMatrix)',  fig.height = 4, fig.width = 6, out.width = "100%", warnings = FALSE,  echo  = FALSE}
 
@@ -1862,18 +1841,17 @@ geneticMatrix
 
 ```
 
-To quantify whether each cluster was enriched or depleted for certain genetic features, I used a multinomial modelling approach, with lasso penalisation (for more background on generalised linear models, see section @\ref(intro-multivariate-modelling)[@Giles2021]. 
+To quantify whether each cluster was enriched or depleted for certain genetic features, I used a multinomial modelling approach, with lasso penalisation (for more background on generalised linear models, see section \@ref(intro-multivariate-modelling) [@Giles2021]. 
+I ran the multinomial model to assign coefficients to genetic features that were associated with each cluster, C1 to C4. Running the regression with lasso regularisation meant that only genetic features that were enriched or depleted in a cluster were selected by the model, and coefficients for all other genetic features were shrunk towards 0. 
 
-I ran the multinomial model to assign coefficients to genetic features that were associated with each cluster, C1 to C4. Running the regression with lasso regularisation meant that only genetic features that were enriched or depleted in a cluster were selected by the model, and coefficients for all other genetic features (n = 39) were shrunk towards 0. 
-
-To run the model, I generated a feature matrix, consisting of the genetic data for  patient samples with complete annotation, and a discrete response matrix, which included the cluster assigned to each patient. I used the function `cv.glmnet` from the `R` package `glmnet` [@R-glmnet] to generate the model, using 3-fold cross validation, and selecting the optimal model using $\lambda{min}$. 
+To run the model, I generated a feature matrix, consisting of the genetic data for  patient samples and a discrete response matrix, which included the cluster assigned to each patient. Genetic features with >20% missing values were excluded (n = 39), and only patients with complete annotation were included in the feature matrix (n = 137). I used the function `cv.glmnet` from the `R` package `glmnet` [@R-glmnet] to generate the model, using 3-fold cross validation, and selecting the optimal model using $\lambda{min}$. 
 
 Each cluster was thus assigned a set of genetic coefficients. To ensure that these were robust, I applied certain cut-offs. I ran 50 bootstrapped repeats, and removed coefficients if they were not selected in at least 60% of cases. Additionally, I applied a minimum value of 0.35. 
 
 Figure \@ref(fig:clusterEnrichment) shows the resulting mean coefficients. A positive coefficient indicated that this feature was enriched in the cluster, and a negative coefficient indicated it was depleted. The associated standard deviations are also indicated. 
 
 
-(ref:clusterEnrichment) Multinomial regression with lasso penalisation to identify enrichment or depletion of genetic features within each cluster. Matrix of genetic features  (p=39), and IGHV status (encoded as M = 1 and U = 0) were used to identify multivariate predictors of cluster assignment.  x axis shows genetic predictors, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and  error bars represent the mean ± standard deviation.  Genetic features with >20% missing values were excluded, and only patients with complete annotation were included in the model (n=137). See Methods section \@ref(cluster-genetics-method). _Figure from Bruch & Giles et al 2021. _
+(ref:clusterEnrichment)  Enrichment and depletion of genetic features within each cluster, quantified using lasso-penalised regression. x axis shows genetic features, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and error bars represent the mean plus and minus standard deviation.  See Methods section \@ref(cluster-genetics-method). _Figure from Bruch & Giles et al 2021. _
 
 ```{r FeatureMatrix04}
 #Generate Matrix
@@ -1982,7 +1960,7 @@ coefTab <- lapply(names(coefList), function(d) {
 ```
 
 
-```{r clusterEnrichment, fig.cap='(ref:clusterEnrichment)', fig.height = 4, fig.width = 6, out.width = "100%", warnings = FALSE,  echo  = FALSE}
+```{r clusterEnrichment, fig.cap='(ref:clusterEnrichment)', fig.height = 4, fig.width = 4, out.width = "80%", warnings = FALSE,  echo  = FALSE}
 
 #average remaining coefficients in dataframe for plotting
 #ie show all sig features, the cluster they predict, and the average coefficient 
@@ -2020,10 +1998,10 @@ clusterEnrichment <-
     ylab("Depleted / Enriched\n")+
     xlab("") +
     scale_fill_manual(values=colors[1:4])+
-    t2+
+    t1+
     theme(strip.background = element_rect(fill = "white", colour = "black", size = 1)) +
     facet_wrap(~cluster, 
-               nrow=4, 
+               nrow=2, 
                strip.position = "top", 
                labeller = labeller(cluster = Cluster.labs))+
    guides(fill = "none")
@@ -2043,7 +2021,7 @@ To quantify differential gene expression, I began by filtering out immunoglobuli
 
 I followed the `DESeq2` protocol [@R-DESeq2] using a design formula to quantify the difference between clusters, and accounting for the confounding effect of IGHV status.  87 genes were differentially expressed (adjusted p < 0.05) between C3 and 4 (Figure \@ref(fig:clusterDE)).
 
-(ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. X axis indicates log2 fold change values, calculated using the `DESeq2` package [@DESeq2], y axis gives corresponding -log10(adjusted p value). P values adjusted using BH method. Genes are labelled where adjusted p < 0.05. Methods section \@ref(cluster-rna-method)  _Figure from Bruch & Giles et al. 2021._
+(ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. x axis indicates log2 fold change values, calculated using the `DESeq2` package [@DESeq2], y axis gives corresponding -log10(BH-adjusted p value). Darker grey points are labelled where adjusted p < 0.01. See Methods section \@ref(cluster-rna-method).  _Figure from Bruch & Giles et al. 2021._
 
 ```{r rnaPrep04}
 cytSeq <- dds_smp
@@ -2158,10 +2136,10 @@ gsea.res <- setReadable(gsea.res, org.Hs.eg.db, keyType = "ENTREZID")
 
 ```
 
-```{r clusterDE, fig.cap='(ref:clusterDE)', out.width = "100%",  echo = FALSE}
+```{r clusterDE, fig.cap='(ref:clusterDE)', out.width = "70%",  echo = FALSE}
 
 
-sgncuoff <- 1.4
+sgncuoff <- 2
 
 clusterDE <-
   res.ds %>%
@@ -2173,7 +2151,7 @@ ggplot( aes(x=log2FoldChange, y=-log10(padj))) +
       geom_point(aes(alpha=0.4, colour = ifelse(-log10(padj)>sgncuoff,"black","grey"))) +
       theme(legend.position = "none") +
       geom_label_repel(aes(label=ifelse(-log10(padj)>sgncuoff&abs(log2FoldChange)>2,as.character(symbol),''),
-                           colour=ifelse(log2FoldChange>0, palreds[2], palblues[4])))+
+                           colour=ifelse(log2FoldChange>0, palreds[2], palblues[4])), max.overlaps = 25)+
       scale_colour_manual(values=c(palblues[2], palreds[4], "black", "grey"))+
       t2 +
       labs(title="Cluster 3 versus 4", x = "Log2FC", y = "-log10(adj p-val)", color = "Significance")+
@@ -2189,9 +2167,9 @@ To assign biological meaning to the differentially expressed genes, I quantified
 Several pathways were upregulated amongst samples in C3, compared to C4, indicating that these pathways may relate in some way to the shorter TTT and LDT of patients within this cluster. Pathways associated with higher disease aggression were regulated in C3 including genesets relating to  stress response (Unfolded Protein Response, UV Response Up, P53 Pathway),  metabolism (Oxidative Phosphorylation) and proliferation (G2M Checkpoint, MYC Targets V1, MTORC1 Signaling, E2F Targets) (Figure \@ref(fig:GSEApathways)). 
 
 
-(ref:clusterGSEA) Gene set enrichment analysis (GSEA) to compare expression of genes in samples from  C3 and C4 reveals upregulation of Hallmark pathways involved in microenvironmental signalling, stress response, metabolism and proliferation in C3. Normalised enrichment scores (NES) are shown for top 10 most significant pathways upregulated in C3 versus C4. Bars coloured according to adjusted p-value. Genes are ranked based on Wald statistic, calculated using the Deseq2 package and GSEA performed using the fgsea algorithm. See Methods section \@ref(cluster-rna-method). _Figure from Bruch & Giles et al. 2021. _
+(ref:clusterGSEA) Bar plot showing gene set enrichment to compare gene expression of samples in  C3 and C4. Normalised enrichment scores (NES) are shown for top ten pathways with smallest adjusted p-value. Gene ranking performed based on Wald statistic, calculated using the `DESeq2` package. See Methods section \@ref(cluster-rna-method). _Figure from Bruch & Giles et al. 2021. _
 
-```{r clusterGSEA, fig.cap='(ref:clusterGSEA)',  out.width = "100%", echo = FALSE}
+```{r clusterGSEA, fig.cap='(ref:clusterGSEA)',  out.width = "70%", echo = FALSE}
 
 #get dataframe of results
 gsea.df <- fortify(gsea.res, 
@@ -2244,9 +2222,9 @@ clusterGSEA
 
 In addition, C3 showed upregulation of  microenvironmental signalling pathways relative to C4, including TNFa Signalling via NFKB and Interferon Gamma Response (Figure \@ref(fig:GSEApathways)) (Bruch & Giles et al. 2021). This finding underlines our hypothesis that  differential activity of microenvironmental signalling, both *in vivo* and *ex vivo* may be relevant to disease prognosis. 
 
-(ref:GSEApathways) Enrichment plots of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes.  The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software.  See Methods section \@ref(cluster-rna-method). _Figure from Bruch & Giles et al. 2021._
+(ref:GSEApathways) Enrichment plot of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes.  The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software.  See Methods section \@ref(cluster-rna-method). _Figure and caption from Bruch & Giles et al. 2021._
 
-```{r GSEApathways, fig.cap='(ref:GSEApathways)', out.wdith = "100%",   echo = FALSE}
+```{r GSEApathways, fig.cap='(ref:GSEApathways)', out.wdith = "70%",   echo = FALSE}
 
 TNFaEnrichment <-
   enrichmentPlot(filter(hm2gene, gs_name =="TNFa Signalling via NFKB")$entrez_gene, geneList) +
@@ -2288,7 +2266,9 @@ The screen enabled a systematic study of the impact of individual microenvironme
 
 In addition, this screen demonstrates the ability of microenvironmental response profiling, to distinguish disease subgroups. The assay revealed four subgroups with distinct response profiles and molecular properties and clinical outcomes, suggesting that microenvironmental response holds biologically significant information that may be relevant to prognosis and treatment decision making. 
 
-## Contributions statement
-The author of this thesis performed statistical inference and regression modelling outlined in this chapter. In essence, she performed data visualisation, optimised and interpreted the clustering of the heatmap to identify four patient subgroups, and investigated the molecular and phenotypic profiles of the four subgroups. 
+```{r remove}
 
-Peter-Martin Bruch generated the viability screening data, and curated and analysed the clinical data on LDT and TTT. The genetic annotation data was taken from @JCIpaper. The heatmap in section was generated collectively with Peter-Martin Bruch, Wolfgang Huber and Sascha Dietrich, for the paper @Giles2021.  The author also received support from Junyan Lu for the generation of the multivariate model, and from Peter-Martin Bruch and Sophie Herbst for the consensus clustering analysis. 
+#clear data
+rm(list = ls())
+
+```
