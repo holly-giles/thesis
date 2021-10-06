@@ -257,7 +257,7 @@ Building on these studies, multi-omics approaches have the power to identify cau
 
 A number of mathematical tools are valuable in analysing complex multi-omics datasets. In this thesis, linear regression with and without lasso penalisation is used extensively to model the impact of the microenvironment and molecular features on drug response and a basic background to these approaches is outlined below. 
 
-**Basic linear regression **
+** Basic linear regression **
 Linear regression involves fitting a linear model to a dataset, to model the process that generated the data. For example, equation \@ref(eq:basiclinearmodelsymbols) describes a basic model to map the values of $X$, to the values of $Y$:
 
  \begin{equation}
