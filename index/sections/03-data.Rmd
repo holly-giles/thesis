@@ -5,62 +5,200 @@ output:
 ---
 # Data
 
-give a proper overview od the approach, the cytokines and drugs and the dataset, try not too write too much 
+Plan: 
+-headings [x]
+-add all figures <-
 
+^almost all done, just ones on data characteristics 
+
+i woudl then put this together, and see if i want to add natyhign else,
+-all text 
+
+proof text
+proof figures
+proof code
+proof numbers 
+
+Done - send 
+
+## Aims of the project 
 
 ```{r setup02, echo = FALSE, message = FALSE, warning = FALSE}
 #libraries
 library(ggplot2)
 library(tidyverse)
 library(ggbeeswarm)
+library(dplyr)
+library(reshape2)
+library(kableExtra)
 
 
 #Data
 load("data/drugs.RData")
+load("data/cytokines.RData")
 load("data/df.RData")
+load("data/patMeta.RData")
+load("data/Raw_Screening_Data.RData")
+
 
 #R code
 source("R/themes_colors.R")
 source("R/plotPathways.R")
 
 ```
+```{r processData}
 
+#add label column to df
+df <- df %>%
+  dplyr::mutate(Cytokine = as.character(Cytokine)) %>%
+  dplyr::mutate(Cytlabel = ifelse(Cytokine == "IL-2", "IL2",
+                            ifelse(Cytokine == "IL-4", "IL4",
+                                   ifelse(Cytokine == "IL-6", "IL6",
+                                          ifelse(Cytokine == "IL-10", "IL10",
+
+                                                        ifelse(Cytokine == "IL-21", "IL21",
+                                                               ifelse(Cytokine == "sCD40L+IL-4","sCD40L + IL4",
+                                                                      ifelse(Cytokine == "IL-15", "IL15",
+                                                                             ifelse(Cytokine == "Interferon gamma","Interferon \u03B3",
+                                                                                    ifelse(Cytokine == "SDF-1a","SDF-1\u03B1",
+                                                                                           ifelse(Cytokine == "IL-1b","IL1\u03B2",
+                                                                                                  ifelse(Cytokine == "TGF-b1","TGF\u03B21", Cytokine)))))))))))) %>%
+
+  dplyr::mutate(Cytokine = factor(Cytokine))
+
+#generate table of Cytokines and assosciated labels
+Cytokine_labels <- df %>% 
+  filter(PatientID == "Pat_001", Drug == "DMSO") %>% 
+  select( Cytokine, Cytlabel)
+
+colnames(Cytokine_labels) <- c("name", "Cytlabel")
+
+
+```
 
 Characterisation of primary CLL samples by high-throughput combinatorial screening and multi-omic profiling. An introduction to the dataset that my PhD is based on. 
 
-## Drug screens and experiments 
+## Experimental overview
 ### High-throughput combinatorial pertubation assay
-We measured the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples and combined each one with 12 drugs to investigate the influence on spontaneous and drug-induced apoptosis (Figure \@ref(fig:studyOverview)). Viability was assessed by ATP measurement via CellTiterGlo after 48 h of culture and normalised to untreated controls8. 
+"We measured the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples and combined each one with 12 drugs to investigate the influence on spontaneous and drug-induced apoptosis (Figure \@ref(fig:studyOverview)). Viability was assessed by ATP measurement via CellTiterGlo after 48 h of culture and normalised to untreated controls." 
 
-(ref:studyOverviewCap) Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n=192). Integrating functional drug-stimulus response profiling with four additional omics layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment reponses, and drug-stimulus interactions in CLL.
+(ref:studyOverview) Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n = 192). Integrating functional drug-stimulus response profiling with four additional omics layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment reponses, and drug-stimulus interactions in CLL. _Figure and caption from Bruch & Giles et al. 2021._
 
-```{r studyOverview, out.width = 0.7, fig.cap='(ref:studyOverviewCap)', echo = FALSE}
+```{r studyOverview, out.width = "70%", fig.cap='(ref:studyOverview)', echo = FALSE}
 
 knitr::include_graphics("figures/studyOverview.eps")
 
 ```
 
+
+See whether to include this here, or jsut with otehr stuff
 ### Validation experiments
 In addition to the screen, we acquired the following validatory data (Figure \@ref(fig:additionalData)). 
 
-Proper explamantion of data srouces and how we acuried them, the format they are in 
+
+Ibrutinib + IL4 - IBET figure 
+(ref:ibribetil4) Overview of the approach for the validation experiments. Four CLL PBMC samples were incubated with ibrutinib, IL4 and IBET-762, both individually and in all combinations. Samples were taken for ATAC sequencing and RNA sequencing after 6 hours and for mass spectrometry after 24 hours. Sequencing data was processed for downstream analysis, outline in Chapter \@ref(chapter7). 
 
 
-(ref:additionalDataCap) Schematic of validatory data. 
+```{r ibribetil4, out.width = "100%", fig.cap='(ref:ibribetil4)', echo = FALSE}
+
+knitr::include_graphics("figures/ibribetil4.eps")
+
+```
+
+Lymph nodes 
+
+Cell line experiments 
+
+### Additional eternal datasets
+Additional datasets (just describe)
+-CLL ATACseq data32 from the EGA (EGAD00001002110) 
+ChIPseq data for Spi-B binding35 from the NCBI GEO database36 (GSE56857, GSM1370276)
+Proteomics data from Sophie
+Clinical data: 
+LDT
+TTT
+TFS
+OS
+
+## Processing of raw values obtained from cell viability assay 
+### Raw values and Quality control
+
+**raw viabilites**
+
+(Figure \@ref(fig:rawViabilities)). 
+
+(ref:rawViabilities) Boxplots of raw viability count data prior to normalisation and log transformation. For each of the 192 patient samples, there were  50 DMSO-treated wells. Dashed horizontal lines indicate potential cut-offs for samples that showed low viability with DMSO control treatment. 
+
+```{r rawViabilities, out.width = "70%", fig.cap='(ref:rawViabilities)', echo = FALSE}
+
+patOrder <- 
+  Raw_Screening_Data %>% 
+  filter(Drug == "DMSO", Cytokine == "No Cytokine")%>% 
+  group_by(PatientID) %>% 
+  summarize(medianViability = median(Viability)) %>% 
+  arrange(medianViability) %>% 
+  select(PatientID) %>% 
+  unlist()
+
+Raw_Screening_Data %>% 
+  left_join(patMeta, by="PatientID") %>% 
+  filter(Drug == "DMSO", Cytokine == "No Cytokine") %>% 
+  mutate(PatientID = factor(PatientID, levels = patOrder)) %>% 
+  
+  ggplot(aes(y = Viability, x = PatientID)) +
+  geom_boxplot(outlier.size = 1.1, color = colors[1]) +
+  scale_y_log10() + 
+  geom_hline(yintercept=1000000, linetype='dotted', col = darkergrey)+
+  geom_hline(yintercept=300000, linetype='dotted', col = darkergrey)+
+  t1 +
+  theme(axis.text.x = element_blank(), 
+        text = element_text(size=20),
+        axis.ticks.x=element_blank(),
+        panel.grid.major.x = element_blank(),
+        legend.position = "bottom") +
+  labs(y = "Viability of \nDMSO-treated controls", x = "Patient samples")
 
 
-```{r additionalData, out.width = 0.7, fig.cap='(ref:additionalDataCap)', echo = FALSE}
 
-knitr::include_graphics("figures/studyOverview.eps")
+
+
+```
+
+
+Rest might not be necessary? 
+**any QC plots**
+
+(Figure \@ref(fig:screenQC)). 
+
+(ref:screenQC) Raw viabilities  
+
+
+```{r screenQC, out.width = "70%", fig.cap='(ref:screenQC)', echo = FALSE}
+
+
+```
+
+### Data normalisation and log transformation
+
+**demo plot**
+
+(Figure \@ref(fig:screenNormalisation)). 
+
+(ref:screenNormalisation) Raw viabilities  
+
+
+```{r screenNormalisation, out.width = "70%", fig.cap='(ref:screenNormalisation)', echo = FALSE}
+
 
 ```
 
 ## Characteristics of drugs used in the screen
 ### Drug pathways
 We screened 17 different drugs (Figure \@ref(fig:drugCategories)). 
+**Add table with details of drugs**
 
-
-(ref:drugCategoriesCap) Bar plot of the drugs used in screen.  
+(ref:drugCategories) Bar plot of the drugs used in screen.  
 
 ```{r  echo = FALSE}
 #add row names to drugs
@@ -74,20 +212,119 @@ drugs$group[which(drugs$devel_012020==1)] = "Clinical development/\ntool compoun
 
 ```
 
-```{r drugCategories, fig.cap='(ref:drugCategoriesCap)', out.width=1, echo = FALSE}
+```{r drugCategories, fig.cap='(ref:drugCategories)', out.width=1, echo = FALSE}
 
 drugCategories <- plotPathways(dat=drugs) 
 drugCategories
 
 ```
 
+(Table \@ref(tab:drugTable)). 
+
+(ref:drugTable) Raw viabilities  
+
+add licencing status , otherwise this is good on the drugs 
+```{r drugTable, out.width = "70%", fig.cap='(ref:drugTable)', echo = FALSE}
+
+drugs %>%
+  dplyr::select(-ID, -approved_012020,-devel_012020) %>%
+  dplyr::rename(Drug=Name,
+                `Main targets`=main_targets,
+                `Target category`=target_category,
+                `Drug Group`=group,
+                Pathway=pathway,
+                Distributor=distributor,
+                `Catalogue number`=cat_no,
+                `Conc. 1`= conc1,
+                `Conc. 2`= conc2) %>%
+  kable() %>%
+  row_spec(0,bold=TRUE) %>%
+kable_styling(latex_options = "striped", 
+              stripe_color = colors[7],
+                html_font = "Helvetica")
+
+
+
+```
+
+### Drug - Drug Correlations 
+(sense check)
+**corr plot**
+
+(Figure \@ref(fig:drugCorrelations)). 
+
+(ref:drugCorrelations) Raw viabilities  
+
+
+```{r drugCorrelations, out.width = "70%", fig.cap='(ref:drugCorrelations)', echo = FALSE, eval = TRUE}
+
+# Using high Drug Concentrations
+#list of cytokines
+thedrugs <- unique(df$Drug) %>% setdiff("DMSO")
+
+corMat <- df %>% 
+  filter(Drug %in% thedrugs, Drug_Concentration == "High", Cytokine == "No Cytokine") %>%
+  dplyr::select(Log, Drug, PatientID) %>% 
+  spread(key = "Drug", value = "Log") %>%
+  column_to_rownames("PatientID")
+
+#compute correlation coefficients 
+cormat <-  cor(corMat, use="all.obs", method="pearson")
+    
+# Function to get lower triangle of the correlation matrix
+get_lower_tri <- function(cormat){
+  cormat[upper.tri(cormat)] <- NA
+  return(cormat)
+}
+  # Function to get upper triangle of the correlation matrix
+get_upper_tri <- function(cormat){
+  cormat[lower.tri(cormat)]<- NA
+  return(cormat)
+}
+
+# Function to cluster matrix 
+reorder_cormat <- function(cormat){
+# Use correlation between variables as distance
+dd <- as.dist((1-cormat)/2)
+hc <- hclust(dd)
+cormat <-cormat[hc$order, hc$order]
+}
+
+cormat <- reorder_cormat(cormat)  
+upper_tri <- get_upper_tri(cormat)
+melted_cormat <- melt(upper_tri, na.rm = TRUE)
+
+
+ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
+ geom_tile(color = "white")+
+ scale_fill_gradient2(low = palblues[1], high = palreds[7], mid = "white", 
+   midpoint = 0, limit = c(-1,1), space = "Lab", 
+   name="Pearson\nCorrelation") +
+  t1 + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1))+
+  xlab("") +
+  ylab("") +
+ coord_fixed() +
+  theme(
+  panel.grid.major = element_blank(),
+  panel.border = element_blank(),
+  panel.background = element_blank(),
+  axis.ticks = element_blank(),
+  axis.text.x = element_blank(),
+  legend.justification = c(1, 0),
+  legend.position = c(0.4, 0.7),
+  legend.direction = "horizontal")+
+  guides(fill = guide_colorbar(barwidth = 5, barheight = 1,
+                title.position = "top", title.hjust = 0.2))
+
+```
 
 ### Drug responses
 The drug responses were as follows (Figure \@ref(fig:drugResponses)). 
 
-(ref:drugResponsesCap) Log transformed viability values for all drugs that were included in the screen after qulaity control. p values from student's t test. 
+(ref:drugResponses) Log transformed viability values for all drugs that were included in the screen after qulaity control. p values from student's t test. 
 
-```{r drugResponses, fig.cap='(ref:drugResponsesCap)', out.width=0.5, echo = FALSE}
+```{r drugResponses, fig.cap='(ref:drugResponses)', out.width="70%", echo = FALSE}
 
 
 orderDrug <-
@@ -120,16 +357,52 @@ df$Drug <- factor(df$Drug, levels=orderDrug)
 
 ```
 
-### Genetic predictors of drug responses
-
-### Drug - Drug Correlations
-
 
 
 ## Characteristics of stimuli used in the screen
 ### The panel of stimuli {#stimuli-info}
+**table of stimuli**
+-details of how were slected
+
+
+(Table \@ref(tab:cytTable)). 
+
+(ref:cytTable) Raw viabilities  
+
+more on pathways? or is the diagram good neough? more on how they were choseN? not really my PhD? 
+```{r cytTable, out.width = "70%", fig.cap='(ref:cytTable)', echo = FALSE}
+
+
+#tidy names for table
+cytokines$stimulus[grepl("IL-4 human recombinant animal component free",cytokines$stimulus)]<-"IL4 human recombinant animal component free"
+cytokines$stimulus[grepl("IL-2 human recombinant animal component free",cytokines$stimulus)]<-"IL2 human recombinant animal component free"
+cytokines$stimulus[grepl("Human IL-1beta",cytokines$stimulus)]<-"Human IL-1 beta"
+cytokines$stimulus[grepl("Human IL-15",cytokines$stimulus)]<-"Human IL15"
+cytokines$stimulus[grepl("Human IFN-gamma",cytokines$stimulus)]<-"Human Interferon gamma"
+cytokines$stimulus[grepl("IL-10 human Animal component free",cytokines$stimulus)]<-"IL10 human Animal component free"
+cytokines$stimulus[grepl("Human TGF-beta1",cytokines$stimulus)]<-"Human TGF\u03B21"
+cytokines$stimulus[grepl("Human IL-6",cytokines$stimulus)]<-"Human IL6"
+cytokines$stimulus[grepl("alpha",cytokines$stimulus)]<-"Human SDF1 alpha (CXCL12)"
+cytokines$stimulus[grepl("HS-5 konditioniertes Medium",cytokines$stimulus)]<-"HS-5 conditioned medium"
+
+cytokines %>%
+  left_join(Cytokine_labels, by = "name") %>%
+  dplyr::select(-name, -additional_pathways, -source) %>%
+  dplyr::rename(Stimulus=stimulus, Name = Cytlabel, Supplier=company, Concentration=conc, `Catalogue Number`=cat_no, `Lot Number`=lot_no, Pathway=pathway) %>%
+
+  select(Stimulus, Name,  everything()) %>%
+  kable() %>%
+  row_spec(0,bold=TRUE) %>%
+kable_styling(latex_options = "striped", 
+              stripe_color = colors[7],
+                html_font = "Helvetica")
+
+
+
+```
 
 ### Stimulus pathways
+**details of which stimuli activates with pathways** 
 (ref:microenvironmentCrosstalk) _Adapted from: Weistner et al 2015_
 
 ```{r microenvironmentCrosstalk, fig.cap='(ref:microenvironmentOverview)', out.width = "60%", echo = FALSE}
@@ -138,17 +411,12 @@ knitr::include_graphics("figures/microenvironmentCrosstalk.eps")
 
 ```
 
-### Stimulus - Stimulus Correlations
+(ref:stimuliPathways)  Overview of stimuli included in the screen and summary of their associated targets. HS-5 Culture Medium is omitted, as no specific target can be shown. _Figure and caption from Bruch & Giles et al. 2021._
+```{r stimuliPathways, fig.cap='(ref:stimuliPathways)', out.width = "60%", echo = FALSE}
 
-## Characteristics of patient samples used in the screen
-### Genetic Data available for each patient
-WES, CNVs, Methylation, Transcriptomic, ATACseq, LDT, survT, IHC
-PLus Ibrutinib + IBET + IL4 treated samples - ATACseq, RNAseq, proteomics 
+knitr::include_graphics("figures/stimuliPathways.eps")
 
-## Processing of raw values obtained from cell viability assay 
-### Data normalization and quality control
-
-### How viabilty is calucalted, why we use log values etc 
+```
 
 ### Heterogeneity of response is not caused by differences in receptor expression
 Next, we tested whether the observed heterogeneity of response was caused by differences in receptor expression.  We calculated Pearson correlation coefficients comparing control - normalised  log viability values for each stimulus with transformed RNA counts of the corresponding stimulus receptor(s). No  stimulus-receptor pair showed a Pearson coefficient greater than 0.4, confirming that the heterogeneity of response was not caused by differential receptor expression. 
@@ -249,17 +517,78 @@ CR_volcanoplot
 ```
 
 
+
+## Characteristics of patient samples used in the screen
+### Genetic Data available for each patient
+**table**
+WES, CNVs, Methylation, Transcriptomic, ATACseq, LDT, survT, IHC
+PLus Ibrutinib + IBET + IL4 treated samples - ATACseq, RNAseq, proteomics 
+
+(Figure \@ref(fig:geneticData)). 
+
+(ref:geneticData) Raw viabilities  
+
+
+```{r geneticData, out.width = "70%", fig.cap='(ref:geneticData)', echo = FALSE}
+
+
+```
+
+### Things form other script 
+**any otehrs?**
+
+(Figure \@ref(fig:dataCharacteristics)). 
+
+(ref:dataCharacteristics) Raw viabilities  
+
+
+```{r dataCharacteristics, out.width = "70%", fig.cap='(ref:dataCharacteristics)', echo = FALSE}
+
+
+```
+
 ## Generation of public resource
 ### Shiny app
 
+[Shiny app](https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/)
+
+(Figure \@ref(fig:shinyApp1)). 
+
+(ref:shinyApp1) Home page of the shiny app accompanying this project. The app was published along side @Giles2021 . 
+
+```{r shinyApp1, out.width = "100%", fig.cap='(ref:shinyApp1)', echo = FALSE}
+
+knitr::include_graphics("figures/shiny1.eps")
+
+```
+
+
+(Figure \@ref(fig:shinyApp3)). 
+
+(ref:shinyApp3) Image of one of the tabs, in which the user can explore log-transformed viability values for different drug and stimulus treatments, stratified by genetic features. 
+
+
+```{r shinyApp3, out.width = "100%", fig.cap='(ref:shinyApp3)', echo = FALSE}
+
+knitr::include_graphics("figures/shiny3.eps")
+
+```
+
+
 ### Package 
 
+[package](https://github.com/Huber-group-EMBL/CLLCytokineScreen2021)
+
+(Figure \@ref(fig:package1)). 
+
+(ref:package1)  
+
+
+```{r package1, out.width = "70%", fig.cap='(ref:package1)', echo = FALSE}
+
+knitr::include_graphics("figures/package.eps")
+
+```
 
 
 
-
-* Present the underlying economic model/theory and give reasons why it is
-  suitable to answer the given problem[^1].
-
-
-[^1]: Here is an example of a footnote.
