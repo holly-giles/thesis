@@ -31,7 +31,13 @@ output:
     FDR & & False discovery rate \\
     GSEA & & Gene set enrichment analysis  \\
     IFN$\gamma$ & & Interferon$\gamma$   \\ 
-    Ig & & Immunoglobulin \\
+    
+\end{tabular}
+    
+\begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
+    
+    
+  Ig & & Immunoglobulin \\
     IGHV & & Immunoglobulin heavy chain variable region \\
     IL & & Interleukin \\
     JAK & & Janus kinase \\
@@ -54,7 +60,12 @@ output:
     SDF1$\alpha$ & & Stromal Cell-Derived Factor-1 alpha  \\
     SF3B1 & & Splicing factor 3B subunit 1 \\
     STAT & & Signal transducer and activator of transcription \\
-    SYK & & Spleen tyrosine kinase \\
+    
+\end{tabular}
+
+\begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
+
+  SYK & & Spleen tyrosine kinase \\
     TF & & Transcription factor \\
     TGF$\beta$ & & Transforming growth factor $\beta$ \\
     Th cell & & T-helper cell \\
