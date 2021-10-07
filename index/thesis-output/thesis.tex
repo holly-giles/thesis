@@ -32,6 +32,46 @@
 \usepackage{breqn} %to break up equations accross multiple lines, where neccesary 
 \usepackage{helvet} %to set font as helvetica 
 
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
        % For being able to set `echo = TRUE` in code chunk options, and thus in-line representation of code
 
 %--------------------------------------------
@@ -57,7 +97,7 @@
 % save thesis parameters for later
 \newcommand{\thesistype}{Dissertation}
 \newcommand{\thesisauthor}{Holly Amelia Rebecca Giles}
-\newcommand{\thesisdate}{Oct 01, 2021?}
+\newcommand{\thesisdate}{Dec 05, 2021}
 
 % Added by CII (Thanks, Hadley!)
 % Use ref for internal links
@@ -122,7 +162,7 @@
   \Large{Presented by} \\\vspace{0.5cm}
   \Large{M.A. Holly Amelia Rebecca Giles} \\
   \Large{born in Portsmouth} \\
-  \Large{Oral examination: Dec 15, 2021?}
+  \Large{Oral examination: Feb 20, 2021}
 
 \end{center}
 \newpage\null\thispagestyle{empty}\newpage
@@ -135,7 +175,7 @@
 \thispagestyle{empty}
 \null
 \begin{center}
-\Large{Drug - microenvironment - gene interplay in chronic lymphocytic leukemia} \\
+\Large{Drug - microenvironment - gene interplay in Chronic Lymphocytic Leukemia} \\
 \vspace*{\fill}
 \begin{tabular}{ c c }
 Referees: & Dr.~Judith Zaugg \\
@@ -157,7 +197,7 @@ Referees: & Dr.~Judith Zaugg \\
 % without the use of others sources than the ones indicated. I have not yet
 % presented this thesis or parts thereof to a university as part of an
 % examination or degree. This work was carried out in the Genome Biology at
-% the European Molecular Biology Laboratory (EMBL) in the group of Dr.~Wolfgang Huber and Dr.~Sascha Dietrich.
+% the European Molecular Biology Laboratory (EMBL) in the group of Dr.~Wolfgang Huber and Prof.~Dr.~Sascha Dietrich.
 % \vspace{1cm}
 %
 % \noindent Heidelberg, \thesisdate{}
@@ -170,7 +210,7 @@ Referees: & Dr.~Judith Zaugg \\
 % \newpage
 % \thispagestyle{empty}
 % \vspace*{\fill}
-% Holly Amelia Rebecca Giles, \textit{Drug - microenvironment - gene interplay in chronic lymphocytic leukemia}, \textcopyright\, \thesisdate{}
+% Holly Amelia Rebecca Giles, \textit{Drug - microenvironment - gene interplay in Chronic Lymphocytic Leukemia}, \textcopyright\, \thesisdate{}
 % \newpage
 
 %\frontmatter % this stuff will be roman-numbered
@@ -186,7 +226,7 @@ Referees: & Dr.~Judith Zaugg \\
 % --------------------------------------------
 \vspace*{\fill}
 \begin{center}
-\textit{To \ldots{}}
+\textit{To Mum, Dad and Milly x}
 \end{center}
 \vspace*{\fill}
 \newpage\null\thispagestyle{empty}\newpage
@@ -293,7 +333,12 @@ I want to thank a few people.
     FDR & & False discovery rate \\
     GSEA & & Gene set enrichment analysis  \\
     IFN$\gamma$ & & Interferon$\gamma$   \\ 
-    Ig & & Immunoglobulin \\
+    
+\end{tabular}
+\begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
+    
+    
+  Ig & & Immunoglobulin \\
     IGHV & & Immunoglobulin heavy chain variable region \\
     IL & & Interleukin \\
     JAK & & Janus kinase \\
@@ -316,7 +361,11 @@ I want to thank a few people.
     SDF1$\alpha$ & & Stromal Cell-Derived Factor-1 alpha  \\
     SF3B1 & & Splicing factor 3B subunit 1 \\
     STAT & & Signal transducer and activator of transcription \\
-    SYK & & Spleen tyrosine kinase \\
+    
+\end{tabular}
+\begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
+
+  SYK & & Spleen tyrosine kinase \\
     TF & & Transcription factor \\
     TGF$\beta$ & & Transforming growth factor $\beta$ \\
     Th cell & & T-helper cell \\
@@ -1038,43 +1087,133 @@ An independent patient cohort of 16 patients was used in the drug-drug interacti
 \hypertarget{data}{%
 \chapter{Data}\label{data}}
 
-give a proper overview od the approach, the cytokines and drugs and the dataset, try not too write too much
+Plan:
+-headings {[}x{]}
+-add all figures \textless-
+-all text
 
+proof text
+proof figures
+proof code
+proof numbers
+
+Done - send
+
+\hypertarget{aims-of-the-project}{%
+\section{Aims of the project}\label{aims-of-the-project}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#add label column to df}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{Cytokine =} \FunctionTok{as.character}\NormalTok{(Cytokine)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{Cytlabel =} \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"IL{-}2"}\NormalTok{, }\StringTok{"IL2"}\NormalTok{,}
+                            \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"IL{-}4"}\NormalTok{, }\StringTok{"IL4"}\NormalTok{,}
+                                   \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"IL{-}6"}\NormalTok{, }\StringTok{"IL6"}\NormalTok{,}
+                                          \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"IL{-}10"}\NormalTok{, }\StringTok{"IL10"}\NormalTok{,}
+
+                                                        \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"IL{-}21"}\NormalTok{, }\StringTok{"IL21"}\NormalTok{,}
+                                                               \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"sCD40L+IL{-}4"}\NormalTok{,}\StringTok{"sCD40L + IL4"}\NormalTok{,}
+                                                                      \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"IL{-}15"}\NormalTok{, }\StringTok{"IL15"}\NormalTok{,}
+                                                                             \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"Interferon gamma"}\NormalTok{,}\StringTok{"Interferon \textbackslash{}u03B3"}\NormalTok{,}
+                                                                                    \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"SDF{-}1a"}\NormalTok{,}\StringTok{"SDF{-}1\textbackslash{}u03B1"}\NormalTok{,}
+                                                                                           \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"IL{-}1b"}\NormalTok{,}\StringTok{"IL1\textbackslash{}u03B2"}\NormalTok{,}
+                                                                                                  \FunctionTok{ifelse}\NormalTok{(Cytokine }\SpecialCharTok{==} \StringTok{"TGF{-}b1"}\NormalTok{,}\StringTok{"TGF\textbackslash{}u03B21"}\NormalTok{, Cytokine)))))))))))) }\SpecialCharTok{\%\textgreater{}\%}
+
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{Cytokine =} \FunctionTok{factor}\NormalTok{(Cytokine))}
+
+\CommentTok{\#generate table of Cytokines and assosciated labels}
+\NormalTok{Cytokine\_labels }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(PatientID }\SpecialCharTok{==} \StringTok{"Pat\_001"}\NormalTok{, Drug }\SpecialCharTok{==} \StringTok{"DMSO"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{( Cytokine, Cytlabel)}
+
+\FunctionTok{colnames}\NormalTok{(Cytokine\_labels) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }\StringTok{"Cytlabel"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 Characterisation of primary CLL samples by high-throughput combinatorial screening and multi-omic profiling. An introduction to the dataset that my PhD is based on.
 
-\hypertarget{drug-screens-and-experiments}{%
-\section{Drug screens and experiments}\label{drug-screens-and-experiments}}
+\hypertarget{experimental-overview}{%
+\section{Experimental overview}\label{experimental-overview}}
 
 \hypertarget{high-throughput-combinatorial-pertubation-assay}{%
 \subsection{High-throughput combinatorial pertubation assay}\label{high-throughput-combinatorial-pertubation-assay}}
 
-We measured the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples and combined each one with 12 drugs to investigate the influence on spontaneous and drug-induced apoptosis (Figure \ref{fig:studyOverview}). Viability was assessed by ATP measurement via CellTiterGlo after 48 h of culture and normalised to untreated controls8.
+``We measured the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples and combined each one with 12 drugs to investigate the influence on spontaneous and drug-induced apoptosis (Figure \ref{fig:studyOverview}). Viability was assessed by ATP measurement via CellTiterGlo after 48 h of culture and normalised to untreated controls.''
 
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7px]{figures/studyOverview} 
+{\centering \includegraphics[width=0.7\linewidth]{figures/studyOverview} 
 
 }
 
-\caption{Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n=192). Integrating functional drug-stimulus response profiling with four additional omics layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment reponses, and drug-stimulus interactions in CLL.}\label{fig:studyOverview}
+\caption{Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n = 192). Integrating functional drug-stimulus response profiling with four additional omics layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment reponses, and drug-stimulus interactions in CLL. \emph{Figure and caption from Bruch \& Giles et al.~2021.}}\label{fig:studyOverview}
 \end{figure}
-\hypertarget{validation-experiments}{%
-\subsection{Validation experiments}\label{validation-experiments}}
-
+See whether to include this here, or jsut with otehr stuff
+\#\#\# Validation experiments
 In addition to the screen, we acquired the following validatory data (Figure \ref{fig:additionalData}).
 
-Proper explamantion of data srouces and how we acuried them, the format they are in
+Ibrutinib + IL4 - IBET figure
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/ibribetil4} 
+
+}
+
+\caption{Overview of the approach for the validation experiments. Four CLL PBMC samples were incubated with ibrutinib, IL4 and IBET-762, both individually and in all combinations. Samples were taken for ATAC sequencing and RNA sequencing after 6 hours and for mass spectrometry after 24 hours. Sequencing data was processed for downstream analysis, outline in Chapter \ref{chapter7}.}\label{fig:ibribetil4}
+\end{figure}
+Lymph nodes
+
+Cell line experiments
+
+\hypertarget{additional-eternal-datasets}{%
+\subsection{Additional eternal datasets}\label{additional-eternal-datasets}}
+
+Additional datasets (just describe)
+-CLL ATACseq data32 from the EGA (EGAD00001002110)
+ChIPseq data for Spi-B binding35 from the NCBI GEO database36 (GSE56857, GSM1370276)
+Proteomics data from Sophie
+Clinical data:
+LDT
+TTT
+TFS
+OS
+
+\hypertarget{processing-of-raw-values-obtained-from-cell-viability-assay}{%
+\section{Processing of raw values obtained from cell viability assay}\label{processing-of-raw-values-obtained-from-cell-viability-assay}}
+
+\hypertarget{raw-values-and-quality-control}{%
+\subsection{Raw values and Quality control}\label{raw-values-and-quality-control}}
+
+\textbf{raw viabilites}
+
+(Figure \ref{fig:rawViabilities}).
 
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.7px]{figures/studyOverview} 
+{\centering \includegraphics[width=0.7\linewidth]{thesis_files/figure-latex/rawViabilities-1} 
 
 }
 
-\caption{Schematic of validatory data.}\label{fig:additionalData}
+\caption{Boxplots of raw viability count data prior to normalisation and log transformation. For each of the 192 patient samples, there were 50 DMSO-treated wells. Dashed horizontal lines indicate potential cut-offs for samples that showed low viability with DMSO control treatment.}\label{fig:rawViabilities}
 \end{figure}
+Rest might not be necessary?
+\textbf{any QC plots}
+
+(Figure \ref{fig:screenQC}).
+
+
+
+\hypertarget{data-normalisation-and-log-transformation}{%
+\subsection{Data normalisation and log transformation}\label{data-normalisation-and-log-transformation}}
+
+\textbf{demo plot}
+
+(Figure \ref{fig:screenNormalisation}).
+
+
+
 \hypertarget{characteristics-of-drugs-used-in-the-screen}{%
 \section{Characteristics of drugs used in the screen}\label{characteristics-of-drugs-used-in-the-screen}}
 
@@ -1082,6 +1221,7 @@ Proper explamantion of data srouces and how we acuried them, the format they are
 \subsection{Drug pathways}\label{drug-pathways}}
 
 We screened 17 different drugs (Figure \ref{fig:drugCategories}).
+\textbf{Add table with details of drugs}
 
 
 \begin{figure}
@@ -1092,6 +1232,68 @@ We screened 17 different drugs (Figure \ref{fig:drugCategories}).
 
 \caption{Bar plot of the drugs used in screen.}\label{fig:drugCategories}
 \end{figure}
+(Table \ref{tab:drugTable}).
+
+
+
+add licencing status , otherwise this is good on the drugs
+\begin{table}
+\centering
+\begin{tabular}{l|l|l|l|l|l|l|l|l|l}
+\hline
+\textbf{ } & \textbf{Drug} & \textbf{Main targets} & \textbf{Target category} & \textbf{Drug Group} & \textbf{Pathway} & \textbf{Distributor} & \textbf{Catalogue number} & \textbf{Conc. 1} & \textbf{Conc. 2}\\
+\hline
+\cellcolor[HTML]{E2E868}{D\_001} & \cellcolor[HTML]{E2E868}{Ibrutinib} & \cellcolor[HTML]{E2E868}{BTK} & \cellcolor[HTML]{E2E868}{BCR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{B-cell receptor} & \cellcolor[HTML]{E2E868}{Selleck Chemicals} & \cellcolor[HTML]{E2E868}{S2680} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
+\hline
+D\_002 & Idelalisib & PI3K delta & BCR & FDA approved & B-cell receptor & Selleck Chemicals & S2226 & 500nM & 50nM\\
+\hline
+\cellcolor[HTML]{E2E868}{D\_003} & \cellcolor[HTML]{E2E868}{Fludarabine} & \cellcolor[HTML]{E2E868}{Purine analogue} & \cellcolor[HTML]{E2E868}{DDR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{Selleck Chemicals} & \cellcolor[HTML]{E2E868}{S1491} & \cellcolor[HTML]{E2E868}{2000nM} & \cellcolor[HTML]{E2E868}{200nM}\\
+\hline
+D\_004 & Nutlin-3a & MDM2 & DDR & Clinical development/
+tool compound & Other & Selleck Chemicals & S8059 & 10000nM & 1000nM\\
+\hline
+D\_005 & Selumetinib & MEK1/2 & MAPK & Clinical development/
+\cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{Selleck Chemicals} & \cellcolor[HTML]{E2E868}{S1008} & \cellcolor[HTML]{E2E868}{1000nM} & \cellcolor[HTML]{E2E868}{100nM}\\
+\hline
+D\_006 & BAY-11-7085 & NFkB & NFkB & Clinical development/
+tool compound & Other & Selleck Chemicals & S7352 & 2000nM & 200nM\\
+\hline
+\cellcolor[HTML]{E2E868}{D\_007} & \cellcolor[HTML]{E2E868}{Everolimus} & \cellcolor[HTML]{E2E868}{mTOR} & \cellcolor[HTML]{E2E868}{mTOR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{Selleck Chemicals} & \cellcolor[HTML]{E2E868}{S1120} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
+\hline
+D\_008 & PRT062607 & SYK & BCR & Clinical development/
+tool compound & B-cell receptor & Selleck Chemicals & S8032 & 500nM & 50nM\\
+\hline
+D\_009 & Pyridone-6 & JAK1/2/3 & JAK/STAT & Clinical development/
+\cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{MedChemExpress} & \cellcolor[HTML]{E2E868}{457021-03-7} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
+\hline
+D\_010 & Ralimetinib & p38 MAPK & MAPK & Clinical development/
+tool compound & Other & Selleck Chemicals & S1494 & 1500nM & 150nM\\
+\hline
+D\_011 & Luminespib & HSP90 & HSP90 & Clinical development/
+\cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{Selleck Chemicals} & \cellcolor[HTML]{E2E868}{S1069} & \cellcolor[HTML]{E2E868}{200nM} & \cellcolor[HTML]{E2E868}{20nM}\\
+\hline
+D\_012 & I-BET 762 & BRD2/3/4 & Epigenome & Clinical development/
+tool compound & Other & Selleck Chemicals & S7189 & 1000nM & 100nM\\
+\hline
+\end{tabular}
+\end{table}
+\hypertarget{drug---drug-correlations}{%
+\subsection{Drug - Drug Correlations}\label{drug---drug-correlations}}
+
+(sense check)
+\textbf{corr plot}
+
+(Figure \ref{fig:drugCorrelations}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{thesis_files/figure-latex/drugCorrelations-1} 
+
+}
+
+\caption{Raw viabilities}\label{fig:drugCorrelations}
+\end{figure}
 \hypertarget{drug-responses}{%
 \subsection{Drug responses}\label{drug-responses}}
 
@@ -1100,27 +1302,70 @@ The drug responses were as follows (Figure \ref{fig:drugResponses}).
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.5px]{thesis_files/figure-latex/drugResponses-1} 
+{\centering \includegraphics[width=0.7\linewidth]{thesis_files/figure-latex/drugResponses-1} 
 
 }
 
 \caption{Log transformed viability values for all drugs that were included in the screen after qulaity control. p values from student's t test.}\label{fig:drugResponses}
 \end{figure}
-\hypertarget{genetic-predictors-of-drug-responses}{%
-\subsection{Genetic predictors of drug responses}\label{genetic-predictors-of-drug-responses}}
-
-\hypertarget{drug---drug-correlations}{%
-\subsection{Drug - Drug Correlations}\label{drug---drug-correlations}}
-
 \hypertarget{characteristics-of-stimuli-used-in-the-screen}{%
 \section{Characteristics of stimuli used in the screen}\label{characteristics-of-stimuli-used-in-the-screen}}
 
 \hypertarget{stimuli-info}{%
 \subsection{The panel of stimuli}\label{stimuli-info}}
 
+\textbf{table of stimuli}
+-details of how were slected
+
+(Table \ref{tab:cytTable}).
+
+
+
+more on pathways? or is the diagram good neough? more on how they were choseN? not really my PhD?
+\begin{table}
+\centering
+\begin{tabular}{l|l|l|l|l|l|l}
+\hline
+\textbf{Stimulus} & \textbf{Name} & \textbf{Supplier} & \textbf{Concentration} & \textbf{Catalogue Number} & \textbf{Lot Number} & \textbf{Pathway}\\
+\hline
+\cellcolor[HTML]{E2E868}{IL4 human recombinant animal component free} & \cellcolor[HTML]{E2E868}{IL4} & \cellcolor[HTML]{E2E868}{Sigma-Aldrich} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{SRP3093} & \cellcolor[HTML]{E2E868}{0712AFC14} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
+\hline
+IL10 human Animal component free & IL10 & Sigma-Aldrich & 10 ng/ml & SRP3312 & 1012AFC21 & JAK/STAT\\
+\hline
+\cellcolor[HTML]{E2E868}{IL2 human recombinant animal component free} & \cellcolor[HTML]{E2E868}{IL2} & \cellcolor[HTML]{E2E868}{Sigma-Aldrich} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{SRP3085} & \cellcolor[HTML]{E2E868}{0416AFC12} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
+\hline
+R-848 & Resiquimod & Enzo Life Siences & 1000 ng/ml & ALX-420-038-M025 & 10211615 & TLR 7/8\\
+\hline
+\cellcolor[HTML]{E2E868}{Human IL-21} & \cellcolor[HTML]{E2E868}{IL21} & \cellcolor[HTML]{E2E868}{Peprotech} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{200-21} & \cellcolor[HTML]{E2E868}{414226} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
+\hline
+Human BAFF & BAFF & Peprotech & 250 ng/ml & 310-13 & 0706CY194 & NFkB\\
+\hline
+\cellcolor[HTML]{E2E868}{Human IL-1 beta} & \cellcolor[HTML]{E2E868}{IL1β} & \cellcolor[HTML]{E2E868}{Peprotech} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{200-01} & \cellcolor[HTML]{E2E868}{0606B95} & \cellcolor[HTML]{E2E868}{NFkB}\\
+\hline
+Human sCD40 Ligand & sCD40L & Peprotech & 1000 ng/ml & 310-02 & 1214145 & NFkB\\
+\hline
+\cellcolor[HTML]{E2E868}{Goat F(AB')2 Fragment to human IgM} & \cellcolor[HTML]{E2E868}{soluble anti-IgM} & \cellcolor[HTML]{E2E868}{MP Biomedicals} & \cellcolor[HTML]{E2E868}{20000 ng/ml} & \cellcolor[HTML]{E2E868}{55055} & \cellcolor[HTML]{E2E868}{7227} & \cellcolor[HTML]{E2E868}{BCR}\\
+\hline
+Human TGFβ1 & TGFβ1 & Peprotech & 10 ng/ml & 100-21 & 1117209 & MAPK\\
+\hline
+\cellcolor[HTML]{E2E868}{Human IL15} & \cellcolor[HTML]{E2E868}{IL15} & \cellcolor[HTML]{E2E868}{Peprotech} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{200-15} & \cellcolor[HTML]{E2E868}{91624} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
+\hline
+Human IL6 & IL6 & Peprotech & 10 ng/ml & 200-06 & 031316-2 & JAK/STAT\\
+\hline
+\cellcolor[HTML]{E2E868}{ODN 2006 (ODN 7909)} & \cellcolor[HTML]{E2E868}{CpG ODN} & \cellcolor[HTML]{E2E868}{Invivogen} & \cellcolor[HTML]{E2E868}{1000 ng/ml} & \cellcolor[HTML]{E2E868}{tlrl-2006-1} & \cellcolor[HTML]{E2E868}{3901-09T} & \cellcolor[HTML]{E2E868}{TLR 9}\\
+\hline
+Human SDF1 alpha (CXCL12) & SDF-1α & Peprotech & 200 ng/ml & 300-28A & 101492 & JAK/STAT\\
+\hline
+\cellcolor[HTML]{E2E868}{Human Interferon gamma} & \cellcolor[HTML]{E2E868}{Interferon γ} & \cellcolor[HTML]{E2E868}{Peprotech} & \cellcolor[HTML]{E2E868}{5 ng/ml} & \cellcolor[HTML]{E2E868}{300-02} & \cellcolor[HTML]{E2E868}{121527} & \cellcolor[HTML]{E2E868}{NFkB}\\
+\hline
+HS-5 conditioned medium & HS-5 CM & self produced & 20 \% & NA & NA & NA\\
+\hline
+\end{tabular}
+\end{table}
 \hypertarget{stimulus-pathways}{%
 \subsection{Stimulus pathways}\label{stimulus-pathways}}
 
+\textbf{details of which stimuli activates with pathways}
 
 \begin{figure}
 
@@ -1130,8 +1375,12 @@ The drug responses were as follows (Figure \ref{fig:drugResponses}).
 
 \caption{(ref:microenvironmentOverview)}\label{fig:microenvironmentCrosstalk}
 \end{figure}
-\hypertarget{stimulus---stimulus-correlations}{%
-\subsection{Stimulus - Stimulus Correlations}\label{stimulus---stimulus-correlations}}
+\hypertarget{heterogeneity-of-response-is-not-caused-by-differences-in-receptor-expression}{%
+\subsection{Heterogeneity of response is not caused by differences in receptor expression}\label{heterogeneity-of-response-is-not-caused-by-differences-in-receptor-expression}}
+
+Next, we tested whether the observed heterogeneity of response was caused by differences in receptor expression. We calculated Pearson correlation coefficients comparing control - normalised log viability values for each stimulus with transformed RNA counts of the corresponding stimulus receptor(s). No stimulus-receptor pair showed a Pearson coefficient greater than 0.4, confirming that the heterogeneity of response was not caused by differential receptor expression.
+
+
 
 \hypertarget{characteristics-of-patient-samples-used-in-the-screen}{%
 \section{Characteristics of patient samples used in the screen}\label{characteristics-of-patient-samples-used-in-the-screen}}
@@ -1139,22 +1388,20 @@ The drug responses were as follows (Figure \ref{fig:drugResponses}).
 \hypertarget{genetic-data-available-for-each-patient}{%
 \subsection{Genetic Data available for each patient}\label{genetic-data-available-for-each-patient}}
 
+\textbf{table}
 WES, CNVs, Methylation, Transcriptomic, ATACseq, LDT, survT, IHC
 PLus Ibrutinib + IBET + IL4 treated samples - ATACseq, RNAseq, proteomics
 
-\hypertarget{processing-of-raw-values-obtained-from-cell-viability-assay}{%
-\section{Processing of raw values obtained from cell viability assay}\label{processing-of-raw-values-obtained-from-cell-viability-assay}}
+(Figure \ref{fig:geneticData}).
 
-\hypertarget{data-normalization-and-quality-control}{%
-\subsection{Data normalization and quality control}\label{data-normalization-and-quality-control}}
 
-\hypertarget{how-viabilty-is-calucalted-why-we-use-log-values-etc}{%
-\subsection{How viabilty is calucalted, why we use log values etc}\label{how-viabilty-is-calucalted-why-we-use-log-values-etc}}
 
-\hypertarget{heterogeneity-of-response-is-not-caused-by-differences-in-receptor-expression}{%
-\subsection{Heterogeneity of response is not caused by differences in receptor expression}\label{heterogeneity-of-response-is-not-caused-by-differences-in-receptor-expression}}
+\hypertarget{things-form-other-script}{%
+\subsection{Things form other script}\label{things-form-other-script}}
 
-Next, we tested whether the observed heterogeneity of response was caused by differences in receptor expression. We calculated Pearson correlation coefficients comparing control - normalised log viability values for each stimulus with transformed RNA counts of the corresponding stimulus receptor(s). No stimulus-receptor pair showed a Pearson coefficient greater than 0.4, confirming that the heterogeneity of response was not caused by differential receptor expression.
+\textbf{any otehrs?}
+
+(Figure \ref{fig:dataCharacteristics}).
 
 
 
@@ -1164,14 +1411,46 @@ Next, we tested whether the observed heterogeneity of response was caused by dif
 \hypertarget{shiny-app}{%
 \subsection{Shiny app}\label{shiny-app}}
 
+\href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{Shiny app}
+
+(Figure \ref{fig:shinyApp1}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/shiny1} 
+
+}
+
+\caption{Home page of the shiny app accompanying this project. The app was published along side \protect\hyperlink{ref-Giles2021}{Bruch et al.} (\protect\hyperlink{ref-Giles2021}{2021}) .}\label{fig:shinyApp1}
+\end{figure}
+(Figure \ref{fig:shinyApp3}).
+
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{figures/shiny3} 
+
+}
+
+\caption{Image of one of the tabs, in which the user can explore log-transformed viability values for different drug and stimulus treatments, stratified by genetic features.}\label{fig:shinyApp3}
+\end{figure}
 \hypertarget{package}{%
 \subsection{Package}\label{package}}
-\begin{itemize}
-\tightlist
-\item
-  Present the underlying economic model/theory and give reasons why it is
-  suitable to answer the given problem\footnote{Here is an example of a footnote.}.
-\end{itemize}
+
+\href{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}{package}
+
+(Figure \ref{fig:package1}).
+
+(ref:package1)
+\begin{figure}
+
+{\centering \includegraphics[width=0.7\linewidth]{figures/package} 
+
+}
+
+\caption{(ref:package1)}\label{fig:package1}
+\end{figure}
 \hypertarget{chapter4}{%
 \chapter{\texorpdfstring{\emph{Ex-vivo} sensitivity to microenvironmental stimulation in primary CLL cells}{Ex-vivo sensitivity to microenvironmental stimulation in primary CLL cells}}\label{chapter4}}
 
