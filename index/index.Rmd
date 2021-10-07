@@ -2,21 +2,21 @@
 #
 # Required Information --------------------------------------------------------
 # change lines 5 - 15
-title: "Drug - microenvironment - gene interplay in chronic lymphocytic leukemia"
+title: "Drug - microenvironment - gene interplay in Chronic Lymphocytic Leukemia"
 type: "Dissertation"
 author: "Holly Amelia Rebecca Giles"
 authordegree: "M.A."
 birthplace: "Portsmouth"
-date: "Oct 01, 2021?"
-examdate: "Dec 15, 2021?"
+date: "Dec 05, 2021"
+examdate: "Feb 20, 2021"
 university: "Ruperto Carola University Heidelberg"
 institute: "European Molecular Biology Laboratory"
 instituteshort: "(EMBL)"
 department: "Genome Biology"
-supervisor: "Dr. Wolfgang Huber and Dr. Sascha Dietrich"
+supervisor: "Dr. Wolfgang Huber and Prof. Dr. Sascha Dietrich"
 referee1: "Dr. Judith Zaugg"
 referee2: "Prof. Dr. Michael Boutros" 
-dedication: "To ..."
+dedication: "To Mum, Dad and Milly x"
 #
 # Optional Information --------------------------------------------------------
 # comment out if unnecessary
