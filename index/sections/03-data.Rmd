@@ -3,27 +3,34 @@ output:
   pdf_document: default
   html_document: default
 ---
+
 # Data
+```{r, echo = FALSE}
+
+knitr::opts_chunk$set(
+   echo = FALSE, 
+   message = FALSE, 
+   warning = FALSE,
+   fig.align="center"
+)
+
+```
 
 Plan: 
--headings [x]
--add all figures <-
-
-^almost all done, just ones on data characteristics 
-
-i woudl then put this together, and see if i want to add natyhign else,
--all text 
-
-proof text
-proof figures
-proof code
-proof numbers 
-
-Done - send 
+-headings [x]   
+-add all figures [x]   
+-all text   <- Tomorrow, shape this up, work with what i have 
+-proof text   
+-proof figures   
+-proof code   
+-proof numbers  
+-proof of gene name etc 
+-anything else?  
+Done - send   
 
 ## Aims of the project 
 
-```{r setup02, echo = FALSE, message = FALSE, warning = FALSE}
+```{r setup03, echo = FALSE, message = FALSE, warning = FALSE}
 #libraries
 library(ggplot2)
 library(tidyverse)
@@ -31,7 +38,12 @@ library(ggbeeswarm)
 library(dplyr)
 library(reshape2)
 library(kableExtra)
+library(BloodCancerMultiOmics2017)
+library(gtable)
+library(grid)
+```
 
+```{r loadData03}
 
 #Data
 load("data/drugs.RData")
@@ -45,8 +57,14 @@ load("data/Raw_Screening_Data.RData")
 source("R/themes_colors.R")
 source("R/plotPathways.R")
 
+#additional aesthetics
+bwScale = c("0"="white","1"="black","N.A."="grey90")
+lfsize = 16 # legend font size
+
 ```
-```{r processData}
+
+
+```{r processData04}
 
 #add label column to df
 df <- df %>%
@@ -76,13 +94,68 @@ colnames(Cytokine_labels) <- c("name", "Cytlabel")
 
 ```
 
+
+```{r defineFunctions04}
+
+plotPathways <-function(dat) 
+{
+  #Set pathway, number of drugs and group
+  Pathway = NULL
+  No = NULL
+  Group = NULL
+  #set ordering of drug cateogries (FDA Approved and  Clinical development/tool compound)
+  ordM = sort(table(dat$group), decreasing = TRUE)
+  
+  #set ordering of pathways within categories
+  ordS = tapply(dat$target_category, dat$group, function(pth) {
+    sort(table(pth), decreasing = TRUE)
+  })
+  
+  #set overall ordering
+  ocur = ordS[names(ordM)]
+  
+  #get a dataframe of number of drugs for each pathway, split by category
+  tmp = do.call(rbind, lapply(names(ocur), function(pathgroup) {
+    data.frame(Group = pathgroup, Pathway = names(ocur[[pathgroup]]), 
+               No = as.vector(unname(ocur[[pathgroup]])))
+  }))
+  
+  #relevel categories
+  tmp$Group = factor(tmp$Group, levels = rev(names(ocur)))
+  
+  #set plotting order
+  lev = sort(tapply(tmp$No, tmp$Pathway, function(x) sum(x)), 
+             decreasing = TRUE)
+  
+  #relevel pathways
+  tmp$Pathway = factor(tmp$Pathway, levels = names(lev))
+  
+  #set height of y axis scale
+  widthmax = max(lev) + 1
+  
+  #make plot
+  g = ggplot(tmp, aes(x = Pathway, y = No, fill = Group)) + 
+    geom_bar(width = 0.6, stat = "identity") + theme_bw() + 
+    scale_fill_manual(values = c(drugpal[1], drugpal[2]), name = "Drug type") + 
+    scale_y_continuous(breaks = seq(0, 20, 2), 
+                       expand = c(0,0), limits = c(0, widthmax)) + 
+    xlab("") + 
+    ylab("No. of drugs") + 
+    t1 + 
+    theme(legend.position = c(0.7, 0.65))
+  
+}
+
+
+
+```
 Characterisation of primary CLL samples by high-throughput combinatorial screening and multi-omic profiling. An introduction to the dataset that my PhD is based on. 
 
 ## Experimental overview
 ### High-throughput combinatorial pertubation assay
 "We measured the effects of 17 cytokines and microenvironmental stimuli on cell viability in 192 primary CLL samples and combined each one with 12 drugs to investigate the influence on spontaneous and drug-induced apoptosis (Figure \@ref(fig:studyOverview)). Viability was assessed by ATP measurement via CellTiterGlo after 48 h of culture and normalised to untreated controls." 
 
-(ref:studyOverview) Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n = 192). Integrating functional drug-stimulus response profiling with four additional omics layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment reponses, and drug-stimulus interactions in CLL. _Figure and caption from Bruch & Giles et al. 2021._
+(ref:studyOverview) Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n = 192). Integrating functional drug-stimulus response profiling with four additional omics layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment responses, and drug-stimulus interactions in CLL. _Figure and caption from Bruch & Giles et al. 2021._
 
 ```{r studyOverview, out.width = "70%", fig.cap='(ref:studyOverview)', echo = FALSE}
 
@@ -92,11 +165,13 @@ knitr::include_graphics("figures/studyOverview.eps")
 
 
 See whether to include this here, or jsut with otehr stuff
+
+
 ### Validation experiments
-In addition to the screen, we acquired the following validatory data (Figure \@ref(fig:additionalData)). 
+
+In addition to the screen, we acquired the following validatory data (Figure \@ref(fig:ibribetil4)). 
 
 
-Ibrutinib + IL4 - IBET figure 
 (ref:ibribetil4) Overview of the approach for the validation experiments. Four CLL PBMC samples were incubated with ibrutinib, IL4 and IBET-762, both individually and in all combinations. Samples were taken for ATAC sequencing and RNA sequencing after 6 hours and for mass spectrometry after 24 hours. Sequencing data was processed for downstream analysis, outline in Chapter \@ref(chapter7). 
 
 
@@ -110,7 +185,7 @@ Lymph nodes
 
 Cell line experiments 
 
-### Additional eternal datasets
+### Additional external datasets
 Additional datasets (just describe)
 -CLL ATACseq data32 from the EGA (EGAD00001002110) 
 ChIPseq data for Spi-B binding35 from the NCBI GEO database36 (GSE56857, GSM1370276)
@@ -121,7 +196,7 @@ TTT
 TFS
 OS
 
-## Processing of raw values obtained from cell viability assay 
+## Data Processing
 ### Raw values and Quality control
 
 **raw viabilites**
@@ -160,28 +235,13 @@ Raw_Screening_Data %>%
   labs(y = "Viability of \nDMSO-treated controls", x = "Patient samples")
 
 
-
-
-
 ```
 
-
-Rest might not be necessary? 
 **any QC plots**
 
-(Figure \@ref(fig:screenQC)). 
-
-(ref:screenQC) Raw viabilities  
-
-
-```{r screenQC, out.width = "70%", fig.cap='(ref:screenQC)', echo = FALSE}
-
-
-```
-
 ### Data normalisation and log transformation
-
-**demo plot**
+Read through gosia's and add a plot on plate normalisation?
+**demo plot**maybeno plot 
 
 (Figure \@ref(fig:screenNormalisation)). 
 
@@ -194,7 +254,7 @@ Rest might not be necessary?
 ```
 
 ## Characteristics of drugs used in the screen
-### Drug pathways
+### Drug characteristics
 We screened 17 different drugs (Figure \@ref(fig:drugCategories)). 
 **Add table with details of drugs**
 
@@ -212,7 +272,7 @@ drugs$group[which(drugs$devel_012020==1)] = "Clinical development/\ntool compoun
 
 ```
 
-```{r drugCategories, fig.cap='(ref:drugCategories)', out.width=1, echo = FALSE}
+```{r drugCategories, fig.cap='(ref:drugCategories)', echo = FALSE}
 
 drugCategories <- plotPathways(dat=drugs) 
 drugCategories
@@ -224,36 +284,28 @@ drugCategories
 (ref:drugTable) Raw viabilities  
 
 add licencing status , otherwise this is good on the drugs 
-```{r drugTable, out.width = "70%", fig.cap='(ref:drugTable)', echo = FALSE}
+```{r drugTable, out.width = "40%", fig.cap='(ref:drugTable)', echo = FALSE}
 
 drugs %>%
-  dplyr::select(-ID, -approved_012020,-devel_012020) %>%
+  dplyr::select(-ID, -approved_012020,-devel_012020, -target_category, -distributor, -cat_no) %>%
   dplyr::rename(Drug=Name,
                 `Main targets`=main_targets,
-                `Target category`=target_category,
                 `Drug Group`=group,
-                Pathway=pathway,
-                Distributor=distributor,
-                `Catalogue number`=cat_no,
-                `Conc. 1`= conc1,
-                `Conc. 2`= conc2) %>%
+                Pathway=pathway) %>%
   kable() %>%
   row_spec(0,bold=TRUE) %>%
 kable_styling(latex_options = "striped", 
               stripe_color = colors[7],
                 html_font = "Helvetica")
 
-
-
 ```
 
-### Drug - Drug Correlations 
+### QC and Drug - Drug Correlations 
 (sense check)
-**corr plot**
 
 (Figure \@ref(fig:drugCorrelations)). 
 
-(ref:drugCorrelations) Raw viabilities  
+(ref:drugCorrelations) Insert caption
 
 
 ```{r drugCorrelations, out.width = "70%", fig.cap='(ref:drugCorrelations)', echo = FALSE, eval = TRUE}
@@ -387,8 +439,8 @@ cytokines$stimulus[grepl("HS-5 konditioniertes Medium",cytokines$stimulus)]<-"HS
 
 cytokines %>%
   left_join(Cytokine_labels, by = "name") %>%
-  dplyr::select(-name, -additional_pathways, -source) %>%
-  dplyr::rename(Stimulus=stimulus, Name = Cytlabel, Supplier=company, Concentration=conc, `Catalogue Number`=cat_no, `Lot Number`=lot_no, Pathway=pathway) %>%
+  dplyr::select(-name, -additional_pathways, -source, -company, -cat_no, -lot_no) %>%
+  dplyr::rename(Stimulus=stimulus, Name = Cytlabel, Concentration=conc, Pathway=pathway) %>%
 
   select(Stimulus, Name,  everything()) %>%
   kable() %>%
@@ -400,8 +452,6 @@ kable_styling(latex_options = "striped",
 
 
 ```
-
-### Stimulus pathways
 **details of which stimuli activates with pathways** 
 (ref:microenvironmentCrosstalk) _Adapted from: Weistner et al 2015_
 
@@ -418,13 +468,13 @@ knitr::include_graphics("figures/stimuliPathways.eps")
 
 ```
 
-### Heterogeneity of response is not caused by differences in receptor expression
+### QC and sense checks
+Heterogeneity of response is not caused by differences in receptor expression
 Next, we tested whether the observed heterogeneity of response was caused by differences in receptor expression.  We calculated Pearson correlation coefficients comparing control - normalised  log viability values for each stimulus with transformed RNA counts of the corresponding stimulus receptor(s). No  stimulus-receptor pair showed a Pearson coefficient greater than 0.4, confirming that the heterogeneity of response was not caused by differential receptor expression. 
 
 (ref:RNAcorrelations) Volcano plot showing p-values versus Pearson correlation coefficients, for the correlation between control - normalised log viability values for each stimulus and expression of the corresponding stimulus receptor, in matched patient samples. Expression calculated using transformed RNA counts (using VST method) of untreated CLL sample.
 
 ```{r RNAcorrelations, fig.cap='(ref:RNAcorrelations)', message = FALSE,  eval = FALSE, echo = FALSE, fig.height=10, fig.width=7, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
-
 
 #VST
 vsd <- vst(dds_smp, blind=TRUE)
@@ -517,35 +567,220 @@ CR_volcanoplot
 ```
 
 
-
 ## Characteristics of patient samples used in the screen
 ### Genetic Data available for each patient
-**table**
-WES, CNVs, Methylation, Transcriptomic, ATACseq, LDT, survT, IHC
-PLus Ibrutinib + IBET + IL4 treated samples - ATACseq, RNAseq, proteomics 
+
+Descirbtpiton of all data at top
+
+Here is: 
+
+-table of all mutatiosn and meta data
+-table of number of each mutation 
+
+= all plots done
+wrtiing after lunch 
+
+```{r}
+
+# select CLL samples
+patM = patMeta$PatientID
+patMeta <- as.data.frame(patMeta)
+rownames(patMeta) <- patM
+ighv = factor(setNames(patMeta[patM,"IGHV.status"], nm=patM), levels=c("U","M"))
+mut1 = c("del17p", "del11q", "trisomy12", "del13q")
+mut2 = c("TP53", "ATM", "SF3B1", "NOTCH1", "MYD88")
+mc = patMeta[,c(8:113)] %>% as.matrix()
+mc <- matrix(as.numeric(mc),  
+             ncol = ncol(mc))
+colnames(mc) = colnames(patMeta[,c(8:113)] )
+rownames(mc) <- rownames(patMeta[,c(8:113)] )
+
+## SELECTION OF MUTATIONS
+# # include mutations with at least incidence of 4
+mut2plot = names(which(sort(colSums(mc, na.rm=TRUE), decreasing=TRUE)>3))
+
+# divide mutations into gene mut and cnv
+mut2plotSV = mut2plot[grep("[[:lower:]]", mut2plot)]
+mut2plotSP = mut2plot[grep("[[:upper:]]", mut2plot)]
+
+
+# rearrange the top ones to match the order in mut1 and mut2
+mut2plotSV = c(mut1, mut2plotSV[!mut2plotSV %in% mut1])
+mut2plotSP = c(mut2, mut2plotSP[!mut2plotSP %in% mut2])
+factors = data.frame(patMeta[patM, c(mut2plotSV, mut2plotSP)],
+                     check.names=FALSE)
+
+# change it to factors
+for(i in 1:ncol(factors)) {
+  factors[,i] = factor(factors[,i], levels=c(1,0))
+}
+ord = order(factors[,1], factors[,2], factors[,3], factors[,4], factors[,5],
+            factors[,6], factors[,7], factors[,8], factors[,9], factors[,10],
+            factors[,11], factors[,12], factors[,13], factors[,14],
+            factors[,15], factors[,16], factors[,17], factors[,18],
+            factors[,19], factors[,20], factors[,21], factors[,22],
+            factors[,23], factors[,24], factors[,25], factors[,26],
+            factors[,27], factors[,28], factors[,29], factors[,30],
+            factors[,31], factors[,32])
+factorsord = factors[ord,]
+patM = patM[ord]
+(c(mut2plotSV, mut2plotSP))
+```
+
+
+(Table \@ref(tab:geneTable)). 
+
+UPdate CNV anmes in this plot 
+
+(ref:geneTable) Number of cases of each mutation
+
+```{r geneTable, out.width = "70%", fig.cap='(ref:geneTable)', echo = FALSE}
+
+plotDF = meltWholeDF(factorsord)
+plotDF$Mut =
+  ifelse(sapply(plotDF$X,
+                function(x) grep(x, list(mut2plotSV, mut2plotSP)))==1,"SV","SP")
+plotDF$Status = "N.A."
+plotDF$Status[plotDF$Measure==1 & plotDF$Mut=="SV"] = "1a"
+plotDF$Status[plotDF$Measure==1 & plotDF$Mut=="SP"] = "1b"
+plotDF$Status[plotDF$Measure==0] = "0"
+plotDF$Status = factor(plotDF$Status, levels=c("1a","1b","0","N.A."))
+plotDF$Y = factor(plotDF$Y, levels=patM)
+plotDF$X = factor(plotDF$X, levels=rev(colnames(factorsord)))
+
+mutPL = ggplotGrob(
+  ggplot(data=plotDF, aes(x=Y, y=X, fill=Status)) + geom_tile() +
+    scale_fill_manual(
+      values=c("0"="white","1a"=colors[1],"1b"=colors[2],"N.A."="grey90"),
+      name="Mutation", labels=c("WT","CNV","Gene mutation","NA")) +
+    ylab("") + xlab("") +
+    geom_vline(xintercept=seq(0.5,length(patM)+1,5), colour="grey60") +
+    geom_hline(yintercept=seq(0.5,ncol(factorsord)+1,1), colour="grey60") +
+    scale_y_discrete(expand=c(0,0)) + scale_x_discrete(expand=c(0,0)) +
+    theme(axis.ticks=element_blank(), axis.text.x=element_blank(),
+          axis.text.y=element_text(
+            size=60, face=ifelse(levels(plotDF$X) %in% mut2plotSV,
+                                 "plain","plain")),
+          axis.text=element_text(margin=unit(0.5,"cm"), colour="black"),
+          legend.key = element_rect(colour = "black"),
+          legend.text=element_text(size=lfsize),
+          legend.title=element_text(size=lfsize)))
+res = table(plotDF[,c("X","Measure")])
+
+
+knitr::kable(res[order(res[,2], decreasing=TRUE),]) %>% kable_styling(latex_options = "striped", 
+              stripe_color = colors[7],
+                html_font = "Helvetica")
+
+
+
+```
+
+```{r sex}
+sexDF = data.frame(Factor="Sex", PatientID=factor(patM, levels=patM),
+                   Value=patMeta[patM, "gender"])
+sexPL = ggplotGrob(
+  ggplot(sexDF, aes(x=PatientID, y=Factor, fill=Value)) + geom_tile() +
+    scale_fill_manual(values=c("f"=palreds[6],"m"=palblues[5],"N.A."="grey90"),
+                      name="Sex", labels=c("Female","Male","NA")) +
+    theme(axis.ticks=element_blank(),
+          axis.text=element_text(size=60, colour="black",
+                                 margin=unit(0.5,"cm")),
+          legend.key = element_rect(colour = "black"),
+          legend.text=element_text(size=lfsize),
+          legend.title=element_text(size=lfsize)))
+
+```
+```{r methylationCluster}
+mcDF = data.frame(Factor="Methylation", PatientID=factor(patM, levels=patM),
+                   Value=patMeta[patM, "Methylation_Cluster"])
+mcPL = ggplotGrob(
+  ggplot(mcDF, aes(x=PatientID, y=Factor, fill=Value)) + geom_tile() +
+    scale_fill_manual(values=c("LP"=palblues[8], "IP"=palblues[6], "HP"=palblues[4],  N.A.="grey90"), name="Methylation Cluster", labels=c("LP","IP","HP", "NA")) +
+    theme(axis.ticks=element_blank(),
+          axis.text=element_text(size=60, colour="black",
+                                 margin=unit(0.5,"cm")),
+          legend.key = element_rect(colour = "black"),
+          legend.text=element_text(size=lfsize),
+          legend.title=element_text(size=lfsize)))
+
+```
+
+```{r treatmentStatus}
+treatDF = data.frame(Factor="Treated", PatientID=factor(patM, levels=patM),
+                     Value=ifelse(patMeta[patM, "treatment"], 0, 1))
+treatDF$Value[is.na(treatDF$Value)] = "N.A."
+treatDF$Value = factor(treatDF$Value, levels=c("0","1","N.A."))
+treatPL = ggplotGrob(
+  ggplot(treatDF, aes(x=PatientID, y=Factor, fill=Value)) +geom_tile() +
+    scale_fill_manual(values=bwScale, name="Treated",
+                      labels=c("0"="No","1"="Yes","N.A."="NA")) +
+    theme(axis.ticks=element_blank(),
+          axis.text=element_text(size=60, colour="black",
+                                 margin=unit(0.5,"cm")),
+          legend.key = element_rect(colour = "black"),
+          legend.text=element_text(size=lfsize),
+          legend.title=element_text(size=lfsize)))
+
+```
+
+```{r ighvStatus}
+ighvDF = data.frame(Factor="IGHV", PatientID=factor(patM, levels=patM),
+                    Value=patMeta[patM, "IGHV.status"])
+ighvDF$Value = ifelse(ighvDF$Value=="M", 1, 0)
+ighvDF$Value[is.na(ighvDF$Value)] = "N.A."
+ighvDF$Value = factor(ighvDF$Value, levels=c("0","1","N.A."))
+ighvPL = ggplotGrob(
+  ggplot(ighvDF, aes(x=PatientID, y=Factor, fill=Value)) + geom_tile() +
+    scale_fill_manual(values=bwScale, name="IGHV",
+                      labels=c("0"="Unmutated","1"="Mutated","N.A."="NA")) +
+    theme(axis.ticks=element_blank(), 
+          axis.text=element_text(size=60, colour="black", margin=unit(0.5,"cm")),
+          legend.key=element_rect(colour = "black"),
+          legend.text=element_text(size=lfsize),
+          legend.title=element_text(size=lfsize)))
+
+```
+
+```{r echo=FALSE}
+nX = length(patM)
+nY = ncol(factorsord)
+unY1 = 0.6*1.6
+unY2 = 0.6*1.8
+unX = 0.2
+sp = 0.001
+wdths = c(6, unX*nX, sp)
+hghts = c(sp, unY1,unY1,unY1,unY1, 0.8, sp, sp ,unY2*nY, sp)
+gt = gtable(widths=unit(wdths, "in"), heights=unit(hghts, "in"))
+# add the plots
+gt = gtable_add_grob(gt, sexPL$grobs[[whichInGrob(sexPL, "panel")]], 2, 2)
+gt = gtable_add_grob(gt, treatPL$grobs[[whichInGrob(treatPL, "panel")]], 3, 2)
+gt = gtable_add_grob(gt, mcPL$grobs[[whichInGrob(mcPL, "panel")]], 4, 2)
+gt = gtable_add_grob(gt, ighvPL$grobs[[whichInGrob(ighvPL, "panel")]], 5, 2)
+gt = gtable_add_grob(gt, mutPL$grobs[[whichInGrob(mutPL, "panel")]], 9, 2)
+# add x axis
+gt = gtable_add_grob(gt, mutPL$grobs[[whichInGrob(mutPL, "axis-b")]], 10, 2)
+# add y axis
+gt = gtable_add_grob(gt, sexPL$grobs[[whichInGrob(sexPL, "axis-l")]], 2, 1)
+gt = gtable_add_grob(gt, treatPL$grobs[[whichInGrob(treatPL, "axis-l")]], 3, 1)
+gt = gtable_add_grob(gt, mcPL$grobs[[whichInGrob(mcPL, "axis-l")]], 4, 1)
+gt = gtable_add_grob(gt, ighvPL$grobs[[whichInGrob(ighvPL, "axis-l")]], 5, 1)
+gt = gtable_add_grob(gt, mutPL$grobs[[whichInGrob(mutPL, "axis-l")]], 9, 1)
+```
+
 
 (Figure \@ref(fig:geneticData)). 
 
-(ref:geneticData) Raw viabilities  
+(ref:geneticData) Summary of genetic data 
+
+```{r geneticData, out.width = "70%", fig.cap='(ref:geneticData)', echo=FALSE, fig.width=sum(wdths), fig.height=sum(hghts)}
 
 
-```{r geneticData, out.width = "70%", fig.cap='(ref:geneticData)', echo = FALSE}
-
-
-```
-
-### Things form other script 
-**any otehrs?**
-
-(Figure \@ref(fig:dataCharacteristics)). 
-
-(ref:dataCharacteristics) Raw viabilities  
-
-
-```{r dataCharacteristics, out.width = "70%", fig.cap='(ref:dataCharacteristics)', echo = FALSE}
+wrap_elements(grid.draw(gt)) / wrap_elements(BloodCancerMultiOmics2017:::drawLegends(plobj=list(sexPL,treatPL,ighvPL,mutPL))) + plot_layout(heights = c(1,0.1))
 
 
 ```
+
 
 ## Generation of public resource
 ### Shiny app
@@ -567,7 +802,6 @@ knitr::include_graphics("figures/shiny1.eps")
 
 (ref:shinyApp3) Image of one of the tabs, in which the user can explore log-transformed viability values for different drug and stimulus treatments, stratified by genetic features. 
 
-
 ```{r shinyApp3, out.width = "100%", fig.cap='(ref:shinyApp3)', echo = FALSE}
 
 knitr::include_graphics("figures/shiny3.eps")
@@ -581,7 +815,7 @@ knitr::include_graphics("figures/shiny3.eps")
 
 (Figure \@ref(fig:package1)). 
 
-(ref:package1)  
+(ref:package1)  This is the package
 
 
 ```{r package1, out.width = "70%", fig.cap='(ref:package1)', echo = FALSE}
