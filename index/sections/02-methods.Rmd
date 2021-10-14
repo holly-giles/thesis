@@ -1,24 +1,36 @@
-# Methods
+# Methods {#methods}
 
 Methods in quotation marks are taken from Bruch & Giles et al. 2021 and I have authored the original text, unless stated otherwise. Paragraphs without quotation marks were rewritten for the thesis. 
 
-Routine: 
-all headings should be here 
-at the end of each chapter, make sure all methods are included
-Copy things in and put in quotation marks if from Bruch & Giles et al. 2021, mark if they were not written by me, or if they were written jointly 
-Add REFERENCE and TABLE for now 
-Return to this later and neaten / expand on methods, and provide all referencing and tables 
--fine to use quotations (although check plaigerism email), suggested rewriting as i / he / pmb throughout 
+
+```{r eval = FALSE}
+#Routine: 
+#-all ehading in order
+#-most methhods shoudlbe pasted in
+#-knwo routine for assigning jobs (ebelow)
+#-come and add in bored moments,finish next week 
+
+#Write were and was everywhere 
+#indicate at the bottom who did what? 
+#indicate sources clearly too
+#^ for now, do this, and get advice on how to manage
+
+#-read Nils methods section and use things from here 
+```
 
 ## Experimental methods: 
-### Drug - Stimulus Combinatorial Pertubation Assay
+### Combinatorial Drug - Stimulus Perturbation Screen
 #### Patient Sample Preparation
-_with Peter-Martin Bruch_ Original 
-Peripheral Blood was taken from 192 patients for the initial drug-stimulation assay. Blood was separated by Ficoll gradient (GE Healthcare) and mononuclear cells were cryopreserved. 
+_HG wrote_
+Peripheral blood samples were obtained from 192 patients. A Ficoll gradient (GE Healthcare) was used to separated the samples and mononuclear cells were then cryopreserved. For the screen, samples were thawed and DMSO was removed.  Primary patient samples were next incubated on a roll mixer at room temperature in cell culture medium for a duration of  three hours. This process ensured that any remaining DMSO was removed and to ensure that cell counts would only include those that survived the freezing process.  For the screen,  15 $\mu$l of each PBMC sample was deposited into each well of the plates with stock solution concentration of 1.3\*10\^6 cells/ml. The final cell concentration was 2\*10\^4 cells per well.
  
-### Preparation of screening plates
+#### Preparation of screening plates
+using the ATP-based CellTiter Glo assay (Promega, Fitchburg, WI, USA) and luminescence level was measured with a Tecan Infinite F200 Microplate Reader(Tecan Group AG, Männedorf, Switzerland).
+
+Compounds were preplated in 384-well polypropylene storage plates (Greiner Bio-One Cat.No.:781271), which were stored at -20$^\circ$C. For each batch of samples tested on the same day a new storage plate was thawed and diluted in serum free RPMI, with or without stimuli. 5$\mu$L of drug-stimulation dilution were then added into each well of the assay plates, 20 $\mu$L of cell suspension were added. The final cell concentration was 8\*10\^5 cells/ml. Cells were thawed as previously described[REFERENCE].
+
 _with Peter-Martin Bruch_ Original 
-"Sample preparation, cell-culture, drug-stimulation profiling and genomic annotation was performed on 192 CLL patient samples as previously described[REFERENCE] with the following adjustments. Stimuli and drugs were mixed and preplated in the culture plates directly before adding the cell suspensions. RPMI-1640 and supplements were acquired from Gibco by Life Technologies, human serum was acquired from PAN Biotech (Cat.No. P40-2701, Lot.No:P-020317). Luminescence was measured after 48h on a Perkin Elmer EnVision." 
+Stimuli and drugs were mixed and preplated in the culture plates directly before adding the cell suspensions. RPMI-1640 and supplements were acquired from Gibco by Life Technologies, human serum was acquired from PAN Biotech (Cat.No. P40-2701, Lot.No:P-020317). Luminescence was measured after 48h on a Perkin Elmer EnVision." 
 
 _with Peter-Martin Bruch_ Original 
 Compounds were obtained from Selleckchem, MedChemExpress and Sigma-Aldrich, dissolved in DMSO and stored at -$20^\circ$C. 12 drugs were used in two concentrations [TABLE]. Final DMSO concentration did not exceed 0.3\% in all experiments. Carfilzomib, Panobinostat and Venetoclax were removed from the analysis as they showed inconsistent toxicity depending on used media.
@@ -32,7 +44,7 @@ Paper:
 Original 
 Compounds were preplated in 384-well polypropylene storage plates (Greiner Bio-One Cat.No.:781271), which were stored at -20$^\circ$C. For each batch of samples tested on the same day a new storage plate was thawed and diluted in serum free RPMI, with or without stimuli. 5$\mu$L of drug-stimulation dilution were added into each well of the assay plates, 20 $\mu$L of cell suspension were added. The final cell concentration was 8\*10\^5 cells/ml. Cells were thawed as previously described[REFERENCE].
 
-## Drug-Stimulation assay 
+#### Drug-Stimulation assay 
 _with Peter-Martin Bruch_ Original 
 Drug-stimulation assays were performed with RPMI-1640 (Gibco by Life Technologies) supplemented with Penicillin Streptomycin (Gibco) final concentration of 100 Units/ml and 100 $\mu$g/ml respectively, L-Glutamine (Gibco) final concentration 2mM, and 10\% pooled, heat-inactivated and sterile filtered human type AB male off the clot serum (PAN Biotech, Cat.No. P40-2701, Lot.No:P-020317).
 
