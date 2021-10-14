@@ -33,12 +33,13 @@ output:
     IFN$\gamma$ & & Interferon$\gamma$   \\ 
     
 \end{tabular}
-    
+\newpage   
 \begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
     
     
   Ig & & Immunoglobulin \\
     IGHV & & Immunoglobulin heavy chain variable region \\
+    IHC & & Immunohistochemistry \\
     IL & & Interleukin \\
     JAK & & Janus kinase \\
     M-CLL & & CLL with somatic hypermutations in IGHV loci \\
@@ -62,7 +63,7 @@ output:
     STAT & & Signal transducer and activator of transcription \\
     
 \end{tabular}
-
+\newpage
 \begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
 
   SYK & & Spleen tyrosine kinase \\
