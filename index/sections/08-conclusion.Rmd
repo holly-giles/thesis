@@ -1,1 +1,5 @@
 # Discussion
+> "All models are wrong, but some are useful."
+>
+> `r tufte::quote_footer('--- George E. P. Box')`
+
