@@ -70,7 +70,7 @@ The Notch pathway activates genes required for proliferation, metabolism and sur
 **DNA Damage Response**
 A number of frequently occurring mutations disrupt the DNA damage response, the most clinically important of which is *TP53*. *TP53* is known as the “guardian of the genome”, owing to its role as a tumour suppressor gene protecting genome integrity by preventing mutation. Despite being a tumour suppressor, *TP53* mutations can have a dominant negative effect on function, such that loss of genomic stability occurs even when a single allele is mutated [@Zenz2008].  *TP53* is an important prognostic marker, as dysregulation of its function is associated with resistance to DNA-damaging agents (chemotherapy and radiotherapy) [@Zenz2008; @Dicker2009; @Rossi2009], and patients who present with mutations at diagnosis often show shorter TTFT and a less favourable OS [@Dohner2000; @Zenz2008; @Rossi2013; @Puente2015]. 
 
-Upstream of *TP53*, the tumour suppressor *ATM* is also frequently mutated in CLL [@Bosch2019]. *ATM* activates the DNA damage response upon recognition of DNA double strand breaks [@Austen2005; @Shiloh2013]. Similarly to *TP53* mutants, *ATM*-disrupted CLLs also show genomic instability and these mutations are associated with shorter TTT and OS, and chemoresistance [@Austen2005; @Stankovic2014]. 
+Upstream of *TP53*, the tumour suppressor *ATM* is also frequently mutated in CLL [@Bosch2019]. *ATM* activates the DNA damage response upon recognition of DNA double strand breaks [@Austen2005; @Shiloh2013]. Similarly to *TP53* mutants, *ATM*-disrupted CLLs also show genomic instability and these mutations are associated with shorter TTFT and OS, and chemoresistance [@Austen2005; @Stankovic2014]. 
 
 *POT1* is also involved in genomic stability, and is mutated in around 3 – 7% of cases [@Bosch2019; @Ramsay2012]. *POT1* mutations disrupt telomere protection, leading to a increased in structural aberrations and chromosomal breaks [@Ramsay2012]. Mutations in *POT1* are associated with IGHV-U CLL and advanced clinical stage [@Ramsay2012].
 
@@ -299,11 +299,33 @@ Lasso regularisation shrinks coefficients towards a central point, by adding a p
 This can make models simpler to interpret and can be useful in cases where the dependent variables are highly correlated, as in these cases only one of the correlated variables will usually be assigned a coefficient.  This also has the caveat that the correlated features may each independently effect $Y$, but only one of these variables will be deemed important by the model. It is also often impossible to determine whether one or all the correlated variables are truly influencing $Y$. Thus, it is important to bear in mind that whilst modelling approaches have proven invaluable in advancing our understanding of biological processes, careful interpretation is required. 
 
 ### CLL as a model for studying tumour biology {#CLL-model-intro}
-CLL represents a valuable model system in cancer and studies of CLL can offer proof-of-principle for the application of new approaches in other entities. Primary PMBC samples are relatively simple to obtain, as CLL is the most common leukaemia and biopsies are performed by taking blood samples rather than intrusive operations. In addition, multiple biopsies cab be taken over the course of a patient’s monitoring and therapy. 
+CLL represents a valuable model system in cancer and studies of CLL can offer proof-of-principle for the application of new approaches in other entities. Primary PMBC samples are relatively simple to obtain, as CLL is the most common leukaemia and biopsies are performed by taking blood samples rather than intrusive operations. In addition, multiple biopsies cab be taken over the course of a patient’s monitoring and therapy. The samples themselves can survive *ex vivo* for several days, even in basic culture condition, making it realtively simple to perform experiments on primary samples. 
 
 For example, the work by @Lu2021 to decipher a new multi-omic marker of disease aggression not only represents an important advance in our understanding of CLL drive, it also demonstrates an integrative approach to the study of cancer which could be useful in other cancers, particular where the heterogeneity of outcome remains unexplained. 
 
 Moreover, CLL is widely viewed as the prototypic disease for studying the integrative role of cell-intrinsic and cell-extrinsic features in disease initiation, expansion and drug response [@Mansouri2016; @Srinivasan2020; @Opezzo2021].  Thus, studies seeking to integrate the impact of cell-intrinsic and cell-extrinsic features on CLL survival and drug response are important in the study of CLL and beyond. 
 
+### Summary of this thesis
+In this thesis, I investigate interplay between molecular features and microenvironmental signals and their influence on viability and drug response in a large CLL patient cohort. Layer by layer, I aim to establish an integrative understanding of survival and drug resistance pathways in CLL.
 
+I employ a large-scale screening dataset of 192 primary CLL samples, which quantifies the effects of 17 microenvironmental stimuli, both alone and in combination with 12 drugs. I combine the screening data with multi-omic profiles for each of the patient samples,  consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. The screen serves as a reductionist model of signalling via soluble factors in the microenvironment, in a cohort of patient samples that encompasses the clinical and molecular heterogeneity of CLL. I investigate the influence of microenvironmental stimulation on spontaneous and drug-induced apoptosis, and how this can be further modulated by molecular features.
 
+Several signalling pathways and genetic features emerge as key players in CLL-microenvironment cross-talk, and in microenvironmental mechanisms of drug resistance. The above experiments are complimented by immunohistorychemistry (IHC) stains of healthy and CLL-infiltrated lymph nodes to investigate the *in vivo* activity of selected pathways. To supplement the large scale screening approach, I also make use of RNAseq, ATACseq, Mass Spectrometry and ChIPseq datasets of CLL patient samples to validate individual findings at a mechanistic level. 
+
+The thesis is structured as follows: 
+**Chapter 1: Introduction** Overview of the background information and surrounding literature of the project.    
+   
+**Chapter 2: Methods** Overview of the experimental and analytical methods used in this thesis. 
+   
+**Chapter 3: Data** Overview of the datasets employed in this thesis, and the corresponding public code repository and shiny app.  
+   
+**Chapter 4: *Ex-vivo* sensitivity to microenvironmental stimulation in primary CLL cells **
+Phenotypic profiling of the responses of CLL samples to the panel of microenvironmental stimuli. 
+
+**Chapter 5: Genetic modulators of responses to microenvironmental stimulation** Integration of the screening data with patient sample multi-omic profiles to perform a comprehensive survey of molecular determinants of stimulus response.   
+   
+**Chapter 6: Molecular and microenvironmental modulators of drug response in CLL** Mapping of drug - microenvironment interactions and how these can be further modulated by molecular features   
+   
+**Chapter 7: The impact of IL4 on ibrutinib efficiacy ** A follow - up investigation into IL4-induced resistance to the BCR inhibitor ibrutinib    
+   
+**Chapter 8: Discussion ** A discussion of the findings, the strengths and weakness of the approaches and their context within the field and surrounding literature.    
