@@ -224,6 +224,14 @@ $if(list-of-publications)$
 \newpage\null\newpage
 $endif$
 
+% --------------------------------------------
+% ---------- List of contributions ------------
+% --------------------------------------------
+$if(list-of-contributions)$
+    $list-of-contributions$
+\newpage\null\newpage
+$endif$
+
 % -------------------------------------
 % --- frontmatter: Zusammendfassung ---
 % -------------------------------------
@@ -259,20 +267,20 @@ $endif$
 % ----------------------------------------------------
 % --- frontmatter: List of Figures (not mandatory) ---
 % ----------------------------------------------------
-$if(lof)$
-\newpage
-\listoffigures
-\addcontentsline{toc}{section}{List of Figures}
-$endif$
+%$if(lof)$
+%\newpage
+%\listoffigures
+%\addcontentsline{toc}{section}{List of Figures}
+%$endif$
 
 % ---------------------------------------------------
 % --- frontmatter: List of Tables (not mandatory) ---
 % ---------------------------------------------------
-$if(lot)$
-\newpage
-\listoftables
-\addcontentsline{toc}{section}{List of Tables}
-$endif$
+%$if(lot)$
+%\newpage
+%\listoftables
+%\addcontentsline{toc}{section}{List of Tables}
+%$endif$
 
 % edit here to affect style of main document 
 %\mainmatter % here the regular arabic numbering starts
