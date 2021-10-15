@@ -2,6 +2,15 @@
 ```{r loadDataAppendix}
 #drug-cyt-gene interactions
 load("data/coeff.long.mat_Fig6.RData") # from data for figure 6 in supplement
+load("data/patMeta.RData")
+
+
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(kableExtra)
+library(BloodCancerMultiOmics2017)
+
 ```
 
 ## Figures {-}
@@ -77,25 +86,99 @@ cyt_and_receptors %>%
 
 ```
 
-\begin{table}[ht]
-    \begin{center}
-        {\footnotesize
-        \begin{tabular}{l|cccccccccc}
-        \hline \hline
-                        & 3m    & 6m    & 1yr   & 2yr   & 3yr   & 5yr   & 7yr   & 10yr  & 12yr  & 15yr   \\
-            \hline
-                Mean   & 3.138 & 3.191 & 3.307 & 3.544 & 3.756 & 4.093 & 4.354 & 4.621 & 4.741 & 4.878  \\
-                Median & 3.013 & 3.109 & 3.228 & 3.490 & 3.680 & 3.906 & 4.117 & 4.420 & 4.575 & 4.759  \\
-                Min    & 1.984 & 1.950 & 1.956 & 2.010 & 2.240 & 2.615 & 2.850 & 3.120 & 3.250 & 3.395  \\
-                Max    & 5.211 & 5.274 & 5.415 & 5.583 & 5.698 & 5.805 & 5.900 & 6.031 & 6.150 & 6.295  \\
-                StD    & 0.915 & 0.919 & 0.935 & 0.910 & 0.876 & 0.825 & 0.803 & 0.776 & 0.768 & 0.762  \\
-            \hline \hline
-        \end{tabular}}
-    \end{center}
-    \caption{Detailed descriptive statistics of location and dispersion for
-    2100 observed swap rates for the period from
-    February 15, 1999 to March 2, 2007. Swap rates measured as 3.12 (instead of 0.0312).}
-    \label{tab:apptable}
-\end{table}
 
-\newpage
+Table \@ref(tab:geneTable)). 
+
+(ref:geneTable) Number of cases of each mutation
+
+```{r}
+
+# select CLL samples
+patM = patMeta$PatientID
+patMeta <- as.data.frame(patMeta)
+rownames(patMeta) <- patM
+ighv = factor(setNames(patMeta[patM,"IGHV.status"], nm=patM), levels=c("U","M"))
+mut1 = c("del17p", "del11q", "trisomy12", "del13q")
+mut2 = c("TP53", "ATM", "SF3B1", "NOTCH1", "MYD88")
+mc = patMeta[,c(8:113)] %>% as.matrix()
+mc <- matrix(as.numeric(mc),  
+             ncol = ncol(mc))
+colnames(mc) = colnames(patMeta[,c(8:113)] )
+rownames(mc) <- rownames(patMeta[,c(8:113)] )
+
+## SELECTION OF MUTATIONS
+# # include mutations with at least incidence of 4
+mut2plot = names(which(sort(colSums(mc, na.rm=TRUE), decreasing=TRUE)>3))
+
+# divide mutations into gene mut and cnv
+mut2plotSV = mut2plot[grep("[[:lower:]]", mut2plot)]
+mut2plotSP = mut2plot[grep("[[:upper:]]", mut2plot)]
+
+
+# rearrange the top ones to match the order in mut1 and mut2
+mut2plotSV = c(mut1, mut2plotSV[!mut2plotSV %in% mut1])
+mut2plotSP = c(mut2, mut2plotSP[!mut2plotSP %in% mut2])
+factors = data.frame(patMeta[patM, c(mut2plotSV, mut2plotSP)],
+                     check.names=FALSE)
+
+# change it to factors
+for(i in 1:ncol(factors)) {
+  factors[,i] = factor(factors[,i], levels=c(1,0))
+}
+ord = order(factors[,1], factors[,2], factors[,3], factors[,4], factors[,5],
+            factors[,6], factors[,7], factors[,8], factors[,9], factors[,10],
+            factors[,11], factors[,12], factors[,13], factors[,14],
+            factors[,15], factors[,16], factors[,17], factors[,18],
+            factors[,19], factors[,20], factors[,21], factors[,22],
+            factors[,23], factors[,24], factors[,25], factors[,26],
+            factors[,27], factors[,28], factors[,29], factors[,30],
+            factors[,31], factors[,32])
+factorsord = factors[ord,]
+patM = patM[ord]
+
+
+
+```
+
+
+```{r geneTable, out.width = "70%", fig.cap='(ref:geneTable)', echo = FALSE, eval = TRUE}
+
+plotDF = meltWholeDF(factorsord)
+plotDF$Mut =
+  ifelse(sapply(plotDF$X,
+                function(x) grep(x, list(mut2plotSV, mut2plotSP)))==1,"SV","SP")
+plotDF$Status = "N.A."
+plotDF$Status[plotDF$Measure==1 & plotDF$Mut=="SV"] = "1a"
+plotDF$Status[plotDF$Measure==1 & plotDF$Mut=="SP"] = "1b"
+plotDF$Status[plotDF$Measure==0] = "0"
+plotDF$Status = factor(plotDF$Status, levels=c("1a","1b","0","N.A."))
+plotDF$Y = factor(plotDF$Y, levels=patM)
+plotDF$X = factor(plotDF$X, levels=rev(colnames(factorsord)))
+
+mutPL = ggplotGrob(
+  ggplot(data=plotDF, aes(x=Y, y=X, fill=Status)) + geom_tile() +
+    scale_fill_manual(
+      values=c("0"="white","1a"=colors[1],"1b"=colors[2],"N.A."="grey90"),
+      name="Mutation", labels=c("WT","CNV","Gene mutation","NA")) +
+    ylab("") + xlab("") +
+    geom_vline(xintercept=seq(0.5,length(patM)+1,5), colour="grey60") +
+    geom_hline(yintercept=seq(0.5,ncol(factorsord)+1,1), colour="grey60") +
+    scale_y_discrete(expand=c(0,0)) + scale_x_discrete(expand=c(0,0)) +
+    theme(axis.ticks=element_blank(), axis.text.x=element_blank(),
+          axis.text.y=element_text(
+            size=60, face=ifelse(levels(plotDF$X) %in% mut2plotSV,
+                                 "plain","plain")),
+          axis.text=element_text(margin=unit(0.5,"cm"), colour="black"),
+          legend.key = element_rect(colour = "black"),
+          legend.text=element_text(size=lfsize),
+          legend.title=element_text(size=lfsize)))
+res = table(plotDF[,c("X","Measure")])
+
+
+knitr::kable(res[order(res[,2], decreasing=TRUE),]) %>% kable_styling(latex_options = "striped", 
+              stripe_color = colors[7],
+                html_font = "Helvetica")
+
+
+
+```
