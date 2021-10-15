@@ -192,19 +192,17 @@ knitr::include_graphics("figures/studyOverview.eps")
 A number of key findings emerged from the above data which warranted further investigation. In addition to the screen, this thesis makes use of a number of validatory datasets, from within our lab and from external sources. These are outlined in the Methods (Chapter \@ref(methods)) and in the relevant results chapters. 
 
 ## Data Processing
-### Raw values and Quality control
-In this section, we provide explanation of how we normalized the raw luminescence
-measurements into the viabilities, which were later used for analysis.
-**raw viabilites**
+### Processing the raw values obtained from the screen
+Raw luminescence measurements  were read in,  normalised  and underwent quality control checks to generate the viability measurements which were used for downstream analysis. Initially, raw data from the experiements were read in using readxl package, fucntions in R were used fro reading in and nroamlsiing. 
 
-We discuss the types of quality control checks, which are crucial for the assessment of mesaurement of drug efficiacy
-are drugsbehaving aswe would expect? 
+Rw data read in via, and processed
 
-deal with the fact that screen reuls are legitimate here :
--be guided by gosia's thesis
--rwar plates -edge effect / spatial effect? 
--choice of measurement
--normalisation for downstream 
+Raw values 
+- we looked at them 
+-some are quite low 
+-we cehcked their responses - seem ok 
+-reran analysis 
+-dwonst seem to changed very much 
 
 (Figure \@ref(fig:rawViabilities)). 
 
@@ -242,21 +240,26 @@ Raw_Screening_Data %>%
 
 ```
 
-**any QC plots**
+In this section, we provide explanation of how we normalized the raw luminescence measurements into the viabilities, which were later used for analysis.
 
-### Data normalisation and log transformation
-Read through gosia's and add a plot on plate normalisation?
-**demo plot**maybeno plot 
-
-(Figure \@ref(fig:screenNormalisation)). 
-
-(ref:screenNormalisation) Raw viabilities  
+WE divided by the mean of .. . controls, then eprform log tranform . Why did we do this.... 
 
 
-```{r screenNormalisation, out.width = "70%", fig.cap='(ref:screenNormalisation)', echo = FALSE}
+### Quality control and data reproducibility 
+With the nromalised values, we could perfrom additional QC steps: 
 
+Quality control aims to: 
+cehcek there are no spatial effects relating to the plate 
+check whether ther are bathc effects between plats
+is each palte reporuible in prinicple 
 
-```
+1. spatial effects - no show plate plot, bascially we didnt see an edge effect 
+2. batch effects (leave for now, ask), 16 batches, didnt see any 
+3. data reproducibility (leave for now, ask) merged duplaictes. 
+
+this is waht happened, dont over -empashie, its on Peter really, this isnt my PhD 
+
+= log-trasnforemd nromalised values used in rest of analysis....
 
 ## Characteristics of drugs used in the screen {#drugs}
 ### Drug characteristics
@@ -567,23 +570,10 @@ CR_volcanoplot
 
 
 ## Characteristics of patient samples used in the screen
-### Genetic Data available for each patient
-The crucial component of conducting a translational research is a well-chosen
-study cohort. It should mirror the different factors of age, sex, disease stage etc.,
-and even the acquired chromosomal aberrations in a proportion which is usually
-seen in clinical practice. The presented study satisfies these conditions (see Figure
-3.3), which makes the results directly applicable to medicine with potential benefit
-to participating patients.
+### Overview of the molecular profiles of the patient samples
+Multi-omics profiles were available for the patient samples in the screen, taken from the Primary Cancer Cell Encyclopedia (PACE). The PACE repository represents an initiate by our lab to characterise the multi-omic characteristics of  primary tumour samples from leukemia and lymphoma patients. Patient multi-omic profiles included whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical information and follow-up data was also available for some patients, including their sex, IGHV status and LDT, TTT, TTFT and OS. Figure \@ref(fig:geneticData) summarises the molecular characteristics of the patient samples. For a summary of the number of samples with each mutation, see Appendix Table \@ref(tab:geneTable).
 
-Descirbtpiton of all data at top
-
-Here is: 
-
--table of all mutatiosn and meta data
--table of number of each mutation 
-
-= all plots done
-wrtiing after lunch 
+The findings from this study have potential relevance in a clinical setting. Thus it was important to ensure that the distribution of genetic features amongst the cohort was representative of those observed in clinical practice. Other studies have determined the expected frequency of many recurrent genetic features in CLL [@Dohner2000;@Puente2015;@Landau2015] : the distribution of molecular lesions in our cohort is comparable to these. 
 
 ```{r}
 
@@ -634,16 +624,9 @@ patM = patM[ord]
 
 ```
 
-Table \@ref(tab:geneTable)). 
 
-(ref:geneTable) Number of cases of each mutation
+```{r geneTablePrep,  echo = FALSE, eval = TRUE}
 
-```{r geneTable, out.width = "70%", fig.cap='(ref:geneTable)', echo = FALSE, eval = TRUE}
-#PUT THIS IN APPENDIX WEHN FIX FIGURS
-
-#Table \@ref(tab:geneTable)). 
-#UPdate CNV anmes in this plot 
-#(ref:geneTable) Number of cases of each mutation
 
 
 plotDF = meltWholeDF(factorsord)
@@ -676,13 +659,6 @@ mutPL = ggplotGrob(
           legend.text=element_text(size=lfsize),
           legend.title=element_text(size=lfsize)))
 res = table(plotDF[,c("X","Measure")])
-
-
-knitr::kable(res[order(res[,2], decreasing=TRUE),]) %>% kable_styling(latex_options = "striped", 
-              stripe_color = colors[7],
-                html_font = "Helvetica")
-
-
 
 ```
 
@@ -793,14 +769,19 @@ wrap_elements(grid.draw(gt)) / wrap_elements(BloodCancerMultiOmics2017:::drawLeg
 ```
 
 
-## Generation of public resource
+## Publishing the data and assosciated analysis
+As explained in section \@ref(microenvironmental-pathways-intro), many studies have characterised the impact of individual omic layers, and individual soluble factors in CLL. However, studies investigating the interplay  cell-intrinsic and cell-extrinsic features in CLL are lacking. Collectively, this dataset represents a valuable resource providing the ability to explore genetic, epigenetic and microenvironmental modulators of survival and drug response in a heterogeneous cohort, and how these relate to clinical outcomes. With CLL samples relatively simple to obtain compared to other cancers, this project (in collaboration with the PACE initiative) represents a considerable dataset of joint functional and molecular profiling of primary cancer samples. 
+
+Thus, an important goal of my work was to ensure that this dataset was both publicly available and accessible for a range of users, including medics and bioinformaticians. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the  manuscript  Bruch and Giles et al. 2021 to an online git repository. 
+
 ### Shiny app
+The shiny app can be found [here](https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/). Figure \@ref(fig:shinyApp1) shows the home page. It consists of four tabs, covering the following: 
+* _Drug and stimulus responses_ Explore drug - stimulus interactions and view log-transformed viabilities with single and combinatorial treatments (Figure \@ref(fig:shinyApp3)).
+* _Effects of mutations on drug and stimulus responses_ Explore how drug and stimulus responses are modulated by genetic features and view log-transformed viability data stratified by mutations
+* _Genetic predictors of drug and stimulus responses_ Explore how drug and stimulus responses are modulated by genetic features with predictor profiles from section \@ref(multivariate-gene-stimulus-assosciations)
+* _Genetic predictors of drug and stimulus interactions_ Explore how drug - stimulus interactions are further modulated by mutations, and view predictor profiles from section \@ref(drug-stimulus-gene-predictor-profile)
 
-[Shiny app](https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/)
-
-(Figure \@ref(fig:shinyApp1)). 
-
-(ref:shinyApp1) Home page of the shiny app accompanying this project. The app was published along side @Giles2021 . 
+(ref:shinyApp1) Home page of the shiny app accompanying this project. The app was published along side @Giles2021. 
 
 ```{r shinyApp1, out.width = "100%", fig.cap='(ref:shinyApp1)', echo = FALSE}
 
@@ -808,10 +789,9 @@ knitr::include_graphics("figures/shiny1.eps")
 
 ```
 
+To generate the app, I first curated the individual datasets and ran each of the individual analyses required to generate the plots outline above. I then set up the four tab structure, and adapted the code required to generate plots in a dynamic manner. Finally, I worked on the aesthetics and interface of the app, to ensure that it was both professional and understandable. I then tested the app with number of colleagues, to ensure it was accessible and understandable by a range of users both familiar and unfamiliar with the project. I implemented their suggested changes and I have published the app on the university server, and I now continue to maintain this. 
 
-(Figure \@ref(fig:shinyApp3)). 
-
-(ref:shinyApp3) Image of one of the tabs, in which the user can explore log-transformed viability values for different drug and stimulus treatments, stratified by genetic features. 
+(ref:shinyApp3) Image of one of the shiny tabs, in which the user can explore log-transformed viability values for different drug and stimulus treatments, stratified by genetic features. 
 
 ```{r shinyApp3, out.width = "100%", fig.cap='(ref:shinyApp3)', echo = FALSE}
 
@@ -819,21 +799,22 @@ knitr::include_graphics("figures/shiny3.eps")
 
 ```
 
+### Online code repository 
+The online repository can be found [here](https://github.com/Huber-group-EMBL/CLLCytokineScreen2021).The repository consists of the data and executable transcripts to completely reproduce the analysis described in Bruch and Giles et al. 2021 (Figure \@ref(fig:package1)). 
 
-### Package 
+To generate the repository, I first curated each of the individual datasets, including various objects containing the screening data, patient genetic meta data, ATACseq processed data,  RNAseq counts, clinical data include LDT, TTT and OS data, plus the follow up data including lymph node IHV experiments, shRNA knockdown experiments, and additional stimulation and inhibition assays.  As many of these data contain sensitive information on patients,  I anonymised each object by updating the patient IDs, and generating a key to convert between public and private IDs, whilst also removing potential identifying features such as age. 
 
-[package](https://github.com/Huber-group-EMBL/CLLCytokineScreen2021)
+I next arranged the analysis into seven separate scripts, one for each figure, such that all individual sections can be rendered into a single html vignette outlining the entire analysis. I ensured that the code in each script was well-annotated and relatively simple to understand and to follow. I shared the code with several colleagues to receive feedback on coding style, and ensured that the analysis could be reproduced by others, and on different operating systems. I published the repository with the along with the preprint (Bruch and Giles et al. 2021), and I continue to maintain the code.
 
-(Figure \@ref(fig:package1)). 
-
-(ref:package1)  This is the package
-
+(ref:package1)  Interface of the online code repository 
 
 ```{r package1, out.width = "70%", fig.cap='(ref:package1)', echo = FALSE}
 
 knitr::include_graphics("figures/package.eps")
 
 ```
+
+These online resources are already beginning to serve as a community resource (e.g.@Lu2021, Nature Cancer), as querying them enables researchers to test new hypotheses within minutes and may obviate the need for certain small-scale experiments.
 
 
 ## Questions
