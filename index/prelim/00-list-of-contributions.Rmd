@@ -52,7 +52,7 @@ Cambridge \textit{25-26th Apr 2019}
   \item EMBL Course: Corporate Winter School, Heidelberg \textit{Sept 2019 and Feb 2020}
   \item 1st Translational Research E-Conference, Chronic Lymphocytic Leukemia
 \textit{16-19th Nov 2020}
-  \item American Society for Haematology Annual Meeting & Exposition \textit{7 - 10th Dec 2020}
+  \item American Society for Haematology Annual Meeting and Exposition \textit{7 - 10th Dec 2020}
 
 \end{itemize}
 
