@@ -32,6 +32,46 @@
 \usepackage{breqn} %to break up equations accross multiple lines, where neccesary 
 \usepackage{helvet} %to set font as helvetica 
 
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
        % For being able to set `echo = TRUE` in code chunk options, and thus in-line representation of code
 
 %--------------------------------------------
@@ -217,7 +257,8 @@ I want to thank a few people.
     \subsubsection*{Thesis related}\label{thesis-related}}
     \addcontentsline{toc}{subsubsection}{Thesis related}
     \begin{itemize}
-        \item  Peter-Martin Bruch\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Mueller-Tidow, Thorsten Zenz, Wolfgang Huber, Sascha Dietrich et al. \textit{in preparation.}  "Mapping drug-microenvironment-genetic interplay in CLL reveals trisomy 12 as a modulator of microenvironment."\textbf{\textit{bioRxiv}}. [doi: 10.1101/2021.07.23.453514](https://doi.org/10.1101/2021.07.23.453514)
+        \item  Peter-Martin Bruch\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Mueller-Tidow, Thorsten Zenz, Wolfgang Huber, Sascha Dietrich et al. "Mapping drug-microenvironment-genetic interplay in CLL reveals trisomy 12 as a modulator of microenvironment."\textbf{\textit{bioRxiv}}.\href{https://doi.org/10.1101/2021.07.23.453514}{DOI: 10.1101/2021.07.23.453514} 
+        
     \end{itemize}
     \hypertarget{other-contributions}{%
     \subsubsection*{Other contributions}\label{other-contributions}}
@@ -225,9 +266,9 @@ I want to thank a few people.
 
     The author of this thesis also contributed to a number of other projects throughout the PhD. The following have been published:
     \begin{itemize}
-        \item Berest, Ivan\ast, Christian Arnold\ast, Armando Reyes-Palomares, Giovanni Palla, Kasper Dindler Rasmussen, \textbf{\underline{Holly Giles}}, and Peter-Martin Bruch et al. 2019. "Quantification Of Differential Transcription Factor Activity And Multiomics-Based Classification Into Activators And Repressors: DiffTF". \textit{Cell Reports} 29 (10): 3147-3159.e12. [doi: 10.1016/j.celrep.2019.10.106](https://doi.org/10.1016/j.celrep.2019.10.106)
+        \item Berest, Ivan\ast, Christian Arnold\ast, Armando Reyes-Palomares, Giovanni Palla, Kasper Dindler Rasmussen, \textbf{\underline{Holly Giles}}, and Peter-Martin Bruch et al. 2019. "Quantification Of Differential Transcription Factor Activity And Multiomics-Based Classification Into Activators And Repressors: DiffTF". \textbf{\textit{Cell Reports}} \href{https://doi.org/10.1016/j.celrep.2019.10.106}{DOI: 10.1016/j.celrep.2019.10.106}
         
-      \item Lu, Junyan\ast, Ester Cannizzaro\ast, Fabienne Meier-Abt, Sebastian Scheinost, Peter-Martin Bruch, \textbf{\underline{Holly A. R. Giles}}, and Almut Lütge et al. 2021. "Multi-Omics Reveals Clinically Relevant Proliferative Drive Associated With Mtor-MYC-OXPHOS Activity In Chronic Lymphocytic Leukemia". \textbf{\textit{Nature Cancer}}. [doi: 10.1038/s43018-021-00216-6](https://doi.org/10.1038/s43018-021-00216-6)
+      \item Lu, Junyan\ast, Ester Cannizzaro\ast, Fabienne Meier-Abt, Sebastian Scheinost, Peter-Martin Bruch, \textbf{\underline{Holly A. R. Giles}}, and Almut Lütge et al. 2021. "Multi-Omics Reveals Clinically Relevant Proliferative Drive Associated With Mtor-MYC-OXPHOS Activity In Chronic Lymphocytic Leukemia". \textbf{\textit{Nature Cancer}}. \href{https://doi.org/10.1038/s43018-021-00216-6}{DOI: 10.1038/s43018-021-00216-6}
     \end{itemize}
 \newpage\null\newpage
 
@@ -244,7 +285,10 @@ I want to thank a few people.
 
     I have additionally presented the work in this thesis at the following meetings\\
     \begin{itemize}
-      \item  Peter-Martin Bruch\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Mueller-Tidow, Thorsten Zenz, Wolfgang Huber, Sascha Dietrich et al. \textit{in preparation.}  "Mapping drug-microenvironment-genetic interplay in CLL reveals trisomy 12 as a modulator of microenvironment."\textbf{\textit{bioRxiv}}. [doi: 10.1101/2021.07.23.453514](https://doi.org/10.1101/2021.07.23.453514)
+      \item  19th International EMBL PhD Symposium 2017
+      \item  MMPU Collaboration Meeting 2018
+      \item  ASCONA Statistics for Medical Data Science 2019
+      \item  MMPU Collaboration Meeting 2019
     \end{itemize}
     \hypertarget{courses-and-conferences}{%
     \subsubsection*{Courses and Conferences}\label{courses-and-conferences}}
@@ -252,8 +296,41 @@ I want to thank a few people.
 
     During my PhD, I attended the following courses and conferences:
     \begin{itemize}
-      \item Berest, Ivan\ast, Christian Arnold\ast, Armando Reyes-Palomares, Giovanni Palla, Kasper Dindler Rasmussen, \textbf{\underline{Holly Giles}}, and Peter-Martin Bruch et al. 2019. "Quantification Of Differential Transcription Factor Activity And Multiomics-Based Classification Into Activators And Repressors: DiffTF". \textit{Cell Reports} 29 (10): 3147-3159.e12. [doi: 10.1016/j.celrep.2019.10.106](https://doi.org/10.1016/j.celrep.2019.10.106)
-      \item Lu, Junyan\ast, Ester Cannizzaro\ast, Fabienne Meier-Abt, Sebastian Scheinost, Peter-Martin Bruch, \textbf{\underline{Holly A. R. Giles}}, and Almut Lütge et al. 2021. "Multi-Omics Reveals Clinically Relevant Proliferative Drive Associated With Mtor-MYC-OXPHOS Activity In Chronic Lymphocytic Leukemia". \textbf{\textit{Nature Cancer}}. [doi: 10.1038/s43018-021-00216-6](https://doi.org/10.1038/s43018-021-00216-6)
+      \item \textbf{2017}
+      \item Huber Group Retreat, Dubrovnik \textit{12th - 15th Sept 2017}
+      \item EMBL EIPP Predoc Course, Heidelberg \textit{1st Oct - 15th Dec 2017}
+      \item EMBL PhD Symposium, Heidelberg \textit{19th - 21st Oct 2017}
+      \item \textbf{2018}
+      \item Huber-Dietrich SOUND retreat, Black Forest \textit{19th - 20th Feb 2018}
+      \item EMBL Biocomputing Retreat, Black Forest \textit{19th - 21st Mar 2018}
+      \item EMBL Course: Statistical Methods in Bioinformatics, Heidelberg \textit{25-27th Apr 2018}
+      \item EMBL Course: Gitlab, Heidelberg \textit{Apr 2018}
+      \item EMBL Course: Using the Cluster, Heidelberg \textit{May 2018}
+      \item Quantitative Genomics Conference, London \textit{14th Jun 2018}
+      \item EMBL Genome Biology Retreat, Boppard \textit{21st - 22nd Jun 2018}
+      \item CSAMA Bioinformatics Course, Brixen \textit{9th - 13th Jul 2018}
+      \item EMBL Course: ATACseq Analysis, Heidelberg \textit{10th - 14th Sept 2018}
+      \item Lymphoid Malignancies Conference, Dublin \textit{29th - 30th Sept 2018}
+      \item EMBL Predoc Retreat, Pilsen \textit{4 - 5th Oct 2018}
+      \item MMPU Winter Research Day, Heidelberg \textit{16th Nov 2018}
+      \item EMBL PhD Symposium, Heidelberg \textit{21st - 24th Nov 2018}
+      \item EBI Bioinformatics Course, Cambridge \textit{26th Nov - 2nd Dec 2018}
+      \item \textbf{2019}
+      \item EMBL Biocomputing Retreat, Black Forest \textit{18th - 20th Feb 2019}
+      \item Therapeutic targeting of the Tumour Microenvironment in Leukemia, London
+    \textit{24th - 26th Feb 2019}
+      \item EMBL Genome Biology Retreat \textit{28th - 29th Mar 2019}
+      \item MASAMB (Mathematical and Statistical Aspects of Molecular Biology),
+    Cambridge \textit{25-26th Apr 2019}
+
+      \item MMPU Summer Research Day, Heidelberg \textit{10th May 2019}
+      \item Huber Group Retreat, Mallorca \textit{20th - 24th May 2019}
+      \item ASCONA 2019: Statistics for Medical Data Science \textit{17th - 21st Jun 2019}
+      \item EMBL Course: Corporate Winter School, Heidelberg \textit{Sept 2019 and Feb 2020}
+      \item 1st Translational Research E-Conference, Chronic Lymphocytic Leukemia
+    \textit{16-19th Nov 2020}
+      \item American Society for Haematology Annual Meeting and Exposition \textit{7 - 10th Dec 2020}
+
     \end{itemize}
     \hypertarget{software}{%
     \subsubsection*{Software}\label{software}}
@@ -397,17 +474,17 @@ I want to thank a few people.
 % ----------------------------------------------------
 % --- frontmatter: List of Figures (not mandatory) ---
 % ----------------------------------------------------
-\newpage
-\listoffigures
-\addcontentsline{toc}{section}{List of Figures}
-
+%%\newpage
+%\listoffigures
+%\addcontentsline{toc}{section}{List of Figures}
+%
 % ---------------------------------------------------
 % --- frontmatter: List of Tables (not mandatory) ---
 % ---------------------------------------------------
-\newpage
-\listoftables
-\addcontentsline{toc}{section}{List of Tables}
-
+%%\newpage
+%\listoftables
+%\addcontentsline{toc}{section}{List of Tables}
+%
 % edit here to affect style of main document 
 %\mainmatter % here the regular arabic numbering starts
 \newpage
@@ -497,7 +574,7 @@ The Notch pathway activates genes required for proliferation, metabolism and sur
 \textbf{DNA Damage Response}
 A number of frequently occurring mutations disrupt the DNA damage response, the most clinically important of which is \emph{TP53}. \emph{TP53} is known as the ``guardian of the genome,'' owing to its role as a tumour suppressor gene protecting genome integrity by preventing mutation. Despite being a tumour suppressor, \emph{TP53} mutations can have a dominant negative effect on function, such that loss of genomic stability occurs even when a single allele is mutated (\protect\hyperlink{ref-Zenz2008}{Zenz et al. 2008}). \emph{TP53} is an important prognostic marker, as dysregulation of its function is associated with resistance to DNA-damaging agents (chemotherapy and radiotherapy) (\protect\hyperlink{ref-Zenz2008}{Zenz et al. 2008}; \protect\hyperlink{ref-Dicker2009}{\textbf{Dicker2009?}}; \protect\hyperlink{ref-Rossi2009}{Rossi et al. 2009}), and patients who present with mutations at diagnosis often show shorter TTFT and a less favourable OS (\protect\hyperlink{ref-Dohner2000}{H. Döhner et al. 2000}; \protect\hyperlink{ref-Zenz2008}{Zenz et al. 2008}; \protect\hyperlink{ref-Rossi2013}{Rossi et al. 2013}; \protect\hyperlink{ref-Puente2015}{Xose S. Puente et al. 2015}).
 
-Upstream of \emph{TP53}, the tumour suppressor \emph{ATM} is also frequently mutated in CLL (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). \emph{ATM} activates the DNA damage response upon recognition of DNA double strand breaks (\protect\hyperlink{ref-Austen2005}{Austen et al. 2005}; \protect\hyperlink{ref-Shiloh2013}{Shiloh and Ziv 2013}). Similarly to \emph{TP53} mutants, \emph{ATM}-disrupted CLLs also show genomic instability and these mutations are associated with shorter TTT and OS, and chemoresistance (\protect\hyperlink{ref-Austen2005}{Austen et al. 2005}; \protect\hyperlink{ref-Stankovic2014}{Stankovic and Skowronska 2014}).
+Upstream of \emph{TP53}, the tumour suppressor \emph{ATM} is also frequently mutated in CLL (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). \emph{ATM} activates the DNA damage response upon recognition of DNA double strand breaks (\protect\hyperlink{ref-Austen2005}{Austen et al. 2005}; \protect\hyperlink{ref-Shiloh2013}{Shiloh and Ziv 2013}). Similarly to \emph{TP53} mutants, \emph{ATM}-disrupted CLLs also show genomic instability and these mutations are associated with shorter TTFT and OS, and chemoresistance (\protect\hyperlink{ref-Austen2005}{Austen et al. 2005}; \protect\hyperlink{ref-Stankovic2014}{Stankovic and Skowronska 2014}).
 
 \emph{POT1} is also involved in genomic stability, and is mutated in around 3 -- 7\% of cases (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}; \protect\hyperlink{ref-Ramsay2012}{\textbf{Ramsay2012?}}). \emph{POT1} mutations disrupt telomere protection, leading to a increased in structural aberrations and chromosomal breaks (\protect\hyperlink{ref-Ramsay2012}{\textbf{Ramsay2012?}}). Mutations in \emph{POT1} are associated with IGHV-U CLL and advanced clinical stage (\protect\hyperlink{ref-Ramsay2012}{\textbf{Ramsay2012?}}).
 
@@ -790,18 +867,22 @@ Phenotypic profiling of the responses of CLL samples to the panel of microenviro
 \chapter{Methods}\label{methods}}
 
 Methods in quotation marks are taken from Bruch \& Giles et al.~2021 and I have authored the original text, unless stated otherwise. Paragraphs without quotation marks were rewritten for the thesis.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Routine: }
+\CommentTok{\#{-}all ehading in order}
+\CommentTok{\#{-}most methhods shoudlbe pasted in}
+\CommentTok{\#{-}knwo routine for assigning jobs (ebelow)}
+\CommentTok{\#{-}come and add in bored moments,finish next week }
 
-Routine:
--all ehading in order
--most methhods shoudlbe pasted in
--knwo routine for assigning jobs (ebelow)
--come and add in bored moments,finish next week
+\CommentTok{\#Write were and was everywhere }
+\CommentTok{\#indicate at the bottom who did what? }
+\CommentTok{\#indicate sources clearly too}
+\CommentTok{\#\^{} for now, do this, and get advice on how to manage}
 
-Write were and was everywhere
-indicate at the bottom who did what?
-indicate sources clearly too
-\^{} for now, do this, and get advice on how to manage
-
+\CommentTok{\#{-}read Nils methods section and use things from here }
+\end{Highlighting}
+\end{Shaded}
 \hypertarget{experimental-methods}{%
 \section{Experimental methods:}\label{experimental-methods}}
 
@@ -816,6 +897,8 @@ Peripheral blood samples were obtained from 192 patients. A Ficoll gradient (GE 
 
 \hypertarget{preparation-of-screening-plates}{%
 \subsubsection{Preparation of screening plates}\label{preparation-of-screening-plates}}
+
+using the ATP-based CellTiter Glo assay (Promega, Fitchburg, WI, USA) and luminescence level was measured with a Tecan Infinite F200 Microplate Reader(Tecan Group AG, Männedorf, Switzerland).
 
 Compounds were preplated in 384-well polypropylene storage plates (Greiner Bio-One Cat.No.:781271), which were stored at -20\(^\circ\)C. For each batch of samples tested on the same day a new storage plate was thawed and diluted in serum free RPMI, with or without stimuli. 5\(\mu\)L of drug-stimulation dilution were then added into each well of the assay plates, 20 \(\mu\)L of cell suspension were added. The final cell concentration was 8*10\^{}5 cells/ml. Cells were thawed as previously described{[}REFERENCE{]}.
 
@@ -1127,28 +1210,6 @@ An independent patient cohort of 16 patients was used in the drug-drug interacti
 \hypertarget{proteomics-analysis}{%
 \subsubsection{Proteomics Analysis}\label{proteomics-analysis}}
 
-Plan:
--headings {[}x{]}\\
--add all figures {[}x{]}\\
--all text \textless- Tomorrow, shape this up, work with what i have
--proof text\\
--proof figures\\
--proof code\\
--proof numbers\\
--proof of gene name etc
--anything else?\\
-Done - send
-
-Refer to dataset i used, dont talk about removed drugs,put as oneliner in methods. add mroe if time
-Now:
-try to docus and get drugs and cytokines done
-write rest tomorrow
-check over weekend and send off
-
-discucsion and methods next week
-
-keep fixing things as i go esp do ackonweldgements on drive up?
-
 \hypertarget{data}{%
 \chapter{Data}\label{data}}
 
@@ -1163,7 +1224,7 @@ This chapter provides an overview of the datasets that are central to this thesi
 This thesis centres on a cohort of 192 CLL patient samples, which were subjected to functional and molecular profiling. First CLL samples were characterised based on their responses to microenvironmental stimuli and drugs.
 A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis.
 
-To prepare 384-well plates for functional profiling, drugs and stimuli were deposited first and patient samples second, using one plate per patient. Each plate accommodated stimulus, drug, drug - stimulus wells along with {[}CHECK{]} DMSO control wells. After 48 hours of incubation at 37\(^\circ\)C, cell viability was assessed using ATP levels in each well. The 12 drugs and 17 stimuli tested in the screens are outlined in sections \ref{drugs} and \ref{cytokines}.
+To prepare 384-well plates for functional profiling, drugs and stimuli were deposited first and patient samples second, using one plate per patient. Each plate accommodated stimulus, drug, drug - stimulus wells along with {[}CHECK{]} DMSO control wells. After 48 hours of incubation at 37\(^\circ\)C, cell viability was assessed using ATP levels in each well. The 12 drugs and 17 stimuli tested in the screens are outlined in sections \ref{drugs} and \ref{stimuli}.
 
 Multi-omics profiles for the patient samples were also available from the PACE repository (\protect\hyperlink{ref-PACE}{\textbf{PACE?}}), consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
 
@@ -1181,7 +1242,7 @@ Collectively, these data enabled (i)characterisation of responses to microenviro
 \hypertarget{additional-datasets}{%
 \subsection{Additional datasets}\label{additional-datasets}}
 
-A number of key findings emerged from the above data which warranted further investigation. In addition to the screen, this thesis makes use of a number of validatory datasets, from within our lab and from external sources. These are outlined in the Methods (Chapter /(\protect\hyperlink{ref-ref}{\textbf{ref?}})(methods)) and in the relevant results chapters.
+A number of key findings emerged from the above data which warranted further investigation. In addition to the screen, this thesis makes use of a number of validatory datasets, from within our lab and from external sources. These are outlined in the Methods (Chapter \ref{methods}) and in the relevant results chapters.
 
 \hypertarget{data-processing-1}{%
 \section{Data Processing}\label{data-processing-1}}
@@ -1236,7 +1297,7 @@ We aimed to generate a systematic study of the impact of soluble factors on ther
 
 \begin{figure}
 
-{\centering \includegraphics{thesis_files/figure-latex/drugCategories-1} 
+{\centering \includegraphics[width=0.5\linewidth]{thesis_files/figure-latex/drugCategories-1} 
 
 }
 
@@ -1317,14 +1378,9 @@ In addition,the individual drug response profiles (Figure \ref{fig:drugResponses
 \hypertarget{stimuli-info}{%
 \subsection{The panel of stimuli}\label{stimuli-info}}
 
-\textbf{table of stimuli}
--details of how were slected
-
-(Table \ref{tab:cytTable}).
+The stimuli selected for the screen, their associated targets and concentrations used are described in Table \ref{tab:cytTable}. They include 16 individual stimuli, plus HS-5 Culture Medium which encompasses the range of soluble factors secreted by the stromal cell line HS-5.
 
 
-
-more on pathways? or is the diagram good neough? more on how they were choseN? not really my PhD?
 \begin{table}
 \centering
 \begin{tabular}{l|l|l|l}
@@ -1365,7 +1421,8 @@ HS-5 conditioned medium & HS-5 CM & 20 \% & NA\\
 \hline
 \end{tabular}
 \end{table}
-\textbf{details of which stimuli activates with pathways}
+A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance \emph{ex vivo} (see section \ref{intro-microenvironmental-pathways}. Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvrionment. \ref{fig:microenvironmentCrosstalk}.
+
 
 \begin{figure}
 
@@ -1375,6 +1432,8 @@ HS-5 conditioned medium & HS-5 CM & 20 \% & NA\\
 
 \caption{(ref:microenvironmentOverview)}\label{fig:microenvironmentCrosstalk}
 \end{figure}
+The stimuli activate a number of critical pathways in CLL, including BCR, TLR, JAK-STAT, NF\(\kappa\)B and TGF\(\beta\). For more information on the importance of these pathways see section \ref{intro-bcr-signalling} and \ref{intro-microenvironmental-pathways}. Amongst these, the roles of BCR, IL4, sCD40L and TLR stimulation were of particular interest.
+
 
 \begin{figure}
 
@@ -1384,11 +1443,12 @@ HS-5 conditioned medium & HS-5 CM & 20 \% & NA\\
 
 \caption{Overview of stimuli included in the screen and summary of their associated targets. HS-5 Culture Medium is omitted, as no specific target can be shown. \emph{Figure and caption from Bruch \& Giles et al.~2021.}}\label{fig:stimuliPathways}
 \end{figure}
-\hypertarget{qc-and-sense-checks}{%
-\subsection{QC and sense checks}\label{qc-and-sense-checks}}
+\hypertarget{assessing-stimulus-response}{%
+\subsection{Assessing stimulus response}\label{assessing-stimulus-response}}
 
-Heterogeneity of response is not caused by differences in receptor expression
-Next, we tested whether the observed heterogeneity of response was caused by differences in receptor expression. We calculated Pearson correlation coefficients comparing control - normalised log viability values for each stimulus with transformed RNA counts of the corresponding stimulus receptor(s). No stimulus-receptor pair showed a Pearson coefficient greater than 0.4, confirming that the heterogeneity of response was not caused by differential receptor expression.
+Before begining the downstream analysis, it was first important to determine whether heterogeneity of response to the stimuli could be caused by differences receptor expression, rather than some other cell-intrinsic feature. This would guide our interpretation of the stimulus responses.
+
+To determine this, we calculated Pearson correlation coefficients to compare log-transformed control - normalised viability values for each stimulus, with vst-transformed RNA counts of the matching receptor(s). All Pearson coefficients were less than 0.4, indicating that heterogeneity of response was not related to differential receptor expression.
 
 
 
@@ -1414,17 +1474,8 @@ Here is:
 
 = all plots done
 wrtiing after lunch
-\begin{verbatim}
- [1] "del17p"    "del11q"    "trisomy12" "del13q"    "gain8q"    "del8p"    
- [7] "gain2p"    "del6q"     "del9p"     "del14q"    "del15q"    "del18p"   
-[13] "del1q"     "del9q"     "gain18q"   "gain19p"   "gain19q"   "TP53"     
-[19] "ATM"       "SF3B1"     "NOTCH1"    "MYD88"     "MED12"     "BRAF"     
-[25] "KRAS"      "POT1"      "CSMD3"     "FAT2"      "NFKBIE"    "EGR2"     
-[31] "FAT4"      "IKZF3"    
-\end{verbatim}
-(Table \ref{tab:geneTable}).
 
-UPdate CNV anmes in this plot
+Table \ref{tab:geneTable}).
 
 
 \begin{table}
