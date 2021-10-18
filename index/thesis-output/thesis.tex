@@ -894,6 +894,7 @@ Methods in quotation marks are taken from Bruch \& Giles et al.~2021 and I have 
 
 \emph{HG wrote}
 Peripheral blood samples were obtained from 192 patients. A Ficoll gradient (GE Healthcare) was used to separated the samples and mononuclear cells were then cryopreserved. For the screen, samples were thawed and DMSO was removed. Primary patient samples were next incubated on a roll mixer at room temperature in cell culture medium for a duration of three hours. This process ensured that any remaining DMSO was removed and to ensure that cell counts would only include those that survived the freezing process. For the screen, 15 \(\mu\)l of each PBMC sample was deposited into each well of the plates with stock solution concentration of 1.3*10\^{}6 cells/ml. The final cell concentration was 2*10\^{}4 cells per well.
+Viability using Celltiter Glo from Promega and measuring on the PerkinElmer Envision Plate Reader, as this absolute Value varies between Samples and Measuring date (Refreezing of CTG and Incubation Time) the Values were normalized to internal DMSO Values.
 
 \hypertarget{preparation-of-screening-plates}{%
 \subsubsection{Preparation of screening plates}\label{preparation-of-screening-plates}}
@@ -1213,7 +1214,7 @@ An independent patient cohort of 16 patients was used in the drug-drug interacti
 \hypertarget{data}{%
 \chapter{Data}\label{data}}
 
-This chapter provides an overview of the datasets that are central to this thesis, and covers the generation of resources to make this data and associated analysis publicly-available.
+This chapter provides an overview of the datasets that are central to this thesis. It also covers the generation of resources to make the data and associated analysis publicly-available.
 
 \hypertarget{experimental-overview}{%
 \section{Experimental overview}\label{experimental-overview}}
@@ -1221,10 +1222,9 @@ This chapter provides an overview of the datasets that are central to this thesi
 \hypertarget{drug-stimulus-combinatorial-pertubation-assay-and-patient-sample-multi-omic-profiling}{%
 \subsection{Drug-stimulus combinatorial pertubation assay and patient sample multi-omic profiling}\label{drug-stimulus-combinatorial-pertubation-assay-and-patient-sample-multi-omic-profiling}}
 
-This thesis centres on a cohort of 192 CLL patient samples, which were subjected to functional and molecular profiling. First CLL samples were characterised based on their responses to microenvironmental stimuli and drugs.
-A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis.
+This thesis centres on a dataset of 192 CLL patient samples subjected to functional and molecular profiling. A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis.
 
-To prepare 384-well plates for functional profiling, drugs and stimuli were deposited first and patient samples second, using one plate per patient. Each plate accommodated stimulus, drug, drug - stimulus wells along with {[}CHECK{]} DMSO control wells. After 48 hours of incubation at 37\(^\circ\)C, cell viability was assessed using ATP levels in each well. The 12 drugs and 17 stimuli tested in the screens are outlined in sections \ref{drugs} and \ref{stimuli}.
+The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient. Each plate contained stimulus, drug, drug - stimulus wells along with DMSO control wells. After 48 hours of incubation at 37\(^\circ\)C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates the number of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \ref{drugs} and \ref{stimuli}.
 
 Multi-omics profiles for the patient samples were also available from the PACE repository (\protect\hyperlink{ref-PACE}{\textbf{PACE?}}), consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
 
@@ -1247,23 +1247,11 @@ A number of key findings emerged from the above data which warranted further inv
 \hypertarget{data-processing-1}{%
 \section{Data Processing}\label{data-processing-1}}
 
-\hypertarget{raw-values-and-quality-control}{%
-\subsection{Raw values and Quality control}\label{raw-values-and-quality-control}}
+\hypertarget{processing-the-raw-values-obtained-from-the-screen}{%
+\subsection{Processing the raw values obtained from the screen}\label{processing-the-raw-values-obtained-from-the-screen}}
 
-In this section, we provide explanation of how we normalized the raw luminescence
-measurements into the viabilities, which were later used for analysis.
-\textbf{raw viabilites}
-
-We discuss the types of quality control checks, which are crucial for the assessment of mesaurement of drug efficiacy
-are drugsbehaving aswe would expect?
-
-deal with the fact that screen reuls are legitimate here :
--be guided by gosia's thesis
--rwar plates -edge effect / spatial effect?
--choice of measurement
--normalisation for downstream
-
-(Figure \ref{fig:rawViabilities}).
+This section describes the process of generating viability scores used in downstream analyses. Initially, raw luminescence measurements from the experiments were read in using custom-made \texttt{R} scripts and functions. Raw values represent the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to amount of ATP present. The ATP levels are directly proportional to the number of viable cells in the well.
+Figure \ref{fig:rawViabilities} shows the raw viability values from the DMSO-treated wells for each patient sample. The absolute values vary between patient samples, and between measuring dates, and thus the viability values required additional normalisation.
 
 
 \begin{figure}
@@ -1272,25 +1260,28 @@ deal with the fact that screen reuls are legitimate here :
 
 }
 
-\caption{Boxplots of raw viability count data prior to normalisation and log transformation. For each of the 192 patient samples, there were 50 DMSO-treated wells. Dashed horizontal lines indicate potential cut-offs for samples that showed low viability with DMSO control treatment.}\label{fig:rawViabilities}
+\caption{Boxplots of raw viability count data prior to normalisation and log transformation. For each of the 192 patient samples, there were 50 DMSO-treated wells. Viability represents the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to amount of ATP present}\label{fig:rawViabilities}
 \end{figure}
-\textbf{any QC plots}
+Each viability value was normalised to internal DMSO values of the same plate. Specifically, the mean of the two wells for each stimulus, drug or drug-stimulus treatment was divided by the median of the 50 DMSO negative control wells present on each plate, resulting in viability scores. {[}CHECK{]} A value of 0 indicated that all cells were killed by the treatment, and a value of \textgreater= 1 indicated the cells survived as well as or better than negative control.
 
-\hypertarget{data-normalisation-and-log-transformation}{%
-\subsection{Data normalisation and log transformation}\label{data-normalisation-and-log-transformation}}
+Given the downstream analysis involved the use of linear modelling, I thus applied a log base \(e\) transformation to the viability scores. This generated log-transformed control-normalised viability scores which are used for the majority of the downstream analysis. Here 0 indicates that cells survived as well as negative control.
 
-Read through gosia's and add a plot on plate normalisation?
-\textbf{demo plot}maybeno plot
+\hypertarget{quality-control-and-data-reproducibility}{%
+\subsection{Quality control and data reproducibility}\label{quality-control-and-data-reproducibility}}
 
-(Figure \ref{fig:screenNormalisation}).
+Next, several additional quality control steps were performed, with the aim of a) adjusting for any spatial effects on each screening plate, b) accounting for any batch effects between screening batches, c) testing data reproducibility.
 
+First, the screening data for each well on each plate was plotted in a grid corresponding to the plate layout, to visualise whether viability values were affected by their position on the plate. We discussed adjusting for any position effect by fitting a surface to the negative control wells, to generate correction factors for each well for each plate. The resulting correction factor was then subtracted from each of the treatment wells. We decided that the position effect was not sufficient to warrant this adjustment, and continued the analysis with the unadjusted values. {[}CHECK{]}
 
+With regards to batch effects, screening was performed on 16 separate days. We concluded that normalising data to the DMSO-treated wells on each plate sufficiently accounted for this. {[}CHECK{]}. Finally, with respect to data reproducibility, each plate was tested twice, such that the resulting viability scores are the mean of two duplicates {[}CHECK{]}.
+
+Thus, the data processing steps generated robust, log-transformed control-normalised viability scores that aim to capture the biological impact of the concomitant application of drugs and stimuli, outlined below.
 
 \hypertarget{drugs}{%
 \section{Characteristics of drugs used in the screen}\label{drugs}}
 
-\hypertarget{drug-characteristics}{%
-\subsection{Drug characteristics}\label{drug-characteristics}}
+\hypertarget{the-panel-of-drugs}{%
+\subsection{The panel of drugs}\label{the-panel-of-drugs}}
 
 We aimed to generate a systematic study of the impact of soluble factors on therapies in CLL. In addition, we were interested to dissect the effect of simultaneous inhibition and stimuli of critical pathways in CLL. To that end, a panel of 17 drugs was constructed, encompassing FDA-approved therapies for CLL, along with a number of drugs in clinical trial or laboratory compounds targeting pathways of interest (Figure \ref{fig:drugCategories}). These included fludarabine (a frontline chemotherapeutic) and ibrutinib and idelalisib (newer BCR inhibitors).
 
@@ -1307,50 +1298,50 @@ The number and concentration of drugs included was limited by the size of the pl
 
 
 \begin{table}
-\centering
+\centering\begingroup\fontsize{7}{9}\selectfont
 \begin{tabular}{l|l|l|l|l|l|l}
 \hline
-\textbf{ } & \textbf{Drug} & \textbf{Main targets} & \textbf{Drug Group} & \textbf{Pathway} & \textbf{conc1} & \textbf{conc2}\\
+\textbf{ID} & \textbf{Drug} & \textbf{Main targets} & \textbf{Target category} & \textbf{Drug Group} & \textbf{conc1} & \textbf{conc2}\\
 \hline
-\cellcolor[HTML]{E2E868}{D\_001} & \cellcolor[HTML]{E2E868}{Ibrutinib} & \cellcolor[HTML]{E2E868}{BTK} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{B-cell receptor} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
+\cellcolor[HTML]{E2E868}{D\_001} & \cellcolor[HTML]{E2E868}{Ibrutinib} & \cellcolor[HTML]{E2E868}{BTK} & \cellcolor[HTML]{E2E868}{BCR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
 \hline
-D\_002 & Idelalisib & PI3K delta & FDA approved & B-cell receptor & 500nM & 50nM\\
+D\_002 & Idelalisib & PI3K delta & BCR & FDA approved & 500nM & 50nM\\
 \hline
-\cellcolor[HTML]{E2E868}{D\_003} & \cellcolor[HTML]{E2E868}{Fludarabine} & \cellcolor[HTML]{E2E868}{Purine analogue} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{2000nM} & \cellcolor[HTML]{E2E868}{200nM}\\
+\cellcolor[HTML]{E2E868}{D\_003} & \cellcolor[HTML]{E2E868}{Fludarabine} & \cellcolor[HTML]{E2E868}{Purine analogue} & \cellcolor[HTML]{E2E868}{DDR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{2000nM} & \cellcolor[HTML]{E2E868}{200nM}\\
 \hline
-D\_004 & Nutlin-3a & MDM2 & Clinical development/
-tool compound & Other & 10000nM & 1000nM\\
+D\_004 & Nutlin-3a & MDM2 & DDR & Clinical development/
+tool compound & 10000nM & 1000nM\\
 \hline
-D\_005 & Selumetinib & MEK1/2 & Clinical development/
-\cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{1000nM} & \cellcolor[HTML]{E2E868}{\vphantom{1} 100nM}\\
+D\_005 & Selumetinib & MEK1/2 & MAPK & Clinical development/
+\cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{1000nM} & \cellcolor[HTML]{E2E868}{\vphantom{1} 100nM}\\
 \hline
-D\_006 & BAY-11-7085 & NFkB & Clinical development/
-tool compound & Other & 2000nM & 200nM\\
+D\_006 & BAY-11-7085 & NFkB & NFkB & Clinical development/
+tool compound & 2000nM & 200nM\\
 \hline
-\cellcolor[HTML]{E2E868}{D\_007} & \cellcolor[HTML]{E2E868}{Everolimus} & \cellcolor[HTML]{E2E868}{mTOR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
+\cellcolor[HTML]{E2E868}{D\_007} & \cellcolor[HTML]{E2E868}{Everolimus} & \cellcolor[HTML]{E2E868}{mTOR} & \cellcolor[HTML]{E2E868}{mTOR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
 \hline
-D\_008 & PRT062607 & SYK & Clinical development/
-tool compound & B-cell receptor & 500nM & 50nM\\
+D\_008 & PRT062607 & SYK & BCR & Clinical development/
+tool compound & 500nM & \vphantom{1} 50nM\\
 \hline
-D\_009 & Pyridone-6 & JAK1/2/3 & Clinical development/
-\cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
+D\_009 & Pyridone-6 & JAK1/2/3 & JAK/STAT & Clinical development/
+\cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
 \hline
-D\_010 & Ralimetinib & p38 MAPK & Clinical development/
-tool compound & Other & 1500nM & 150nM\\
+D\_010 & Ralimetinib & p38 MAPK & MAPK & Clinical development/
+tool compound & 1500nM & 150nM\\
 \hline
-D\_011 & Luminespib & HSP90 & Clinical development/
-\cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{Other} & \cellcolor[HTML]{E2E868}{200nM} & \cellcolor[HTML]{E2E868}{20nM}\\
+D\_011 & Luminespib & HSP90 & HSP90 & Clinical development/
+\cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{200nM} & \cellcolor[HTML]{E2E868}{20nM}\\
 \hline
-D\_012 & I-BET 762 & BRD2/3/4 & Clinical development/
-tool compound & Other & 1000nM & 100nM\\
+D\_012 & I-BET 762 & BRD2/3/4 & Epigenome & Clinical development/
+tool compound & 1000nM & 100nM\\
 \hline
 \end{tabular}
+\endgroup{}
 \end{table}
 \hypertarget{assessing-drug-response}{%
 \subsection{Assessing drug response}\label{assessing-drug-response}}
 
-To assess the quality of the drug response data, I quantified correlation coefficients for every drug pair.
-Drugs were highly correlated if they shared identical target pathways, suggesting that the screen captures interindividual differences in pathway dependencies, both sensitively and specifically. For example, BCR inhibitors ibrutinib, idelalisib, PRT062607 and selumetinib were all highly correlated (Figure \ref{fig:drugCorrelations}).
+To assess the quality of the drug response data, I quantified correlation coefficients for every drug pair. Drugs were highly correlated if they shared identical target pathways, suggesting that the screen captures inter-individual differences in pathway dependencies, both sensitively and specifically. For example, BCR inhibitors ibrutinib, idelalisib, PRT062607 and selumetinib were all highly correlated (Figure \ref{fig:drugCorrelations}).
 
 
 \begin{figure}
@@ -1359,9 +1350,9 @@ Drugs were highly correlated if they shared identical target pathways, suggestin
 
 }
 
-\caption{Heatmap of Pearson correlation coefficients of each pair of drugs, based on log transformed viability values. See Methods section \ref{correlations}. \emph{Figure adapted from \protect\hyperlink{ref-Giles2021}{Bruch et al.} (\protect\hyperlink{ref-Giles2021}{2021}) .}}\label{fig:drugCorrelations}
+\caption{Heatmap of Pearson correlation coefficients of each pair of drugs, based on log transformed viability values. See Methods section \ref{correlations}. \emph{Figure adapted from Bruch and Giles et al.~2021.}}\label{fig:drugCorrelations}
 \end{figure}
-In addition,the individual drug response profiles (Figure \ref{fig:drugResponses}) indicated that each of the drugs decreased CLL viability as expected, and in line with previous CLL drug screens performed in our lab (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}).
+In addition, the individual drug response profiles (Figure \ref{fig:drugResponses}) indicated that each of the drugs decreased CLL viability as expected, and in line with previous CLL drug screens performed in our lab (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}).
 
 
 \begin{figure}
@@ -1370,7 +1361,7 @@ In addition,the individual drug response profiles (Figure \ref{fig:drugResponses
 
 }
 
-\caption{Log transformed viability values for all drugs that were included in the screen after quality control. p values from student's t test.}\label{fig:drugResponses}
+\caption{Log transformed control-normalised viability values for all drugs that were included in the screen after quality control. p values from Student's t-test.}\label{fig:drugResponses}
 \end{figure}
 \hypertarget{stimuli}{%
 \section{Characteristics of stimuli used in the screen}\label{stimuli}}
@@ -1382,44 +1373,45 @@ The stimuli selected for the screen, their associated targets and concentrations
 
 
 \begin{table}
-\centering
-\begin{tabular}{l|l|l|l}
+\centering\begingroup\fontsize{7}{9}\selectfont
+\begin{tabular}{l|l|l}
 \hline
-\textbf{Stimulus} & \textbf{Name} & \textbf{Concentration} & \textbf{Pathway}\\
+\textbf{Name} & \textbf{Concentration} & \textbf{Pathway}\\
 \hline
-\cellcolor[HTML]{E2E868}{IL4 human recombinant animal component free} & \cellcolor[HTML]{E2E868}{IL4} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
+\cellcolor[HTML]{E2E868}{IL4} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
 \hline
-IL10 human Animal component free & IL10 & 10 ng/ml & JAK/STAT\\
+IL10 & 10 ng/ml & JAK/STAT\\
 \hline
-\cellcolor[HTML]{E2E868}{IL2 human recombinant animal component free} & \cellcolor[HTML]{E2E868}{IL2} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
+\cellcolor[HTML]{E2E868}{IL2} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
 \hline
-R-848 & Resiquimod & 1000 ng/ml & TLR 7/8\\
+Resiquimod & 1000 ng/ml & TLR 7/8\\
 \hline
-\cellcolor[HTML]{E2E868}{Human IL-21} & \cellcolor[HTML]{E2E868}{IL21} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
+\cellcolor[HTML]{E2E868}{IL21} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
 \hline
-Human BAFF & BAFF & 250 ng/ml & NFkB\\
+BAFF & 250 ng/ml & NFkB\\
 \hline
-\cellcolor[HTML]{E2E868}{Human IL-1 beta} & \cellcolor[HTML]{E2E868}{IL1β} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{NFkB}\\
+\cellcolor[HTML]{E2E868}{IL1β} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{NFkB}\\
 \hline
-Human sCD40 Ligand & sCD40L & 1000 ng/ml & NFkB\\
+sCD40L & 1000 ng/ml & NFkB\\
 \hline
-\cellcolor[HTML]{E2E868}{Goat F(AB')2 Fragment to human IgM} & \cellcolor[HTML]{E2E868}{soluble anti-IgM} & \cellcolor[HTML]{E2E868}{20000 ng/ml} & \cellcolor[HTML]{E2E868}{BCR}\\
+\cellcolor[HTML]{E2E868}{soluble anti-IgM} & \cellcolor[HTML]{E2E868}{20000 ng/ml} & \cellcolor[HTML]{E2E868}{BCR}\\
 \hline
-Human TGFβ1 & TGFβ1 & 10 ng/ml & MAPK\\
+TGFβ1 & 10 ng/ml & MAPK\\
 \hline
-\cellcolor[HTML]{E2E868}{Human IL15} & \cellcolor[HTML]{E2E868}{IL15} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
+\cellcolor[HTML]{E2E868}{IL15} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
 \hline
-Human IL6 & IL6 & 10 ng/ml & JAK/STAT\\
+IL6 & 10 ng/ml & JAK/STAT\\
 \hline
-\cellcolor[HTML]{E2E868}{ODN 2006 (ODN 7909)} & \cellcolor[HTML]{E2E868}{CpG ODN} & \cellcolor[HTML]{E2E868}{1000 ng/ml} & \cellcolor[HTML]{E2E868}{TLR 9}\\
+\cellcolor[HTML]{E2E868}{CpG ODN} & \cellcolor[HTML]{E2E868}{1000 ng/ml} & \cellcolor[HTML]{E2E868}{TLR 9}\\
 \hline
-Human SDF1 alpha (CXCL12) & SDF-1α & 200 ng/ml & JAK/STAT\\
+SDF-1α & 200 ng/ml & JAK/STAT\\
 \hline
-\cellcolor[HTML]{E2E868}{Human Interferon gamma} & \cellcolor[HTML]{E2E868}{Interferon γ} & \cellcolor[HTML]{E2E868}{5 ng/ml} & \cellcolor[HTML]{E2E868}{NFkB}\\
+\cellcolor[HTML]{E2E868}{Interferon γ} & \cellcolor[HTML]{E2E868}{5 ng/ml} & \cellcolor[HTML]{E2E868}{NFkB}\\
 \hline
-HS-5 conditioned medium & HS-5 CM & 20 \% & NA\\
+HS-5 CM & 20 \% & NA\\
 \hline
 \end{tabular}
+\endgroup{}
 \end{table}
 A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance \emph{ex vivo} (see section \ref{intro-microenvironmental-pathways}. Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvrionment. \ref{fig:microenvironmentCrosstalk}.
 
@@ -1455,102 +1447,12 @@ To determine this, we calculated Pearson correlation coefficients to compare log
 \hypertarget{characteristics-of-patient-samples-used-in-the-screen}{%
 \section{Characteristics of patient samples used in the screen}\label{characteristics-of-patient-samples-used-in-the-screen}}
 
-\hypertarget{genetic-data-available-for-each-patient}{%
-\subsection{Genetic Data available for each patient}\label{genetic-data-available-for-each-patient}}
+\hypertarget{overview-of-the-molecular-profiles-of-the-patient-samples}{%
+\subsection{Overview of the molecular profiles of the patient samples}\label{overview-of-the-molecular-profiles-of-the-patient-samples}}
 
-The crucial component of conducting a translational research is a well-chosen
-study cohort. It should mirror the different factors of age, sex, disease stage etc.,
-and even the acquired chromosomal aberrations in a proportion which is usually
-seen in clinical practice. The presented study satisfies these conditions (see Figure
-3.3), which makes the results directly applicable to medicine with potential benefit
-to participating patients.
+Multi-omics profiles were available for the patient samples in the screen, taken from the Primary Cancer Cell Encyclopedia (PACE). The PACE repository represents an initiative by our lab to characterise the multi-omic characteristics of primary tumour samples from leukemia and lymphoma patients. Patient multi-omic profiles included whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical information and follow-up data was also available for some patients, including their sex, IGHV status and LDT, TTT, TTFT and OS. Figure \ref{fig:geneticData} summarises the molecular characteristics of the patient samples. For a summary of the number of samples with each mutation, see Appendix Table \ref{tab:geneTable}.
 
-Descirbtpiton of all data at top
-
-Here is:
-
--table of all mutatiosn and meta data
--table of number of each mutation
-
-= all plots done
-wrtiing after lunch
-
-Table \ref{tab:geneTable}).
-
-
-\begin{table}
-\centering
-\begin{tabular}{l|r|r}
-\hline
-  & 0 & 1\\
-\hline
-\cellcolor[HTML]{E2E868}{del13q} & \cellcolor[HTML]{E2E868}{66} & \cellcolor[HTML]{E2E868}{108}\\
-\hline
-TP53 & 157 & 30\\
-\hline
-\cellcolor[HTML]{E2E868}{del11q} & \cellcolor[HTML]{E2E868}{148} & \cellcolor[HTML]{E2E868}{28}\\
-\hline
-SF3B1 & 161 & 26\\
-\hline
-\cellcolor[HTML]{E2E868}{trisomy12} & \cellcolor[HTML]{E2E868}{149} & \cellcolor[HTML]{E2E868}{25}\\
-\hline
-NOTCH1 & 137 & 24\\
-\hline
-\cellcolor[HTML]{E2E868}{del17p} & \cellcolor[HTML]{E2E868}{154} & \cellcolor[HTML]{E2E868}{20}\\
-\hline
-ATM & 164 & 16\\
-\hline
-\cellcolor[HTML]{E2E868}{gain8q} & \cellcolor[HTML]{E2E868}{159} & \cellcolor[HTML]{E2E868}{13}\\
-\hline
-del8p & 135 & 11\\
-\hline
-\cellcolor[HTML]{E2E868}{MED12} & \cellcolor[HTML]{E2E868}{170} & \cellcolor[HTML]{E2E868}{10}\\
-\hline
-gain2p & 137 & 9\\
-\hline
-\cellcolor[HTML]{E2E868}{KRAS} & \cellcolor[HTML]{E2E868}{177} & \cellcolor[HTML]{E2E868}{7}\\
-\hline
-BRAF & 180 & 7\\
-\hline
-\cellcolor[HTML]{E2E868}{del6q} & \cellcolor[HTML]{E2E868}{166} & \cellcolor[HTML]{E2E868}{7}\\
-\hline
-POT1 & 174 & 6\\
-\hline
-\cellcolor[HTML]{E2E868}{del9p} & \cellcolor[HTML]{E2E868}{140} & \cellcolor[HTML]{E2E868}{6}\\
-\hline
-NFKBIE & 175 & 5\\
-\hline
-\cellcolor[HTML]{E2E868}{FAT2} & \cellcolor[HTML]{E2E868}{175} & \cellcolor[HTML]{E2E868}{5}\\
-\hline
-CSMD3 & 175 & 5\\
-\hline
-\cellcolor[HTML]{E2E868}{del1q} & \cellcolor[HTML]{E2E868}{141} & \cellcolor[HTML]{E2E868}{5}\\
-\hline
-del18p & 141 & 5\\
-\hline
-\cellcolor[HTML]{E2E868}{del15q} & \cellcolor[HTML]{E2E868}{141} & \cellcolor[HTML]{E2E868}{5}\\
-\hline
-del14q & 145 & 5\\
-\hline
-\cellcolor[HTML]{E2E868}{IKZF3} & \cellcolor[HTML]{E2E868}{176} & \cellcolor[HTML]{E2E868}{4}\\
-\hline
-FAT4 & 176 & 4\\
-\hline
-\cellcolor[HTML]{E2E868}{EGR2} & \cellcolor[HTML]{E2E868}{176} & \cellcolor[HTML]{E2E868}{4}\\
-\hline
-gain19q & 142 & 4\\
-\hline
-\cellcolor[HTML]{E2E868}{gain19p} & \cellcolor[HTML]{E2E868}{142} & \cellcolor[HTML]{E2E868}{4}\\
-\hline
-gain18q & 144 & 4\\
-\hline
-\cellcolor[HTML]{E2E868}{del9q} & \cellcolor[HTML]{E2E868}{142} & \cellcolor[HTML]{E2E868}{4}\\
-\hline
-MYD88 & 184 & 3\\
-\hline
-\end{tabular}
-\end{table}
-(Figure \ref{fig:geneticData}).
+The findings from this study have potential relevance in a clinical setting. Thus it was important to ensure that the distribution of genetic features amongst the cohort was representative of those observed in clinical practice. Other studies have determined the expected frequency of many recurrent genetic features in CLL (\protect\hyperlink{ref-Dohner2000}{H. Döhner et al. 2000}; \protect\hyperlink{ref-Puente2015}{Xose S. Puente et al. 2015}; \protect\hyperlink{ref-Landau2015}{Landau et al. 2015}) : the distribution of molecular lesions in our cohort is comparable to these.
 
 
 \begin{figure}
@@ -1559,7 +1461,7 @@ MYD88 & 184 & 3\\
 
 }
 
-\caption{Summary of genetic data}\label{fig:geneticData-1}
+\caption{Summary of the genetic characteristics of the patient samples in the screen.}\label{fig:geneticData-1}
 \end{figure}
 \begin{figure}
 
@@ -1567,18 +1469,26 @@ MYD88 & 184 & 3\\
 
 }
 
-\caption{Summary of genetic data}\label{fig:geneticData-2}
+\caption{Summary of the genetic characteristics of the patient samples in the screen.}\label{fig:geneticData-2}
 \end{figure}
-\hypertarget{generation-of-public-resource}{%
-\section{Generation of public resource}\label{generation-of-public-resource}}
+\hypertarget{publishing-the-data-and-assosciated-analysis}{%
+\section{Publishing the data and assosciated analysis}\label{publishing-the-data-and-assosciated-analysis}}
+
+As explained in section \ref{microenvironmental-pathways-intro}, many studies have characterised the impact of individual omic layers, and individual soluble factors in CLL. However, studies investigating the interplay between cell-intrinsic and cell-extrinsic features in CLL are lacking. Collectively, this dataset represents a valuable resource providing the ability to explore genetic, epigenetic and microenvironmental modulators of survival and drug response in a heterogeneous cohort, and how these relate to clinical outcomes. With CLL samples relatively simple to obtain compared to other cancers, this project (in collaboration with the PACE initiative) represents a considerable dataset containing joint functional and molecular profiling of primary cancer samples.
+
+Thus, an important goal of my work was to ensure that this dataset was both publicly available and accessible for a range of users, including medics and bioinformaticians. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the manuscript Bruch and Giles et al.~2021 to an online git repository.
 
 \hypertarget{shiny-app}{%
 \subsection{Shiny app}\label{shiny-app}}
 
-\href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{Shiny app}
+The shiny app can be found \href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{here}. Figure \ref{fig:shinyApp1} shows the home page. It consists of four tabs, covering the following:
+\begin{itemize}
+    \item  \textbf{\textit{Drug and stimulus responses}} Explore drug - stimulus interactions and view log-transformed viabilities with single and combinatorial treatments (Figure \\ref{fig:shinyApp3}).
+    \item \textbf{\textit{Effects of mutations on drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features and view log-transformed viability data stratified by mutations
+    \item \textbf{\textit{Genetic predictors of drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features with predictor profiles from section \\ref{multivariate-gene-stimulus-assosciations}
+    \item \textbf{\textit{Genetic predictors of drug and stimulus interactions}} Explore how drug - stimulus interactions are further modulated by mutations, and view predictor profiles from section \\ref{drug-stimulus-gene-predictor-profile}
 
-(Figure \ref{fig:shinyApp1}).
-
+\end{itemize}
 
 \begin{figure}
 
@@ -1586,9 +1496,9 @@ MYD88 & 184 & 3\\
 
 }
 
-\caption{Home page of the shiny app accompanying this project. The app was published along side \protect\hyperlink{ref-Giles2021}{Bruch et al.} (\protect\hyperlink{ref-Giles2021}{2021}) .}\label{fig:shinyApp1}
+\caption{Home page of the shiny app accompanying this project. The app was published alongside Bruch and Giles et al.~2021.}\label{fig:shinyApp1}
 \end{figure}
-(Figure \ref{fig:shinyApp3}).
+To generate the app, I first curated the individual datasets and ran each of the individual analyses required to generate the plots outline above. I then set up the four tab structure, and adapted the code required to generate plots in a dynamic manner. Finally, I worked on the aesthetics and interface of the app, to ensure that it was both professional and understandable. I then tested the app with number of colleagues, to ensure it was accessible and understandable by a range of users both familiar and unfamiliar with the project. I maintain the app on the university server.
 
 
 \begin{figure}
@@ -1597,14 +1507,16 @@ MYD88 & 184 & 3\\
 
 }
 
-\caption{Image of one of the tabs, in which the user can explore log-transformed viability values for different drug and stimulus treatments, stratified by genetic features.}\label{fig:shinyApp3}
+\caption{Image of one of the shiny tabs, in which the user can explore log-transformed viability values for different drug and stimulus treatments, stratified by genetic features.}\label{fig:shinyApp3}
 \end{figure}
-\hypertarget{package}{%
-\subsection{Package}\label{package}}
+\hypertarget{online-code-repository}{%
+\subsection{Online code repository}\label{online-code-repository}}
 
-\href{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}{package}
+The online repository can be found \href{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}{here}.The repository consists of the data and executable transcripts to completely reproduce the analysis described in Bruch and Giles et al.~2021 (Figure \ref{fig:package1}).
 
-(Figure \ref{fig:package1}).
+To generate the repository, I first curated each of the individual datasets, including various objects containing the screening data, patient genetic meta data, ATACseq processed data, RNAseq counts, clinical data include LDT, TTT and OS data, plus the follow up data including lymph node IHV experiments, shRNA knockdown experiments, and additional stimulation and inhibition assays. As many of these data contain sensitive information on patients, I anonymised each object by updating the patient IDs and removing potential identifying features such as age.
+
+I next arranged the analysis into seven separate scripts, one for each figure, such that all individual sections can be rendered into a single html vignette outlining the entire analysis. I ensured that the code in each script was well-annotated and relatively simple to understand and to follow. I shared the code with several colleagues to receive feedback on coding style, and ensured that the analysis could be reproduced by others, and on different operating systems. I published the repository with the along with the preprint (Bruch and Giles et al.~2021).
 
 
 \begin{figure}
@@ -1613,13 +1525,9 @@ MYD88 & 184 & 3\\
 
 }
 
-\caption{This is the package}\label{fig:package1}
+\caption{Interface of the online code repository}\label{fig:package1}
 \end{figure}
-\hypertarget{questions}{%
-\section{Questions}\label{questions}}
-
-can i just put in methods that we removed
-is the section on drug QC sufficeint ? I dnt want to put too much empashsis on this, as it was mostly done bfoe i arrived
+These online resources are already beginning to serve as a community resource (e.g.@Lu2021, Nature Cancer), as querying them enables researchers to test new hypotheses within minutes and may obviate the need for certain small-scale experiments.
 
 \hypertarget{chapter4}{%
 \chapter{\texorpdfstring{\emph{Ex-vivo} sensitivity to microenvironmental stimulation in primary CLL cells}{Ex-vivo sensitivity to microenvironmental stimulation in primary CLL cells}}\label{chapter4}}
@@ -1765,6 +1673,7 @@ A multivariate Cox proportional hazard model accounting for IGHV status, trisomy
 
 \caption{\label{tab:clusterCox}Table depicting results of Multivariate Cox Proportional Hazard Model to test prognostic value of key genetic features and clusters using Time to Next Treatment and C3 as reference. }
 \centering
+\fontsize{7}{9}\selectfont
 \begin{tabular}[t]{l|r|r|r|r|l}
 \hline
 Factor & coef & exp(coef) & se(coef) & z & p.value\\
@@ -2327,8 +2236,6 @@ Equation \eqref{eq:drugCytGeneInt} quantifies how the viability with any combina
     \end{equation}
 \emph{where \(V\) is the predicted viability of a patient sample with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\), \(\beta_{int}\), \(\beta_{drug-stimulus}\), \(\beta_{drug-patient}\), \(\beta_{drug-stimulus}\) \emph{and} \(\beta_{int}X_{drug}\) \emph{are regression coefficients for the drug, stimulus, patient sample and combinatorial terms and} \(X_{drug}\), \(X_{stimulus}\) \emph{and} \(X_{patient}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus/patient sample.} \(\epsilon\) \emph{is the vector of model residuals. See also Methods section \ref{drug-stimulus-gene-interactions-method}. Equation from (\protect\hyperlink{ref-Giles2021}{Bruch et al. 2021}).}
 
-This generates a higher order interaction term \(\beta_{int}X_{drug}X_{stimulus}X_{patient}\). This term represents a \emph{patient sample-specific} \(\beta{int}\) for each drug - stimulus combination, quantifying the size of an interaction between a drug and stimulus in each patient genetic background.
-
 With these patient sample-specific \(\beta{int}\) terms, it was possible to search for associations between the size of \(\beta_{int}\)) and genetic features. The aim was to screen for molecular features that increased or decreased the size of a drug - stimulus interactions, using multivariate regression with L1 (lasso) regularisation.
 
 As input to the model, the response matrix was composed of the sample - specific \(\beta_{int}\) values for each drug-stimulus combination. To generate the feature matrix (137 samples versus 40 features), I excluded genetic features for which \textgreater20\% of the values were missing, and patient samples with incomplete annotation. As predictors, I included genetic mutations and CNVs (p=39) and IGHV status (coded as 0-1). I ran lasso regression, as implemented in the \texttt{R} package \texttt{glmnet}(\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}), using three-fold cross-validation with misclassification error as loss. The resulting predictors are the mean of those coefficients that were selected in at least 90\% of 30 bootstrapped repeats.
@@ -2348,8 +2255,8 @@ This analysis revealed that 60/204 drug - stimulus interactions were modulated b
 \end{figure}
 Applying this broad scale screening approach established some wider trends. Firstly, Trisomy 12 and IGHV status impacted the largest number of drug - stimulus interactions,indicating that their impact on stimulus and drug response individually also extends to drug-stimulus interactions. Secondly, out of all the stimuli, IL4 and sCD40L + IL4-based interactions were modulated by the largest number of features. IL4 alone increased viability uniformly accross genetic backgrounds; its interaction with drugs may be more influenced by genetic features. Notably, the presence of trisomy 12 acted to increase IL4-induced drug resistance, in almost all drugs for which \(\beta{int}\)\textgreater0.05. Interestingly, the presence of TP53 and del(17q) reduced the degree to which IL4 induced resistance to the chemotherapeutics Nutlin-3a and Fludarabine, most likely because both these mutations already induce resistance alone.
 
-\hypertarget{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}{%
-\subsection{Patient - specific drug - stimulus interactions may have clinical significance}\label{patient---specific-drug---stimulus-interactions-may-have-clinical-significance}}
+\hypertarget{drug-stimulus-gene-predictor-profile}{%
+\subsection{Patient - specific drug - stimulus interactions may have clinical significance}\label{drug-stimulus-gene-predictor-profile}}
 
 This broad scale screening approach was not perfect in itself. Modelling can only go so far, and it is likely that some cases identified here are artefacts of the modelling approach. Therefore, I decided to investigate each individual case one - by - one to establish which drug - stimulus - gene interactions are the most biologically interesting. This analysis highlighted several drug - stimulus - gene interactions that may have clinical importance and warrant further investigation (\protect\hyperlink{ref-Giles2021}{Bruch et al. 2021}).
 
@@ -2384,7 +2291,7 @@ TLR-induced drug resistance in certain genetic backgrounds extended to other che
 
 }
 
-\caption{Predictor profile depicting genetic features that modulate the size of \(\beta{int}\) between Nutlin-3a (MDM2) and CpG ODN. Scatter plot (bottom) and heatmap (right) and bar plots (left) indicate inputs and outputs of fitting model in Equation \eqref{eq:drugCytGeneInt}. Bar plots indicate size and sign of coefficients assigned to genetic features named on the right. Scatter plot depicts ranked patient-specific \(\beta{int}\) values i.e.~the response matrix. Heatmap above indicates patient mutation status for the selected genetic features i.e.~feature matrix. Heatmap tiles correspond to points in scatter plot (i.e.~patient data is aligned), to indicate how the size of \(\beta{int}\) varies with selected genetic feature. See Methods section \ref{drug-stimulus-gene-interactions-method}. \_Figure and caption from (\protect\hyperlink{ref-Giles2021._}{\textbf{Giles2021.\_?}})}\label{fig:nutlinCpgEx}
+\caption{Predictor profile depicting genetic features that modulate the size of \(\beta{int}\) between Nutlin-3a (MDM2) and CpG ODN. Scatter plot (bottom) and heatmap (right) and bar plots (left) indicate inputs and outputs of fitting model in Equation f.~Bar plots indicate size and sign of coefficients assigned to genetic features named on the right. Scatter plot depicts ranked patient-specific \(\beta{int}\) values i.e.~the response matrix. Heatmap above indicates patient mutation status for the selected genetic features i.e.~feature matrix. Heatmap tiles correspond to points in scatter plot (i.e.~patient data is aligned), to indicate how the size of \(\beta{int}\) varies with selected genetic feature. See Methods section \ref{drug-stimulus-gene-interactions-method}. \_Figure and caption from (\protect\hyperlink{ref-Giles2021._}{\textbf{Giles2021.\_?}})}\label{fig:nutlinCpgEx}
 \end{figure}
 
 \begin{figure}
@@ -3351,7 +3258,7 @@ Ziller, Michael J., Hongcang Gu, Fabian Müller, Julie Donaghey, Linus T.-Y. Tsa
 
 
 \begin{table}
-\centering
+\centering\begingroup\fontsize{10}{12}\selectfont
 \begin{tabular}{l|l|l|l}
 \hline
 Cytokine & Receptor & ENSEMBLID & Kegg\\
@@ -3423,27 +3330,81 @@ TGF-b1 & TGF-beta R1 & ENSG00000106799 & 7046\\
 \cellcolor[HTML]{E2E868}{TGF-b1} & \cellcolor[HTML]{E2E868}{TGF-beta R2} & \cellcolor[HTML]{E2E868}{ENSG00000163513} & \cellcolor[HTML]{E2E868}{7048}\\
 \hline
 \end{tabular}
+\endgroup{}
 \end{table}
-\begin{table}[ht]
-    \begin{center}
-        {\footnotesize
-        \begin{tabular}{l|cccccccccc}
-        \hline \hline
-                        & 3m    & 6m    & 1yr   & 2yr   & 3yr   & 5yr   & 7yr   & 10yr  & 12yr  & 15yr   \\
-            \hline
-                Mean   & 3.138 & 3.191 & 3.307 & 3.544 & 3.756 & 4.093 & 4.354 & 4.621 & 4.741 & 4.878  \\
-                Median & 3.013 & 3.109 & 3.228 & 3.490 & 3.680 & 3.906 & 4.117 & 4.420 & 4.575 & 4.759  \\
-                Min    & 1.984 & 1.950 & 1.956 & 2.010 & 2.240 & 2.615 & 2.850 & 3.120 & 3.250 & 3.395  \\
-                Max    & 5.211 & 5.274 & 5.415 & 5.583 & 5.698 & 5.805 & 5.900 & 6.031 & 6.150 & 6.295  \\
-                StD    & 0.915 & 0.919 & 0.935 & 0.910 & 0.876 & 0.825 & 0.803 & 0.776 & 0.768 & 0.762  \\
-            \hline \hline
-        \end{tabular}}
-    \end{center}
-    \caption{Detailed descriptive statistics of location and dispersion for
-    2100 observed swap rates for the period from
-    February 15, 1999 to March 2, 2007. Swap rates measured as 3.12 (instead of 0.0312).}
-    \label{tab:apptable}
-\end{table}
-\newpage
+Table \ref{tab:geneTable}).
 
+
+\begin{table}
+\centering
+\begin{tabular}{l|r|r}
+\hline
+  & 0 & 1\\
+\hline
+\cellcolor[HTML]{E2E868}{del13q} & \cellcolor[HTML]{E2E868}{66} & \cellcolor[HTML]{E2E868}{108}\\
+\hline
+TP53 & 157 & 30\\
+\hline
+\cellcolor[HTML]{E2E868}{del11q} & \cellcolor[HTML]{E2E868}{148} & \cellcolor[HTML]{E2E868}{28}\\
+\hline
+SF3B1 & 161 & 26\\
+\hline
+\cellcolor[HTML]{E2E868}{trisomy12} & \cellcolor[HTML]{E2E868}{149} & \cellcolor[HTML]{E2E868}{25}\\
+\hline
+NOTCH1 & 137 & 24\\
+\hline
+\cellcolor[HTML]{E2E868}{del17p} & \cellcolor[HTML]{E2E868}{154} & \cellcolor[HTML]{E2E868}{20}\\
+\hline
+ATM & 164 & 16\\
+\hline
+\cellcolor[HTML]{E2E868}{gain8q} & \cellcolor[HTML]{E2E868}{159} & \cellcolor[HTML]{E2E868}{13}\\
+\hline
+del8p & 135 & 11\\
+\hline
+\cellcolor[HTML]{E2E868}{MED12} & \cellcolor[HTML]{E2E868}{170} & \cellcolor[HTML]{E2E868}{10}\\
+\hline
+gain2p & 137 & 9\\
+\hline
+\cellcolor[HTML]{E2E868}{KRAS} & \cellcolor[HTML]{E2E868}{177} & \cellcolor[HTML]{E2E868}{7}\\
+\hline
+BRAF & 180 & 7\\
+\hline
+\cellcolor[HTML]{E2E868}{del6q} & \cellcolor[HTML]{E2E868}{166} & \cellcolor[HTML]{E2E868}{7}\\
+\hline
+POT1 & 174 & 6\\
+\hline
+\cellcolor[HTML]{E2E868}{del9p} & \cellcolor[HTML]{E2E868}{140} & \cellcolor[HTML]{E2E868}{6}\\
+\hline
+NFKBIE & 175 & 5\\
+\hline
+\cellcolor[HTML]{E2E868}{FAT2} & \cellcolor[HTML]{E2E868}{175} & \cellcolor[HTML]{E2E868}{5}\\
+\hline
+CSMD3 & 175 & 5\\
+\hline
+\cellcolor[HTML]{E2E868}{del1q} & \cellcolor[HTML]{E2E868}{141} & \cellcolor[HTML]{E2E868}{5}\\
+\hline
+del18p & 141 & 5\\
+\hline
+\cellcolor[HTML]{E2E868}{del15q} & \cellcolor[HTML]{E2E868}{141} & \cellcolor[HTML]{E2E868}{5}\\
+\hline
+del14q & 145 & 5\\
+\hline
+\cellcolor[HTML]{E2E868}{IKZF3} & \cellcolor[HTML]{E2E868}{176} & \cellcolor[HTML]{E2E868}{4}\\
+\hline
+FAT4 & 176 & 4\\
+\hline
+\cellcolor[HTML]{E2E868}{EGR2} & \cellcolor[HTML]{E2E868}{176} & \cellcolor[HTML]{E2E868}{4}\\
+\hline
+gain19q & 142 & 4\\
+\hline
+\cellcolor[HTML]{E2E868}{gain19p} & \cellcolor[HTML]{E2E868}{142} & \cellcolor[HTML]{E2E868}{4}\\
+\hline
+gain18q & 144 & 4\\
+\hline
+\cellcolor[HTML]{E2E868}{del9q} & \cellcolor[HTML]{E2E868}{142} & \cellcolor[HTML]{E2E868}{4}\\
+\hline
+MYD88 & 184 & 3\\
+\hline
+\end{tabular}
+\end{table}
 \end{document}
