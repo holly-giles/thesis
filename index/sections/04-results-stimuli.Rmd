@@ -1722,7 +1722,8 @@ Supp_table_4 %>%
   kable(caption = "Table depicting results of Multivariate Cox Proportional Hazard Model to test prognostic value of key genetic features and clusters using Time to Next Treatment and C3 as reference. ") %>%
   kable_styling(latex_options = "striped", 
                 stripe_color = colors[7],
-                html_font = "Helvetica") 
+                html_font = "Helvetica",
+                font_size = 7) 
 
 
 
