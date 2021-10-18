@@ -11,6 +11,9 @@ library(dplyr)
 library(kableExtra)
 library(BloodCancerMultiOmics2017)
 
+
+bwScale = c("0"="white","1"="black","N.A."="grey90")
+lfsize = 16 # legend font size
 ```
 
 ## Figures {-}
@@ -82,7 +85,8 @@ cyt_and_receptors %>%
     kable() %>%
     kable_styling(latex_options = "striped", 
                 stripe_color = colors[7],
-                html_font = "Arial Narrow") 
+                html_font = "Arial Narrow", 
+                font_size = 10) 
 
 ```
 
