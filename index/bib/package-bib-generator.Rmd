@@ -55,6 +55,7 @@ library(biomartr)
 library(biomaRt)
 library(BloodCancerMultiOmics2017)
 library(biobroom)
+library(readxl)
 
 ```
 
