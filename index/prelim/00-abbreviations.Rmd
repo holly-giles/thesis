@@ -27,6 +27,7 @@ output:
     DNAseq & & DNA sequencing \\
     ERK & & Ras-dependent extracellular signal-regulated kinase \\
     FBS & & Fetal bovine serum \\
+    FDA & & Federal Drug Administration \\
     FDC & & Follicular dendritic cell \\
     FDR & & False discovery rate \\
     GSEA & & Gene set enrichment analysis  \\
