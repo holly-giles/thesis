@@ -1684,9 +1684,9 @@ The difference in disease progression between the clusters indicated that microe
 
 A multivariate Cox proportional hazard model accounting for IGHV status, trisomy 12 and TP53 in addition to the cluster assignment indicated an independent prognostic value for cluster assignment between C3 and C4 (p = 0.039, Table \@ref(tab:clusterCox)).
 
-(ref:clusterCox) Table depicting results of multivariate Cox proportional hazard model to test prognostic value of key genetic features and clusters using TTT and C3 as reference. See Methods section \@ref(survival-method). _Table adapted from Bruch & Giles et al. 2021._
 
-```{r clusterCox, tab.cap='(ref:clusterTTT)', echo = FALSE}
+
+```{r clusterCox, tab.cap='(ref:clusterCox)', echo = FALSE}
 ### TTT
 # Multivariate Coxph Analysis
 # Cluster 3 as reference group
@@ -1719,12 +1719,11 @@ Supp_table_4<-coxph_coeff %>%
 
 
 Supp_table_4 %>%  
-  kable(caption = "Table depicting results of Multivariate Cox Proportional Hazard Model to test prognostic value of key genetic features and clusters using Time to Next Treatment and C3 as reference. ") %>%
+  kable(caption = "Table depicting results of multivariate Cox proportional hazard model to test prognostic value of key genetic features and clusters using TTT and C3 as reference. See Methods section \ref(survival-method). _Table adapted from Bruch & Giles et al. 2021._") %>%
   kable_styling(latex_options = "striped", 
                 stripe_color = colors[7],
                 html_font = "Helvetica",
                 font_size = 7) 
-
 
 
 C3vsC4_p_mv <- coxph_coeff[3,5] %>% round(3)
