@@ -31,6 +31,10 @@ library(BloodCancerMultiOmics2017)
 library(gtable)
 library(grid)
 library(patchwork)
+library(DESeq2)
+library(ggrepel)
+library(biobroom)
+
 ```
 
 ```{r loadData03}
@@ -41,6 +45,9 @@ load("data/cytokines.RData")
 load("data/df.RData")
 load("data/patMeta.RData")
 load("data/Raw_Screening_Data.RData")
+load("data/dds_smp.RData")
+load("data/cytReceptors.RData")
+load("data/cyt_and_receptors.RData")
 
 
 #R code
@@ -89,9 +96,9 @@ colnames(Cytokine_labels) <- c("name", "Cytlabel")
 ### Drug-stimulus combinatorial pertubation assay and patient sample multi-omic profiling
 This thesis centres on a dataset of 192 CLL patient samples subjected to functional and molecular profiling. A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis.  
 
-The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al. 2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient. Each plate contained stimulus, drug, drug - stimulus wells along with DMSO control wells. After 48 hours of incubation at 37$^\circ$C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates  the number  of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \@ref(drugs) and \@ref(stimuli).
+The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al. 2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells. After 48 hours of incubation at 37$^\circ$C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates  the number  of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \@ref(drugs) and \@ref(stimuli).
  
-Multi-omics profiles for the patient samples were also available from the PACE repository [@PACE], consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
+Multi-omics profiles for the patient samples were also available from the PACE repository [@R-BloodCancerMultiOmics2017], consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
 
 Collectively, these data enabled (i)characterisation of responses to microenvironmental stimuli, (ii) definition of functional patient subgroups, (iii)  profiling of molecular determinants of drug and stimulus responses (iv) mapping of drug - stimulus and drug - stimulus - gene interactions, thus shedding light on the heterogeneity of CLL biology and drug response (Figure \@ref(fig:studyOverview)).
 
@@ -108,7 +115,7 @@ A number of key findings emerged from the above data which warranted further inv
 
 ## Data Processing
 ### Processing the raw values obtained from the screen
-This section describes the process of generating viability scores used in downstream analyses (following the same process as published in Bruch and Giles et al. 2021). Initially, raw luminescence measurements from the experiments were read in using custom-made `R` scripts and functions. Raw values represent the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to amount of ATP present. The ATP levels are directly proportional to the number of viable cells in the well. 
+This section describes the process of generating viability scores used in downstream analyses (following the same process as published in Bruch and Giles et al. 2021). Initially, raw luminescence measurements from the experiments were read in using custom-made `R` scripts and functions. Raw values represent the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to the amount of ATP present. The ATP levels are directly proportional to the number of viable cells in the well. 
 Figure \@ref(fig:rawViabilities) shows the raw viability values from the DMSO-treated wells for each patient sample.  The absolute values vary between patient samples, and between measuring dates, and thus the viability values required additional normalisation. 
 
 (ref:rawViabilities) Boxplots of raw viability count data prior to normalisation and log transformation. For each of the 192 patient samples, there were 50 DMSO-treated wells. Viability represents the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to amount of ATP present.
@@ -150,7 +157,7 @@ Each viability value was normalised to internal DMSO values of the same plate.  
 Given the downstream analysis involved the use of linear modelling, I thus applied a log base $e$ transformation to the viability scores. This generated log-transformed control-normalised viability scores which are used for the majority of the downstream analysis. Here 0 indicates that cells survived as well as negative control. 
 
 ### Quality control and data reproducibility 
-Next, several additional quality control steps were performed, with the aim of a) adjusting for any spatial effects on each screening plate, b) accounting for any batch effects between screening batches, c) testing data reproducibility. 
+Next, several additional quality control steps were considered, with the aim of a) adjusting for any spatial effects on each screening plate, b) accounting for any batch effects between screening batches, c) testing data reproducibility. 
 
 First, the screening data for each well on each plate was plotted in a grid corresponding to the plate layout, to visualise whether viability values were affected by their position on the plate. We discussed adjusting for any position effect by fitting a surface to the negative control wells, to generate correction factors for each well for each plate. The resulting correction factor was then subtracted from each of the treatment wells. We decided that the position effect was not sufficient to warrant this adjustment, and continued the analysis with the unadjusted values. [CHECK]
 
@@ -183,21 +190,22 @@ drugCategories
 
 ```
 
-The number and concentration of drugs included was limited by the size of the plate. Thus there is minimal overlap between drug targets, and two concentrations were used for each drug. The choice of concentration was guided by the results of a previous drug screen in CLL patients, performed in our lab [@JCIpaper]. The concentrations used were expected to reduce CLL viability without eliminating all cells. Drug concentrations are shown in Table Table \@ref(tab:drugTable).  
+The number and concentration of drugs included was limited by the size of the plate. Thus there is minimal overlap between drug targets, and two concentrations were used for each drug. The choice of concentration was guided by the results of a previous drug screen in CLL patients, performed in our lab [@JCIpaper]. The concentrations used were expected to reduce CLL viability without eliminating all cells. Drug concentrations are shown in Table \@ref(tab:drugTable).  
 
-(ref:drugTable) Drug characteristics, including targets, concentrations and licencing status. 
 
-```{r drugTable, out.width = "30%", fig.cap='(ref:drugTable)', echo = FALSE}
+```{r drugTable, out.width = "30%", echo = FALSE}
 
 rownames(drugs) <- NULL
 
 drugs %>%
-  dplyr::select( -approved_012020,-devel_012020, -pathway, -distributor, -cat_no) %>%
+  dplyr::select(-ID, -approved_012020,-devel_012020, -pathway, -distributor, -cat_no) %>%
   dplyr::rename(Drug=Name,
                 `Main targets`=main_targets,
                 `Drug Group`=group,
-                `Target category`=target_category) %>%
-  kable() %>%
+                `Target category`=target_category,
+                `Conc. 1`=conc1,
+                `Conc. 2`=conc2) %>%
+  kable(caption = "Drug characteristics, including targets, concentrations and licencing status.") %>%
   row_spec(0,bold=TRUE) %>%
 kable_styling(latex_options = "striped", 
               stripe_color = colors[7],
@@ -311,7 +319,6 @@ df$Drug <- factor(df$Drug, levels=orderDrug)
 ### The panel of stimuli {#stimuli-info}
 The stimuli selected for the screen, their associated targets and concentrations used  are described in Table \@ref(tab:cytTable). They include 16 individual stimuli, plus HS-5 Culture Medium which encompasses the range of soluble factors secreted by the stromal cell line HS-5 (Bruch and Giles et al. 2021.)
 
-(ref:cytTable) Stimuli names, targets pathways and concentrations.  
 
 ```{r cytTable, out.width = "30%", fig.cap='(ref:cytTable)', echo = FALSE}
 
@@ -331,7 +338,7 @@ newCytokines$Name[grepl("Interferon \u03B3",cytokines$Name)] <- "Interferon $\\g
 newCytokines$Name[grepl("SDF-1\u03B1",cytokines$Name)] <- "SDF-1$\\alpha$"
 
 newCytokines %>% 
-  kable() %>%
+  kable(caption = "Stimuli names, targets pathways and concentrations.") %>%
   row_spec(0,bold=TRUE) %>%
   kable_styling(latex_options = "striped", 
                 stripe_color = colors[7],
@@ -340,7 +347,7 @@ newCytokines %>%
 
 ```
 
-A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance *ex vivo* (see section \@ref(intro-microenvironmental-pathways). Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvrionment. \@ref(fig:microenvironmentCrosstalk).
+A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance *ex vivo* (see section \@ref(intro-microenvironmental-pathways). Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvironment. \@ref(fig:microenvironmentCrosstalk).
 
 
 (ref:microenvironmentCrosstalk) A selection of interactions between CLL cells and components of the microenvironment, covered by the screen. (See section \@ref(intro-microenvironmental-pathways) for more details on these signals).  _Figure adapted from an original published in @Wiestner2015 ._
@@ -366,105 +373,11 @@ Before beginning the downstream analysis, it was first important to determine wh
 
 To determine this, we calculated Pearson correlation coefficients to compare log-transformed control - normalised  viability values for each stimulus,  with vst-transformed RNA counts of the matching receptor(s). All Pearson coefficients were less than 0.4, indicating that heterogeneity of response was not related to differential receptor expression. 
 
-(ref:RNAcorrelations) Volcano plot showing p-values versus Pearson correlation coefficients, for the correlation between log transformed control - normalised viability values for each stimulus and expression of the corresponding stimulus receptor, in matched patient samples. Expression calculated using transformed RNA counts (using VST method) of untreated CLL sample. _Figure and caption from Bruch and Giles et al. 2021._ 
-
-```{r RNAcorrelations, fig.cap='(ref:RNAcorrelations)', message = FALSE,  eval = FALSE, echo = FALSE, fig.height=10, fig.width=7, fig.align="center", out.width = "60%", dev = 'cairo_pdf'}
-
-#VST
-vsd <- vst(dds_smp, blind=TRUE)
-
-#rename transformed counts
-assayNames(vsd) <- "transformedcounts"
-ColData <- as.data.frame(colData(dds_smp))
-tidy_RNA_data <-
-  vsd %>%
-  tidy() %>%
-  filter(gene %in% cytReceptors$ENSEMBLID) %>%
-  dplyr::rename(PatientID=sample) %>%
-  left_join(cyt_and_receptors, by=c("gene"="ENSEMBLID"))
-
-RNA_Screen_data <-
-  df %>%
-  dplyr::filter(Drug=="DMSO", Cytokine %in% c("Resiquimod","IL-4" ,"TGF-b1","IL-1b",
-                                     "Interferon gamma","SDF-1a","sCD40L",
-                                     "sCD40L+IL-4","soluble anti-IgM","CpG ODN",
-                                     "IL-6","IL-10","IL-21","anti-IgM Beads",
-                                     "HS-5 CM","IL-15","BAFF","IL-2")) %>%
-  
-  dplyr::filter(PatientID %in% unique(tidy_RNA_data$PatientID)) %>%
-  
-  dplyr::select(PatientID, Cytokine, Normalized) %>%
-  
-  left_join(tidy_RNA_data, by=c("PatientID", "Cytokine"))
-
-
-Cytokine_Receptor_combinations <-
-  RNA_Screen_data %>%
-  dplyr::group_by(Cytokine, Receptor) %>%
-  dplyr::summarize(.groups = "keep") %>%
-  dplyr::filter(!is.na(Receptor))
-
-Cytokine_Receptor_combinations$p.value <- as.numeric(NA)
-Cytokine_Receptor_combinations$pearson_R <- as.numeric(NA)
-
-for(i in 1:nrow(Cytokine_Receptor_combinations)) {
-  
-  x = Cytokine_Receptor_combinations[i,]
-  Correlation_data_matrix<-RNA_Screen_data %>%
-    mutate(Cytokine_Receptor=paste0(Cytokine,":", Receptor)) %>%
-    dplyr::filter(Cytokine_Receptor==paste0(x[1],":",x[2])) %>%
-    dplyr::select(Normalized, value) %>%
-    as.matrix()
-  
-  correlation_res <- cor.test(Correlation_data_matrix[,1],Correlation_data_matrix[,2], method = "pearson")
-  Cytokine_Receptor_combinations[which(Cytokine_Receptor_combinations$Cytokine==unlist(x[1])&Cytokine_Receptor_combinations$Receptor==unlist(x[2])),]$p.value=correlation_res$p.value
-  
-  Cytokine_Receptor_combinations[which(Cytokine_Receptor_combinations$Cytokine==unlist(x[1])&Cytokine_Receptor_combinations$Receptor==unlist(x[2])),]$pearson_R<-correlation_res$estimate
-  
-}
-Cytokine_Receptor_combinations <- Cytokine_Receptor_combinations%>%
-  mutate(adj.p.value=p.adjust(p.value, method="fdr"))
-colnames(Cytokine_labels) <- c("Cytokine", "Cytlabel")
-Cytokine_Receptor_combinations <- left_join(Cytokine_Receptor_combinations, Cytokine_labels, by = "Cytokine")
-Cytokine_Receptor_combinations$Receptor[grepl("IL-10 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL10 R \u03B1"
-Cytokine_Receptor_combinations$Receptor[grepl("IL-10 R beta",Cytokine_Receptor_combinations$Receptor)]<-"IL10 R \u03B2"
-Cytokine_Receptor_combinations$Receptor[grepl("IL-15 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL15 R \u03B1"
-Cytokine_Receptor_combinations$Receptor[grepl("IL-2 R beta",Cytokine_Receptor_combinations$Receptor)]<-"IL2 R \u03B2"
-Cytokine_Receptor_combinations$Receptor[grepl("IL-2 R gamma",Cytokine_Receptor_combinations$Receptor)]<-"IL2 R \u03B3"
- 
-Cytokine_Receptor_combinations$Receptor[grepl("IL-1 R1",Cytokine_Receptor_combinations$Receptor)]<-"IL1 R1"
-Cytokine_Receptor_combinations$Receptor[grepl("IL-2 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL2 R \u03B1"
-Cytokine_Receptor_combinations$Receptor[grepl("IL-13 R A1",Cytokine_Receptor_combinations$Receptor)]<-"IL13 R A1"
-Cytokine_Receptor_combinations$Receptor[grepl("IFN-gamma R2",Cytokine_Receptor_combinations$Receptor)]<-"IFN \u03B3 R2"
-Cytokine_Receptor_combinations$Receptor[grepl("IL-6 R",Cytokine_Receptor_combinations$Receptor)]<-"IL6 R"
-Cytokine_Receptor_combinations$Receptor[grepl("IFN gamma R1",Cytokine_Receptor_combinations$Receptor)]<-"IFN \u03B3 R1"
-Cytokine_Receptor_combinations$Receptor[grepl("IL-4 R alpha",Cytokine_Receptor_combinations$Receptor)]<-"IL4 R \u03B1"
-
-
-  ggplot(Cytokine_Receptor_combinations,
-         aes(x=pearson_R,
-             y=-log10(adj.p.value)))+
-  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R>(-0.4)&pearson_R<0.4), color="grey")+
-  geom_point(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.4)|pearson_R>0.4), color="red")+
-   geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.4)|pearson_R>0.4), nudge_x = 0.07, color="red", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5)+
-  geom_label_repel(data=filter(Cytokine_Receptor_combinations, pearson_R<(-0.1)|pearson_R>0.1, !(pearson_R<(-0.4)|pearson_R>0.4)), nudge_x = 0.07, color="grey", aes(label=paste0(Cytlabel, " | ", Receptor)), size=5) + 
-  coord_cartesian(xlim=c(-0.45,0.45)) +
-  geom_vline(xintercept = -0.4, linetype=3) +
-  geom_vline(xintercept = 0.4, linetype=3) +
-  theme_minimal() +
-  scale_x_continuous(breaks = c(-0.2,0,0.2)) +
-  xlab("Pearson Correlation Coefficient") +
-  ylab("-log10(BH adjusted p-value)") +
-  t2
-
-
-
-```
 
 
 ## Characteristics of patient samples used in the screen
 ### Overview of the molecular profiles of the patient samples
-Multi-omics profiles were available for the patient samples in the screen, taken from the Primary Cancer Cell Encyclopedia (PACE) [@PACE]. The PACE repository represents an initiative by our lab to characterise the multi-omic characteristics of  primary tumour samples from leukemia and lymphoma patients. Patient multi-omic profiles included whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical information and follow-up data was also available for some patients, including their sex, IGHV status and LDT, TTT, TTFT and OS. Figure \@ref(fig:geneticData) summarises the molecular characteristics of the patient samples. For a summary of the number of samples with each mutation, see Appendix Table \@ref(tab:geneTable).
+Multi-omics profiles were available for the patient samples in the screen, taken from the Primary Cancer Cell Encyclopedia (PACE) [@R-BloodCancerMultiOmics2017]. The PACE repository represents an initiative by our lab to characterise the multi-omic characteristics of  primary tumour samples from leukemia and lymphoma patients. Patient multi-omic profiles included whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical information and follow-up data was also available for some patients, including their sex, IGHV status and LDT, TTT, TTFT and OS. Figure \@ref(fig:geneticData) summarises the molecular characteristics of the patient samples. For a summary of the number of samples with each mutation, see Appendix Table \@ref(tab:geneTable).
 
 The findings from this study have potential relevance in a clinical setting. Thus it was important to ensure that the distribution of genetic features amongst the cohort was representative of those observed in clinical practice. Other studies have determined the expected frequency of many recurrent genetic features in CLL [@Dohner2000; @Puente2015; @Landau2015] : the distribution of molecular lesions in our cohort is comparable to these (Bruch and Giles et al. 2021). 
 
@@ -647,30 +560,34 @@ gt = gtable_add_grob(gt, ighvPL$grobs[[whichInGrob(ighvPL, "axis-l")]], 5, 1)
 gt = gtable_add_grob(gt, mutPL$grobs[[whichInGrob(mutPL, "axis-l")]], 9, 1)
 ```
 
-(ref:geneticData) Summary of the genetic characteristics of the patient samples in the screen. 
+(ref:geneticData) Summary of the genetic characteristics of the patient samples in the screen. Annotations: Grey shows when patient sample is not annotated.  Black indicates treated / IGHV-M,  Green indicates occurrence of CNV, Yellow indicates gene is Mutated.
+```{r fig.height = 2, fig.width = 3, eval= FALSE}
 
-```{r geneticData, out.width = "60%", fig.cap='(ref:geneticData)', echo=FALSE, fig.width=3, fig.height=4}
+  
+  wrap_elements(BloodCancerMultiOmics2017:::drawLegends(plobj=list(sexPL,treatPL,ighvPL,mutPL)))
+```
+
+```{r geneticData, fig.cap='(ref:geneticData)', fig.height = 25, fig.width = 20, echo=FALSE}
 
 
-wrap_elements(grid.draw(gt)) / wrap_elements(BloodCancerMultiOmics2017:::drawLegends(plobj=list(sexPL,treatPL,ighvPL,mutPL))) + plot_layout(heights = c(1,0.1))
-
+wrap_elements(grid.draw(gt)) 
 
 ```
 
 
 ## Publishing the data and assosciated analysis
-As explained in section \@ref(microenvironmental-pathways-intro), many studies have characterised the impact of individual omic layers, and individual soluble factors in CLL. However, studies investigating the interplay between cell-intrinsic and cell-extrinsic features in CLL are lacking. Collectively, this dataset represents a valuable resource providing the ability to explore genetic, epigenetic and microenvironmental modulators of survival and drug response in a heterogeneous cohort, and how these relate to clinical outcomes. With CLL samples relatively simple to obtain compared to other cancers, this project (in collaboration with the PACE initiative [@PACE]) represents a considerable dataset containing joint functional and molecular profiling of primary cancer samples. 
+Collectively, this dataset represents a valuable resource providing the ability to explore genetic, epigenetic and microenvironmental modulators of survival and drug response in a heterogeneous cohort, and how these relate to clinical outcomes. With CLL samples relatively simple to obtain compared to other cancers, this project (in collaboration with the PACE initiative [@R-BloodCancerMultiOmics2017]) represents a considerable dataset containing joint functional and molecular profiling of primary cancer samples. 
 
-Thus, an important goal of my work was to ensure that this dataset was both publicly available and accessible for a range of users, including medics and bioinformaticians. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the  manuscript  Bruch and Giles et al. 2021 to an online git repository. 
+An important goal of my work was thus to ensure that this dataset was both publicly available and accessible for a range of users, including medics and bioinformaticians. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the  manuscript  Bruch and Giles et al. 2021 to an online git repository. 
 
 ### Shiny app
 The shiny app can be found [here](https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/). Figure \@ref(fig:shinyApp1) shows the home page. It consists of four tabs, covering the following: 
 
 \begin{itemize}
-    \item  \textbf{\textit{Drug and stimulus responses}} Explore drug - stimulus interactions and view log-transformed viabilities with single and combinatorial treatments (Figure \@ref(fig:shinyApp3)).
+    \item  \textbf{\textit{Drug and stimulus responses}} Explore drug - stimulus interactions and view log-transformed viabilities with single and combinatorial treatments (Figure \ref{fig:shinyApp3}).
     \item \textbf{\textit{Effects of mutations on drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features and view log-transformed viability data stratified by mutations
-    \item \textbf{\textit{Genetic predictors of drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features with predictor profiles from section \@ref(multivariate-gene-stimulus-assosciations)
-    \item \textbf{\textit{Genetic predictors of drug and stimulus interactions}} Explore how drug - stimulus interactions are further modulated by mutations, and view predictor profiles from section \@ref(drug-stimulus-gene-predictor-profile)
+    \item \textbf{\textit{Genetic predictors of drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features with predictor profiles from section \ref{multivariate-gene-stimulus-assosciations}
+    \item \textbf{\textit{Genetic predictors of drug and stimulus interactions}} Explore how drug - stimulus interactions are further modulated by mutations, and view predictor profiles from section \ref{drug-stimulus-gene-predictor-profile}
 
 \end{itemize}
 
@@ -707,9 +624,9 @@ knitr::include_graphics("figures/package.eps")
 
 ```
 
-These online resources are already beginning to serve as a community resource (e.g.@Lu2021, Nature Cancer), as querying them enables researchers to test new hypotheses within minutes and may obviate the need for certain small-scale experiments.
+These online resources are already beginning to serve as a community resource (e.g. @Lu2021, Nature Cancer), as querying them enables researchers to test new hypotheses within minutes and may obviate the need for certain small-scale experiments.
 
-```{r remove}
+```{r remove02}
 
 #clear data
 rm(list = ls())
