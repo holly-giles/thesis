@@ -53,6 +53,55 @@ Drugs and stimuli were added to the cells simultaneously. Culture was performed 
 
 Cell Viability was determined using the ATP-based CellTiter-Glo assay (Promega, Cat.No.:G7573). Luminescence was measured for the drug-stimulation assays using a Perkin Elmer EnVision and for the drug-drug interaction experiments using a Perkin Elmer EnSight, with a measurement time of 100ms per well.
 
+Drugs : ADD
+
+
+Cytokines : update 
+
+```{r cytTable02, out.width = "30%", fig.cap='(ref:cytTable)', echo = FALSE, eval = FALSE}
+#cytokines_clean <- cytokines
+cytokines <- cytokines_clean
+
+#tidy names for table
+cytokines$stimulus[grepl("IL-4 human recombinant animal component free",cytokines$stimulus)]<-"IL4 human recombinant animal component free"
+cytokines$stimulus[grepl("IL-2 human recombinant animal component free",cytokines$stimulus)]<-"IL2 human recombinant animal component free"
+cytokines$stimulus[grepl("Human IL-1beta",cytokines$stimulus)]<-"Human IL-1$\\beta$"
+cytokines$stimulus[grepl("Human IL-15",cytokines$stimulus)]<-"Human IL15"
+cytokines$stimulus[grepl("Human IFN-gamma",cytokines$stimulus)]<-"Human Interferon $\\gamma$"
+cytokines$stimulus[grepl("IL-10 human Animal component free",cytokines$stimulus)]<-"IL10 human Animal component free"
+cytokines$stimulus[grepl("Human TGF-beta1",cytokines$stimulus)]<-"Human TGF$\\beta$"
+cytokines$stimulus[grepl("Human IL-6",cytokines$stimulus)]<-"Human IL6"
+cytokines$stimulus[grepl("alpha",cytokines$stimulus)]<-"Human SDF-1$\\alpha$ (CXCL12)"
+cytokines$stimulus[grepl("HS-5 konditioniertes Medium",cytokines$stimulus)]<-"HS-5 conditioned medium"
+
+newCytokines <-  
+cytokines %>%
+  left_join(Cytokine_labels, by = "name") %>%
+  dplyr::select(-name, -additional_pathways, -source, -company, -cat_no, -lot_no) %>%
+  dplyr::rename(Stimulus=stimulus, 
+                Name = Cytlabel, 
+                Concentration=conc, 
+                Pathway=pathway) %>%
+
+  dplyr::select(Stimulus, Name,  everything())
+
+
+#update label for latex 
+
+newCytokines$Name[grepl("TGF\u03B21",cytokines$Name)] <- "TGF$\\beta$"
+newCytokines$Name[grepl("IL1\u03B2",cytokines$Name)] <- "IL1$\\beta$"
+newCytokines$Name[grepl("Interferon \u03B3",cytokines$Name)] <- "Interferon $\\gamma$"
+newCytokines$Name[grepl("SDF-1\u03B1",cytokines$Name)] <- "SDF-1$\\alpha$"
+
+newCytokines %>% 
+  kable() %>%
+  row_spec(0,bold=TRUE) %>%
+  kable_styling(latex_options = "striped", 
+                stripe_color = colors[7],
+                html_font = "Helvetica", 
+                font_size = 7)
+
+```
 
 ## WES, RNA Sequencing, Targeted Sequencing and DNA Copy number variants 
 _Myself_ Original 
