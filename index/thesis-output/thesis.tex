@@ -32,46 +32,6 @@
 \usepackage{breqn} %to break up equations accross multiple lines, where neccesary 
 \usepackage{helvet} %to set font as helvetica 
 
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
        % For being able to set `echo = TRUE` in code chunk options, and thus in-line representation of code
 
 %--------------------------------------------
@@ -414,6 +374,7 @@ I want to thank a few people.
     DNAseq & & DNA sequencing \\
     ERK & & Ras-dependent extracellular signal-regulated kinase \\
     FBS & & Fetal bovine serum \\
+    FDA & & Federal Drug Administration \\
     FDC & & Follicular dendritic cell \\
     FDR & & False discovery rate \\
     GSEA & & Gene set enrichment analysis  \\
@@ -867,22 +828,7 @@ Phenotypic profiling of the responses of CLL samples to the panel of microenviro
 \chapter{Methods}\label{methods}}
 
 Methods in quotation marks are taken from Bruch \& Giles et al.~2021 and I have authored the original text, unless stated otherwise. Paragraphs without quotation marks were rewritten for the thesis.
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\#Routine: }
-\CommentTok{\#{-}all ehading in order}
-\CommentTok{\#{-}most methhods shoudlbe pasted in}
-\CommentTok{\#{-}knwo routine for assigning jobs (ebelow)}
-\CommentTok{\#{-}come and add in bored moments,finish next week }
 
-\CommentTok{\#Write were and was everywhere }
-\CommentTok{\#indicate at the bottom who did what? }
-\CommentTok{\#indicate sources clearly too}
-\CommentTok{\#\^{} for now, do this, and get advice on how to manage}
-
-\CommentTok{\#{-}read Nils methods section and use things from here }
-\end{Highlighting}
-\end{Shaded}
 \hypertarget{experimental-methods}{%
 \section{Experimental methods:}\label{experimental-methods}}
 
@@ -927,6 +873,10 @@ Drug-stimulation assays were performed with RPMI-1640 (Gibco by Life Technologie
 Drugs and stimuli were added to the cells simultaneously. Culture was performed in 384-well plates (Greiner Bio-One Cat.No.: 781904) and cells were incubated at 37\(^\circ\)C and 5\% CO2 for 48h.
 
 Cell Viability was determined using the ATP-based CellTiter-Glo assay (Promega, Cat.No.:G7573). Luminescence was measured for the drug-stimulation assays using a Perkin Elmer EnVision and for the drug-drug interaction experiments using a Perkin Elmer EnSight, with a measurement time of 100ms per well.
+
+Drugs : ADD
+
+Cytokines : update
 
 \hypertarget{wes-rna-sequencing-targeted-sequencing-and-dna-copy-number-variants}{%
 \section{WES, RNA Sequencing, Targeted Sequencing and DNA Copy number variants}\label{wes-rna-sequencing-targeted-sequencing-and-dna-copy-number-variants}}
@@ -1031,73 +981,99 @@ RNA data was taken from the PACE repository (\protect\hyperlink{ref-PACE}{\textb
 \hypertarget{correlations}{%
 \subsubsection{Drug-drug and stimulus - stimulus correlations}\label{correlations}}
 
-\emph{myself} original complete
-Section \ref{cytokine-profiling}. Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the \texttt{cor} functions of the (\protect\hyperlink{ref-R-base}{R Core Team 2021}) package with log transformed viability values which were normalised to untreated controls.
+Section \ref{drug-responses} and \ref{cytokine-profiling}. Pearson correlation coefficients were calculated for each drug - drug and stimulus - stimulus pair, using the \texttt{cor} functions in \texttt{R} (\protect\hyperlink{ref-R-base}{R Core Team 2021}) with log transformed viability values which were normalised to untreated controls (Bruch and Giles et al.~2021).
+
+Contributions:
+Performed with: Peter
+Written by: Me
+Text source: written for thesis
+
+\hypertarget{correlation-of-rna-receptor-expression-with-viability-scores}{%
+\subsubsection{Correlation of RNA-Receptor Expression with viability scores}\label{correlation-of-rna-receptor-expression-with-viability-scores}}
+
+Section \ref{rna-correlations}. RNA count data for matched samples was available for 49 patients and was transformed using the variance stabilising transformation. Stimulus - receptor pairs were defined using the available literature, see Appendix Table \ref{tab:receptorPairs}. For each stimulus, a Pearson correlation coefficient was calculated between the log-transformed control-normalised viability values and the expression of the corresponding stimulus receptor for matching samples. Correlation coefficients were visualised in a volcano plot, to determine if any cytokine-receptor pairs showed R\textgreater0.4 (Bruch and Giles et al.~2021).
+
+Contributions:
+Performed with: Peter
+Written by: Me
+Text source: Written for thesis
 
 \hypertarget{stimulus-heatmap-method}{%
-\subsubsection{Characterising stimulus responses across all samples}\label{stimulus-heatmap-method}}
+\subsubsection{Consensus clustering and visualisation of stimulus responses}\label{stimulus-heatmap-method}}
 
-\emph{myself} original complete (just check)
-Section \ref{clusters}. For the heatmap in figure \ref{fig:stimuliHeatmap}, the viability data is represented as z scores. Log transformed viability values, normalised to DMSO controls, are row-scaled according to the Median Absolute Deviance. Limits were then applied to this row scaling factor for optimal visualisation. The matrix of z scores was plotted using the (\protect\hyperlink{ref-R-pheatmap}{Kolde 2019}) package. The ordering of the columns (patient samples) was obtained from the dendrogram that resulted from running \texttt{ConsensusClusterPlus}, from the (\protect\hyperlink{ref-R-ConsensusClusterPlus}{Wilkerson and Waltman 2021}) package. The rows were ordered using the dendrogram order produced by \texttt{hclust} with default branch arrangement.
+Section \ref{clusters}. For the heatmap in figure \ref{fig:stimuliHeatmap}, the log transformed control-normalised viability scores were scaled for optimal visualisation. For each stimulus, viability values were row-scaled according to the Median Absolute Deviance, and limits were then applied to this row scaling factor for the purposes of visualisation, such that all resulting z scores were between -3 and +3.
 
-ADD detial on clustering
+The columns (patient samples) of the resulting matrix were then clustered using the \texttt{ConsensusClusterPlus} function, from the (\protect\hyperlink{ref-R-ConsensusClusterPlus}{Wilkerson and Waltman 2021}) package. The function generated robust clusters for k (number of clusters) = 2 - 7, performing heirarchical clustering based on Euclidean distances, with 10,000 repeats.
+
+To quantify the degree of confidence in the clusters for each k, plots representing the cumulative distribution functions (CDFs) of the consensus matrices for k = 2 - 7, the relative change in area under the CDF curves, and cluster stability were assessed.
+
+The z scores were then visualised for k = 4, using the pheatmap package (\protect\hyperlink{ref-R-pheatmap}{Kolde 2019}), whereby the columns were clustered according to the dendrogram resulting from the above, and the rows (stimuli) were ordered using the dendrogram order produced by \texttt{hclust} with default branch arrangement (Bruch and Giles et al.~2021).
+
+Contributions:
+Performed with: Peter
+Written by: Me
+Text source: Written for thesis
 
 \hypertarget{univariate-gene-stimulus-associations-method}{%
 \subsubsection{Univariate analysis of gene - stimulus and gene - drug response assosciations}\label{univariate-gene-stimulus-associations-method}}
 
-\emph{myself} writtten for thesis complete
-Section \ref{univariate-gene-stimulus-associations} \& \ref{univariate-gene-drug-associations}. Two-sided Student's t-tests, with equal variance were performed for IGHV status and somatic mutations and copy number aberrations with ≥3 patient samples in each group (n = 63/54). A 10\% FDR cut off was used to determine significance.
+Section \ref{univariate-gene-stimulus-assosciations} and \ref{univariate-gene-drug-associations}. Two-sided Student's t-tests, with equal variance were performed for IGHV status and somatic mutations and copy number aberrations with at least 3 patient samples in each group (n = 54). Mutations in \emph{KRAS}, \emph{NRAS} and \emph{BRAF} were tested in a single group. p values were adjusted using the BH-adjustment procedure, and a 10\% FDR cut off was used to determine significance (Bruch and Giles et al.~2021).
+
+Contributions:
+Performed with: Peter
+Written by: Me
+Text source: Written for thesis
 
 \hypertarget{multivariate-gene-stimulus-assosciations-method}{%
-\subsubsection{Penalised multivariate regression of gene - stimulus and gene - drug assosciations}\label{multivariate-gene-stimulus-assosciations-method}}
+\subsubsection{Penalised multivariate regression of gene - stimulus assosciations}\label{multivariate-gene-stimulus-assosciations-method}}
 
-\emph{myself} written for thesis (but some overlap with JCI)
-Section \ref{multivariate-gene-stimulus-assosciations} \& \ref{multivariate-gene-drug-assosciations}.\\
-ADAPT FOR DRUGS ALSO A Gaussian linear model with L1-penalty implemented in the \texttt{R} package \texttt{glmnet} (\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}), with mixing parameter alpha = 1,was used to identify gene-stimulus associations. Matrix of genetic features (p=39), IGHV status (encoded as M = 1 and U = 0), and Methylation Cluster (encoded as 0, 0.5, 1) were used to identify multivariate predictors. All features were thus encoded on a similar scale to ensure equal treatment by lasso constraint in model fitting. Genetic features with more than 20\% missing values were excluded from the analysis, and samples without complete annotation for remaining features were removed, resulting in n = 129 samples. The matrix of control-normalised log-transformed viability values for these 129 samples was provided as the dependent variable. Using 3-fold cross-validation, the optimal penalty parameter \(\lambda\) was selected so as to minimise the cross-validated R2. The reduction in cross-validated mean squared error compared to the null model was used as loss. The model was fitted for 30 bootstrapped repeats, and the resulting coefficients are the mean of those coefficients that were selected in \textgreater75\% model fits.
+Section \ref{multivariate-gene-stimulus-assosciations}. To identify gene-stimulus associations, a Gaussian linear model with L1-penalty with mixing parameter alpha = 1 was fitted for each stimulus using the \texttt{cv.glmnet} function from the \texttt{R} package \texttt{glmnet} (\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}). The feature matrix consisted of genetic features (p=39), IGHV status (input as M = 1 and U = 0), and Methylation Cluster (input as 0, 0.5, 1). All features were thus encoded on a similar scale to ensure equal treatment by lasso constraint in model fitting. Where genetic features showed more than 20\% missing values, these were excluded from the feature matrix. Samples without complete annotation for remaining features were removed, resulting in n = 129 samples. The matrix of control-normalised log-transformed viability values for these 129 samples was provided as the response matrix. Using three-fold cross-validation, the optimal penalty parameter \(\lambda\) was selected so as to minimise the cross-validated R2. The reduction in cross-validated mean squared error compared to the null model was used as loss. The model was fitted for 30 bootstrapped repeats, and the resulting coefficients are the mean of those coefficients that were selected in \textgreater75\% model fits (Bruch and Giles et al.~2021).
 
-\hypertarget{correlation-of-rna-receptor-expression-with-viability}{%
-\subsubsection{Correlation of RNA-Receptor Expression with viability}\label{correlation-of-rna-receptor-expression-with-viability}}
-
-\emph{myself} original complete
-RNA count data for matched samples was available for 49 patients and was transformed using the variance stabilising transformation. Stimulus - receptor pairs were defined using the available literature, see table \ref{tab:receptorPairs}. For each stimulus, pearson correlation coefficient were calculated between the control-normalised log-transformed viability value of a sample and its expression of the corresponding stimulus receptor.
+Contributions:
+Performed with: support from Junyan and JCI paper
+Written by: Me
+Text source: Written for thesis
 
 \hypertarget{drug-stimulus-linear-model-method}{%
 \subsubsection{Linear modelling of drug - stimulus interactions}\label{drug-stimulus-linear-model-method}}
 
-\emph{myself} original
-Section \ref{drug-stimulus-linear-model} Linear models were fitted for each drug - stimulus combination, to extract a \(\beta{int}\) term and assossciated p value for each combinatorial treatment. Linear model was fitted using equation \eqref{eq:drugCytInt}, using the \texttt{lm} function of the \texttt{R} package stats (\protect\hyperlink{ref-R-base}{R Core Team 2021}):
-\begin{equation}
-            log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{int}X_{drug}X_{stimulus} + \epsilon
-                                       \label{eq:drugCytInt}
-    \end{equation}
-\emph{where \(V\) is the predicted viability with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\) \emph{and} \(\beta_{int}\) \emph{are coefficients for the drug, stimulus and combinatorial terms and} \(X_{drug}\) \emph{and} \(X_{stimulus}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus.} \(\epsilon\) \emph{is the vector of model residuals. Equation from Bruch \& Giles et al.~2021.}
+Section \ref{drug-stimulus-linear-model}. Linear models were fitted for each drug - stimulus combination, to extract a \(\beta{int}\) term and associated p value for each combinatorial treatment. Linear model was fitted using equation \eqref{eq:drugCytInt}, using the \texttt{lm} function of the \texttt{R} package stats (\protect\hyperlink{ref-R-base}{R Core Team 2021}).
 
-To fit model, the matrix of log-transformed viability values, for control, single and combinatorial treatments was used. Interactions were defined as significant if p value for \(\beta{int}\) \textless{} 0.05. The matrix of significant \(\beta{int}\) was then plotted as a heatmap, with the package \texttt{pheatmap}(\protect\hyperlink{ref-R-pheatmap}{Kolde 2019}) where the rows (stimuli) and columns (drugs) were ordered according to the dendrogram order produced by \texttt{hclust} (\protect\hyperlink{ref-R-base}{R Core Team 2021}) using default branch arrangement.
+To fit model, the matrix of log-transformed viability values, for control, single and combinatorial treatments was used. Interactions were filtered according to whether p value for \(\beta{int}\) \textless{} 0.05. To generate the map of drug - stimulus interactions, the matrix of resulting \(\beta{int}\) was plotted as a heatmap, with the package \texttt{pheatmap}(\protect\hyperlink{ref-R-pheatmap}{Kolde 2019}) where the rows (stimuli) and columns (drugs) were ordered according to the dendrogram order produced by \texttt{hclust} (\protect\hyperlink{ref-R-base}{R Core Team 2021}) using default branch arrangement.
 
-To define the four interaction categories, drug - stimulus combinations were first divided with respect to the sign of \(\beta{int}\), whereby a positive \(\beta{int}\) indicates that the viability with combinatorial treatment is higher than would be expected based on additive effects alone and vice versa. The groups were further divided into synergies and antagonisms according to the values of the model coefficients (\(\beta{drug}\), \(\beta{stimulus}\) and \(\beta{int}\)). Synergisms were assigned when coefficients for single treatments (\(\beta{drug}\) and \(\beta{stimulus}\)) were both greater than, or both less than, the observed coefficient for the combinatorial treatment (i.e.~\(\beta{drug}\) + \(\beta{stimulus}\) + \(\beta{int}\)). For positive antagonisms, \(\beta{drug}\) + \(\beta{stimulus}\) + \(\beta{int}\) was less than either \(\beta{drug}\) or \(\beta{stimulus}\). For negative antagonisms, \(\beta{drug}\) + \(\beta{stimulus}\) + \(\beta{int}\) was greater than either \(\beta{drug}\) or \(\beta{stimulus}\). All drug - stimulus interactions, for which p value for \(\beta{int}\) \textless0.05 fit into one of these groups.
+To define the four interaction categories, drug - stimulus combinations were first divided with respect to the sign of \(\beta{int}\), whereby a positive \(\beta{int}\) indicates that the viability with combinatorial treatment is higher than would be expected based on additive effects alone and vice versa. The groups were further divided into synergies and antagonisms according to the values of the model coefficients (\(\beta{drug}\), \(\beta{stimulus}\) and \(\beta{int}\)). Synergisms were assigned when coefficients for single treatments (\(\beta{drug}\) and \(\beta{stimulus}\)) were both greater than, or both less than, the observed coefficient for the combinatorial treatment (i.e.~\(\beta{drug}\) + \(\beta{stimulus}\) + \(\beta{int}\)). For positive antagonisms, \(\beta{drug}\) + \(\beta{stimulus}\) + \(\beta{int}\) was less than either \(\beta{drug}\) or \(\beta{stimulus}\). For negative antagonisms, \(\beta{drug}\) + \(\beta{stimulus}\) + \(\beta{int}\) was greater than either \(\beta{drug}\) or \(\beta{stimulus}\). All drug - stimulus interactions for which p value for \(\beta{int}\) \textless0.05 fit into one of these groups (Bruch and Giles et al.~2021).
+
+Contributions:
+Performed with: myself, Frederick helped with script (Sophie did not credit this), Peter did int categories
+Written by: Me
+Text source: Written for thesis
 
 \hypertarget{drug-stimulus-gene-interactions-method}{%
 \subsubsection{Modelling of drug - stimulus - gene interactions}\label{drug-stimulus-gene-interactions-method}}
 
-\emph{myself} original
-Section \ref{drug-stimulus-gene-interactions}. To identify drug - stimulus interactions that were dependent on genetic features, we first fitted linear models to the viability matrix, for each drug - stimulus combination, using the formula in Eqn2. We extracted drug - stimulus interaction coefficients for each patient to generate a response matrix for n = 137 patients. Next, we performed multivariate regression using a Gaussian linear model with L1-penalty (i.e., lasso regression) as implemented in the R package \texttt{glmnet}(\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}). As the dependent variable, the matrix of drug - stimulus interaction coefficients for each patient sample was used. As input to the model, genetic features with more than 20\% missing values were excluded, and only patients with complete annotation were included in the model ( n= 137 ). As predictors, the genetic mutations and CNVs (p= 39), IGHV status (coded as 0-1) and Methylation CLuster (coded as 0, 0.5, 1) were used, using 3-fold cross-validation. Misclassification error was used as loss for cross- validation.
+Section \ref{drug-stimulus-gene-interactions}. Identification of drug - stimulus interactions that were modulated by genetic features was performed in two steps.
 
-Equation \eqref{eq:drugCytGeneInt} quantifies how the viability with any combination can be predicted:
-\begin{equation}
-            log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{patient}X_{patient} + \beta_{drug-stimulus}X_{drug}X_{stimulus} + \beta_{drug-patient}X_{drug}X_{patient} + \beta_{stimulus-patient}X_{stimulus}X_{patient} +\beta_{int}X_{drug}X_{stimulus}X_{patient} + \epsilon
-                                       \label{eq:drugCytGeneInt}
-    \end{equation}
-\emph{where \(V\) is the predicted viability of a patient sample with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\),\(\beta_{int}\), \(\beta_{drug-stimulus}\),\(\beta_{drug-patient}\),\(\beta_{drug-stimulus}\) \emph{and} \(\beta_{int}X_{drug}\) \emph{are regression coefficients for the drug, stimulus, patient sample and combinatorial terms and} \(X_{drug}\), \(X_{stimulus}\) \emph{and} \(X_{patient}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus/patient sample.} \(\epsilon\) \emph{is the vector of model residuals. See also Methods section \ref{drug-stimulus-gene-interactions-method}. Equation from Bruch \& Giles et al.~2021.}
+First the linear model in equation \eqref{eq:drugCytInt} was fitted in a patient sample specific manner i.e.~equation \eqref{eq:drugCytGeneInt} was fit to the matrix of log-transformed, control-normalised viability scores, for each drug - stimulus combination.
 
-This generates a higher order interaction term \(\beta_{int}X_{drug}X_{stimulus}X_{patient}\). This term represents a \emph{patient sample-specific} \(\beta{int}\) for each drug - stimulus combination, quantifying the size of an interaction between a drug and stimulus in each patient genetic background.
+This resulted in a higher order interaction term for each drug - stimulus - patient combination, named \(\beta_{int}X_{drug}X_{stimulus}X_{patient}\). This term represents a \emph{patient sample-specific} \(\beta{int}\) for each drug - stimulus combination, quantifying the size of an interaction between a drug and stimulus in each patient genetic background.
 
-With these patient sample-specific \(\beta{int}\) terms, it was possible to search for associations between the size of \(\beta_{int}\)) and genetic features. The aim was to screen for molecular features that increased or decreased the size of a drug - stimulus interactions, using multivariate regression with L1 (lasso) regularisation.
+In the second step, multivariate regression with L1 (lasso) regularisation was used to identify associations between the size of the patient sample-specific \(\beta{int}\) terms and genetic features. As input to the model, the response matrix was composed of the sample - specific \(\beta_{int}\) values for each drug-stimulus combination. The feature matrix consisted of genetic features (p=39), IGHV status (input as M = 1 and U = 0), and Methylation Cluster (input as 0, 0.5, 1). All features were thus encoded on a similar scale to ensure equal treatment by lasso constraint in model fitting. Where genetic features showed more than 20\% missing values, these were excluded from the feature matrix. Samples without complete annotation for remaining features were removed, resulting in n = 129 samples.
 
-As input to the model, the response matrix was composed of the sample - specific \(\beta_{int}\) values for each drug-stimulus combination. To generate the feature matrix (137 samples versus 40 features), I excluded genetic features for which \textgreater20\% of the values were missing, and patient samples with incomplete annotation. As predictors, I included genetic mutations and CNVs (p=39) and IGHV status (coded as 0-1). I ran lasso regression, as implemented in the \texttt{R} package \texttt{glmnet}(\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}), using three-fold cross-validation with misclassification error as loss. The resulting predictors are the mean of those coefficients that were selected in at least 90\% of 30 bootstrapped repeats.
+Using three-fold cross-validation, the optimal penalty parameter \(\lambda\) was selected so as to minimise the cross-validated R2. The misclassification error was used as loss. The resulting predictors are the mean of those coefficients that were selected in at least 90\% of 30 bootstrapped repeats (Bruch and Giles et al.~2021).
 
-\^{}elaborate?
-\#\#\# Follow up
-\#\#\#\# Lympocyte doubling times \{\#LDT-method\}
+Contributions:
+Performed with: myself
+Written by: Me
+Text source: Written for thesis
+
+Now proof this section in pdf and sign off
+
+\hypertarget{follow-up}{%
+\subsection{Follow up}\label{follow-up}}
+
+\hypertarget{LDT-method}{%
+\subsubsection{Lympocyte doubling times}\label{LDT-method}}
+
 \emph{Herbst et al., 2020c} - update
 Section \ref{cluster-survival}. ``Patients which had lymphocyte counts available for less than 4 time points between the sample
 collection date and the time of the next treatment and patients currently in treatment were ex-cluded. Thus, \ldots{} patients with enough data remained. Lymphocyte growth rates were calculated by fitting a linear model to the log10 transformed lymphocyte counts of all timepoints between the sample collection date and the time of the next treatment versus the period of time.''
@@ -1224,9 +1200,9 @@ This chapter provides an overview of the datasets that are central to this thesi
 
 This thesis centres on a dataset of 192 CLL patient samples subjected to functional and molecular profiling. A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis.
 
-The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al.~2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient. Each plate contained stimulus, drug, drug - stimulus wells along with DMSO control wells. After 48 hours of incubation at 37\(^\circ\)C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates the number of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \ref{drugs} and \ref{stimuli}.
+The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al.~2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells. After 48 hours of incubation at 37\(^\circ\)C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates the number of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \ref{drugs} and \ref{stimuli}.
 
-Multi-omics profiles for the patient samples were also available from the PACE repository (\protect\hyperlink{ref-PACE}{\textbf{PACE?}}), consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
+Multi-omics profiles for the patient samples were also available from the PACE repository (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021}), consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
 
 Collectively, these data enabled (i)characterisation of responses to microenvironmental stimuli, (ii) definition of functional patient subgroups, (iii) profiling of molecular determinants of drug and stimulus responses (iv) mapping of drug - stimulus and drug - stimulus - gene interactions, thus shedding light on the heterogeneity of CLL biology and drug response (Figure \ref{fig:studyOverview}).
 
@@ -1250,7 +1226,7 @@ A number of key findings emerged from the above data which warranted further inv
 \hypertarget{processing-the-raw-values-obtained-from-the-screen}{%
 \subsection{Processing the raw values obtained from the screen}\label{processing-the-raw-values-obtained-from-the-screen}}
 
-This section describes the process of generating viability scores used in downstream analyses (following the same process as published in Bruch and Giles et al.~2021). Initially, raw luminescence measurements from the experiments were read in using custom-made \texttt{R} scripts and functions. Raw values represent the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to amount of ATP present. The ATP levels are directly proportional to the number of viable cells in the well.
+This section describes the process of generating viability scores used in downstream analyses (following the same process as published in Bruch and Giles et al.~2021). Initially, raw luminescence measurements from the experiments were read in using custom-made \texttt{R} scripts and functions. Raw values represent the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to the amount of ATP present. The ATP levels are directly proportional to the number of viable cells in the well.
 Figure \ref{fig:rawViabilities} shows the raw viability values from the DMSO-treated wells for each patient sample. The absolute values vary between patient samples, and between measuring dates, and thus the viability values required additional normalisation.
 
 
@@ -1269,7 +1245,7 @@ Given the downstream analysis involved the use of linear modelling, I thus appli
 \hypertarget{quality-control-and-data-reproducibility}{%
 \subsection{Quality control and data reproducibility}\label{quality-control-and-data-reproducibility}}
 
-Next, several additional quality control steps were performed, with the aim of a) adjusting for any spatial effects on each screening plate, b) accounting for any batch effects between screening batches, c) testing data reproducibility.
+Next, several additional quality control steps were considered, with the aim of a) adjusting for any spatial effects on each screening plate, b) accounting for any batch effects between screening batches, c) testing data reproducibility.
 
 First, the screening data for each well on each plate was plotted in a grid corresponding to the plate layout, to visualise whether viability values were affected by their position on the plate. We discussed adjusting for any position effect by fitting a surface to the negative control wells, to generate correction factors for each well for each plate. The resulting correction factor was then subtracted from each of the treatment wells. We decided that the position effect was not sufficient to warrant this adjustment, and continued the analysis with the unadjusted values. {[}CHECK{]}
 
@@ -1294,49 +1270,49 @@ We aimed to generate a systematic study of the impact of soluble factors on ther
 
 \caption{Bar plot of the drugs used in screen, indicating targets and licencing status. \emph{Figure from Bruch and Giles et al.~2021).}}\label{fig:drugCategories}
 \end{figure}
-The number and concentration of drugs included was limited by the size of the plate. Thus there is minimal overlap between drug targets, and two concentrations were used for each drug. The choice of concentration was guided by the results of a previous drug screen in CLL patients, performed in our lab (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}). The concentrations used were expected to reduce CLL viability without eliminating all cells. Drug concentrations are shown in Table Table \ref{tab:drugTable}.
-
-
+The number and concentration of drugs included was limited by the size of the plate. Thus there is minimal overlap between drug targets, and two concentrations were used for each drug. The choice of concentration was guided by the results of a previous drug screen in CLL patients, performed in our lab (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}). The concentrations used were expected to reduce CLL viability without eliminating all cells. Drug concentrations are shown in Table \ref{tab:drugTable}.
 \begin{table}
-\centering\begingroup\fontsize{7}{9}\selectfont
-\begin{tabular}{l|l|l|l|l|l|l}
+
+\caption{\label{tab:drugTable}Drug characteristics, including targets, concentrations and licencing status.}
+\centering
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{l|l|l|l|l|l}
 \hline
-\textbf{ID} & \textbf{Drug} & \textbf{Main targets} & \textbf{Target category} & \textbf{Drug Group} & \textbf{conc1} & \textbf{conc2}\\
+\textbf{Drug} & \textbf{Main targets} & \textbf{Target category} & \textbf{Drug Group} & \textbf{Conc. 1} & \textbf{Conc. 2}\\
 \hline
-\cellcolor[HTML]{E2E868}{D\_001} & \cellcolor[HTML]{E2E868}{Ibrutinib} & \cellcolor[HTML]{E2E868}{BTK} & \cellcolor[HTML]{E2E868}{BCR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
+\cellcolor[HTML]{E2E868}{Ibrutinib} & \cellcolor[HTML]{E2E868}{BTK} & \cellcolor[HTML]{E2E868}{BCR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
 \hline
-D\_002 & Idelalisib & PI3K delta & BCR & FDA approved & 500nM & 50nM\\
+Idelalisib & PI3K delta & BCR & FDA approved & 500nM & 50nM\\
 \hline
-\cellcolor[HTML]{E2E868}{D\_003} & \cellcolor[HTML]{E2E868}{Fludarabine} & \cellcolor[HTML]{E2E868}{Purine analogue} & \cellcolor[HTML]{E2E868}{DDR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{2000nM} & \cellcolor[HTML]{E2E868}{200nM}\\
+\cellcolor[HTML]{E2E868}{Fludarabine} & \cellcolor[HTML]{E2E868}{Purine analogue} & \cellcolor[HTML]{E2E868}{DDR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{2000nM} & \cellcolor[HTML]{E2E868}{200nM}\\
 \hline
-D\_004 & Nutlin-3a & MDM2 & DDR & Clinical development/
+Nutlin-3a & MDM2 & DDR & Clinical development/
 tool compound & 10000nM & 1000nM\\
 \hline
-D\_005 & Selumetinib & MEK1/2 & MAPK & Clinical development/
+Selumetinib & MEK1/2 & MAPK & Clinical development/
 \cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{1000nM} & \cellcolor[HTML]{E2E868}{\vphantom{1} 100nM}\\
 \hline
-D\_006 & BAY-11-7085 & NFkB & NFkB & Clinical development/
+BAY-11-7085 & NFkB & NFkB & Clinical development/
 tool compound & 2000nM & 200nM\\
 \hline
-\cellcolor[HTML]{E2E868}{D\_007} & \cellcolor[HTML]{E2E868}{Everolimus} & \cellcolor[HTML]{E2E868}{mTOR} & \cellcolor[HTML]{E2E868}{mTOR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
+\cellcolor[HTML]{E2E868}{Everolimus} & \cellcolor[HTML]{E2E868}{mTOR} & \cellcolor[HTML]{E2E868}{mTOR} & \cellcolor[HTML]{E2E868}{FDA approved} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
 \hline
-D\_008 & PRT062607 & SYK & BCR & Clinical development/
+PRT062607 & SYK & BCR & Clinical development/
 tool compound & 500nM & \vphantom{1} 50nM\\
 \hline
-D\_009 & Pyridone-6 & JAK1/2/3 & JAK/STAT & Clinical development/
+Pyridone-6 & JAK1/2/3 & JAK/STAT & Clinical development/
 \cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{500nM} & \cellcolor[HTML]{E2E868}{50nM}\\
 \hline
-D\_010 & Ralimetinib & p38 MAPK & MAPK & Clinical development/
+Ralimetinib & p38 MAPK & MAPK & Clinical development/
 tool compound & 1500nM & 150nM\\
 \hline
-D\_011 & Luminespib & HSP90 & HSP90 & Clinical development/
+Luminespib & HSP90 & HSP90 & Clinical development/
 \cellcolor[HTML]{E2E868}{tool compound} & \cellcolor[HTML]{E2E868}{200nM} & \cellcolor[HTML]{E2E868}{20nM}\\
 \hline
-D\_012 & I-BET 762 & BRD2/3/4 & Epigenome & Clinical development/
+I-BET 762 & BRD2/3/4 & Epigenome & Clinical development/
 tool compound & 1000nM & 100nM\\
 \hline
 \end{tabular}
-\endgroup{}
 \end{table}
 \hypertarget{assessing-drug-response}{%
 \subsection{Assessing drug response}\label{assessing-drug-response}}
@@ -1370,11 +1346,12 @@ In addition, the individual drug response profiles (Figure \ref{fig:drugResponse
 \subsection{The panel of stimuli}\label{stimuli-info}}
 
 The stimuli selected for the screen, their associated targets and concentrations used are described in Table \ref{tab:cytTable}. They include 16 individual stimuli, plus HS-5 Culture Medium which encompasses the range of soluble factors secreted by the stromal cell line HS-5 (Bruch and Giles et al.~2021.)
-
-
 \begin{table}
-\centering\begingroup\fontsize{7}{9}\selectfont
-\begin{tabular}{l|l|l}
+
+\caption{\label{tab:cytTable}Stimuli names, targets pathways and concentrations.}
+\centering
+\fontsize{7}{9}\selectfont
+\begin{tabular}[t]{l|l|l}
 \hline
 \textbf{Name} & \textbf{Concentration} & \textbf{Pathway}\\
 \hline
@@ -1411,9 +1388,8 @@ SDF-1α & 200 ng/ml & JAK/STAT\\
 HS-5 CM & 20 \% & NA\\
 \hline
 \end{tabular}
-\endgroup{}
 \end{table}
-A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance \emph{ex vivo} (see section \ref{intro-microenvironmental-pathways}. Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvrionment. \ref{fig:microenvironmentCrosstalk}.
+A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance \emph{ex vivo} (see section \ref{intro-microenvironmental-pathways}. Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvironment. \ref{fig:microenvironmentCrosstalk}.
 
 
 \begin{figure}
@@ -1442,51 +1418,49 @@ Before beginning the downstream analysis, it was first important to determine wh
 
 To determine this, we calculated Pearson correlation coefficients to compare log-transformed control - normalised viability values for each stimulus, with vst-transformed RNA counts of the matching receptor(s). All Pearson coefficients were less than 0.4, indicating that heterogeneity of response was not related to differential receptor expression.
 
-
-
 \hypertarget{characteristics-of-patient-samples-used-in-the-screen}{%
 \section{Characteristics of patient samples used in the screen}\label{characteristics-of-patient-samples-used-in-the-screen}}
 
 \hypertarget{overview-of-the-molecular-profiles-of-the-patient-samples}{%
 \subsection{Overview of the molecular profiles of the patient samples}\label{overview-of-the-molecular-profiles-of-the-patient-samples}}
 
-Multi-omics profiles were available for the patient samples in the screen, taken from the Primary Cancer Cell Encyclopedia (PACE) (\protect\hyperlink{ref-PACE}{\textbf{PACE?}}). The PACE repository represents an initiative by our lab to characterise the multi-omic characteristics of primary tumour samples from leukemia and lymphoma patients. Patient multi-omic profiles included whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical information and follow-up data was also available for some patients, including their sex, IGHV status and LDT, TTT, TTFT and OS. Figure \ref{fig:geneticData} summarises the molecular characteristics of the patient samples. For a summary of the number of samples with each mutation, see Appendix Table \ref{tab:geneTable}.
+Multi-omics profiles were available for the patient samples in the screen, taken from the Primary Cancer Cell Encyclopedia (PACE) (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021}). The PACE repository represents an initiative by our lab to characterise the multi-omic characteristics of primary tumour samples from leukemia and lymphoma patients. Patient multi-omic profiles included whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical information and follow-up data was also available for some patients, including their sex, IGHV status and LDT, TTT, TTFT and OS. Figure \ref{fig:geneticData} summarises the molecular characteristics of the patient samples. For a summary of the number of samples with each mutation, see Appendix Table \ref{tab:geneTable}.
 
 The findings from this study have potential relevance in a clinical setting. Thus it was important to ensure that the distribution of genetic features amongst the cohort was representative of those observed in clinical practice. Other studies have determined the expected frequency of many recurrent genetic features in CLL (\protect\hyperlink{ref-Dohner2000}{H. Döhner et al. 2000}; \protect\hyperlink{ref-Puente2015}{Xose S. Puente et al. 2015}; \protect\hyperlink{ref-Landau2015}{Landau et al. 2015}) : the distribution of molecular lesions in our cohort is comparable to these (Bruch and Giles et al.~2021).
 
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/geneticData-1} 
+{\centering \includegraphics{thesis_files/figure-latex/geneticData-1} 
 
 }
 
-\caption{Summary of the genetic characteristics of the patient samples in the screen.}\label{fig:geneticData-1}
+\caption{Summary of the genetic characteristics of the patient samples in the screen. Annotations: Grey shows when patient sample is not annotated. Black indicates treated / IGHV-M, Green indicates occurrence of CNV, Yellow indicates gene is Mutated.}\label{fig:geneticData-1}
 \end{figure}
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/geneticData-2} 
+{\centering \includegraphics{thesis_files/figure-latex/geneticData-2} 
 
 }
 
-\caption{Summary of the genetic characteristics of the patient samples in the screen.}\label{fig:geneticData-2}
+\caption{Summary of the genetic characteristics of the patient samples in the screen. Annotations: Grey shows when patient sample is not annotated. Black indicates treated / IGHV-M, Green indicates occurrence of CNV, Yellow indicates gene is Mutated.}\label{fig:geneticData-2}
 \end{figure}
 \hypertarget{publishing-the-data-and-assosciated-analysis}{%
 \section{Publishing the data and assosciated analysis}\label{publishing-the-data-and-assosciated-analysis}}
 
-As explained in section \ref{microenvironmental-pathways-intro}, many studies have characterised the impact of individual omic layers, and individual soluble factors in CLL. However, studies investigating the interplay between cell-intrinsic and cell-extrinsic features in CLL are lacking. Collectively, this dataset represents a valuable resource providing the ability to explore genetic, epigenetic and microenvironmental modulators of survival and drug response in a heterogeneous cohort, and how these relate to clinical outcomes. With CLL samples relatively simple to obtain compared to other cancers, this project (in collaboration with the PACE initiative (\protect\hyperlink{ref-PACE}{\textbf{PACE?}})) represents a considerable dataset containing joint functional and molecular profiling of primary cancer samples.
+Collectively, this dataset represents a valuable resource providing the ability to explore genetic, epigenetic and microenvironmental modulators of survival and drug response in a heterogeneous cohort, and how these relate to clinical outcomes. With CLL samples relatively simple to obtain compared to other cancers, this project (in collaboration with the PACE initiative (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021})) represents a considerable dataset containing joint functional and molecular profiling of primary cancer samples.
 
-Thus, an important goal of my work was to ensure that this dataset was both publicly available and accessible for a range of users, including medics and bioinformaticians. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the manuscript Bruch and Giles et al.~2021 to an online git repository.
+An important goal of my work was thus to ensure that this dataset was both publicly available and accessible for a range of users, including medics and bioinformaticians. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the manuscript Bruch and Giles et al.~2021 to an online git repository.
 
 \hypertarget{shiny-app}{%
 \subsection{Shiny app}\label{shiny-app}}
 
 The shiny app can be found \href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{here}. Figure \ref{fig:shinyApp1} shows the home page. It consists of four tabs, covering the following:
 \begin{itemize}
-    \item  \textbf{\textit{Drug and stimulus responses}} Explore drug - stimulus interactions and view log-transformed viabilities with single and combinatorial treatments (Figure \\ref{fig:shinyApp3}).
+    \item  \textbf{\textit{Drug and stimulus responses}} Explore drug - stimulus interactions and view log-transformed viabilities with single and combinatorial treatments (Figure \ref{fig:shinyApp3}).
     \item \textbf{\textit{Effects of mutations on drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features and view log-transformed viability data stratified by mutations
-    \item \textbf{\textit{Genetic predictors of drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features with predictor profiles from section \\ref{multivariate-gene-stimulus-assosciations}
-    \item \textbf{\textit{Genetic predictors of drug and stimulus interactions}} Explore how drug - stimulus interactions are further modulated by mutations, and view predictor profiles from section \\ref{drug-stimulus-gene-predictor-profile}
+    \item \textbf{\textit{Genetic predictors of drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features with predictor profiles from section \ref{multivariate-gene-stimulus-assosciations}
+    \item \textbf{\textit{Genetic predictors of drug and stimulus interactions}} Explore how drug - stimulus interactions are further modulated by mutations, and view predictor profiles from section \ref{drug-stimulus-gene-predictor-profile}
 
 \end{itemize}
 
@@ -1527,7 +1501,7 @@ I next arranged the analysis into seven separate scripts, one for each figure, s
 
 \caption{Interface of the online code repository}\label{fig:package1}
 \end{figure}
-These online resources are already beginning to serve as a community resource (e.g.@Lu2021, Nature Cancer), as querying them enables researchers to test new hypotheses within minutes and may obviate the need for certain small-scale experiments.
+These online resources are already beginning to serve as a community resource (e.g. \protect\hyperlink{ref-Lu2021}{J. Lu et al.} (\protect\hyperlink{ref-Lu2021}{2021}), Nature Cancer), as querying them enables researchers to test new hypotheses within minutes and may obviate the need for certain small-scale experiments.
 
 \hypertarget{chapter4}{%
 \chapter{\texorpdfstring{\emph{Ex-vivo} sensitivity to microenvironmental stimulation in primary CLL cells}{Ex-vivo sensitivity to microenvironmental stimulation in primary CLL cells}}\label{chapter4}}
@@ -1664,14 +1638,12 @@ To further validate this, we observed that TTT in the IGHV-M enriched C3 was sig
 
 \caption{(A) LDT stratified by cluster, p-values from Student's t-test. (B) Kaplan-Meier curves to show TTT for each cluster. p-values from univariate Cox proportional hazard models comparing IGHV-U enriched C1 with C2, and IGHV-M enriched C3 with C4. See Methods sections \ref{LDT-method} and \ref{survival-method}. \emph{Figure from \protect\hyperlink{ref-Giles2021}{Bruch et al.} (\protect\hyperlink{ref-Giles2021}{2021}) .}}\label{fig:clusterLDTTTT}
 \end{figure}
-The difference in disease progression between the clusters indicated that microenvironmental response represents an additional biological layer, holding information relevant to disease dynamics. To validate that these clusters were not simply an indication of any underlying genetic features, we checked whether the observed differences in progression dynamics could be explained by other prognostic markers (Bruch \& Giles et al.~2021).
+The difference in disease progression between the clusters indicated that microenvironmental response represents an additional biological layer, holding information relevant to disease dynamics. To validate that these clusters were not simply an indication of any underlying genetic features, we checked whether the observed differences in progression dynamics could be explained by other prognostic markers (Bruch and Giles et al.~2021).
 
 A multivariate Cox proportional hazard model accounting for IGHV status, trisomy 12 and TP53 in addition to the cluster assignment indicated an independent prognostic value for cluster assignment between C3 and C4 (p = 0.039, Table \ref{tab:clusterCox}).
-
-
 \begin{table}
 
-\caption{\label{tab:clusterCox}Table depicting results of Multivariate Cox Proportional Hazard Model to test prognostic value of key genetic features and clusters using Time to Next Treatment and C3 as reference. }
+\caption{\label{tab:clusterCox}Table depicting results of multivariate Cox proportional hazard model to test prognostic value of key genetic features and clusters using TTT and C3 as reference. See Methods section ef(survival-method). _Table adapted from Bruch and Giles et al. 2021._}
 \centering
 \fontsize{7}{9}\selectfont
 \begin{tabular}[t]{l|r|r|r|r|l}
@@ -1740,14 +1712,14 @@ Figure \ref{fig:clusterEnrichment} shows the resulting mean coefficients. A posi
 
 }
 
-\caption{Enrichment and depletion of genetic features within each cluster, quantified using lasso-penalised regression. x axis shows genetic features, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and error bars represent the mean plus and minus standard deviation. See Methods section \ref{cluster-genetics-method}. \emph{Figure from Bruch \& Giles et al 2021. }}\label{fig:clusterEnrichment}
+\caption{Enrichment and depletion of genetic features within each cluster, quantified using lasso-penalised regression. x axis shows genetic features, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and error bars represent the mean plus and minus standard deviation. See Methods section \ref{cluster-genetics-method}. \emph{Figure from Bruch and Giles et al 2021. }}\label{fig:clusterEnrichment}
 \end{figure}
 As expected, IGHV status was the main feature that predicted cluster membership. Beyond IGHV status, trisomy 12 and \emph{SF3B1} mutations were enriched in C2, which showed enhanced responses to many stimuli. C4, which was associated with slow in-vivo progression, showed depletion of \emph{TP53}, \emph{ATM}, mutations in \emph{RAS} and \emph{RAF} and gain(8q).
 
 \hypertarget{cluster-rna}{%
 \subsection{GSEA of DE genes between subgroups}\label{cluster-rna}}
 
-In addition to genetic features, I investigated differential expression of genes within each cluster. For n = 49 samples, RNAseq data was available for matched PBMC samples. I focused on the difference between C3 and C4, for which 21 RNAseq samples were available (Bruch \& Giles et al.~2021).
+In addition to genetic features, I investigated differential expression of genes within each cluster. For n = 49 samples, RNAseq data was available for matched PBMC samples. I focused on the difference between C3 and C4, for which 21 RNAseq samples were available (Bruch and Giles et al.~2021).
 
 To quantify differential gene expression, I began by filtering out immunoglobulin genes, including genes at the heavy, light and kappa loci that encode the antigen receptor of B cells. The clusters each show differential enrichment of IGHV-M and U samples, and thus the differential expression analysis would otherwise be dominated by immunoglobulin genes that are affected by this biomarker.
 
@@ -1760,9 +1732,9 @@ I followed the \texttt{DESeq2} protocol (\protect\hyperlink{ref-R-DESeq2}{Love, 
 
 }
 
-\caption{Volcano plot of differentially expressed genes between C3 and C4. x axis indicates log2 fold change values, calculated using the \texttt{DESeq2} package (\protect\hyperlink{ref-DESeq2}{\textbf{DESeq2?}}), y axis gives corresponding -log10(BH-adjusted p value). Darker grey points are labelled where adjusted p \textless{} 0.01. See Methods section \ref{cluster-rna-method}. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:clusterDE}
+\caption{Volcano plot of differentially expressed genes between C3 and C4. x axis indicates log2 fold change values, calculated using the \texttt{DESeq2} package (\protect\hyperlink{ref-DESeq2}{\textbf{DESeq2?}}), y axis gives corresponding -log10(BH-adjusted p value). Darker grey points are labelled where adjusted p \textless{} 0.01. See Methods section \ref{cluster-rna-method}. \emph{Figure from Bruch and Giles et al.~2021.}}\label{fig:clusterDE}
 \end{figure}
-To assign biological meaning to the differentially expressed genes, I quantified the enrichment of Hallmark pathways amongst the genes. I ranked the genes based on the Wald statistic, and then ran GSEA using the fgsea algorithm (Figure \ref{fig:clusterGSEA}) (Bruch \& Giles et al.~2021).
+To assign biological meaning to the differentially expressed genes, I quantified the enrichment of Hallmark pathways amongst the genes. I ranked the genes based on the Wald statistic, and then ran GSEA using the fgsea algorithm (Figure \ref{fig:clusterGSEA}) (Bruch and Giles et al.~2021).
 
 Several pathways were upregulated amongst samples in C3, compared to C4, indicating that these pathways may relate in some way to the shorter TTT and LDT of patients within this cluster. Pathways associated with higher disease aggression were regulated in C3 including genesets relating to stress response (Unfolded Protein Response, UV Response Up, P53 Pathway), metabolism (Oxidative Phosphorylation) and proliferation (G2M Checkpoint, MYC Targets V1, MTORC1 Signaling, E2F Targets) (Figure \ref{fig:GSEApathways}).
 
@@ -1773,9 +1745,9 @@ Several pathways were upregulated amongst samples in C3, compared to C4, indicat
 
 }
 
-\caption{Bar plot showing gene set enrichment to compare gene expression of samples in C3 and C4. Normalised enrichment scores (NES) are shown for top ten pathways with smallest adjusted p-value. Gene ranking performed based on Wald statistic, calculated using the \texttt{DESeq2} package. See Methods section \ref{cluster-rna-method}. \emph{Figure from Bruch \& Giles et al.~2021. }}\label{fig:clusterGSEA}
+\caption{Bar plot showing gene set enrichment to compare gene expression of samples in C3 and C4. Normalised enrichment scores (NES) are shown for top ten pathways with smallest adjusted p-value. Gene ranking performed based on Wald statistic, calculated using the \texttt{DESeq2} package. See Methods section \ref{cluster-rna-method}. \emph{Figure from Bruch and Giles et al.~2021. }}\label{fig:clusterGSEA}
 \end{figure}
-In addition, C3 showed upregulation of microenvironmental signalling pathways relative to C4, including TNFa Signalling via NFKB and Interferon Gamma Response (Figure \ref{fig:GSEApathways}) (Bruch \& Giles et al.~2021). This finding underlines our hypothesis that differential activity of microenvironmental signalling, both \emph{in vivo} and \emph{ex vivo} may be relevant to disease prognosis.
+In addition, C3 showed upregulation of microenvironmental signalling pathways relative to C4, including TNFa Signalling via NFKB and Interferon Gamma Response (Figure \ref{fig:GSEApathways}) (Bruch and Giles et al.~2021). This finding underlines our hypothesis that differential activity of microenvironmental signalling, both \emph{in vivo} and \emph{ex vivo} may be relevant to disease prognosis.
 
 
 \begin{figure}
@@ -1784,7 +1756,7 @@ In addition, C3 showed upregulation of microenvironmental signalling pathways re
 
 }
 
-\caption{Enrichment plot of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes. The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software. See Methods section \ref{cluster-rna-method}. \emph{Figure and caption from Bruch \& Giles et al.~2021.}}\label{fig:GSEApathways}
+\caption{Enrichment plot of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes. The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software. See Methods section \ref{cluster-rna-method}. \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:GSEApathways}
 \end{figure}
 \hypertarget{summary}{%
 \section{Summary}\label{summary}}
