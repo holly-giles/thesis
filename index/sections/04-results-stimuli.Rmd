@@ -1680,7 +1680,7 @@ clusterLDT + clusterTTT +  plot_layout(design = thedesign) + plot_annotation(tag
 
 ```
 
-The difference in disease progression between the clusters indicated that microenvironmental response represents an additional biological layer, holding information relevant to disease dynamics.  To validate that these clusters were not simply an indication of any underlying genetic features, we checked whether the observed differences in progression dynamics could be explained by other prognostic markers (Bruch & Giles et al. 2021).
+The difference in disease progression between the clusters indicated that microenvironmental response represents an additional biological layer, holding information relevant to disease dynamics.  To validate that these clusters were not simply an indication of any underlying genetic features, we checked whether the observed differences in progression dynamics could be explained by other prognostic markers (Bruch and Giles et al. 2021).
 
 A multivariate Cox proportional hazard model accounting for IGHV status, trisomy 12 and TP53 in addition to the cluster assignment indicated an independent prognostic value for cluster assignment between C3 and C4 (p = 0.039, Table \@ref(tab:clusterCox)).
 
@@ -1719,7 +1719,7 @@ Supp_table_4<-coxph_coeff %>%
 
 
 Supp_table_4 %>%  
-  kable(caption = "Table depicting results of multivariate Cox proportional hazard model to test prognostic value of key genetic features and clusters using TTT and C3 as reference. See Methods section \ref(survival-method). _Table adapted from Bruch & Giles et al. 2021._") %>%
+  kable(caption = "Table depicting results of multivariate Cox proportional hazard model to test prognostic value of key genetic features and clusters using TTT and C3 as reference. See Methods section \ref(survival-method). _Table adapted from Bruch and Giles et al. 2021._") %>%
   kable_styling(latex_options = "striped", 
                 stripe_color = colors[7],
                 html_font = "Helvetica",
@@ -1851,7 +1851,7 @@ Each cluster was thus assigned a set of genetic coefficients. To ensure that the
 Figure \@ref(fig:clusterEnrichment) shows the resulting mean coefficients. A positive coefficient indicated that this feature was enriched in the cluster, and a negative coefficient indicated it was depleted. The associated standard deviations are also indicated. 
 
 
-(ref:clusterEnrichment)  Enrichment and depletion of genetic features within each cluster, quantified using lasso-penalised regression. x axis shows genetic features, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and error bars represent the mean plus and minus standard deviation.  See Methods section \@ref(cluster-genetics-method). _Figure from Bruch & Giles et al 2021. _
+(ref:clusterEnrichment)  Enrichment and depletion of genetic features within each cluster, quantified using lasso-penalised regression. x axis shows genetic features, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and error bars represent the mean plus and minus standard deviation.  See Methods section \@ref(cluster-genetics-method). _Figure from Bruch and Giles et al 2021. _
 
 ```{r FeatureMatrix04}
 #Generate Matrix
@@ -2015,13 +2015,13 @@ As expected, IGHV status was the main feature that predicted cluster membership.
 
 
 ### GSEA of DE genes between subgroups {#cluster-rna}
-In addition to genetic features, I investigated differential expression of genes within each cluster. For n = 49 samples, RNAseq data was available for matched PBMC samples. I focused on the difference between  C3 and C4, for which 21 RNAseq samples were available (Bruch & Giles et al. 2021). 
+In addition to genetic features, I investigated differential expression of genes within each cluster. For n = 49 samples, RNAseq data was available for matched PBMC samples. I focused on the difference between  C3 and C4, for which 21 RNAseq samples were available (Bruch and Giles et al. 2021). 
 
 To quantify differential gene expression, I began by filtering out immunoglobulin genes, including genes at the heavy, light and kappa loci that encode the antigen receptor of B cells. The clusters each show differential enrichment of IGHV-M and U samples, and thus the differential expression analysis would otherwise be dominated by immunoglobulin genes that are affected by this biomarker. 
 
 I followed the `DESeq2` protocol [@R-DESeq2] using a design formula to quantify the difference between clusters, and accounting for the confounding effect of IGHV status.  87 genes were differentially expressed (adjusted p < 0.05) between C3 and 4 (Figure \@ref(fig:clusterDE)).
 
-(ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. x axis indicates log2 fold change values, calculated using the `DESeq2` package [@DESeq2], y axis gives corresponding -log10(BH-adjusted p value). Darker grey points are labelled where adjusted p < 0.01. See Methods section \@ref(cluster-rna-method).  _Figure from Bruch & Giles et al. 2021._
+(ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. x axis indicates log2 fold change values, calculated using the `DESeq2` package [@DESeq2], y axis gives corresponding -log10(BH-adjusted p value). Darker grey points are labelled where adjusted p < 0.01. See Methods section \@ref(cluster-rna-method).  _Figure from Bruch and Giles et al. 2021._
 
 ```{r rnaPrep04}
 cytSeq <- dds_smp
@@ -2162,12 +2162,12 @@ clusterDE
 ```
 
 
-To assign biological meaning to the differentially expressed genes, I quantified the enrichment of Hallmark pathways amongst the genes. I ranked the genes based on the Wald statistic, and then ran GSEA using the fgsea algorithm (Figure \@ref(fig:clusterGSEA)) (Bruch & Giles et al. 2021).
+To assign biological meaning to the differentially expressed genes, I quantified the enrichment of Hallmark pathways amongst the genes. I ranked the genes based on the Wald statistic, and then ran GSEA using the fgsea algorithm (Figure \@ref(fig:clusterGSEA)) (Bruch and Giles et al. 2021).
 
 Several pathways were upregulated amongst samples in C3, compared to C4, indicating that these pathways may relate in some way to the shorter TTT and LDT of patients within this cluster. Pathways associated with higher disease aggression were regulated in C3 including genesets relating to  stress response (Unfolded Protein Response, UV Response Up, P53 Pathway),  metabolism (Oxidative Phosphorylation) and proliferation (G2M Checkpoint, MYC Targets V1, MTORC1 Signaling, E2F Targets) (Figure \@ref(fig:GSEApathways)). 
 
 
-(ref:clusterGSEA) Bar plot showing gene set enrichment to compare gene expression of samples in  C3 and C4. Normalised enrichment scores (NES) are shown for top ten pathways with smallest adjusted p-value. Gene ranking performed based on Wald statistic, calculated using the `DESeq2` package. See Methods section \@ref(cluster-rna-method). _Figure from Bruch & Giles et al. 2021. _
+(ref:clusterGSEA) Bar plot showing gene set enrichment to compare gene expression of samples in  C3 and C4. Normalised enrichment scores (NES) are shown for top ten pathways with smallest adjusted p-value. Gene ranking performed based on Wald statistic, calculated using the `DESeq2` package. See Methods section \@ref(cluster-rna-method). _Figure from Bruch and Giles et al. 2021. _
 
 ```{r clusterGSEA, fig.cap='(ref:clusterGSEA)',  out.width = "70%", echo = FALSE}
 
@@ -2220,9 +2220,9 @@ clusterGSEA
 ```
 
 
-In addition, C3 showed upregulation of  microenvironmental signalling pathways relative to C4, including TNFa Signalling via NFKB and Interferon Gamma Response (Figure \@ref(fig:GSEApathways)) (Bruch & Giles et al. 2021). This finding underlines our hypothesis that  differential activity of microenvironmental signalling, both *in vivo* and *ex vivo* may be relevant to disease prognosis. 
+In addition, C3 showed upregulation of  microenvironmental signalling pathways relative to C4, including TNFa Signalling via NFKB and Interferon Gamma Response (Figure \@ref(fig:GSEApathways)) (Bruch and Giles et al. 2021). This finding underlines our hypothesis that  differential activity of microenvironmental signalling, both *in vivo* and *ex vivo* may be relevant to disease prognosis. 
 
-(ref:GSEApathways) Enrichment plot of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes.  The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software.  See Methods section \@ref(cluster-rna-method). _Figure and caption from Bruch & Giles et al. 2021._
+(ref:GSEApathways) Enrichment plot of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes.  The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software.  See Methods section \@ref(cluster-rna-method). _Figure and caption from Bruch and Giles et al. 2021._
 
 ```{r GSEApathways, fig.cap='(ref:GSEApathways)', out.wdith = "70%",   echo = FALSE}
 
