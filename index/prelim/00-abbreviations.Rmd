@@ -26,6 +26,7 @@ output:
     DNA & & Deoxyribonucleic acid  \\
     DNAseq & & DNA sequencing \\
     ERK & & Ras-dependent extracellular signal-regulated kinase \\
+    FACS & & Flourescence-activated cell sorting \\
     FBS & & Fetal bovine serum \\
     FDA & & Federal Drug Administration \\
     FDC & & Follicular dendritic cell \\
@@ -45,6 +46,7 @@ output:
     JAK & & Janus kinase \\
     M-CLL & & CLL with somatic hypermutations in IGHV loci \\
     U-CLL & & CLL without somatic hypermutations in IGHV loci \\
+    MACS & & Magnetic-activated cell sorting \\
     MAPK & & Mitogen-activated protein kinase  \\
     MRD & & Minimal residual disease  \\
     MSCs & & Mesenchymal stromal cells  \\
