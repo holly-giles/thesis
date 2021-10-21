@@ -1,4 +1,5 @@
 # Genetic modulators of responses to microenvironmental stimulation {#chapter5}
+Add all methods references
 Profiling the effects of the panel of stimuli revealed the heterogenous nature of responses to stimulation. The analysis revealed four  patient sample groups, with distinct responses to the stimuli, unique molecular profiles, and differential disease progression. Two pathways emerged as the most potent modulators of CLL viability, namely IL4 and TLR. These too induced heterogeneous responses across the cohort, in particular stimulation of TLR 7/8/9 increased viability in some samples, whilst it reduced viability in others. 
 
 Next we asked to what extent this heterogeneity of response relates to the molecular profiles of the tumours. We sought to understand which underlying genetic features might modulate responses to external signals, and how these interactions may occur.  We combined the screening dataset with multi-omics profiles of the patient samples taken from the PACE repository [@JCIpaper; @R-BloodCancerMultiOmics2017] and performed a systematic survey of molecular determinants of stimulus response, using whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, for a small subset of patients we also generated  ATAC sequencing and Mass Spectrometry data. 
@@ -1530,7 +1531,6 @@ if(testRatio){
   glmRes <- runGlm.bin(X, as.integer(y), repeats = repeats, folds = folds, testRatio = NULL)}
 
 
-
 ## ROC of best model
 if(testRatio){
 iBest <- which.max(glmRes$aucCV)
@@ -1623,7 +1623,7 @@ RNAplots[[1]] + RNAplots[[2]] + RNAplots[[3]]
 
 These results collectively suggest that increased gene dosage of key genes in the IL4, TLR and TGF$\beta$ pathways may underlie the increased response of trisomy 12 samples to these pathways. This is also reflected in the patient samples A and B, which responded more strongly to the TGF$\beta$ and TLR pathways, respectively, and correspondingly higher levels of SMAD3 and STAT6 proteins. However, computational techniques can only go to far in providing biological proof, and more work is needed here to confirm this finding. In addition to gene dosage effects, I also investigated differences in transcription factor activity in trisomy 12. The results of this warranted further follow up, and this forms the focus of rest of this chapter. 
 
-###  Spi-B and PU.1 TFs show higher activity in trisomy 12 CLL
+###  Spi-B and PU.1 TFs show higher activity in trisomy 12 CLL {#trisomy12-ATACseq}
 Trisomy 12 has been well-studied at both the transcriptomic and proteomic level, and yet the cause of its recurrence in CLL is not fully understood. Thus, I next decided to investigate the impact of trisomy 12 on the epigenetic landscape of CLL, which is less well studied. In particular, I wanted to investigate differential transcription factor activity in CLL, which would give an indicator of which pathways are differentially active. 
 
 We acquired two independent ATAC sequencing datasets. The first, generated and processed in our lab, consisted of two WT and two trisomy 12 samples (Bruch & Giles et al. 2021). The second, taken from @Rendeiro2017 and processed in our lab, comprised 43 WT and nine trisomy 12 samples. 
@@ -1932,10 +1932,10 @@ ggtexttable(resTab, rows = NULL,
 ```
 
 
-### Double knockdown of Spi-B and PU.1 reduces profileration of trisomy 12+ cell lines
+### Double knockdown of Spi-B and PU.1 reduces profileration of trisomy 12+ cell lines {#shRNA-KDs}
 To establish the functional impact of Spi-B and PU.1 inhibition in trisomy 12+ lymphoma, we tested th impact of inhibiting these TFs on proliferation of lymphoma cell lines (Figure \@ref(fig:SpiBshRNAKD). We generated single and double shRNA knockdowns in lymphoma cell lines, namely SU-DHL4 and SU-DHL5 (trisomy 12) and SU-DHL2 (no trisomy 12) and then measured cell counts at 24 hour intervals (Bruch & Giles et al. 2021). 
 
-(ref:SpiBshRNAKD) Knockdown of Spi-B and PU.1 led to growth restriction and cell death. Data shown is the mean of three technical replicates. While SU-DHL 5 was already growth impaired after Spi-B KD, SU-DHL 2 and SU-DHL 4 were only impaired after double knock-down. Double knockdown lead to rapid cell death in SU-DHL 5 (data not shown). Cell count normalised to seeded cell number of diffuse large b cell lymphoma cell lines after knockdown of Spi-B or double knockdown of Spi-B and PU.1 or shRNA as control. _Figure and caption from Bruch & Giles et al. 2021._
+(ref:SpiBshRNAKD) Knockdown of Spi-B and PU.1 led to growth restriction and cell death. Data shown is the mean of three technical replicates. While SU-DHL 5 was already growth impaired after Spi-B KD, SU-DHL 2 and SU-DHL 4 were only impaired after double knock-down. Double knockdown lead to rapid cell death in SU-DHL 5 (data not shown). Cell count normalised to seeded cell number of diffuse large b cell lymphoma cell lines after knockdown of Spi-B or double knockdown of Spi-B and PU.1 or shRNA as control. See Methods section \@ref(shRNA-KDs-method). _Figure and caption from Bruch & Giles et al. 2021._
 
 ```{r SpiBshRNAKD, fig.cap='(ref:SpiBshRNAKD)', message = FALSE,  echo = FALSE, fig.height=4, fig.width = 10, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
 
