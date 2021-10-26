@@ -1,3 +1,120 @@
 # Acknowledgements {-}
+Include everything for P1 and
 
-I want to thank a few people.
+**Thesis supervisor**
+Wolfgang 
+Sascha
+
+**TAC**
+Michael Boutros 
+Nassos Typas 
+Simon Anders for their comments on the manuscript and their valued advice.
+in particular, Moritz
+
+**The labs and lab members**
+Huber group, Dietrich group and Gerstung group
+
+Junyan
+Mike 
+Frederik Ziebell for advice on statistics and analysis
+Gosia 
+simone
+vlad
+Tom
+Katharina
+Stefanie
+Laleh
+Emma
+Jennifer
+Britta
+
+
+Sascha
+
+Sophie 
+(Berit) <- moral during experiments
+Marieke <- with experiments
+Peter <- paper
+Tobias <- conferences and shit
+Caro <- experiemtns
+Nora <- SMART
+Xi <- slides 
+Tina <- shRNA data
+
+Angela Lenze
+
+plus general things 
+
+
+Moritz
+(Mike, Jose, Alex)
+
+
+**Collaborators and Technical  support **
+Paper: 
+
+Thorsten's group
+
+Zaugg group 
+Ivan and Christian - you have been so helpful and taught me a lot
+
+Brian Lai and Anna - thank you for being patient with experiments 
+
+Gene  Core and proteomics 
+Vladimir Benes and Nayara Trevisan Doimo de Azevedohe of the EMBL Genomics Core Facility.
+Frank Stein
+
+IT services 
+We thank EMBL’s IT Services for providing data management and computing infrastructure
+
+Martina Seiffert lab
+
+Nils
+
+
+**People who provided resources for porjects **
+Patients who donated
+Martina Seiffert for the HS-5 stromal cell line
+Sophie Herbst for proteomics 
+
+**Institutes: **
+EBI
+We thank the Department of Medicine V, University of Heidelberg, 
+Molecular Medicine Partnership Unit (MMPU),
+EMBL Heidelberg 
+and DKFZ/Heidelberg Center for Personalized Oncology (DKFZ/HIPO) for technical support
+
+Moritz and EBI 
+
+**Christ's College **
+Dr Hunt and Helena Browne and Jo Chase
+
+**Funding **
+Department of Medicine V, University of Heidelberg, 
+Molecular Medicine Partnership Unit (MMPU), 
+EMBL Heidelberg 
+and DKFZ/Heidelberg Center for Personalized Oncology (DKFZ/HIPO) for funding, 
+SIMONA grant
+
+HG was supported by a Joachim-Herz Add-on Fellowship for Interdisciplinary Science.
+
+**Music **
+The entire catalogues of Coldplay, London Grammar and Pete Tong for being there in the good times, and helping to get through the bad. 
+
+**Family**
+Mum, Dad, Milly,  gap year, lockdown, 
+Jim and Ann for the morale boosting trips to Cambridge while I was writing my thesis, and the infamous hike up to the castle
+
+
+**Friends**
+Heidelberg friends, my cohort
+Jakob, Tim, Fergus <- especially for the flat
+
+UK friends 
+Helena, Kesh, Henry being there in Cam 
+
+Lockdown gang 
+esp Michael, Helena, Harriet, Vivek, Hollie 
+
+
+ALLES
