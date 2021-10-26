@@ -55,13 +55,17 @@ library(biomartr)
 library(biomaRt)
 library(BloodCancerMultiOmics2017)
 library(biobroom)
-library(readxl)
+library(DiffBind)
+library(tximport)
+library(maxstat)
+
 
 ```
 
-
 ```{r pressure, echo=FALSE}
+
 knitr::write_bib(c(.packages(), "bookdown"), "/Volumes/huber/users/giles/thesis/index/bib/packages.bib")
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
