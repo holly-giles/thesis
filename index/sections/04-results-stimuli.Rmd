@@ -1563,7 +1563,7 @@ To validate the potential biological significance of these four clusters, we inv
 
 C1 and C2 showed a shorter LDT than C3 and C4, which is expected due to the differential proportions of IGHV-U and M patient samples in these groups (Figure \@ref(fig:clusterLDTTTT)A). Notably, within the IGHV-M enriched clusters C3 and C4, samples in C3 showed a significantly shorter LDT (Student’s t-test, p-value =  0.025). 
 
-To further validate this, we observed that TTT in the IGHV-M enriched C3 was significantly shorter than C4 (p-value =  0.005) and comparable to the progression dynamics of IGHV-U enriched C1 and 2 (Figure \@ref(fig:clusterLDTTTT)B). 
+To further validate this, we observed that TTT in the IGHV-M enriched C3 was significantly shorter than C4 (Cox proportional hazards model p value =  0.005) and comparable to the progression dynamics of IGHV-U enriched C1 and 2 (Figure \@ref(fig:clusterLDTTTT)B). 
 
 
 (ref:clusterLDTTTT) (A)  LDT stratified by cluster, p-values from Student's t-test.  (B) Kaplan-Meier curves to show TTT for each cluster. p-values from univariate Cox proportional hazard models comparing IGHV-U enriched C1 with C2, and IGHV-M enriched C3 with C4. See Methods sections \@ref(LDT-method) and \@ref(survival-method). _Figure from @Giles2021 ._
@@ -2021,7 +2021,7 @@ To quantify differential gene expression, I began by filtering out immunoglobuli
 
 I followed the `DESeq2` protocol [@R-DESeq2] using a design formula to quantify the difference between clusters, and accounting for the confounding effect of IGHV status.  87 genes were differentially expressed (adjusted p < 0.05) between C3 and 4 (Figure \@ref(fig:clusterDE)).
 
-(ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. x axis indicates log2 fold change values, calculated using the `DESeq2` package [@DESeq2], y axis gives corresponding -log10(BH-adjusted p value). Darker grey points are labelled where adjusted p < 0.01. See Methods section \@ref(cluster-rna-method).  _Figure from Bruch and Giles et al. 2021._
+(ref:clusterDE)  Volcano plot of differentially expressed genes between C3 and C4. x axis indicates log2 fold change values, calculated using the `DESeq2` package [@R-DESeq2], y axis gives corresponding -log10(BH-adjusted p value). Darker grey points are labelled where adjusted p < 0.01. See Methods section \@ref(cluster-rna-method).  _Figure from Bruch and Giles et al. 2021._
 
 ```{r rnaPrep04}
 cytSeq <- dds_smp
