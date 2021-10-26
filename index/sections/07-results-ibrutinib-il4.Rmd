@@ -36,6 +36,9 @@ In addition to the screen, we acquired the following validatory data (Figure \@r
 
 with surv cures, make sure update the label to TTT (beaucs its the same as TFS)
 
+
+### ATAC RNA and Proteomics {#ch7-overview}
+
 (ref:ibribetil4) Overview of the approach for the validation experiments. Four CLL PBMC samples were incubated with ibrutinib, IL4 and IBET-762, both individually and in all combinations. Samples were taken for ATAC sequencing and RNA sequencing after 6 hours and for mass spectrometry after 24 hours. Sequencing data was processed for downstream analysis, outline in Chapter \@ref(chapter7). 
 
 
@@ -44,4 +47,6 @@ with surv cures, make sure update the label to TTT (beaucs its the same as TFS)
 knitr::include_graphics("figures/ibribetil4.eps")
 
 ```
+### ATACseq {#treated-atacseq}
 
+### RNAseq {#treated-rnaseq}
