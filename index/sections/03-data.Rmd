@@ -93,16 +93,16 @@ colnames(Cytokine_labels) <- c("name", "Cytlabel")
 
 
 ## Experimental overview
-### Drug-stimulus combinatorial pertubation assay and patient sample multi-omic profiling
+### Drug-stimulus combinatorial pertubation assay and patient sample multi-omic profiling {#the-screen}
 This thesis centres on a dataset of 192 CLL patient samples subjected to functional and molecular profiling. A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis.  
 
-The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al. 2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells. After 48 hours of incubation at 37$^\circ$C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates  the number  of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \@ref(drugs) and \@ref(stimuli).
+The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al. 2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient sample. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells (Appendix Figure \@ref(drugPlate) and Figure \@ref(stimulusPlate)). After 48 hours of incubation at 37$^\circ$C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates  the number  of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \@ref(drugs) and \@ref(stimuli).
  
 Multi-omics profiles for the patient samples were also available from the PACE repository [@R-BloodCancerMultiOmics2017], consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
 
-Collectively, these data enabled (i)characterisation of responses to microenvironmental stimuli, (ii) definition of functional patient subgroups, (iii)  profiling of molecular determinants of drug and stimulus responses (iv) mapping of drug - stimulus and drug - stimulus - gene interactions, thus shedding light on the heterogeneity of CLL biology and drug response (Figure \@ref(fig:studyOverview)).
+Collectively, these data enabled (i) characterisation of responses to microenvironmental stimuli, (ii) definition of functional patient subgroups, (iii)  profiling of molecular determinants of drug and stimulus responses (iv) mapping of drug - stimulus and drug - stimulus - gene interactions, thus shedding light on the heterogeneity of CLL biology and drug response (Figure \@ref(fig:studyOverview)).
 
-(ref:studyOverview) Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n = 192). Integrating functional drug-stimulus response profiling with four additional omic layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment responses, and drug-stimulus interactions in CLL. _Figure and caption from Bruch & Giles et al. 2021._
+(ref:studyOverview) Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n = 192). Integrating functional drug-stimulus response profiling with four additional omic layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment responses, and drug-stimulus interactions in CLL. _Figure and caption from Bruch and Giles et al. 2021._
 
 ```{r studyOverview, out.width = "70%", fig.cap='(ref:studyOverview)', echo = FALSE}
 
@@ -113,10 +113,10 @@ knitr::include_graphics("figures/studyOverview.eps")
 ### Additional datasets
 A number of key findings emerged from the above data which warranted further investigation. In addition to the screen, this thesis makes use of a number of validatory datasets, from within our lab and from external sources. These are outlined in the Methods (Chapter \@ref(methods)) and in the relevant results chapters. 
 
-## Data Processing
+## Data Processing {#data-processing}
 ### Processing the raw values obtained from the screen
 This section describes the process of generating viability scores used in downstream analyses (following the same process as published in Bruch and Giles et al. 2021). Initially, raw luminescence measurements from the experiments were read in using custom-made `R` scripts and functions. Raw values represent the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to the amount of ATP present. The ATP levels are directly proportional to the number of viable cells in the well. 
-Figure \@ref(fig:rawViabilities) shows the raw viability values from the DMSO-treated wells for each patient sample.  The absolute values vary between patient samples, and between measuring dates, and thus the viability values required additional normalisation. 
+Figure \@ref(fig:rawViabilities) shows the raw viability values from the DMSO-treated wells for each patient sample.The absolute values vary between patient samples, and between measuring dates, and thus the viability values required additional normalisation. 
 
 (ref:rawViabilities) Boxplots of raw viability count data prior to normalisation and log transformation. For each of the 192 patient samples, there were 50 DMSO-treated wells. Viability represents the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to amount of ATP present.
 
@@ -152,7 +152,7 @@ Raw_Screening_Data %>%
 
 ```
 
-Each viability value was normalised to internal DMSO values of the same plate.  Specifically, the mean of the two  wells for each stimulus, drug or drug-stimulus treatment was divided by the median of the 50 DMSO negative control wells present on each plate,  resulting in viability scores. [CHECK] A value of 0 indicated that all cells were killed by the treatment, and a value of >= 1 indicated the cells survived as well as or better than negative control. 
+Each viability value was normalised to internal DMSO values of the same plate.  Specifically, the well for each stimulus, drug or drug-stimulus treatment was divided by the median of the 48 DMSO negative control wells present on each plate, resulting in viability scores. A value of 0 indicated that all cells were killed by the treatment, and a value of >= 1 indicated the cells survived as well as or better than negative control. 
 
 Given the downstream analysis involved the use of linear modelling, I thus applied a log base $e$ transformation to the viability scores. This generated log-transformed control-normalised viability scores which are used for the majority of the downstream analysis. Here 0 indicates that cells survived as well as negative control. 
 
@@ -214,7 +214,7 @@ kable_styling(latex_options = "striped",
 
 ```
 
-### Assessing drug response
+### Assessing drug response {#drug-responses}
 To assess the quality of the drug response data, I quantified correlation coefficients for every drug pair (Bruch and Giles et al. 2021). Drugs were highly correlated if they shared identical target pathways, suggesting that the screen captures inter-individual differences in pathway dependencies, both sensitively and specifically. For example, BCR inhibitors ibrutinib, idelalisib, PRT062607 and selumetinib were all highly correlated (Figure \@ref(fig:drugCorrelations)).
 
 (ref:drugCorrelations) Heatmap of Pearson correlation coefficients of each pair of drugs, based on log transformed viability values. See Methods section \@ref(correlations). _Figure adapted from Bruch and Giles et al. 2021._
@@ -361,14 +361,14 @@ knitr::include_graphics("figures/microenvironmentCrosstalk.eps")
 
 The stimuli activate a number of critical pathways in CLL, including BCR, TLR, JAK-STAT, NF$\kappa$B and TGF$\beta$. For more information on the importance of these pathways see section \@ref(intro-bcr-signalling) and \@ref(intro-microenvironmental-pathways). Amongst these, the roles of BCR, IL4, sCD40L and TLR stimulation were of particular interest. 
 
-(ref:stimuliPathways)  Overview of stimuli included in the screen and summary of their associated targets. HS-5 Culture Medium is omitted, as no specific target can be shown. _Figure and caption from Bruch & Giles et al. 2021._
+(ref:stimuliPathways)  Overview of stimuli included in the screen and summary of their associated targets. HS-5 Culture Medium is omitted, as no specific target can be shown. _Figure and caption from Bruch and Giles et al. 2021._
 ```{r stimuliPathways, fig.cap='(ref:stimuliPathways)', out.width = "60%", echo = FALSE}
 
 knitr::include_graphics("figures/stimuliPathways.eps")
 
 ```
 
-### Assessing stimulus response
+### Assessing stimulus response {#rna-correlations}
 Before beginning the downstream analysis, it was first important to determine whether  heterogeneity of response to the stimuli could be caused by differences receptor expression, rather than some other cell-intrinsic feature (Bruch and Giles et al. 2021). This would guide our interpretation of the stimulus responses. 
 
 To determine this, we calculated Pearson correlation coefficients to compare log-transformed control - normalised  viability values for each stimulus,  with vst-transformed RNA counts of the matching receptor(s). All Pearson coefficients were less than 0.4, indicating that heterogeneity of response was not related to differential receptor expression. 
