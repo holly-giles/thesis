@@ -32,6 +32,7 @@ output:
     FDC & & Follicular dendritic cell \\
     FDR & & False discovery rate \\
     GSEA & & Gene set enrichment analysis  \\
+    HS-5 CM & & HS-5 Conditioned Medium  \\
     IFN$\gamma$ & & Interferon$\gamma$   \\ 
     
 \end{tabular}
@@ -84,6 +85,4 @@ output:
     WT & & Wild type \\
     ZAP70 & & Tyrosine-protein kinase ZAP-70 \\
 
-    
-   
 \end{tabular}
