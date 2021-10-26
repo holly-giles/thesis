@@ -1,8 +1,12 @@
 # Appendix {-}
 ```{r loadDataAppendix}
+
 #drug-cyt-gene interactions
 load("data/coeff.long.mat_Fig6.RData") # from data for figure 6 in supplement
 load("data/patMeta.RData")
+load("data/cytokines.RData")
+load("data/drugs.RData")
+load("data/df.RData")
 
 
 library(ggplot2)
@@ -14,13 +18,61 @@ library(BloodCancerMultiOmics2017)
 
 bwScale = c("0"="white","1"="black","N.A."="grey90")
 lfsize = 16 # legend font size
+
+```
+
+```{r processDataAppendix}
+
+#add label column to df
+df <- df %>%
+  dplyr::mutate(Cytokine = as.character(Cytokine)) %>%
+  dplyr::mutate(Cytlabel = ifelse(Cytokine == "IL-2", "IL2",
+                            ifelse(Cytokine == "IL-4", "IL4",
+                                   ifelse(Cytokine == "IL-6", "IL6",
+                                          ifelse(Cytokine == "IL-10", "IL10",
+
+                                                        ifelse(Cytokine == "IL-21", "IL21",
+                                                               ifelse(Cytokine == "sCD40L+IL-4","sCD40L + IL4",
+                                                                      ifelse(Cytokine == "IL-15", "IL15",
+                                                                             ifelse(Cytokine == "Interferon gamma","Interferon \u03B3",
+                                                                                    ifelse(Cytokine == "SDF-1a","SDF-1\u03B1",
+                                                                                           ifelse(Cytokine == "IL-1b","IL1\u03B2",
+                                                                                                  ifelse(Cytokine == "TGF-b1","TGF\u03B21", Cytokine)))))))))))) %>%
+
+  dplyr::mutate(Cytokine = factor(Cytokine))
+
+#generate table of Cytokines and assosciated labels
+Cytokine_labels <- df %>% 
+  dplyr::filter(PatientID == "Pat_001", Drug == "DMSO") %>% 
+  dplyr::select( Cytokine, Cytlabel)
+
+colnames(Cytokine_labels) <- c("name", "Cytlabel")
+
+
 ```
 
 ## Figures {-}
 
+(ref:drugPlot) Layout of the 15 drugs on each screening plate. 
 
 
-(ref:diffTFsmallvolPlot) Analysis of ATACseq dataset of two trisomy 12 and two non-trisomy 12 untreated CLL PMBC samples. The volcano plot depicts change in TF activity (x axis) versus BH-adjusted p-values (y axis) for  636  TFs, comparing trisomy 12  and non-trisomy 12 samples. The [@diffTF][REFERENCE] package was ran in analytical mode to calculate TF activity, measured as  weighted mean difference. TFs are labeled if adjusted p-value < 0.01 and absolute weighted mean difference > 0.15.
+```{r drugPlot, fig.cap='(ref:drugPlot)', echo = FALSE, fig.height=5, fig.width = 7, fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+
+knitr::include_graphics("figures/drugPlate.eps")
+
+```
+
+
+(ref:stimulusPlot) Layout of the 18 stimuli on each screening plate. A.A., S.P., Beads, B.S.A. and C.A. refer to additional agents tested in the screen which were not included in downstream analysis.
+
+```{r stimulusPlot, fig.cap='(ref:stimulusPlot)', echo = FALSE, fig.show="hold", fig.height=5, fig.width = 7, fig.align="center", out.width = '50%', dev = 'cairo_pdf'}
+
+knitr::include_graphics("figures/stimulusPlate1.eps")
+knitr::include_graphics("figures/stimulusPlate2.eps")
+
+```
+
+(ref:diffTFsmallvolPlot) Analysis of ATACseq dataset of two trisomy 12 and two non-trisomy 12 untreated CLL PMBC samples. The volcano plot depicts change in TF activity (x axis) versus BH-adjusted p-values (y axis) for  636  TFs, comparing trisomy 12  and non-trisomy 12 samples. The `diffTF` [@Berest2019] software was run in analytical mode to calculate TF activity, measured as  weighted mean difference. TFs are labeled if adjusted p-value < 0.01 and absolute weighted mean difference > 0.15.
 
 
 ```{r diffTFsmallvolPlot, fig.cap='(ref:diffTFsmallvolPlot)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
@@ -77,23 +129,103 @@ ggplot(mtcars)
 
 ## Tables {-}
 
-(ref:receptorPairs) Table depicting stimulus and receptor pairs used in stimulus response - stimulus receptor expression analysis. 
+```{r patientTable, echo = FALSE}
 
-```{r receptorPairs, tab.cap='(ref:receptorPairs)', echo = FALSE}
-
-cyt_and_receptors %>%  
-    kable() %>%
-    kable_styling(latex_options = "striped", 
-                stripe_color = colors[7],
-                html_font = "Arial Narrow", 
-                font_size = 10) 
+patMeta %>%
+  dplyr::select(PatientID, gender, treatment, IGHV.status, `Methylation_Cluster`, del13q, del11q, trisomy12, del17p) %>%
+  dplyr::rename(`Patient ID` = PatientID, `Sex` = gender, `Treated before` = treatment, `IGHV status` = IGHV.status, `Methylation Cluster`=`Methylation_Cluster`, `Del13q`=del13q, `Del11q`=del11q, `Trisomy 12`=trisomy12, `Del17p`=del17p) %>%
+  kable(caption = "Summary of the patient samples and selected genetic features included in this study. For complete genetic profiles see [online vignette](https://github.com/Huber-group-EMBL/CLLCytokineScreen2021).", longtable = TRUE) %>% 
+  row_spec(0, bold = TRUE) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header", "striped"),   stripe_color = colors[7],
+                html_font = "Helvetica", font_size = 7)
 
 ```
 
 
-Table \@ref(tab:geneTable)). 
+```{r drugTableAppendix,  echo = FALSE}
 
-(ref:geneTable) Number of cases of each mutation
+rownames(drugs) <- NULL
+
+drugs %>%
+  dplyr::select(-ID, -approved_012020,-devel_012020, -pathway) %>%
+  dplyr::rename(Drug=Name,
+                `Main targets`=main_targets,
+                `Drug Group`=group,
+                `Target category`=target_category,
+                `Conc. 1`=conc1,
+                `Conc. 2`=conc2, 
+                Company = distributor, 
+                `Cat. No.`=cat_no) %>%
+  kable(caption = "Characteristics of drugs included in the screen.") %>%
+  row_spec(0,bold=TRUE) %>%
+kable_styling(latex_options = c("striped", "scale_down"), 
+              stripe_color = colors[7],
+                html_font = "Helvetica", 
+              font_size = 7)
+
+
+
+```
+
+```{r stimulusTableAppendix,  echo = FALSE, eval = FALSE}
+
+#tidy names for table
+cytokines$stimulus[grepl("IL-4 human recombinant animal component free",cytokines$stimulus)]<-"IL4 human recombinant animal component free"
+cytokines$stimulus[grepl("IL-2 human recombinant animal component free",cytokines$stimulus)]<-"IL2 human recombinant animal component free"
+cytokines$stimulus[grepl("Human IL-1beta",cytokines$stimulus)]<-"Human IL-1$\\beta$"
+cytokines$stimulus[grepl("Human IL-15",cytokines$stimulus)]<-"Human IL15"
+cytokines$stimulus[grepl("Human IFN-gamma",cytokines$stimulus)]<-"Human Interferon $\\gamma$"
+cytokines$stimulus[grepl("IL-10 human Animal component free",cytokines$stimulus)]<-"IL10 human Animal component free"
+cytokines$stimulus[grepl("Human TGF-beta1",cytokines$stimulus)]<-"Human TGF$\\beta$"
+cytokines$stimulus[grepl("Human IL-6",cytokines$stimulus)]<-"Human IL6"
+cytokines$stimulus[grepl("alpha",cytokines$stimulus)]<-"Human SDF-1$\\alpha$ (CXCL12)"
+cytokines$stimulus[grepl("HS-5 konditioniertes Medium",cytokines$stimulus)]<-"HS-5 conditioned medium"
+
+newCytokines <-  
+cytokines %>%
+  left_join(Cytokine_labels, by = "name") %>%
+  dplyr::select(-name, -additional_pathways) %>%
+  dplyr::rename(Stimulus=stimulus, 
+                Name = Cytlabel, 
+                Concentration=conc, 
+                Pathway=pathway,
+                Source=source, 
+                Company =company, 
+                `Cat. No.`=cat_no, 
+                `Lot No.`=lot_no) %>%
+  dplyr::select(Stimulus, Name,  everything())
+
+
+#update label for latex 
+
+newCytokines$Name[grepl("TGF\u03B21",cytokines$Name)] <- "TGF$\\beta$"
+newCytokines$Name[grepl("IL1\u03B2",cytokines$Name)] <- "IL1$\\beta$"
+newCytokines$Name[grepl("Interferon \u03B3",cytokines$Name)] <- "Interferon $\\gamma$"
+newCytokines$Name[grepl("SDF-1\u03B1",cytokines$Name)] <- "SDF-1$\\alpha$"
+
+newCytokines %>% 
+  kable(caption = "Characteristics of the stimuli included in the screen.") %>%
+  row_spec(0,bold=TRUE) %>%
+  kable_styling(latex_options = c("striped", "scale_down"), 
+                stripe_color = colors[7],
+                html_font = "Helvetica", 
+                font_size = 7)
+
+```
+
+
+
+```{r receptorPairs, tab.cap='(ref:receptorPairs)', echo = FALSE}
+
+cyt_and_receptors %>%  
+    kable(caption = "Table depicting stimulus and receptor pairs used in stimulus response - stimulus receptor expression analysis.") %>%
+    kable_styling(latex_options = "striped", 
+                stripe_color = colors[7],
+                html_font = "Helvetica", 
+                font_size = 7) 
+
+```
+
 
 ```{r}
 
@@ -145,6 +277,8 @@ patM = patM[ord]
 ```
 
 
+
+
 ```{r geneTable, out.width = "70%", fig.cap='(ref:geneTable)', echo = FALSE, eval = TRUE}
 
 plotDF = meltWholeDF(factorsord)
@@ -179,10 +313,12 @@ mutPL = ggplotGrob(
 res = table(plotDF[,c("X","Measure")])
 
 
-knitr::kable(res[order(res[,2], decreasing=TRUE),]) %>% kable_styling(latex_options = "striped", 
-              stripe_color = colors[7],
-                html_font = "Helvetica")
-
+knitr::kable(res[order(res[,2], decreasing=TRUE),],
+             caption = "Number of cases of each gene mutation within the cohort used in this study") %>%
+    kable_styling(latex_options = "striped", 
+                stripe_color = colors[7],
+                html_font = "Helvetica", 
+                font_size = 7) 
 
 
 ```
