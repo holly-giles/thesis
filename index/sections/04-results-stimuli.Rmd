@@ -1164,7 +1164,7 @@ ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
 
 However, whilst certain stimuli clustered into groups, very few stimulus pairs showed any significant correlation. Almost all stimulus pairs showed little correlation (R < 0.6), including those that targeted similar downstream pathways, indicating a high degree of functional diversity amongst soluble factors in the CLL microenvironment. For example, JAK-STAT agonists such as IL4 and IL6 showed little correlation (Figure \@ref(fig:correlationsScatter)A). 
 
-Only two stimulus pairs showed correlations where R > 0.6, and in both cases these targeted near identical receptors or downstream pathways. These included CpG ODN (TLR 9) and Resiquimod (TLR 7 and 8) (Figure \@ref(fig:correlationsScatter)B), and IL4 and IL4 + CD40L which primarily target JAK3 - STAT6.
+Only two stimulus pairs showed correlations where R > 0.6, and in both cases these targeted near identical receptors or downstream pathways. These included CpG ODN (CpG oligodeoxynucleotides, TLR 9) and Resiquimod (TLR 7 and 8) (Figure \@ref(fig:correlationsScatter)B), and IL4 and IL4 + CD40L which primarily target JAK3 - STAT6.
 
 In contrast, correlation of drug - drug pairs demonstrated that drugs targeting components of the same  pathway were highly correlated. For quality control purposes, this indicated that our data sensitively and specifically reflect inter-individual differences in pathway dependencies [@JCIpaper].
 
@@ -1505,7 +1505,7 @@ The graph of the CDFs of the consensus matrix for each k indicated that the CDF 
 
 
 ## Functional characterisation of patient clusters
-###  C1 - C4 show distinct response profiles with the panel of stimuli
+###  C1 - C4 show distinct response profiles with the panel of stimuli {#cluster-responses}
 Consensus clustering identified four patient subgroups, which each responded differently to the panel of stimuli. This raised the possibility that responses to microenvironmental stimulation are linked to cell-intrinsic features, and could be prognostic. Thus, I next aimed to characterise the phenotypic and molecular differences between these four clusters. 
 
 I began by investigating the differences between the response profiles of each cluster. I refer to the four clusters as C1 to C4: C1 and C2 were enriched for IGHV-U whilst the samples in C3 and C4 were mostly IGHV-M. Amongst the IGHV-U enriched  C1 and C2, both showed strong, positive responses to IL4 and TLR7/8/9 stimulation.  C2 could be distinguished by stronger responses to the stimuli overall, in particular to NF$\kappa$B agonists IL1$\beta$,  anti-IgM, BAFF and sCD40L. Amongst the IGHV-M enriched clusters, C3 showed weaker responses to the majority of stimuli, and C4 was defined by a negative response to TLR7/8/9 stimulation (Bruch & Giles et al. 2021). Figure \@ref(fig:clusterStimuliResponse) summarises these findings in  more detail, showing responses stratified by cluster for a subset of the stimuli.
