@@ -156,7 +156,7 @@ Section \@ref(trisomy12-classifier). Trisomy 12 phenocopies were identified usin
 
 Second, the function `predict` was used with each of the 50 model fits, to assign trisomy 12 status for each sample, based on the matrix of z scores.  Non-trisomy 12 samples were determined to be misclassified i.e. phenocopies if they were wrongly annotated as trisomy 12 in >25 of repeats. 
 
-#### diffTF analysis of TF activity in trisomy 12 CLL
+#### diffTF analysis of TF activity in trisomy 12 CLL {#trisomy12-ATACseq-method}
 Section \@ref(trisomy12-ATACseq). For the external ATACseq data set from @Rendeiro2016 (n = 52),  trisomy 12 status was not included in the  published metadata. Trisomy 12 status was annotated based on the mean number of reads in the chromatin accessible peaks for each sample. All samples containing 1.4 times more reads in the peaks located on chromosome 12, compared to the peaks on all other chromosomes, were classified as trisomy 12 (n = 9).
 
 Following the `diffTF` @Berest2019 protocol,  a consensus peak set was first generated using the function `dba.peakset` from the package `DiffBind` [@R-DiffBind] and with  `minOverlap` = 3, which defines the minimum number of samples in which a peak should be present to be included in the consensus set. Sex chromosomes, non-assembled contigs and alternative haplotypes were then filtered.  Transcription factor binding sites were defined based on the HOCOMOCO v10 database [@HOCOMOCO] which summarises TF binding sites as Position Weight Matrices (PWMs) from a range of ChIPseq experiments, resulting in 638 human TFs.  `diffTF` was run in permutation mode with design formula: `∼ sample_processing_batch + sex + IGHV status + trisomy 12`. For more detail see @Berest2019. 
