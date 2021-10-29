@@ -28,7 +28,7 @@ wrap_plots(plotList$`treatment_drug:Selumetinib:treatment_cytokine:IL-4`)) + plo
 
 ```{r IL4ihc, fig.cap='(ref:IL4ihc)', message = FALSE,  echo = FALSE, fig.height=6.6, fig.width = 12, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
 
-
+ggplot(mtcars, aes(x = mpg, y = cyl ))
 
 ```
 
