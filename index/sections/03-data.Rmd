@@ -96,7 +96,7 @@ colnames(Cytokine_labels) <- c("name", "Cytlabel")
 ### Drug-stimulus combinatorial pertubation assay and patient sample multi-omic profiling {#the-screen}
 This thesis centres on a dataset of 192 CLL patient samples subjected to functional and molecular profiling. A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis.  
 
-The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al. 2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient sample. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells (Appendix Figure \@ref(drugPlate) and Figure \@ref(stimulusPlate)). After 48 hours of incubation at 37$^\circ$C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates  the number  of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \@ref(drugs) and \@ref(stimuli).
+The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al. 2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient sample. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells (Appendix Figure \@ref(fig:drugPlot) and Figure \@ref(fig:stimulusPlot)). After 48 hours of incubation at 37$^\circ$C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates  the number  of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \@ref(drugs) and \@ref(stimuli).
  
 Multi-omics profiles for the patient samples were also available from the PACE repository [@R-BloodCancerMultiOmics2017], consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
 
@@ -347,10 +347,10 @@ newCytokines %>%
 
 ```
 
-A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance *ex vivo* (see section \@ref(intro-microenvironmental-pathways). Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvironment. \@ref(fig:microenvironmentCrosstalk).
+A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance *ex vivo* (see section \@ref(intro-microenvironmental-pathways)). Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvironment. \@ref(fig:microenvironmentCrosstalk).
 
 
-(ref:microenvironmentCrosstalk) A selection of interactions between CLL cells and components of the microenvironment, covered by the screen. (See section \@ref(intro-microenvironmental-pathways) for more details on these signals).  _Figure adapted from an original published in @Wiestner2015 ._
+(ref:microenvironmentCrosstalk) A selection of interactions between CLL cells and components of the microenvironment, covered by the screen. See section \@ref(intro-microenvironmental-pathways) for more details on these signals.  _Figure adapted from an original published in @Wiestner2015 ._
 
 
 ```{r microenvironmentCrosstalk, fig.cap='(ref:microenvironmentCrosstalk)', out.width = "60%", echo = FALSE}
@@ -561,6 +561,7 @@ gt = gtable_add_grob(gt, mutPL$grobs[[whichInGrob(mutPL, "axis-l")]], 9, 1)
 ```
 
 (ref:geneticData) Summary of the genetic characteristics of the patient samples in the screen. Annotations: Grey shows when patient sample is not annotated.  Black indicates treated / IGHV-M,  Green indicates occurrence of CNV, Yellow indicates gene is Mutated.
+
 ```{r fig.height = 2, fig.width = 3, eval= FALSE}
 
   
@@ -568,7 +569,6 @@ gt = gtable_add_grob(gt, mutPL$grobs[[whichInGrob(mutPL, "axis-l")]], 9, 1)
 ```
 
 ```{r geneticData, fig.cap='(ref:geneticData)', fig.height = 25, fig.width = 20, echo=FALSE}
-
 
 wrap_elements(grid.draw(gt)) 
 
