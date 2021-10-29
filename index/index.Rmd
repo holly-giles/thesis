@@ -32,8 +32,8 @@ acknowledge: |
   `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-acknowledge.Rmd"), collapse = '\n  ')`
 abbreviations: |  
   `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-abbreviations.Rmd"), collapse = '\n  ')`
-lot: true                               # list of tables
-lof: true                              # list of figures
+lot: false                               # list of tables
+lof: false                              # list of figures
 link-citations: true                  #can click link to go to ref sectin
 bibliography: [bib/references.bib,  bib/packages.bib]     # bibliography file, can also add biblio-style: 
 #
