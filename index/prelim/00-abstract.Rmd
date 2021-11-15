@@ -1,3 +1,70 @@
 # Abstract {-}
-The tumour microenvironment and genetic alterations collectively influence disease biology and drug resistance in Chronic Lymphocytic Leukaemia (CLL). To establish an integrative understanding of these factors in CLL biology, we performed a combinatorial assay using 12 drugs individually co-applied with each of 17 microenvironmental stimuli on 192 samples of CLL peripheral blood mononucleated cells. We examined microenvironment response across a heterogeneous patient cohort and identified four distinct CLL subgroups that differed in their response landscapes and in patient outcomes. By combining our data with whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data of the same tumours, we systematically searched for molecular determinants of stimulus response and found trisomy 12 as a key modulator. Our data suggest that the amplifying effect of trisomy 12 on the response to environmental signals is mediated by the transcription factors Spi-B and PU.1. We generated a comprehensive map of drug-microenvironment interactions in CLL, and profiled the modulating impact of genetic features on these antagonistic and synergistic effects. Interleukin (IL) 4  and Toll-Like Receptor (TLR) 7/8/9 stimuli showed the most interactions. Both pathways were more active in CLL-infiltrated lymph nodes than in healthy samples (p<0.001), and high IL4 activity in lymph nodes correlated with shorter survival (p=0.038). We provide a multi-layered resource to investigate microenvironmental and drug interplay in CLL ([Repository](https://git.embl.de/giles/cllcytokinescreen2021) & [Shiny](https://www.google.com/url?q=https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/&sa=D&source=editors&ust=1625764640786000&usg=AOvVaw01HOFP7k2BJRLTteCXa8qy)). Our results highlight the importance of cell-extrinsic influences on drug response and disease progression, and how these further depend on molecular features. 
 
+SO how to write abstract; 
+
+get a structure
+Put i what i want to highlight
+Write
+Send for feedabck 
+
+# Abstract
+First sentence: where is the gap
+At least one sentence fo each chapter 
+What are the research questions? 
+
+Closing sentence: how have we advanced 
+
+Topic: 
+Chronic Lymphocytic Leukaemia is a malignancy of mature B lymphocytes, characterised by the accumulation of malignant cells within the blood, bone marrow and lymph nodes. The disease pathogenesis is driven by multiple factors, including molecular features, signalling via the B cell receptor (BCR) and interactions with non-neoplastic cells within the lymphoid tissues (known as the tumour microenvironment). The impact of individual genetic features and microenvironmental signals has been well-characterised, and CLL represents a success story in linking advances in molecular understanding to improvements in clinical approaches. However, very few studies have studied these features integratively, and systematic investigations of the influence of cell-intrinsic and cell-extrinsic features on CLL are lacking.  
+
+How we tackled the problem: 
+To investigate the integrative impact of these features on CLL biology, in this thesis I analyse screening data of primary patient samples, combined with multi-omics profiles of the same samples. The screen was performed  using 12 drugs co-applied with 17 individual microenvironmental stimuli on CLL peripheral blood mononucleated cells (n = 192). I combined this data with whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data of matching tumour samples, and additional ATAC-sequencing and RNA-sequencing data for validatory work. The screening data is complemented with *in vivo* data on clinical outcomes, and IHC of patient lymph nodes stained for pSTAT6, pIRAK4 and STAT6.  I apply statistical inference and regression modelling to integrate multiple data types, with the aim of finding new drivers and mechanisms of drug resistance in CLL. 
+
+Results
+Profiling responses to microenvironmental stimulation across the heterogeneous patient cohort delineates   four patient subgroups that have differential disease progression dynamics, and molecalur profiles, suggesting the dynamics of the microenvironment is important to disease outcomes.  I perform a systematic survey of genetic determinants of microenvironmental response and identify trisomy 12 as a modulator of microenvironemtnal stimulation. THe data suggest that the activity of the transcription factors Spi-B and PU.1 may mediate this effect. I generate a map of interactions between microenvironmental signalling pathways and drugs, and identify novel drug -resistance mechanism including the effect of interferon gamma on ibrutinib toxicity. I demonstrate how drug - microenvironment interactions can be further modulated by molecular features, and identify drug resistance mechanism that occur in suggests of CLL cases. For example, TLR activity induces resistance to fludarabine in IGH-U and triomsy 12 patients, but not in IGHV-M. I demonstrate the *in vivo* relevance of these findings within CLL-infiltrated lymph nodes, which show higher levels of IL4 and TLR signalling compared to non-neoplastic samples (p<0.001). Elevated IL4 signalling in CLL -infiltrated lymphd nodes correlates with poorer outcomes (p=0.038). CLL represents a prototypic model for the study of cell-intrinsic and cell-extrinsic features in cancers. This data set represents an important resource for exploring the impact of these features and I have published the dataset and reproducible analyses as part of an online git repository () and interactive shiny app(). 
+
+Collectively, these results demonstrate the integrative impact of molecular features and microenvironmental stimuli on drug response and propose potential novel drivers and drug resistance mechanisms and strategies for targeting these in future work. 
+
+
+
+Introduction
+Introduction. In one sentence, what’s the topic? Phrase it in a way that your reader will understand. If you’re writing a PhD thesis, your readers are the examiners – assume they are familiar with the general field of research, so you need to tell them specifically what topic your thesis addresses. Same advice works for scientific papers – the readers are the peer reviewers, and eventually others in your field interested in your research, so again they know the background work, but want to know specifically what topic your paper covers.
+
+Topic: the collective influence of cell intrisinc and cell extrisnc features on CLL biology and drug response 
+
+Introduction
+State the problem you tackle. What’s the key research question? Again, in one sentence. (Note: For a more general essay, I’d adjust this slightly to state the central question that you want to address) Remember, your first sentence introduced the overall topic, so now you can build on that, and focus on one key question within that topic. If you can’t summarize your thesis/paper/essay in one key question, then you don’t yet understand what you’re trying to write about. Keep working at this step until you have a single, concise (and understandable) question.
+
+How do mciroenvroinmetnal signals and genetic feautres impact on drug response in CLL? Can we target this?
+
+
+
+
+Introduction
+Summarize (in one sentence) why nobody else has adequately answered the research question yet. For a PhD thesis, you’ll have an entire chapter, covering what’s been done previously in the literature. Here you have to boil that down to one sentence. But remember, the trick is not to try and cover all the various ways in which people have tried and failed; the trick is to explain that there’s this one particular approach that nobody else tried yet (hint: it’s the thing that your research does). But here you’re phrasing it in such a way that it’s clear it’s a gap in the literature. So use a phrase such as “previous work has failed to address…”. (if you’re writing a more general essay, you still need to summarize the source material you’re drawing on, so you can pull the same trick – explain in a few words what the general message in the source material is, but expressed in terms of what’s missing)
+
+-stuies so far have look ed at individual components, or lacked integrative effects, most stuides on drug response are in absence of signals (despite plenty of evidence that they are important), some other models are hard to find cause and effect, model sysems to investigate me dont also profile geneitcs 
+
+-genetic effcets do not ocmpeltey explain treatment outocmes, cure is rare, ME is proabbly responsible 
+
+Methods / Data
+Explain, in one sentence, how you tackled the research question. What’s your big new idea? (Again for a more general essay, you might want to adapt this slightly: what’s the new perspective you have adopted? or: What’s your overall view on the question you introduced in step 2?)
+screen combined with mutliocs data, along with multomcis follow up experiments and clinical data and lymph node data and powerful anlaysitcal technqiueus 
+
+Methods / Data
+In one sentence, how did you go about doing the research that follows from your big idea. Did you run experiments? Build a piece of software? Carry out case studies? This is likely to be the longest sentence, especially if it’s a PhD thesis – after all you’re probably covering several years worth of research. But don’t overdo it – we’re still looking for a sentence that you could read aloud without having to stop for breath. Remember, the word ‘abstract’ means a summary of the main ideas with most of the detail left out. So feel free to omit detail! (For those of you who got this far and are still insisting on writing an essay rather than signing up for a PhD, this sentence is really an elaboration of sentence 4 – explore the consequences of your new perspective).
+
+used statistical inference and regression modelling to integrate these data types - new bigger scale biolgoy 
+
+Results 1 -4
+sitmuli eheternogenous resopnse, define subgroups, may be prognsotics and hsoudl be accounted for in models 
+Genetc and ME effects integater - tirsomy 12 is a key modeulator, and incompeltely understood, spi and PU1
+drug resistance meachniems isnlcu intergeren gamma and Ibrutinib, how tehse can be further modualtored flduarabinr and tlr 
+il4 levels are higher, and relate to sruvival times 
+resource - this is a protypic model 
+
+
+Conclusion, where is the advacenemtn 
+As a single sentence, what’s the key impact of your research? Here we’re not looking for the outcome of an experiment. We’re looking for a summary of the implications. What’s it all mean? Why should other people care? What can they do with your research. (Essay folks: all the same questions apply: what conclusions did you draw, and why would anyone care about them?)
+
+demonstrate teh integrative effectgs of drugs, stimuli and modelucalr features, identifying new targets in CLL, and providng a resoruce 
