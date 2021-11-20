@@ -7,6 +7,8 @@ output:
 # Data {#data}
 This chapter provides an overview of the datasets that are central to this thesis. It also covers the generation of resources to make the data and associated analysis publicly-available. 
 
+The screening dataset discussed here was produced and published as part of the manuscript Giles and Bruch et al. 2021. Some analysis and figures outlined in this chapter have also been published in Bruch and Giles et al. 2021, and this is clearly stated where this is the case. 
+
 ```{r, echo = FALSE}
 
 knitr::opts_chunk$set(
@@ -91,12 +93,11 @@ colnames(Cytokine_labels) <- c("name", "Cytlabel")
 ```
 
 
-
 ## Experimental overview
 ### Drug-stimulus combinatorial pertubation assay and patient sample multi-omic profiling {#the-screen}
-This thesis centres on a dataset of 192 CLL patient samples subjected to functional and molecular profiling. A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis.  
+This thesis centres on a dataset of 192 CLL patient samples subjected to functional and molecular profiling. A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis (Bruch and Giles et al. 2021).  
 
-The screen was primarily performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al. 2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient sample. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells (Appendix Figure \@ref(fig:drugPlot) and Figure \@ref(fig:stimulusPlot)). After 48 hours of incubation at 37$^\circ$C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method calculates the number of viable cells in a culture by determining the quantity of ATP present, which indicates  the number  of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \@ref(drugs) and \@ref(stimuli).
+The screen was primarily designed and performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al. 2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient sample. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells (Appendix Figures \@ref(fig:drugPlot), \@ref(fig:stimulusPlot1) and \@ref(fig:stimulusPlot2)). After 48 hours of incubation at 37$^\circ$C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method estimates the number of viable cells in a culture by determining the quantity of ATP present, which indicates the number of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \@ref(drugs) and \@ref(stimuli).
  
 Multi-omics profiles for the patient samples were also available from the PACE repository [@R-BloodCancerMultiOmics2017], consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
 
@@ -116,11 +117,11 @@ A number of key findings emerged from the above data which warranted further inv
 ## Data Processing {#data-processing}
 ### Processing the raw values obtained from the screen
 This section describes the process of generating viability scores used in downstream analyses (following the same process as published in Bruch and Giles et al. 2021). Initially, raw luminescence measurements from the experiments were read in using custom-made `R` scripts and functions. Raw values represent the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to the amount of ATP present. The ATP levels are directly proportional to the number of viable cells in the well. 
-Figure \@ref(fig:rawViabilities) shows the raw viability values from the DMSO-treated wells for each patient sample.The absolute values vary between patient samples, and between measuring dates, and thus the viability values required additional normalisation. 
 
-(ref:rawViabilities) Boxplots of raw viability count data prior to normalisation and log transformation. For each of the 192 patient samples, there were 50 DMSO-treated wells. Viability represents the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to amount of ATP present.
 
-```{r rawViabilities, out.width = "70%", fig.cap='(ref:rawViabilities)', echo = FALSE}
+(ref:rawViabilities) Boxplots of raw viability count data prior to normalisation and log transformation. For each of the 192 patient samples, there were 50 DMSO-treated wells.  _Raw data read in and initial processing performed by Peter-Martin Bruch, figure adapted from Bruch and Giles et al. 2021._ 
+
+```{r rawViabilities, out.width = "60%", fig.cap='(ref:rawViabilities)', echo = FALSE}
 
 patOrder <- 
   Raw_Screening_Data %>% 
@@ -152,24 +153,27 @@ Raw_Screening_Data %>%
 
 ```
 
-Each viability value was normalised to internal DMSO values of the same plate.  Specifically, the well for each stimulus, drug or drug-stimulus treatment was divided by the median of the 48 DMSO negative control wells present on each plate, resulting in viability scores. A value of 0 indicated that all cells were killed by the treatment, and a value of >= 1 indicated the cells survived as well as or better than negative control. 
 
-Given the downstream analysis involved the use of linear modelling, I thus applied a log base $e$ transformation to the viability scores. This generated log-transformed control-normalised viability scores which are used for the majority of the downstream analysis. Here 0 indicates that cells survived as well as negative control. 
+Figure \@ref(fig:rawViabilities) shows the raw viability values from the DMSO-treated wells for each patient sample. The absolute values vary between patient samples, and between measuring dates, and thus the viability values required additional normalisation. 
+
+Each viability value was normalised to internal DMSO values of the same plate.  Specifically, the well for each stimulus, drug or drug-stimulus treatment was divided by the median of the 48 DMSO negative control wells present on each plate, resulting in viability scores. A value of 0 indicated that all cells were killed by the treatment, and a value of 1 indicated the cells survived as well as in the negative control. 
+
+Given the downstream analysis involved the use of linear modelling, I thus applied a natural logarithm transformation to the viability scores. This generated log-transformed control-normalised viability scores which are used for the majority of the downstream analysis. Here 0 indicates that cells survived as well as negative control. 
 
 ### Quality control and data reproducibility 
 Next, several additional quality control steps were considered, with the aim of a) adjusting for any spatial effects on each screening plate, b) accounting for any batch effects between screening batches, c) testing data reproducibility. 
 
-First, the screening data for each well on each plate was plotted in a grid corresponding to the plate layout, to visualise whether viability values were affected by their position on the plate. We discussed adjusting for any position effect by fitting a surface to the negative control wells, to generate correction factors for each well for each plate. The resulting correction factor was then subtracted from each of the treatment wells. We decided that the position effect was not sufficient to warrant this adjustment, and continued the analysis with the unadjusted values. [CHECK]
+First, the screening data for each well on each plate was plotted in a grid corresponding to the plate layout, to visualise whether viability values were affected by their position on the plate. We discussed adjusting for any position effect by fitting a surface to the negative control wells, to generate correction factors for each well for each plate. The resulting correction factor was then subtracted from each of the treatment wells. We decided that the position effect was not sufficient to warrant this adjustment, and continued the analysis with the unadjusted values. [CHECK/remove]
 
-With regards to batch effects, screening was performed on 16 separate days. We concluded that normalising data to the DMSO-treated wells on each plate sufficiently accounted for this. [CHECK]. Finally, with respect to data reproducibility, each plate was tested twice, such that the  resulting viability scores are the mean of two duplicates [CHECK].
+With regards to batch effects, screening was performed on 16 separate days. We concluded that normalising data to the DMSO-treated wells on each plate sufficiently accounted for this. [CHECK]. Finally, with respect to data reproducibility, each plate was tested twice, such that the  resulting viability scores are the mean of two duplicates [CHECK, add correlation figure].
 
 Thus, the data processing steps generated robust, log-transformed control-normalised viability scores that aim to capture the biological impact of the concomitant application of drugs and stimuli, outlined below. 
 
 ## Characteristics of drugs used in the screen {#drugs}
 ### The panel of drugs 
-We aimed to generate a systematic study of the impact of soluble factors on therapies in CLL (Bruch and Giles et al. 2021). In addition, we were interested to dissect the effect of simultaneous inhibition and stimuli of critical pathways in CLL. To that end, a panel of 17 drugs was constructed, encompassing FDA-approved therapies for CLL, along with a number of drugs in clinical trial or laboratory compounds targeting pathways of interest (Figure \@ref(fig:drugCategories)). These included fludarabine (a frontline chemotherapeutic) and ibrutinib and idelalisib (newer BCR inhibitors). 
+This study aims to generate a systematic investigation of the impact of soluble factors on therapies and critical pathways in CLL (Bruch and Giles et al. 2021). To that end, a panel of 17 drugs was constructed, encompassing FDA-approved therapies for CLL, along with a number of drugs in clinical trial or laboratory compounds targeting pathways of interest (Figure \@ref(fig:drugCategories)). These included fludarabine (a frontline chemotherapeutic) and ibrutinib and idelalisib (newer BCR inhibitors). 
 
-(ref:drugCategories) Bar plot of the drugs used in screen, indicating targets and licencing status. _Figure from Bruch and Giles et al. 2021)._
+(ref:drugCategories) Bar plot of the drugs used in screen, indicating targets and licencing status. _Figure from Bruch and Giles et al. 2021._
 
 ```{r  echo = FALSE}
 #add row names to drugs
@@ -190,36 +194,15 @@ drugCategories
 
 ```
 
-The number and concentration of drugs included was limited by the size of the plate. Thus there is minimal overlap between drug targets, and two concentrations were used for each drug. The choice of concentration was guided by the results of a previous drug screen in CLL patients, performed in our lab [@JCIpaper]. The concentrations used were expected to reduce CLL viability without eliminating all cells. Drug concentrations are shown in Table \@ref(tab:drugTable).  
+The number and concentration of drugs included was limited by the size of the plate. Thus there is minimal overlap between drug targets, and two concentrations were used for each drug. The choice of concentration was guided by the results of a previous drug screen in CLL patients, performed in our lab [@JCIpaper]. The concentrations used were expected to reduce CLL viability without eliminating all cells. Drug concentrations are shown in Appendix Table \@ref(tab:drugTableAppendix).  
 
-
-```{r drugTable, out.width = "30%", echo = FALSE}
-
-rownames(drugs) <- NULL
-
-drugs %>%
-  dplyr::select(-ID, -approved_012020,-devel_012020, -pathway, -distributor, -cat_no) %>%
-  dplyr::rename(Drug=Name,
-                `Main targets`=main_targets,
-                `Drug Group`=group,
-                `Target category`=target_category,
-                `Conc. 1`=conc1,
-                `Conc. 2`=conc2) %>%
-  kable(caption = "Drug characteristics, including targets, concentrations and licencing status.") %>%
-  row_spec(0,bold=TRUE) %>%
-kable_styling(latex_options = "striped", 
-              stripe_color = colors[7],
-                html_font = "Helvetica", 
-              font_size = 7)
-
-```
 
 ### Assessing drug response {#drug-responses}
-To assess the quality of the drug response data, I quantified correlation coefficients for every drug pair (Bruch and Giles et al. 2021). Drugs were highly correlated if they shared identical target pathways, suggesting that the screen captures inter-individual differences in pathway dependencies, both sensitively and specifically. For example, BCR inhibitors ibrutinib, idelalisib, PRT062607 and selumetinib were all highly correlated (Figure \@ref(fig:drugCorrelations)).
+To assess the quality of the drug response data, we quantified correlation coefficients for every drug pair (Bruch and Giles et al. 2021). Drugs were highly correlated if they shared identical target pathways, suggesting that the screen captures inter-individual differences in pathway dependencies, both sensitively and specifically. For example, BCR inhibitors ibrutinib, idelalisib, PRT062607 and selumetinib were all highly correlated (Figure \@ref(fig:drugCorrelations)A).
 
-(ref:drugCorrelations) Heatmap of Pearson correlation coefficients of each pair of drugs, based on log transformed viability values. See Methods section \@ref(correlations). _Figure adapted from Bruch and Giles et al. 2021._
+(ref:drugCorrelations) (A) Heatmap of Pearson correlation coefficients of each pair of drugs, based on log transformed viability values. See Methods section \@ref(correlations).  (B) Log transformed control-normalised viability values for all drugs that were included in the screen after quality control. p values from Student's t-test. _Figure (A) adapted from original generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al. 2021._
 
-```{r drugCorrelations, out.width = "70%", fig.cap='(ref:drugCorrelations)', echo = FALSE, eval = TRUE}
+```{r drugCorrelations, out.width = "70%", fig.cap='(ref:drugCorrelations)', fig.width  = 12, fig.height = 5, echo = FALSE, eval = TRUE}
 
 # Using high Drug Concentrations
 #list of cytokines
@@ -257,7 +240,7 @@ cormat <- reorder_cormat(cormat)
 upper_tri <- get_upper_tri(cormat)
 melted_cormat <- melt(upper_tri, na.rm = TRUE)
 
-
+A<- 
 ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
  geom_tile(color = "white")+
  scale_fill_gradient2(low = palblues[1], high = palreds[7], mid = "white", 
@@ -272,21 +255,11 @@ ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
   panel.grid.major = element_blank(),
   panel.border = element_blank(),
   panel.background = element_blank(),
-  axis.ticks = element_blank(),
-  axis.text.x = element_blank(),
   legend.justification = c(1, 0),
   legend.position = c(0.4, 0.7),
   legend.direction = "horizontal")+
   guides(fill = guide_colorbar(barwidth = 5, barheight = 1,
                 title.position = "top", title.hjust = 0.2))
-
-```
-
-In addition, the individual drug response profiles (Figure \@ref(fig:drugResponses)) indicated that each of the drugs decreased CLL viability as expected, and in line with previous CLL drug screens performed in our lab [@JCIpaper].   
-
-(ref:drugResponses) Log transformed control-normalised viability values for all drugs that were included in the screen after quality control. p values from Student's t-test. 
-
-```{r drugResponses, fig.cap='(ref:drugResponses)', out.width="70%", echo = FALSE}
 
 orderDrug <-
   df %>%
@@ -299,12 +272,13 @@ orderDrug <- as.character(orderDrug$Drug)
 
 df$Drug <- factor(df$Drug, levels=orderDrug)
 
+B<- 
   df %>%
   dplyr::filter(Drug_Concentration =="High", Cytokine == "No Cytokine") %>%
   ggplot(aes(x = Drug,
              y = Log)) +
   geom_hline(yintercept = 0) +
-  geom_violin(cex=0.4, alpha=0.7,aes(x = Drug,y = Log)) + 
+  geom_violin(cex=0.4, alpha=0.7,color = palblues[1], aes(x = Drug,y = Log)) + 
   scale_colour_manual(name = 'Viability > 0', values = setNames(c(palreds[8], palblues[1]), c(T, F)))+
   t2 +
   guides(size="none", color = "none")+
@@ -313,39 +287,16 @@ df$Drug <- factor(df$Drug, levels=orderDrug)
   xlab("")
 
 
+A + B + plot_annotation(tag_levels = c('A'))
+
 ```
+
+In addition, the individual drug response profiles (Figure \@ref(fig:drugCorrelations)B) indicated that each of the drugs decreased CLL viability as expected, and in line with previous CLL drug screens performed in our lab [@JCIpaper].   
 
 ## Characteristics of stimuli used in the screen {#stimuli}
 ### The panel of stimuli {#stimuli-info}
-The stimuli selected for the screen, their associated targets and concentrations used  are described in Table \@ref(tab:cytTable). They include 16 individual stimuli, plus HS-5 Culture Medium which encompasses the range of soluble factors secreted by the stromal cell line HS-5 (Bruch and Giles et al. 2021.)
+The stimuli selected for the screen, their associated targets and concentrations used  are described in Appendix Table \@ref(tab:stimulusTableAppendix). They include 16 individual stimuli, plus HS-5 Culture Medium which encompasses the range of soluble factors secreted by the stromal cell line HS-5 (Bruch and Giles et al. 2021.)
 
-
-```{r cytTable, out.width = "30%", fig.cap='(ref:cytTable)', echo = FALSE}
-
-newCytokines <-  
-cytokines %>%
-  left_join(Cytokine_labels, by = "name") %>%
-  dplyr::select(-name, -additional_pathways, -source, -company, -cat_no, -lot_no) %>%
-  dplyr::rename(Name = Cytlabel, Concentration=conc, Pathway=pathway) %>%
-
-  dplyr::select(Name,  Concentration, Pathway)
-
-#update label for latex 
-
-newCytokines$Name[grepl("TGF\u03B21",cytokines$Name)] <- "TGF$\\beta$"
-newCytokines$Name[grepl("IL1\u03B2",cytokines$Name)] <- "IL1$\\beta$"
-newCytokines$Name[grepl("Interferon \u03B3",cytokines$Name)] <- "Interferon $\\gamma$"
-newCytokines$Name[grepl("SDF-1\u03B1",cytokines$Name)] <- "SDF-1$\\alpha$"
-
-newCytokines %>% 
-  kable(caption = "Stimuli names, targets pathways and concentrations.") %>%
-  row_spec(0,bold=TRUE) %>%
-  kable_styling(latex_options = "striped", 
-                stripe_color = colors[7],
-                html_font = "Helvetica", 
-                font_size = 7)
-
-```
 
 A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance *ex vivo* (see section \@ref(intro-microenvironmental-pathways)). Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvironment. \@ref(fig:microenvironmentCrosstalk).
 
@@ -362,6 +313,7 @@ knitr::include_graphics("figures/microenvironmentCrosstalk.eps")
 The stimuli activate a number of critical pathways in CLL, including BCR, TLR, JAK-STAT, NF$\kappa$B and TGF$\beta$. For more information on the importance of these pathways see section \@ref(intro-bcr-signalling) and \@ref(intro-microenvironmental-pathways). Amongst these, the roles of BCR, IL4, sCD40L and TLR stimulation were of particular interest. 
 
 (ref:stimuliPathways)  Overview of stimuli included in the screen and summary of their associated targets. HS-5 Culture Medium is omitted, as no specific target can be shown. _Figure and caption from Bruch and Giles et al. 2021._
+
 ```{r stimuliPathways, fig.cap='(ref:stimuliPathways)', out.width = "60%", echo = FALSE}
 
 knitr::include_graphics("figures/stimuliPathways.eps")
@@ -372,8 +324,6 @@ knitr::include_graphics("figures/stimuliPathways.eps")
 Before beginning the downstream analysis, it was first important to determine whether  heterogeneity of response to the stimuli could be caused by differences receptor expression, rather than some other cell-intrinsic feature (Bruch and Giles et al. 2021). This would guide our interpretation of the stimulus responses. 
 
 To determine this, we calculated Pearson correlation coefficients to compare log-transformed control - normalised  viability values for each stimulus,  with vst-transformed RNA counts of the matching receptor(s). All Pearson coefficients were less than 0.4, indicating that heterogeneity of response was not related to differential receptor expression. 
-
-
 
 ## Characteristics of patient samples used in the screen
 ### Overview of the molecular profiles of the patient samples
@@ -564,21 +514,20 @@ gt = gtable_add_grob(gt, mutPL$grobs[[whichInGrob(mutPL, "axis-l")]], 9, 1)
 
 ```{r fig.height = 2, fig.width = 3, eval= FALSE}
 
-  
   wrap_elements(BloodCancerMultiOmics2017:::drawLegends(plobj=list(sexPL,treatPL,ighvPL,mutPL)))
 ```
 
-```{r geneticData, fig.cap='(ref:geneticData)', fig.height = 25, fig.width = 20, echo=FALSE}
+```{r geneticData, fig.cap='(ref:geneticData)',fig.width=sum(wdths), fig.height=sum(hghts), echo=FALSE, out.width = '70%'}
 
 wrap_elements(grid.draw(gt)) 
 
 ```
 
 
-## Publishing the data and assosciated analysis
+## Making the data and assosciated analysis available
 Collectively, this dataset represents a valuable resource providing the ability to explore genetic, epigenetic and microenvironmental modulators of survival and drug response in a heterogeneous cohort, and how these relate to clinical outcomes. With CLL samples relatively simple to obtain compared to other cancers, this project (in collaboration with the PACE initiative [@R-BloodCancerMultiOmics2017]) represents a considerable dataset containing joint functional and molecular profiling of primary cancer samples. 
 
-An important goal of my work was thus to ensure that this dataset was both publicly available and accessible for a range of users, including medics and bioinformaticians. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the  manuscript  Bruch and Giles et al. 2021 to an online git repository. 
+An important goal of my work was thus to ensure that this dataset was both publicly available and accessible for a range of users. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the  manuscript  Bruch and Giles et al. 2021 to an online git repository. 
 
 ### Shiny app
 The shiny app can be found [here](https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/). Figure \@ref(fig:shinyApp1) shows the home page. It consists of four tabs, covering the following: 
