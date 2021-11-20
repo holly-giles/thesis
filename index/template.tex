@@ -20,7 +20,7 @@
 \usepackage{array}
 \usepackage{multirow}
 \usepackage{wrapfig}
-\usepackage{float}
+%\usepackage{float}
 \usepackage{pdflscape}
 \usepackage{tabu}
 \usepackage{threeparttable}
@@ -31,6 +31,7 @@
 \usepackage[gen]{eurosym}
 \usepackage{breqn} %to break up equations accross multiple lines, where neccesary 
 \usepackage{helvet} %to set font as helvetica 
+\usepackage{amsmath} % to put equation on multiple line 
 
 $if(highlighting-macros)$
 $highlighting-macros$
@@ -231,6 +232,15 @@ $if(list-of-contributions)$
     $list-of-contributions$
 \newpage\null\newpage
 $endif$
+
+% --------------------------------------------
+% ---------- List of contributions ------------
+% --------------------------------------------
+$if(list-of-other-contributers)$
+    $list-of-other-contributers$
+\newpage\null\newpage
+$endif$
+
 
 % -------------------------------------
 % --- frontmatter: Zusammendfassung ---
