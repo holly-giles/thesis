@@ -21,6 +21,7 @@ output:
     ChIPseq & & Chromatin immunoprecipitation sequencing \\
     CLL & & Chronic lymphocytic leukemia \\
     CNV & & Copy number variation \\
+    CI & & Confidence Interval \\
     CpG ODN & & CpG oligodeoxynucleotides \\
     DMSO & & Dimethyl sulfoxide  \\
     DNA & & Deoxyribonucleic acid  \\
@@ -32,15 +33,16 @@ output:
     FDC & & Follicular dendritic cell \\
     FDR & & False discovery rate \\
     GSEA & & Gene set enrichment analysis  \\
-    HS-5 CM & & HS-5 Conditioned Medium  \\
-    IFN$\gamma$ & & Interferon$\gamma$   \\ 
+    HR & & Hazard ratio  \\
+  
     
 \end{tabular}
 \newpage   
 \begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
     
-    
-  Ig & & Immunoglobulin \\
+  HS-5 CM & & HS-5 Conditioned Medium  \\
+    IFN$\gamma$ & & Interferon$\gamma$   \\  
+    Ig & & Immunoglobulin \\
     IGHV & & Immunoglobulin heavy chain variable region \\
     IHC & & Immunohistochemistry \\
     IL & & Interleukin \\
@@ -65,12 +67,7 @@ output:
     SDF1$\alpha$ & & Stromal Cell-Derived Factor-1 alpha  \\
     SF3B1 & & Splicing factor 3B subunit 1 \\
     STAT & & Signal transducer and activator of transcription \\
-    
-\end{tabular}
-\newpage
-\begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
-
-  SYK & & Spleen tyrosine kinase \\
+    SYK & & Spleen tyrosine kinase \\
     TF & & Transcription factor \\
     TGF$\beta$ & & Transforming growth factor $\beta$ \\
     Th cell & & T-helper cell \\
@@ -79,7 +76,12 @@ output:
     TTFT & & Time to first treatment \\
     TTT & & Time to next treatment \\
     U-CLL & & CLL without somatic hypermutations in IGHV loci \\
-    VST & & Variance Stabilising Transformation \\
+    
+\end{tabular}
+\newpage
+\begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
+
+  VST & & Variance Stabilising Transformation \\
     WES & & Whole exome sequencing \\
     WGS & & Whole genome sequencing \\
     WT & & Wild type \\
