@@ -10,7 +10,7 @@ Chronic lymphocytic leukaemia (CLL) is a malignancy of mature B cells, character
 
 The disease pathogenesis is driven by multiple factors, including molecular features, signalling via the B cell receptor (BCR) and interactions with non-neoplastic cells within the lymphoid tissues (known as the tumour microenvironment) [@Kipps2017].  Whilst the majority of CLL cells are in a resting state [@Messmer2005; @Defoiche2008],  evidence suggests that CLL cells migrate towards lymph nodes where they form proliferation centres [@Granziero2001; @Messmer2005], similar to germinal centres in healthy lymph nodes, which can show a daily birth rate of up to 3.3% of the tumour [@Herndon2017]. 
 
-(ref:CLLmorphology) Wright–Giemsa-stained blood smear of a CLL malignant B cell, depicting typical morphology. _Figure from @Kipps2017 _. 
+(ref:CLLmorphology) Wright–Giemsa-stained blood smear of a CLL malignant B cell, depicting typical morphology. _Figure reproduced with permission from @Kipps2017 _. 
 
 ```{r CLLmorphology, fig.cap='(ref:CLLmorphology)', out.width="40%", echo = FALSE}
 
@@ -45,7 +45,7 @@ There are two types of BCR signalling in healthy and CLL B cells: ligand-depende
 
 The different clinical properties of IGHV-M and IGHV-U CLLs are believed to be determined by in part by their differential response to BCR stimulation, which is influenced by their cell of origin [@Burger2013]. IGHV-U CLLs have not undergone somatic hypermutation and consequently express low-affinity BCRs that are frequently activated by numerous antigens and auto-antigens in the microenvironment [@Borche1990; @Broker1988; @Sthoeger1989; @Herve2005; @Lanemo2008; @Chu2008; @Binder2010; @Krysov2010; @Kostareli2012]. In contrast, IGHV-M BCRs only recognise highly specific antigens, which either occur infrequently or induce anergy due to high-affinity binding [@Chiorazzi2003; @Stevenson2004; @Chiorazzi2005; @Burger2013]. IGHV-M CLL clones therefore are more stable and expand at a slower rate. 
 
-(ref:BCRsignalling) Graphical depiction of the BCR pathway. _Figure originally published in @Kipps2017 _
+(ref:BCRsignalling) Graphical depiction of the BCR pathway. _Figure reproduced with permission from @Kipps2017 _
 
 ```{r BCRsignalling, fig.cap='(ref:BCRsignalling)', out.width = "60%",  echo = FALSE}
 
@@ -81,7 +81,7 @@ Upstream of *TP53*, the tumour suppressor *ATM* is also frequently mutated in CL
 **NF$\kappa$B signalling**
 A wide range of mutations across various pathways converge on the activation of NF$\kappa$B [@Fabbri2011; @Puente2011; @Wang2011; @Quesada2012; @Puente2015; @Landau2015], including *BIRC3* and *MYD88*. For example, certain mutations in *MYD88* result in increased binding to IRAK1 and higher activation of NF$\kappa$B [@Puente2011]. However, the role and prognostic importance of NF$\kappa$B activation in CLL is still unclear [@Bosch2019].
 
-(ref:CLLmutations)  Graphical depiction of commonly mutated genes in CLL, grouped into cellular pathways (blue boxes).  Minus sign indicates negative regulation. _Figure originally published in @Kipps2017 ._
+(ref:CLLmutations)  Graphical depiction of commonly mutated genes in CLL, grouped into cellular pathways (blue boxes).  Minus sign indicates negative regulation. _Figure reproduced with permission from @Kipps2017 ._
 
 ```{r CLLmutations, fig.cap='(ref:CLLmutations)', out.width="100%", echo = FALSE}
 
@@ -135,7 +135,7 @@ The decision to initiate therapy is guided by the stage of disease, evidence for
 
 CLL is a manageable disease, with a well-established arsenal of treatments and associated management algorithm. However, treatments are harsh, and the disease is still considered incurable [@Bosch2019]. Many cases develop resistance to therapy, both via acquired mutations and through survival signals provided by the microenvironment (see section \@ref(intro-microenvironment-drug-response)) and minimal residual disease within the bone marrow is common. Collectively, these lead to relapse or required prolonged therapy and its associated toxicities. There remains a clinical need to improve patient outcomes and experience.
 
-(ref:CLLstratification) Management algorithm for patients with CLL. CIT (chemoimmunotherapy), LDT (lymphocyte doubling time). _Figure originally published in  @Kipps2017 _.
+(ref:CLLstratification) Management algorithm for patients with CLL. CIT (chemoimmunotherapy), LDT (lymphocyte doubling time). _Figure reproduced with permission from @Kipps2017 _.
 
 
 ```{r CLLstratification, fig.cap='(ref:CLLstratification)', out.width = '80%', echo = FALSE}
@@ -156,7 +156,7 @@ The importance of the microenvironment in CLL pathogenesis was first recognised 
 **Lymph Nodes**
 Over the last two decades, significant progress has been made in unravelling this complex cross-talk and many of the important cellular and molecular components have been defined and studied. Malignant B cells circulate through the blood in a resting state, and follow chemokine gradients towards the lymph nodes to form "profileration centres" (Figure \@ref(fig:proliferationCentres)), similar to germinal centres [@Herishanu2011]. Studies using detuerated water labelling have shown that up to 3% of the clone is actively proliferating within the lymph node [@Messmer2005; @Herndon2017]. Cross-talk with the non-neoplastic cells in the lymph node  shapes the transcriptomic profile of the malignant B cells, and leads to upregulation of the BCR pathway [@Herishanu2011, @Mittal2014], a central driver of CLL pathogenesis. 
 
-(ref:proliferationCentres) Haemotoxylin and eosin stain of CLL-infiltrated lymph node tissue section, showing pale-staining profileration centres (circled). _Figure originally published in @Kipps2017 _. 
+(ref:proliferationCentres) Haemotoxylin and eosin stain of CLL-infiltrated lymph node tissue section, showing pale-staining profileration centres (circled). _Figure reproduced with permission from @Kipps2017 _. 
 
 ```{r proliferationCentres, fig.cap='(ref:proliferationCentres)', out.width="50%", echo = FALSE}
 
@@ -178,7 +178,7 @@ The T cell compartment is also altered in CLL, first described by @Scrivener2003
 ### Microenvironmental pathways {#intro-microenvironmental-pathways}
 Cross-talk between these non-neoplastic cells and the malignant B cells can occur directly, via cell-cell contacts and adhesion molecules, indirectly, via soluble factors that bind to receptors on the CLL cells, or through the exchange of material held in extracellular vesicles [@Guarini2008; @Oppezzo2013; @Crompot2017]. Collectively these induce pathway activation (most importantly BCR and NF$\kappa$B [@Herishanu2011]) and gene expression modifications with the CLL cells, leading to chemotaxis, homing to lymphoid tissues and survival of the tumour cells [@Dubois2020]. Figure \@ref(fig:microenvironmentSignalling) depicts an overview of this cross-talk.
 
-(ref:microenvironmentSignalling) Graphic summarising soluble factors and cell-cell contacts involved in cross-talk between CLL cells and non-neoplastic cells of the tumour microenvironment _Figure originally published in @Kipps2017 ._ 
+(ref:microenvironmentSignalling) Graphic summarising soluble factors and cell-cell contacts involved in cross-talk between CLL cells and non-neoplastic cells of the tumour microenvironment _Figure reproduced with permission from @Kipps2017 ._ 
 
 ```{r microenvironmentSignalling, fig.cap='(ref:microenvironmentSignalling)', out.width = "80%", echo = FALSE}
 
@@ -198,7 +198,7 @@ NLCs, MSCs, FDCs and T cells also secrete soluble factors that have a protective
 
 ### The influence of the microenvironment on drug response {#intro-microenvironment-drug-response}
 
-In addition to their effect of spontaneous apoptosis, the cell types and soluble factors outlined above have also been shown to impact on drug-induced apoptosis *in vitro*. For example, NLCs and stromal cells have been shown to meditate ibrutinib resistance [@Cheng2014; @Boissard2015; @Guo2017], and the chemotherapeutics fludarabine, oxaliplatin, chlorambucil, cyclophosphamide and doxorubicine show reduced efficacy in stromal cell co-cultures [@Kay2007; @Kurtova2009; @Mraz2011; @Zhang2012]. A number of soluble factors also induce resistance to drugs *in vitro*. These include decreased efficacy of fludarabine and venetoclax in the presence of TLR stimulation [@Fonte2013; @Jayappa2017] and reduced sensitivity to ibrutinib in the presence of IL4 [@AguilarHernandez2016] and BAFF [@McWilliams2019].  
+In addition to their effect of spontaneous apoptosis, the cell types and soluble factors outlined above have also been shown to impact on drug-induced apoptosis *in vitro*. For example, NLCs and stromal cells have been shown to meditate ibrutinib resistance [@Cheng2014; /; @Guo2017], and the chemotherapeutics fludarabine, oxaliplatin, chlorambucil, cyclophosphamide and doxorubicine show reduced efficacy in stromal cell co-cultures [@Kay2007; @Kurtova2009; @Mraz2011; @Zhang2012]. A number of soluble factors also induce resistance to drugs *in vitro*. These include decreased efficacy of fludarabine and venetoclax in the presence of TLR stimulation [@Fonte2013; @Jayappa2017] and reduced sensitivity to ibrutinib in the presence of IL4 [@AguilarHernandez2016] and BAFF [@McWilliams2019].  
 
 Evidence of microenvironmentally-induced drug resistance *in vivo* is less prevalent, although there is widespread consensus that the microenvironment, in particular the lymph node, plays an important role in patient outcomes. Low rates of complete response and the inevitability of relapse in CLL have implicated the protective niche in enabling MRD [@OBrien2011; @Hayden2012]. A number of studies have shown enlarged lymph nodes are associated with MRD [@Moreton2005], in particular, incomplete response to ibrutinib is associated with persistently enlarged lymph nodes [@Ahn2018]. MSCs have also been shown to protect CLL cells taken from patients before and after *in vivo* fludarabine therapy [@Trimarco2015]. 
 
@@ -231,7 +231,7 @@ The importance of interplay between microenvironment and molecular features in C
 
 
 ## CLL as a model for studying tumour biology {#CLL-model-intro}
-CLL represents a valuable model system in cancer and studies of CLL can offer proof-of-principle for the application of new approaches in other entities. Primary PMBC samples are relatively simple to obtain, as CLL is the most common leukaemia and biopsies are performed by taking blood samples rather than intrusive operations. In addition, multiple biopsies cab be taken over the course of a patient’s monitoring and therapy. The samples themselves can survive *ex vivo* for several days, even in basic culture condition, making it realtively simple to perform experiments on primary samples. 
+CLL represents a valuable model system in cancer and studies of CLL can offer proof-of-principle for the application of new approaches in other entities. Primary PMBC samples are relatively simple to obtain, as CLL is the most common leukaemia and biopsies are performed by taking blood samples rather than intrusive operations. In addition, multiple biopsies cab be taken over the course of a patient’s monitoring and therapy. The samples themselves can survive *ex vivo* for several days, even in basic culture condition, making it relatively simple to perform experiments on primary samples. 
 
 For example, the work by @Lu2021 to decipher a new multi-omic marker of disease aggression not only represents an important advance in our understanding of CLL drive, it also demonstrates an integrative approach to the study of cancer which could be useful in other cancers, particular where the heterogeneity of outcome remains unexplained. 
 
@@ -313,7 +313,8 @@ I employ a large-scale screening dataset of 192 primary CLL samples, which quant
 
 Several signalling pathways and genetic features emerge as key players in CLL-microenvironment cross-talk, and in microenvironmental mechanisms of drug resistance. The above experiments are complimented by immunohistorychemistry (IHC) stains of healthy and CLL-infiltrated lymph nodes to investigate the *in vivo* activity of selected pathways. To supplement the large scale screening approach, I also make use of RNAseq, ATACseq, Mass Spectrometry and ChIPseq datasets of CLL patient samples to validate individual findings at a mechanistic level. 
 
-The thesis is structured as follows: 
+The thesis is structured as follows:   
+   
 **Chapter 1: Introduction** Overview of the background information and surrounding literature of the project.    
    
 **Chapter 2: Methods** Overview of the experimental and analytical methods used in this thesis. 
