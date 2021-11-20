@@ -3,3 +3,17 @@
 >
 > `r tufte::quote_footer('--- George E. P. Box')`
 
+```{r eval = FALSE, include = FALSE, echo = FALSE}
+#one paragprah on each of the themes in teh thesis, keep it succint
+
+#trisomy 12 and trageting trisomy 12 
+
+#IL4 induced resitance
+
+#IL4 and interferon gamma nad NOS2 
+
+#fludarabine and tlr 
+
+#^mayeb adatp plan and then jsut let it all come out like this 
+
+```
