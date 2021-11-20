@@ -8,7 +8,7 @@ output:
 #### Thesis related {-}
 
 \begin{itemize}
-    \item  Peter-Martin Bruch\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Mueller-Tidow, Thorsten Zenz, Wolfgang Huber, Sascha Dietrich et al. "Mapping drug-microenvironment-genetic interplay in CLL reveals trisomy 12 as a modulator of microenvironment."\textbf{\textit{bioRxiv}}.\href{https://doi.org/10.1101/2021.07.23.453514}{DOI: 10.1101/2021.07.23.453514} 
+    \item  Peter-Martin Bruch\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Mueller-Tidow, Thorsten Zenz, Wolfgang Huber, Sascha Dietrich et al. "Mapping drug-microenvironment-genetic interplay in CLL reveals trisomy 12 as a modulator of microenvironmental signalling." \textbf{\textit{bioRxiv}}.\href{https://doi.org/10.1101/2021.07.23.453514}{DOI: 10.1101/2021.07.23.453514} 
     
 \end{itemize}
 
