@@ -309,6 +309,8 @@ left_join(df, patMeta, by = "PatientID") %>%
   t2
 
 ```
+
+
 (ref:ibetatac) Differential  TF  binding  site  accessibility  (y  axis)  in  trisomy  12  vs  non-trisomy  12  CLL samples  (purple)  and  for  IBET-762  vs  DMSO  treated  CLL  samples  (green).  Direction  of 
 differential accessibility values are shown for two independent datasets comparing trisomy 12 
 vs non-trisomy 12 CLL and IBET-762 vs control-treated CLL, for all TFs with adjusted p value 
