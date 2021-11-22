@@ -864,7 +864,7 @@ Having generated an overview of drug - stimulus interactions, I next examined ea
 
 Additionally, this analysis demonstrated the broader significance of IL4-induced resistance, beyond what previous work has shown. IL4 showed the highest number of positive antagonistic interactions amongst all of the stimuli and inhibited a range of drugs, including BCR inhibitors and chemotherapeutics. This is investigated in more detail in section \@ref(IL4resistance) below.
 
-In addition to IL4,  IFN$\gamma$ showed the second largest number of positive antagonistic interactions. IFN$\gamma$ stimulation induced resistance to BCR inhibition by ibrutinib and idelalisib, and to the chemotherapeutic Nutlin-3a (MDM2) (Figure \@ref(fig:drugStimulusIntEx)B, Bruch and Giles et al. 2021), and may represent a novel targetable resistance mechanism (Bruch and Giles et al. 2021). 
+In addition to IL4,  IFN$\gamma$ showed the second largest number of positive antagonistic interactions. IFN$\gamma$ stimulation induced resistance to BCR inhibition by ibrutinib and idelalisib, and to the chemotherapeutic nutlin-3a (MDM2) (Figure \@ref(fig:drugStimulusIntEx)B, Bruch and Giles et al. 2021), and may represent a novel targetable resistance mechanism (Bruch and Giles et al. 2021). 
 
 IL4 and IFN$\gamma$ induced resistance to common pathways and thus I stipulated that both stimuli may share the same mechanism of action. This was supported by the observations in section \@ref(multivariate-gene-stimulus-assosciations), in which I demonstrated that IL4 showed a smaller increase in viability in cells that had mutations in Ras-Raf-MEK-ERK, and that inhibition of p38 MAPK activity with ralimetinib increased the pro-survival effect of IL4 stimulation. IFN$\gamma$ demonstrated similar behaviour whereby p38 MAPK inhibition increased the pro-survival effect of stimulating this pathway (Appendix Figure \@ref(fig:ifngamma)).  Collectively these observations suggest that IL4 and IFN$\gamma$ may operate via a common pro-survival mechanism, which is negatively regulated by activity of MAPK signalling. [CHECK]
 
@@ -1231,7 +1231,7 @@ In addition, this analysis highlighted the broad impact of trisomy 12 on drug re
 
 These included increased sensitivity to p38 MAPK inhibition by ralimetinib, agreeing with previous work demonstrating higher trisomy 12 sensitivity with a range of MEK and ERK inhibitors and suggesting an essential role for MEK/ERK signalling in trisomy 12 CLL [@JCIpaper]. 
 
-I also noted that trisomy 12 CLL showed increased sensitivity to IBET-762, a bromodomain inhibitor that has been shown to suppress transcriptional responses to cytokine signalling via JAK-STAT [@Chan2015]. The results in section \@ref(trisomy12-modulator) indicated that trisomy 12 enhances responses to some cytokines. I was interested to see whether bromodomain inhibition may provide a strategy to target this feature of trisomy 12 samples. I decided to investigate the impact of IBET-762 treatment on the trisomy 12 transcription factor signature determined in Figure \@ref(fig:tri12diffTF).  I made use of an additional ATACseq dataset consisting of four CLL PBMC samples each treated  with  IBET-762  and  DMSO  as control. I visualised inferred TF activity for trisomy 12 signature TFs, calculated using `diffTF` [@Berest2019]. All nine TFs showing  higher  accessibility  in  trisomy  12 CLL (Figure \@ref(fig:tri12diffTF)) exhibited  decreased  accessibility  upon  treatment with IBET-762  (Appendix Figure \@ref(ibetatac)). This result suggests that  bromodomain inhibition may represent a potential target in CLL patients with trisomy 12 (Bruch and Giles et al. 2021). [CHECK: Does it make sense to include this here, or is it a distraction from the main story?]
+I also noted that trisomy 12 CLL showed increased sensitivity to IBET-762, a bromodomain inhibitor that has been shown to suppress transcriptional responses to cytokine signalling via JAK-STAT [@Chan2015]. The results in section \@ref(trisomy12-modulator) indicated that trisomy 12 enhances responses to some cytokines. I was interested to see whether bromodomain inhibition may provide a strategy to target this feature of trisomy 12 samples. I decided to investigate the impact of IBET-762 treatment on the trisomy 12 transcription factor signature determined in Figure \@ref(fig:tri12diffTF).  I made use of an additional ATACseq dataset consisting of four CLL PBMC samples each treated  with  IBET-762  and  DMSO  as control. I visualised inferred TF activity for trisomy 12 signature TFs, calculated using `diffTF` [@Berest2019]. All nine TFs showing  higher  accessibility  in  trisomy  12 CLL (Figure \@ref(fig:tri12diffTF)) exhibited  decreased  accessibility  upon  treatment with IBET-762  (Appendix Figure \@ref(fig:ibetatac)). This result suggests that  bromodomain inhibition may represent a potential target in CLL patients with trisomy 12 (Bruch and Giles et al. 2021). [CHECK: Does it make sense to include this here, or is it a distraction from the main story?]
 
 (ref:drugGeneIntEx) Beeswarm-boxplots showing control-normalised log transformed viability values after treatment with (A) Ralimetinib (p38 MAPK) and (B) IBET-762 (BRD2/3/4), stratified by trisomy 12.
 
@@ -1292,8 +1292,8 @@ I began by conceptualising methods to quantify the collective effect of the drug
 
 \begin{equation}
 \begin{aligned}
-log(V) ={} & beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{patient}X_{patient} \\
-           & \beta_{drug-stimulus}X_{drug}X_{stimulus} \\+ \beta_{drug-patient}X_{drug}X_{patient} + \beta_{stimulus-patient}X_{stimulus}X_{patient} \\
+log(V) ={} & \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{patient}X_{patient} \\
+           & \beta_{drug-stimulus}X_{drug}X_{stimulus} + \beta_{drug-patient}X_{drug}X_{patient} + \beta_{stimulus-patient}X_{stimulus}X_{patient} + \\
            & \beta_{int}X_{drug}X_{stimulus}X_{patient} + \epsilon
            (\#eq:drugCytGeneInt)
 \end{aligned}
@@ -1412,7 +1412,7 @@ The multivariate modelling approach outlined above was a valuable screening tool
 
 The first of these concerned the interaction between fludarabine (purine analogue) and CpG ODN (TLR9). The value of $\beta_{int}$ for fludarabine and CpG ODN was modulated by six genetic factors; most strongly by IGHV status, del(11q) and trisomy 12 (Figure \@ref(fig:FluCpGExA), Bruch and Giles et al. 2021).
 
-(ref:FluCpGExA) "Genetic features that modulate the size of $\beta_{int}$ between fludarabine (purine analogue) and CpG ODN (TLR9). Scatter plot, heatmap and bar plots indicate inputs and outputs of equation \@ref(eq:drugCytGeneInt). Bar plots indicate size and sign of coefficients assigned to genetic features named on right. Scatter plot depicts $\beta{int}$ values for each patient sample i.e.response matrix.  Heatmap tiles indicate mutation status for the selected genetic features (i.e. feature matrix) corresponding to same sample in scatter plot below, to show how size of $\beta{int}$ varies with each feature." See Methods section \@ref(drug-stimulus-gene-interactions-method). _Figure and caption from Bruch and Giles et al. 2021._
+(ref:FluCpGExA) "Genetic features that modulate the size of $\beta_{int}$ between fludarabine (purine analogue) and CpG ODN (TLR9). Scatter plot, heatmap and bar plots indicate inputs and outputs of equation \@ref(eq:drugCytGeneInt). Bar plots indicate size and sign of coefficients assigned to genetic features named on right. Scatter plot depicts $\beta_{int}$ values for each patient sample i.e.response matrix.  Heatmap tiles indicate mutation status for the selected genetic features (i.e. feature matrix) corresponding to same sample in scatter plot below, to show how size of $\beta_{int}$ varies with each feature." See Methods section \@ref(drug-stimulus-gene-interactions-method). _Figure and caption from Bruch and Giles et al. 2021._
 
 
 ```{r FluCpGExA, fig.cap='(ref:FluCpGExA)', message = FALSE,  echo = FALSE, fig.height = 6, fig.width = 11, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
@@ -1482,7 +1482,7 @@ ighv.labs <- c("U" = "IGHV-U", "M" =  "IGHV-M")
 
 I observed a similar effect with other chemotherapeutic drugs. Nutlin-3a is an MDM2 inhibitor, which in our dataset showed higher efficacy in IGHV-U, trisomy12, and del(11q) CLLs (Figure \@ref(fig:drugGeneIntMap), Figure \@ref(fig:drugGeneIntEx), Appendix Figure \@ref(fig:NutlinPredictors)). TLR stimulation reduced nutlin-3a toxicity in these same genetic backgrounds, i.e  nutlin-3a efficacy in the context of CpG ODN stimulation was lower in IGHV-U, trisomy 12 and del(11q) samples (Figure \@ref(fig:nutlinCpgEx), Figure \@ref(fig:TLRCpGIGHVdel11q)).  This observation underlines the need to observe _in vitro_ drug activity  in the context of microenvironmental signals [CHECK].
 
-(ref:nutlinCpgEx) Predictor profile depicting genetic features that modulate the size of $\beta{int}$ between nutlin-3a (MDM2) and CpG ODN (TLR9).  Plot generated as in Figure \@ref(fig:FluCpGExA). See Methods section \@ref(drug-stimulus-gene-interactions-method).
+(ref:nutlinCpgEx) Predictor profile depicting genetic features that modulate the size of $\beta_{int}$ between nutlin-3a (MDM2) and CpG ODN (TLR9).  Plot generated as in Figure \@ref(fig:FluCpGExA). See Methods section \@ref(drug-stimulus-gene-interactions-method).
 
 
 ```{r nutlinCpgEx, fig.cap='(ref:nutlinCpgEx)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 10, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
@@ -1535,7 +1535,7 @@ The modelling approach also identified interactions where the differential size 
 
 This was the case with ibrutinib + IL4 for instance (Bruch and Giles et al. 2021). Ibrutinib showed higher efficacy in trisomy 12 and IGHV-U samples and IL4 induced complete resistance to ibrutinib independently of genetic background. Thus in trisomy 12 and IGHV-U samples treated with ibrutinib, the increase in viability in the context of IL4 stimulation was larger than in non-trisomy 12 and IGHV-M samples, and thus these features were assigned positive coefficients. 
 
-This result highlights that IL4-induced resistance may be a broad spectrum resistance mechanism, even in tumours with molecular features that are associated with higher ibrutinib efficacy. IL4 signalling may represent a drug resistance mechanism common to many CLLs, in a disease known for its molecular and genetic heterogeneity, though more *in vivo* evidence is required here (Figure \@ref(fig:ibrIl4ExA), Figure \@ref(fig:ibrIl4ExB), (Bruch and Giles et al. 2021).
+This result highlights that IL4-induced resistance may be a broad spectrum resistance mechanism, even in tumours with molecular features that are associated with higher ibrutinib efficacy. IL4 signalling may represent a drug resistance mechanism common to many CLLs, in a disease known for its molecular and genetic heterogeneity, though more *in vivo* evidence is required here (Figure \@ref(fig:ibrIl4ExA), Figure \@ref(fig:ibrIl4ExB), Bruch and Giles et al. 2021).
 
 (ref:ibrIl4ExA) Predictor profile depicting genetic features that modulate the size of $\beta_{int}$ between ibrutinib (BTK) and IL4. Plot generated as in Figure \@ref(fig:FluCpGExA). See also Methods section \@ref(drug-stimulus-gene-interactions-method). _Figure from Bruch and Giles et al. 2021._
 
@@ -1596,6 +1596,9 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Ibrutinib + IL-4"], ncol = 1)
 
 
 ```
+
+## IL4 induced resistance to BCR inhibition {#il4-ibrutinib}
+ADD
 
 ## Summary 
 This work aims to integrate the effects of mutations and the microenvironment in drug response in CLL, at a large scale. The results demonstrate the value of using multi-omic data (consisting of both observational data on patient samples and perturbation data generated through screening) to generate more complex biological insights that can guide further clinical studies. 
