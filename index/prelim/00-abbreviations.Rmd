@@ -23,6 +23,7 @@ output:
     CNV & & Copy number variation \\
     CI & & Confidence Interval \\
     CpG ODN & & CpG oligodeoxynucleotides \\
+    DLBCL & & Diffuse Large B Cell Lymphoma \\
     DMSO & & Dimethyl sulfoxide  \\
     DNA & & Deoxyribonucleic acid  \\
     DNAseq & & DNA sequencing \\
