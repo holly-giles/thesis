@@ -589,7 +589,7 @@ When a stimulus is individually applied to a CLL sample, the stimulus activates 
 
 In the case that there is some interaction between the stimulus pathway and drug target pathway, the resulting viability will not simply be additive. The difference between the additive, or expected viability, and the true measured viability, can be quantified by an **interaction factor**. Linear modelling aims to quantify this  **interaction factor**. [IS THIS CLEAR?]
 
-Based on this principle, I fitted linear models to the viablity data for each drug - stimulus combination, outlined in Equation \@ref(eq:drugCytInt) (Bruch and Giles et al. 2021). I used the `lm` function implemented in the `R` package `stats`[@R-base]. 
+Based on this principle, I fitted linear models to the viability data for each drug - stimulus combination, outlined in Equation \@ref(eq:drugCytInt) (Bruch and Giles et al. 2021). I used the `lm` function implemented in the `R` package `stats`[@R-base]. 
 
 Equation \@ref(eq:drugCytInt) quantifies how the viability with any combination can be predicted:
     \begin{equation}
