@@ -8,9 +8,9 @@ rmd_files: ["index.Rmd",
   "sections/06-results-drugs.Rmd",
   #"sections/07-results-ibrutinib-il4.Rmd", 
   "sections/08-conclusion.Rmd", 
-  "sections/98-references.Rmd",
-  "sections/99-appendix.Rmd"
-  ]
+  "sections/97-references.Rmd",
+  "sections/98-appendix-figures.Rmd"
+  "sections/99-appendix-tables.Rmd"]
 output_dir: "thesis-output"
 download: ["thesis.pdf", "PDF"]
 delete_merged_file: true
