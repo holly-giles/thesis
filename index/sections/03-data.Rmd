@@ -301,7 +301,7 @@ The stimuli selected for the screen, their associated targets and concentrations
 A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance *ex vivo* (see section \@ref(intro-microenvironmental-pathways)). Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvironment. \@ref(fig:microenvironmentCrosstalk).
 
 
-(ref:microenvironmentCrosstalk) A selection of interactions between CLL cells and components of the microenvironment, covered by the screen. See section \@ref(intro-microenvironmental-pathways) for more details on these signals.  _Figure adapted from an original published in @Wiestner2015 ._
+(ref:microenvironmentCrosstalk) A selection of interactions between CLL cells and components of the microenvironment, covered by the screen. See section \@ref(intro-microenvironmental-pathways) for more details on these signals.  _Figure adapted from an original published in @Wiestner2015 and reproduced with permission._
 
 
 ```{r microenvironmentCrosstalk, fig.cap='(ref:microenvironmentCrosstalk)', out.width = "60%", echo = FALSE}
