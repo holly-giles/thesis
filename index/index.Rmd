@@ -2,13 +2,13 @@
 #
 # Required Information --------------------------------------------------------
 # change lines 5 - 15
-title: "Drug - microenvironment - gene interactions in Chronic Lymphocytic Leukemia"
+title: "Chronic Lymphocytic Leukemia and the tumour microenvironment: A multi-omics investigation of interactions between molecular features and external signals on drug response and clinical outcomes"
 type: "Dissertation"
 author: "Holly Amelia Rebecca Giles"
 authordegree: "B.A."
 birthplace: "Portsmouth"
-date: "Dec 05, 2021"
-examdate: "Feb 20, 2021 (to discuss)"
+date: "Dec 11, 2021"
+examdate: "Mar 04 2021"
 university: "Ruperto Carola University Heidelberg"
 institute: "European Molecular Biology Laboratory"
 instituteshort: "(EMBL)"
