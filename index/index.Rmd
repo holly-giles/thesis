@@ -2,14 +2,14 @@
 #
 # Required Information --------------------------------------------------------
 # change lines 5 - 15
-title: "Chronic Lymphocytic Leukemia and the tumour microenvironment: A multi-omics investigation of interactions between molecular features and external signals on drug response and clinical outcomes"
+title: "Chronic Lymphocytic Leukaemia and the tumour microenvironment: A multi-omics investigation of interactions between molecular features and external signals on drug response and clinical outcomes"
 type: "Dissertation"
 author: "Holly Amelia Rebecca Giles"
 authordegree: "B.A."
 birthplace: "Portsmouth"
 date: "Dec 11, 2021"
-examdate: "Mar 04 2021"
-university: "Ruperto Carola University Heidelberg"
+examdate: "Mar 04, 2021"
+university: "Ruprecht - Karls - University"
 institute: "European Molecular Biology Laboratory"
 instituteshort: "(EMBL)"
 department: "Genome Biology"
@@ -26,8 +26,8 @@ zusammenfassung: |
   `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-zusammenfassung.Rmd"), collapse = '\n  ')`
 list-of-publications: |  
   `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-list-of-publications.Rmd"), collapse = '\n  ')`
-list-of-contributions: |  
-  `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-list-of-contributions.Rmd"), collapse = '\n  ')`
+#list-of-contributions: |  
+#  `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-list-of-contributions.Rmd"), collapse = '\n  ')`
 list-of-other-contributers: |  
   `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-list-of-other-contributers.Rmd"), collapse = '\n  ')`
 acknowledge: |  
