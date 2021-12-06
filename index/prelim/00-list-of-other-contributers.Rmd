@@ -5,12 +5,12 @@ output:
 ---
 # Contributions {-}
 
-Unless stated otherwise, the computational methods, statistical inference and regression modelling presented here were primarily conceptualised, performed, and interpreted by me, with support from my supervisors Dr. Wolfgang Huber and Dr. Sascha Dietrich. This shiny app and softare documentation was assembled by me, using the scripts generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al. 2021. Processing of screening data and clinical data was performed by my colleague in the Department of Medicine, University of Heidelberg, Peter Martin-Bruch. Where stated, figures were jointly produced with Peter Martin-Bruch and with input from Wolfgang Huber and Sascha Dietrich for the manuscript Bruch and Giles et al. 2021. Junyan Lu provided advice and code to support regression modelling. Ivan Berest and Christian Arnold supported processing and analysis of ATAC sequencing datasets. 
+Unless stated otherwise, the computational methods, statistical inference and regression modelling presented here were conceptualised, performed, and interpreted by me, with support from my supervisors Dr. Wolfgang Huber and Dr. Sascha Dietrich. The shiny app and software documentation was assembled by me, using the scripts generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al. 2021. Processing of screening data and clinical data was performed by my colleague in the Department of Medicine, University of Heidelberg, Peter Martin-Bruch. Where stated, figures were jointly produced with Peter Martin-Bruch and with input from Wolfgang Huber and Sascha Dietrich for the manuscript Bruch and Giles et al. 2021. Junyan Lu provided advice and code to support regression modelling. Ivan Berest and Christian Arnold supported processing and analysis of ATAC sequencing datasets. 
 
 The experiments described in this thesis were generated as follows. The drug - stimulus perturbation assay was performed primarily by Peter Martin-Bruch, with support from Dr. Sascha Dietrich, Carolin Kolb, Dr. Sebastian Scheinhost and Lena Wagner. Additional follow-up experiments presented in this thesis were performed by colleagues at EMBL and the Department of Medicine, University of Heidelberg:
 \begin{itemize}
-    \item  The Spi-B and PU.1 shRNA Knockdowns were performed by Tina Becirovic and Sophie Herbst
-    \item  The immunohistochemistry (IHC) staining of CLL and non-neoplastic lymph nodes were performed by Mark Kriegsmann, Katharina Kriegsmann and Christiane Zgorzelski
+    \item  The Spi-B and PU.1 shRNA knockdowns were performed by Tina Becirovic and Sophie Herbst
+    \item  The immunohistochemistry (IHC) stains of CLL and non-neoplastic lymph nodes were performed by Mark Kriegsmann, Katharina Kriegsmann and Christiane Zgorzelski
     \item  The Ibrutinib - IL4 - STAT6i interaction assay on CLL PMBCs was performed by Peter-Martin Bruch
     \item  The joint RNAseq - ATACseq - Mass Spectrometry of treated CLL PMBC samples was performed by Peter-Martin Bruch and Nayara Trevisan Doimo de Azevedohe
     
