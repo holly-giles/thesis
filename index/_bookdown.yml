@@ -10,7 +10,6 @@ rmd_files: ["index.Rmd",
   "sections/08-conclusion.Rmd",
   "sections/97-references.Rmd",
   "sections/99-appendix.Rmd"]
-
 output_dir: "thesis-output"
 download: ["thesis.pdf", "PDF"]
 delete_merged_file: true
