@@ -8,8 +8,8 @@ author: "Holly Amelia Rebecca Giles"
 authordegree: "B.A."
 birthplace: "Portsmouth"
 date: "Dec 11, 2021"
-examdate: "Mar 04, 2021"
-university: "Ruprecht - Karls - University"
+examdate: "Mar 04 2021"
+university: "Ruperto Carola University Heidelberg"
 institute: "European Molecular Biology Laboratory"
 instituteshort: "(EMBL)"
 department: "Genome Biology"
@@ -26,8 +26,6 @@ zusammenfassung: |
   `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-zusammenfassung.Rmd"), collapse = '\n  ')`
 list-of-publications: |  
   `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-list-of-publications.Rmd"), collapse = '\n  ')`
-#list-of-contributions: |  
-#  `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-list-of-contributions.Rmd"), collapse = '\n  ')`
 list-of-other-contributers: |  
   `r if(knitr:::is_latex_output()) paste(readLines("prelim/00-list-of-other-contributers.Rmd"), collapse = '\n  ')`
 acknowledge: |  
@@ -38,14 +36,14 @@ lot: false                               # list of tables
 lof: false                              # list of figures
 link-citations: true                  #can click link to go to ref sectin
 bibliography: [bib/references.bib,  bib/packages.bib]     # bibliography file, can also add biblio-style: 
-#
+# 
 # Rendering Options -----------------------------------------------------------
 #
 knit: "bookdown::render_book"
-output: 
-  heididown::thesis_pdf:
-    latex_engine: lualatex
-    extra_dependencies: ["float"]
+output:
+ heididown::thesis_pdf:
+   latex_engine: lualatex
+   extra_dependencies: ["float"]
 space_between_paragraphs: true       # if you want spaces bt paragraph
 # header-includes:     # if including additional latex packages or commands
   # - \setlength{\parindent}{17pt}
