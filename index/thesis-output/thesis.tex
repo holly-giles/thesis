@@ -1,5 +1,5 @@
 \documentclass[11pt, a4paper, twosided]{book}
-\usepackage[hmarginratio=1:1]{geometry} % equal right and left raitios
+\usepackage[hmarginratio=1:1, hmargin={2.2cm,2.2cm}, tmargin=2cm]{geometry} % equal right and left raitios, vmargin ration is 2:3 so bmargin should be set automatically. If this doesn't work jsut go back to deafult 
 \usepackage{amsmath,amssymb,amsfonts,amsthm}    % Typical maths resource packages
 \usepackage{graphicx}                           % Packages to allow inclusion of graphics
 \usepackage[authoryear]{natbib}                 % literature reference style
@@ -33,6 +33,7 @@
 \usepackage{helvet} %to set font as helvetica 
 \usepackage{amsmath} % to put equation on multiple line 
 
+
        % For being able to set `echo = TRUE` in code chunk options, and thus in-line representation of code
 
 %--------------------------------------------
@@ -58,7 +59,7 @@
 % save thesis parameters for later
 \newcommand{\thesistype}{Dissertation}
 \newcommand{\thesisauthor}{Holly Amelia Rebecca Giles}
-\newcommand{\thesisdate}{Dec 05, 2021}
+\newcommand{\thesisdate}{Dec 11, 2021}
 
 % Added by CII (Thanks, Hadley!)
 % Use ref for internal links
@@ -113,17 +114,19 @@
 
 \thispagestyle{empty}
   \begin{center}
-  {\Large{Dissertation\\
-    submitted to the\\
-    Combined Faculty of Natural Sciences and Mathematics\\
-    of the Ruperto Carola University Heidelberg, Germany\\
-    for the degree of\\
-    Doctor of Natural Sciences\\}} \vspace*{\fill}
+  {\Large{Inaugural dissertation\\
+    for\\
+    obtaining the doctoral degree\\
+    of the\\
+    Combined Faculty of Mathematics, Engineering and Natural Sciences\\
+    of the\\
+    Ruprecht - Karls - University\\
+    Heidelberg\\}} \vspace*{\fill}
 
   \Large{Presented by} \\\vspace{0.5cm}
   \Large{B.A. Holly Amelia Rebecca Giles} \\
   \Large{born in Portsmouth} \\
-  \Large{Oral examination: Feb 20, 2021 (to discuss)}
+  \Large{Oral examination: Mar 04 2021}
 
 \end{center}
 \newpage\null\thispagestyle{empty}\newpage
@@ -136,7 +139,7 @@
 \thispagestyle{empty}
 \null
 \begin{center}
-\Large{Drug - microenvironment - gene interactions in Chronic Lymphocytic Leukemia} \\
+\Large{Chronic Lymphocytic Leukaemia and the tumour microenvironment: A multi-omics investigation of interactions between molecular features and external signals on drug response and clinical outcomes} \\
 \vspace*{\fill}
 \begin{tabular}{ c c }
 Referees: & Dr.~Judith Zaugg \\
@@ -171,7 +174,7 @@ Referees: & Dr.~Judith Zaugg \\
 % \newpage
 % \thispagestyle{empty}
 % \vspace*{\fill}
-% Holly Amelia Rebecca Giles, \textit{Drug - microenvironment - gene interactions in Chronic Lymphocytic Leukemia}, \textcopyright\, \thesisdate{}
+% Holly Amelia Rebecca Giles, \textit{Chronic Lymphocytic Leukaemia and the tumour microenvironment: A multi-omics investigation of interactions between molecular features and external signals on drug response and clinical outcomes}, \textcopyright\, \thesisdate{}
 % \newpage
 
 %\frontmatter % this stuff will be roman-numbered
@@ -203,7 +206,25 @@ Referees: & Dr.~Judith Zaugg \\
 \chapter*{Acknowledgements}\label{acknowledgements}}
 \addcontentsline{toc}{chapter}{Acknowledgements}
 
-I would like to thank \ldots..
+I am very grateful to everyone that has supported me over the last four years. First and foremost, I would like to thank my PhD Supervisors Dr.~Wolfgang Huber and Prof.~Dr.~Sascha Dietrich. Wolfgang, you have been an excellent mentor. You have led by example, and your rigorous approach to science and your collegiately are skills that I aim carry with me into the rest of my career. Sascha, I learned a great deal from you and your clinical insight has been critical to this work.
+
+I have also benefited from the generous input of other mentors. Thank you to Prof.~Dr.~Michael Boutros, Dr.~Nassos Typas, Dr.~Moritz Gerstung and Dr.~Simon Anders for their valued advice and enthusiasm in engaging with my project at each TAC meeting. Thank you also to my referees and Defence committee. I would also like to thank Moritz for supporting me as a visiting student in Cambridge. I really appreciate the time you have given to support my science.
+
+I am grateful to all members of the Huber, Dietrich and Gerstung groups, past and present. It has been so rewarding to work with such motivated, talented and collegiate scientists. Thank you to the Huber group for many enjoyable lunch times, coffee breaks and fabulous retreats, and of course thank you for all the support and input you have given me in group meetings, and in answering my questions. To Mike and Junyan, I am very grateful that you took the time to teach me good practice in R and answer my questions at any time of the day. I thank Gosia for her useful advice on how to approach this thesis. I am very grateful to Simone for all her support with the administrative side of my PhD. Thank you to Junyan and Katharina for providing invaluable feedback on my thesis and to Nils for sharing the Heididown package!
+
+Thank you to the Dietrich group for our regular lunch time chats (and giving me some German practice) and for the support you have provided, especially when I was trying out new techniques in the lab! I would like to thank my colleague Peter-Martin Bruch: I learned a great deal from you and the project has benefited from your medical and experimental expertise. Thank you to Mareike, Angela, Caro and Tina, your support with experiments has been invaluable. I am grateful to the Gerstung group for welcoming me over the final six months of this project, our regular morning calls and evening meet-ups have kept me motivated as I have written this thesis.
+
+My development as a PhD student and this project have also hugely benefited form working with collaborators and the technical support and advice they have provided. Thorsten Zenz and the Zenz group have provided essential input and infrastructure. Judith Zaugg and the Zaugg group have been generous with their time and expertise. I am grateful to Ivan and Christian for their support and I am glad to have been the first external user of diffTF, thank you for taking the time to teach me! Thank you also to Brian and Anna, you took the time to show me your experimental techniques in ATACseq and scATACseq.
+
+I would like to thank everyone who provided resources for this project, in particular Dr.~Martina Seiffert who provided the HS-5 stromal cell line, Dr.~Sophie Herbst for the proteomics dataset and Dr.~Ivan Berest who provided access to the ATACseq dataset (\protect\hyperlink{ref-Rendeiro2016}{Rendeiro et al. 2016}). Thank you to each of the patients who gave their consent for blood samples to be included in this study.
+
+I am so glad to have had the opportunity to work at such collegial institutes and I would like to thank EMBL Heidelberg for providing such a fulfilling environment in which to work. In particular, the infrastructure at EMBL is so successful at fostering cutting-edge science, and I would like to thank the Gene Core and Proteomics Core Facilities, the Centre for Statistical Analysis and EMBL IT services for their help. Thank you also to the Molecular Medicine Partnership Unit (MMPU), for providing the infrastructure supporting such a close collaboration between my two labs. Thank you to EMBL-EBI for hosting me for the final six months of my PhD. The opportunity to work and study in Cambridge has been so positive, and proven invaluable in networking and building the next stages of my life and career. My time in Cambridge has been made more productive and enjoyable through the generosity of Dr.~Robert Hunt and Dr.~Helena Browne who have supported me as a visitor at Christ's College.
+
+This project would not have been possible without the funding received from the Department of Medicine V, University of Heidelberg, the Molecular Medicine Partnership Unit (MMPU), EMBL Heidelberg, DKFZ, the Heidelberg Center for Personalized Oncology (DKFZ/HIPO), the Joachim-Herz Stiftung and the SIMONA grant.
+
+My PhD has been a huge learning curve, and I am grateful to my family and friends in Heidelberg, Cambridge and Portsmouth for supporting me. Jakob, thank you for helping settle into Germany, even from the very first time we walked what felt like the entirety of Heidelberg during interview week (and of course thank you for guarding my flat all this time!). Tim and Martine, thank you for being my fellow English-speaking pals, I miss all of our late night Guest house chats and dinners at Illegally Tasty. Thank you to Sally-Jane for your mentorship and support. Thank you to all my UK friends who have also been there along the way, and visited many times in the last four years. Kesh, Henry, Adam, thank you for your morale-boosting trips to Cambridge. Thank you to Michael and Helena, our PhD chats have really got me through the last year, and thank you to our lockdown zoom gang, we could not have got through Winter of 2020 without that! Thanks also to Coldplay (and Pete Tong), soundtrack of my PhD.
+
+Finally, and importantly, I would like to thank my family for all the support and mentorship they have provided during the course of my PhD. Milly, I am so glad you could live with me for a year in Heidelberg. Jim and Ann, I have appreciated your morale-boosting trips over to Cambridge while I have been writing this thesis, and of course for your venture to Heidelberg. Mum and Dad, thank you so much for your patience and positivity (and lifting skills), and for always keeping me on the right track.
 \newpage\null\newpage
 
 
@@ -215,112 +236,30 @@ I would like to thank \ldots..
     \addcontentsline{toc}{chapter}{List of publications}
 
     \hypertarget{thesis-related}{%
-    \subsubsection*{Thesis related}\label{thesis-related}}
-    \addcontentsline{toc}{subsubsection}{Thesis related}
+    \subsubsection*{Thesis-related}\label{thesis-related}}
+    \addcontentsline{toc}{subsubsection}{Thesis-related}
     \begin{itemize}
-        \item  Peter-Martin Bruch\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Mueller-Tidow, Thorsten Zenz, Wolfgang Huber, Sascha Dietrich et al. "Mapping drug-microenvironment-genetic interplay in CLL reveals trisomy 12 as a modulator of microenvironmental signalling." \textbf{\textit{bioRxiv}}.\href{https://doi.org/10.1101/2021.07.23.453514}{DOI: 10.1101/2021.07.23.453514} 
+        \item Bruch, Peter Martin\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Müller-Tidow, Thorsten Zenz, Wolfgang Huber\ast and Sascha Dietrich\ast. 2021. "Combinatorial drug-microenvironment interaction mapping reveals cell-extrinsic drug resistance mechanisms and clinically relevant patient subgroups in CLL." \textit{bioRxiv}.\href{https://doi.org/10.1101/2021.07.23.453514}{DOI: 10.1101/2021.07.23.453514} 
         
+    \end{itemize}
+    \hypertarget{software}{%
+    \subsubsection{Software}\label{software}}
+
+    During my PhD, I have published the following software:
+    \begin{itemize}
+      \item \textbf{\underline{Giles, Holly A. R.}} and Peter Martin Bruch. 2021. "CLLCytokineScreen2021: Complete data and executable scripts to reproduce the figures and analysis presented in Bruch and Giles et al. 2021." GitHub. Updated December 6, 2021. \href{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}
+      
+       \item \textbf{\underline{Giles, Holly A. R.}} and Peter Martin Bruch. 2021. "CLLCytokineScreen2021Shiny: Shiny app to explore the dataset presented in Bruch and Giles et al. 2021." Uni-Heidelberg. Updated November 25. \href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/} 
     \end{itemize}
     \hypertarget{other-contributions}{%
     \subsubsection*{Other contributions}\label{other-contributions}}
     \addcontentsline{toc}{subsubsection}{Other contributions}
 
-    The author of this thesis also contributed to a number of other projects throughout the PhD. The following have been published:
+    The author of this thesis also contributed to the following publications:
     \begin{itemize}
-        \item Berest, Ivan\ast, Christian Arnold\ast, Armando Reyes-Palomares, Giovanni Palla, Kasper Dindler Rasmussen, \textbf{\underline{Holly Giles}}, and Peter-Martin Bruch et al. 2019. "Quantification Of Differential Transcription Factor Activity And Multiomics-Based Classification Into Activators And Repressors: DiffTF". \textbf{\textit{Cell Reports}} \href{https://doi.org/10.1016/j.celrep.2019.10.106}{DOI: 10.1016/j.celrep.2019.10.106}
+        \item Berest, Ivan\ast, Christian Arnold\ast, Armando Reyes-Palomares, Giovanni Palla, Kasper Dindler Rasmussen, \textbf{\underline{Holly A. R. Giles}}, Peter-Martin Bruch, Wolfgang Huber, Sascha Dietrich, Kristian Helin and Judith B. Zaugg. 2019. "Quantification Of Differential Transcription Factor Activity And Multiomics-Based Classification Into Activators And Repressors: DiffTF". \textit{Cell Reports} 29 (10): 3147–3159.e12. \href{https://doi.org/10.1016/j.celrep.2019.10.106}{DOI: 10.1016/j.celrep.2019.10.106}
         
-      \item Lu, Junyan\ast, Ester Cannizzaro\ast, Fabienne Meier-Abt, Sebastian Scheinost, Peter-Martin Bruch, \textbf{\underline{Holly A. R. Giles}}, and Almut Lütge et al. 2021. "Multi-Omics Reveals Clinically Relevant Proliferative Drive Associated With Mtor-MYC-OXPHOS Activity In Chronic Lymphocytic Leukemia". \textbf{\textit{Nature Cancer}}. \href{https://doi.org/10.1038/s43018-021-00216-6}{DOI: 10.1038/s43018-021-00216-6}
-    \end{itemize}
-\newpage\null\newpage
-
-% --------------------------------------------
-% ---------- List of contributions ------------
-% --------------------------------------------
-    \hypertarget{list-of-other-contributions-and-achievements}{%
-    \chapter*{List of other contributions and achievements}\label{list-of-other-contributions-and-achievements}}
-    \addcontentsline{toc}{chapter}{List of other contributions and achievements}
-
-    \hypertarget{conference-talks-and-posters}{%
-    \subsubsection*{Conference Talks and Posters}\label{conference-talks-and-posters}}
-    \addcontentsline{toc}{subsubsection}{Conference Talks and Posters}
-
-    I have additionally presented at the following meetings during my PhD:
-    \begin{itemize}
-      \item  19th International EMBL PhD Symposium 2017
-      \item  Molecular Medicine Partnership Unit (MMPU) Summer Research Meeting 2018
-      \item  ASCONA Workshop: Statistics for Medical Data Science 2019
-      \item  MMPU Summer Research Meeting 2019
-    \end{itemize}
-    \hypertarget{courses-and-conferences}{%
-    \subsubsection*{Courses and Conferences}\label{courses-and-conferences}}
-    \addcontentsline{toc}{subsubsection}{Courses and Conferences}
-
-    During my PhD, I attended the following courses and conferences:
-
-    \textbf{2017:}
-    \begin{itemize}
-      \item Huber Group Retreat, Dubrovnik \textit{12th - 15th Sept 2017}
-      \item EMBL EIPP Predoc Course, Heidelberg \textit{1st Oct - 15th Dec 2017}
-      \item EMBL PhD Symposium, Heidelberg \textit{19th - 21st Oct 2017}
-    \end{itemize}
-    \textbf{2018:}
-    \begin{itemize}
-      \item Huber-Dietrich SOUND retreat, Black Forest \textit{19th - 20th Feb 2018}
-      \item EMBL Biocomputing Retreat, Black Forest \textit{19th - 21st Mar 2018}
-      \item EMBL Course: Statistical Methods in Bioinformatics, Heidelberg \textit{25th - 27th Apr 2018}
-      \item EMBL Course: GitLab, Heidelberg \textit{Apr 2018}
-      \item EMBL Course: Using the Cluster, Heidelberg \textit{May 2018}
-      \item Quantitative Genomics Conference, London \textit{14th Jun 2018}
-      \item EMBL Genome Biology Retreat, Boppard \textit{21st - 22nd Jun 2018}
-      \item CSAMA Bioinformatics Course, Brixen \textit{9th - 13th Jul 2018}
-      \item EMBL Course: ATACseq Analysis, Heidelberg \textit{10th - 14th Sept 2018}
-      \item Lymphoid Malignancies Conference, Dublin \textit{29th - 30th Sept 2018}
-      \item EMBL Predoc Retreat, Pilsen \textit{4 - 5th Oct 2018}
-      \item MMPU Winter Research Day, Heidelberg \textit{16th Nov 2018}
-      \item EMBL PhD Symposium, Heidelberg \textit{21st - 24th Nov 2018}
-      \item EBI Bioinformatics Course, Cambridge \textit{26th Nov - 2nd Dec 2018}
-      \end{itemize}
-    \textbf{2019:}
-    \begin{itemize}
-      \item EMBL Biocomputing Retreat, Black Forest \textit{18th - 20th Feb 2019}
-      \item Therapeutic targeting of the Tumour Microenvironment in Leukaemia, London
-    \textit{24th - 26th Feb 2019}
-      \item EMBL Genome Biology Retreat \textit{28th - 29th Mar 2019}
-      \item MASAMB (Mathematical and Statistical Aspects of Molecular Biology),
-    Cambridge \textit{25 - 26th Apr 2019}
-
-      \item MMPU Summer Research Day, Heidelberg \textit{10th May 2019}
-      \item Huber Group Retreat, Mallorca \textit{20th - 24th May 2019}
-      \item ASCONA 2019: Statistics for Medical Data Science \textit{17th - 21st Jun 2019}
-      \item EMBL Course: Corporate Winter School, Heidelberg \textit{Sept 2019 and Feb 2020}
-    \end{itemize}
-    \textbf{2020:}
-    \begin{itemize}
-      \item Modern Statistics for Modern Biology Course
-    \textit{May - Jul 2020}
-      
-    \end{itemize}
-    \hypertarget{software}{%
-    \subsubsection*{Software}\label{software}}
-    \addcontentsline{toc}{subsubsection}{Software}
-
-    During my PhD, I have published the following software:
-    \begin{itemize}
-      \item \textbf{\underline{Giles, Holly A. R.}} and Peter M. Bruch, 2021. CLLCytokineScreen2021: Complete data and executable scripts to reproduce the figures and analysis presented in Bruch and Giles et al. 2021. https://github.com/Huber-group-EMBL/CLLCytokineScreen2021
-      
-      \item \textbf{\underline{Giles, Holly A. R.}} and Peter M. Bruch, 2021. CLLCytokineScreen2021Shiny: Shiny app to explore the dataset presented in Bruch and Giles et al. 2021. https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/
-    \end{itemize}
-    \hypertarget{responsibilities}{%
-    \subsubsection{Responsibilities}\label{responsibilities}}
-    \begin{itemize}
-      \item \textbf{Coordinator, EMBL PhD Symposium 2018} My role as Coordinator involved managing a team of 30 fellow PhD students to plan and implement a large-scale conference, with over 220 attendees and a budget of over \euro{60000}. 
-      \item \textbf{External Consultant, Merck KGaA} I advised Merck regarding the implementation of the project proposal I submitted as part of Team Healthy Lives at the 2018 Merck Innovation Cup.
-    \end{itemize}
-    \hypertarget{awards}{%
-    \subsubsection{Awards}\label{awards}}
-    \begin{itemize}
-      \item \textbf{Joachim-Herz Add-on Fellowship for Interdisplinary Life Science 2019}, \euro{12000} In 2019 I was awarded the Joachim-Herz Add-on Fellowship, which funds interdisciplinary research and qualification (e.g. stays at a research lab and participation in conferences) over a period of two years.
-      \item \textbf{Merck Innovation Cup}, \euro{5000} As part of a team of six, I competed in the Merck Innovation Cup, winning first prize in the Healthy Lives category for our business proposal for a new pharmaceutical product to improve our preparedness for future viral pandemics.
+      \item Lu, Junyan\ast, Ester Cannizzaro\ast, Fabienne Meier-Abt, Sebastian Scheinost, Peter-Martin Bruch, \textbf{\underline{Holly A. R. Giles}}, Almut Lütge, Jennifer Hüllein, Lena Wagner, Brian Giacopelli, Ferran Nadeu, Julio Delgado, Elias Campo, Maurizio Mangolini, Ingo Ringshausen, Martin Böttcher, Dimitrios Mougiakakos, Andrea Jacobs, Bernd Bodenmiller, Sascha Dietrich, Christopher C. Oakes, Thorsten Zenz and Wolfgang Huber.  2021. "Multi-Omics Reveals Clinically Relevant Proliferative Drive Associated With Mtor-MYC-OXPHOS Activity In Chronic Lymphocytic Leukemia". \textit{Nature Cancer} 2 (8): 853–64. \href{https://doi.org/10.1038/s43018-021-00216-6}{DOI: 10.1038/s43018-021-00216-6}
     \end{itemize}
 \newpage\null\newpage
 
@@ -331,12 +270,12 @@ I would like to thank \ldots..
     \chapter*{Contributions}\label{contributions}}
     \addcontentsline{toc}{chapter}{Contributions}
 
-    Unless stated otherwise, the computational methods, statistical inference and regression modelling presented here were primarily conceptualised, performed, and interpreted by me, with support from my supervisors Dr.~Wolfgang Huber and Dr.~Sascha Dietrich. This shiny app and softare documentation was assembled by me, using the scripts generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021. Processing of screening data and clinical data was performed by my colleague in the Department of Medicine, University of Heidelberg, Peter Martin-Bruch. Where stated, figures were jointly produced with Peter Martin-Bruch and with input from Wolfgang Huber and Sascha Dietrich for the manuscript Bruch and Giles et al.~2021. Junyan Lu provided advice and code to support regression modelling. Ivan Berest and Christian Arnold supported processing and analysis of ATAC sequencing datasets.
+    Unless stated otherwise, the computational methods, statistical inference and regression modelling presented here were conceptualised, performed, and interpreted by me, with support from my supervisors Dr.~Wolfgang Huber and Dr.~Sascha Dietrich. The shiny app and software documentation was assembled by me, using the scripts generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021. Processing of screening data and clinical data was performed by my colleague in the Department of Medicine, University of Heidelberg, Peter Martin-Bruch. Where stated, figures were jointly produced with Peter Martin-Bruch and with input from Wolfgang Huber and Sascha Dietrich for the manuscript Bruch and Giles et al.~2021. Junyan Lu provided advice and code to support regression modelling. Ivan Berest and Christian Arnold supported processing and analysis of ATAC sequencing datasets.
 
     The experiments described in this thesis were generated as follows. The drug - stimulus perturbation assay was performed primarily by Peter Martin-Bruch, with support from Dr.~Sascha Dietrich, Carolin Kolb, Dr.~Sebastian Scheinhost and Lena Wagner. Additional follow-up experiments presented in this thesis were performed by colleagues at EMBL and the Department of Medicine, University of Heidelberg:
     \begin{itemize}
-        \item  The Spi-B and PU.1 shRNA Knockdowns were performed by Tina Becirovic and Sophie Herbst
-        \item  The immunohistochemistry (IHC) staining of CLL and non-neoplastic lymph nodes were performed by Mark Kriegsmann, Katharina Kriegsmann and Christiane Zgorzelski
+        \item  The Spi-B and PU.1 shRNA knockdowns were performed by Tina Becirovic and Sophie Herbst
+        \item  The immunohistochemistry (IHC) stains of CLL and non-neoplastic lymph nodes were performed by Mark Kriegsmann, Katharina Kriegsmann and Christiane Zgorzelski
         \item  The Ibrutinib - IL4 - STAT6i interaction assay on CLL PMBCs was performed by Peter-Martin Bruch
         \item  The joint RNAseq - ATACseq - Mass Spectrometry of treated CLL PMBC samples was performed by Peter-Martin Bruch and Nayara Trevisan Doimo de Azevedohe
         
@@ -352,8 +291,13 @@ I would like to thank \ldots..
     \chapter*{Zusammenfassung}\label{zusammenfassung}}
     \addcontentsline{toc}{chapter}{Zusammenfassung}
 
-    Abstract in German
-    Aktuelle Entwicklungen im Bereich der ``omik''-Technologien tragen wesentlich zurBeschleunigung des Fortschritts in der Krebsforschung bei etc
+    Die chronische lymphatische Leukämie (CLL) ist eine bösartige Erkrankung reifer B-Lymphozyten, die durch eine Anhäufung bösartiger Zellen im Blut, Knochenmark und in den Lymphknoten gekennzeichnet ist. Die Krankheit nimmt einen heterogenen Verlauf, der durch mehrere Faktoren bestimmt wird, darunter genetische Aberrationen, die Signalübertragung über den B-Zell-Rezeptor (BCR) und Interaktionen mit nicht-neoplastischen Zellen in der Mikroumgebung des Tumors. Viele einzelne Krankheitsfaktoren wurden bereits gut charakterisiert, und die CLL ist eine Erfolgsgeschichte, wenn es darum geht, Fortschritte im molekularen Verständnis mit Verbesserungen bei den klinischen Ansätzen zu verknüpfen. Darauf aufbauend versprechen Multi-omiks-Ansätze, unser Verständnis der Krankheitsbiologie durch die Integration verschiedener Datentypen zu verbessern. Im klinischen Bereich besteht nach wie vor die Notwendigkeit, ein systematisches Verständnis der Rolle zu entwickeln, die genetische Aberrationen und Signalwege gemeinsam bei der CLL spielen.
+
+    In dieser Arbeit untersuche ich den Einfluss zelleigener und -fremder Faktoren auf die Biologie der CLL und das Ansprechen auf Medikamente. Ich verwende einen Datensatz, der aus Lebensfähigkeitsdaten von CLL-Primärproben besteht, die mit Arzneimitteln und Stimuli aus der Mikroumgebung behandelt wurden, sowie aus molekularen Profilen derselben Proben. Der Lebensfähigkeitstest wurde mit 12 Medikamenten durchgeführt, die jeweils mit 17 individuellen Mikroumweltstimuli kombiniert wurden (n = 192), und mit molekularen Profilen kombiniert, die Punktmutationen, Kopienzahlvariationen, DNA-Methylierung und mRNA-Expression umfassen. Ergänzt wird der Datensatz durch klinische Patientendaten und immunhistochemische (IHC) Färbungen von Lymphknotenbiopsien. Ich wende statistische Schlussfolgerungen und Regressionsmodellierung an, um mehrere wichtige Erkenntnisse zu gewinnen.
+
+    Erstens zeigen CLL-Proben heterogene Reaktionen auf die verschiedenen Stimuli aus der Mikroumgebung, wobei IL4 und TLR-Signalisierung den stärksten Einfluss haben. Aus den Reaktionsprofilen lassen sich vier Patientenuntergruppen ableiten, die unterschiedliche Krankheitsdynamiken und molekulare Profile aufweisen. Zweitens: Eine systematische Untersuchung der genetischen Determinanten der Mikroumweltreaktion identifiziert Trisomie 12 als einen wichtigen Modulator. Die Daten deuten darauf hin, dass die Transkriptionsfaktoren Spi-B und PU.1 diese Wirkung vermitteln können. Drittens erstelle ich eine Karte der Wechselwirkungen zwischen Mikroumwelt-Signalwegen und Arzneimitteln und identifiziere neue Wege der Arzneimittelresistenz, einschließlich der Wirkung von IFN\(\gamma\) auf die Toxizität von Ibrutinib. Ich zeige, wie diese Wechselwirkungen zwischen Medikament und Mikroumgebung durch molekulare Merkmale weiter moduliert werden können, und identifiziere kontextabhängige Mechanismen der Medikamentenresistenz, die bei bestimmten genetischen Hintergründen auftreten. Zum Beispiel induziert die TLR-Aktivität eine Resistenz gegen Fludarabin bei IGHV-U und Trisomie 12 CLLs, aber nicht bei IGHV-M. Schließlich wird die \emph{in vivo} Relevanz dieser Ergebnisse in CLL-infiltrierten Lymphknoten nachgewiesen, die im Vergleich zu nicht-neoplastischen Proben höhere IL4-Signalisierungswerte aufweisen (p\textless0,001). Erhöhte IL4-Signalisierung in CLL-infiltrierten Lymphknoten korreliert mit schlechteren Behandlungsergebnissen (p=0,038).
+
+    Der vorgestellte Datensatz und die Analyse sind online (\url{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}) und über eine interaktive glänzende App (\url{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}) verfügbar. Insgesamt zeigen diese Ergebnisse die Auswirkungen genetischer Aberrationen und mikroökologischer Stimuli auf das Ansprechen auf Medikamente und legen neue pathogene Mechanismen und Ursachen der Medikamentenresistenz nahe.
 \newpage\null\newpage
 
 % -----------------------------
@@ -364,8 +308,13 @@ I would like to thank \ldots..
     \chapter*{Abstract}\label{abstract}}
     \addcontentsline{toc}{chapter}{Abstract}
 
-    {[}IN PROGRESS{]}
-    Chronic Lymphocytic Leukaemia is a malignancy of mature B lymphocytes, characterised by the accumulation of malignant cells within the blood, bone marrow and lymph nodes. The disease pathogenesis is driven by multiple factors, including molecular features, signalling via the B cell receptor (BCR) and interactions with non-neoplastic cells within the lymphoid tissues (known as the tumour microenvironment). The impact of individual genetic features and microenvironmental signals has been well-characterised, and CLL represents a success story in linking advances in molecular understanding to improvements in clinical approaches. However, very few studies have studied these features integratively, and systematic investigations of the influence of cell-intrinsic and cell-extrinsic features on CLL are lacking. To investigate the integrative impact of these features on CLL biology, in this thesis I analyse screening data of primary patient samples, combined with multi-omics profiles of the same samples. The screen was performed using 12 drugs co-applied with 17 individual microenvironmental stimuli on CLL peripheral blood mononucleated cells (n = 192). I combined this data with whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data of matching tumour samples, and additional ATAC-sequencing and RNA-sequencing data for validatory work. The screening data is complemented with \emph{in vivo} data on clinical outcomes, and IHC of patient lymph nodes stained for pSTAT6, pIRAK4 and STAT6. I apply statistical inference and regression modelling to integrate multiple data types, with the aim of finding new drivers and mechanisms of drug resistance in CLL. Profiling responses to microenvironmental stimulation across the heterogeneous patient cohort delineates four patient subgroups that have differential disease progression dynamics, and molecular profiles, suggesting the dynamics of the microenvironment is important to disease outcomes. I perform a systematic survey of genetic determinants of microenvironmental response and identify trisomy 12 as a modulator of microenvironmenntal stimulation. The data suggest that the activity of the transcription factors Spi-B and PU.1 may mediate this effect. I generate a map of interactions between microenvironmental signalling pathways and drugs, and identify novel drug -resistance mechanism including the effect of interferon gamma on ibrutinib toxicity. I demonstrate how drug - microenvironment interactions can be further modulated by molecular features, and identify drug resistance mechanism that occur in suggests of CLL cases. For example, TLR activity induces resistance to fludarabine in IGH-U and trisomy 12 patients, but not in IGHV-M. I demonstrate the \emph{in vivo} relevance of these findings within CLL-infiltrated lymph nodes, which show higher levels of IL4 and TLR signalling compared to non-neoplastic samples (p\textless0.001). Elevated IL4 signalling in CLL -infiltrated lymph nodes correlates with poorer outcomes (p=0.038). CLL represents a prototypic model for the study of cell-intrinsic and cell-extrinsic features in cancers. This data set represents an important resource for exploring the impact of these features and I have published the dataset and reproducible analyses as part of an online git repository () and interactive shiny app(). Collectively, these results demonstrate the integrative impact of molecular features and microenvironmental stimuli on drug response and propose potential novel drivers and drug resistance mechanisms and strategies for targeting these in future work.
+    Chronic Lymphocytic Leukaemia (CLL) is a malignancy of mature B lymphocytes, characterised by the accumulation of malignant cells within the blood, bone marrow and lymph nodes. The disease follows a heterogeneous course driven by multiple factors, including genetic aberrations, signalling via the B cell receptor (BCR) and interactions with non-neoplastic cells in the tumour microenvironment. Many individual disease drivers have been well-characterised, and CLL represents a success story in linking advances in molecular understanding to improvements in clinical approaches. Building on this, multi-omics approaches promise to further our understanding of disease biology through the integration of multiple datatypes. There remains a clinical need to generate systematic understanding of the role that genetic aberrations and signalling pathways collectively play in CLL.
+
+    In this thesis, I investigate the impact of cell-intrinsic and extrinsic factors on CLL biology and drug response. I employ a dataset consisting of viability data of CLL primary samples treated with drugs and microenvironmental stimuli, along with molecular profiles of the same samples. The viability assay was performed using 12 drugs each co-applied with 17 individual microenvironmental stimuli (n = 192) and combined with molecular profiles covering point mutations, copy number variations, DNA methylation and mRNA expression. The dataset is complemented with patient clinical data and immunohistochemistry (IHC) stains of lymph node biopsies. I apply statistical inference and regression modelling to reveal several key findings.
+
+    Firstly, CLL samples demonstrate heterogeneous responses to the panel of microenvironmental stimuli and IL4 and TLR signalling have the strongest impact. The response profiles delineate four patient subgroups that show differential disease dynamics and molecular profiles. Secondly, a systematic survey of genetic determinants of microenvironmental response identifies trisomy 12 as a key modulator. The data suggest that the transcription factors Spi-B and PU.1 may mediate this effect. Thirdly, I generate a map of interactions between microenvironmental signalling pathways and drugs and identify novel drug-resistance pathways including the effect of IFN\(\gamma\) on ibrutinib toxicity. I demonstrate how these drug - microenvironment interactions can be further modulated by molecular features, and identify context-dependent drug resistance mechanism that occur in specific genetic backgrounds. For example, TLR activity induced resistance to fludarabine in IGHV-U and trisomy 12 CLLs, but not in IGHV-M. Finally, the \emph{in vivo} relevance of these findings is established within CLL-infiltrated lymph nodes, which show higher levels of IL4 signalling compared to non-neoplastic samples (p\textless0.001). Elevated IL4 signalling in CLL-infiltrated lymph nodes correlates with poorer outcomes (p=0.038).
+
+    The presented dataset and analysis are available online (\url{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}) and through an interactive shiny app (\url{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}). Collectively, these results demonstrate the impact of genetic aberrations and microenvironmental stimuli on drug response and propose novel pathogenic mechanisms and causes of drug resistance.
 \newpage\null\newpage
 
 % -----------------------------
@@ -383,8 +332,8 @@ I would like to thank \ldots..
 \chapter*{List of Abbreviations}\label{list-of-abbreviations}}
 \addcontentsline{toc}{chapter}{List of Abbreviations}
 \begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
-    AML & & Acute myeloid leukaemia \\
     AKT & & Protein kinase B \\
+    AML & & Acute myeloid leukaemia \\
     ATACseq & & Assay for Transposase-Accessible Chromatin using sequencing \\
     ATP & & Adenosine triphosphate \\
     AUC & & Area under curve \\
@@ -394,51 +343,50 @@ I would like to thank \ldots..
     BMSC & & Mesenchymal bone marrow stromal cell \\
     BTK & & Bruton’s tyrosine kinase \\
     CD40L & & CD40 Ligand \\
-    CDF & & Cumulative Distribution Function \\
+    CDF & & Cumulative distribution function \\
     ChIPseq & & Chromatin immunoprecipitation sequencing \\
-    CLL & & Chronic lymphocytic leukemia \\
+    CI & & Confidence interval \\
+    CLL & & Chronic lymphocytic leukaemia \\
     CNV & & Copy number variation \\
-    CI & & Confidence Interval \\
     CpG ODN & & CpG oligodeoxynucleotides \\
+    DLBCL & & Diffuse large B cell lymphoma \\
     DMSO & & Dimethyl sulfoxide  \\
     DNA & & Deoxyribonucleic acid  \\
     DNAseq & & DNA sequencing \\
     ERK & & Ras-dependent extracellular signal-regulated kinase \\
-    FACS & & Flourescence-activated cell sorting \\
     FBS & & Fetal bovine serum \\
-    FDA & & Federal Drug Administration \\
+    FDA & & United States Food and Drug Administration \\
     FDC & & Follicular dendritic cell \\
     FDR & & False discovery rate \\
     GSEA & & Gene set enrichment analysis  \\
     HR & & Hazard ratio  \\
+    HS-5 CM & & HS-5 Conditioned Medium  \\
+    IFN$\gamma$ & & Interferon$\gamma$   \\  
+    Ig & & Immunoglobulin \\
+    IGHV & & Immunoglobulin heavy chain variable region \\
   
     
 \end{tabular}
 \newpage   
 \begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
     
-  HS-5 CM & & HS-5 Conditioned Medium  \\
-    IFN$\gamma$ & & Interferon$\gamma$   \\  
-    Ig & & Immunoglobulin \\
-    IGHV & & Immunoglobulin heavy chain variable region \\
-    IHC & & Immunohistochemistry \\
+  IHC & & Immunohistochemistry \\
     IL & & Interleukin \\
     JAK & & Janus kinase \\
     M-CLL & & CLL with somatic hypermutations in IGHV loci \\
-    U-CLL & & CLL without somatic hypermutations in IGHV loci \\
     MACS & & Magnetic-activated cell sorting \\
     MAPK & & Mitogen-activated protein kinase  \\
     MRD & & Minimal residual disease  \\
     MSCs & & Mesenchymal stromal cells  \\
-    NF$\kappa$B & & Nuclear factor kappa-light-chain-enhancer of activated B cells \\
-    NLC & & nurselike cell  \\
+    NF$\kappa$B & & Nuclear factor $\kappa$-light-chain-enhancer of activated B cells \\
+    NLC & & Nurselike cell  \\
     NOTCH & & Neurogenic locus notch  \\
     OS & & Overall survival \\
     PBMC & & Peripheral blood mononuclear cells \\
     PCA & & Principal component analysis \\
-    PKC & & Protein kinase C \\
-    PLC-$\gamma$2 & & phospholipase C $\gamma$ 2 \\
     PI3K & & Phosphoinositide 3-kinase \\
+    PKC & & Protein kinase C \\
+    PLC-$\gamma$2 & & Phospholipase C $\gamma$ 2 \\
     RNA & & Ribonucleic acid  \\
     RNAseq & & RNA sequencing \\
     SDF1$\alpha$ & & Stromal Cell-Derived Factor-1 alpha  \\
@@ -451,19 +399,14 @@ I would like to thank \ldots..
     TLR & & Toll-like receptor \\ 
     TSS & & Transcription start site \\
     TTFT & & Time to first treatment \\
-    TTT & & Time to next treatment \\
+    TTT & & Time to treatment \\
     U-CLL & & CLL without somatic hypermutations in IGHV loci \\
-    
-\end{tabular}
-\newpage
-\begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
-
-  VST & & Variance Stabilising Transformation \\
+    VST & & Variance stabilising transformation \\
     WES & & Whole exome sequencing \\
     WGS & & Whole genome sequencing \\
     WT & & Wild type \\
     ZAP70 & & Tyrosine-protein kinase ZAP-70 \\
-
+    
 \end{tabular}
 % ----------------------------------------------------
 % --- frontmatter: List of Figures (not mandatory) ---
@@ -483,8 +426,8 @@ I would like to thank \ldots..
 \hypertarget{introduction}{%
 \chapter{Introduction}\label{introduction}}
 
-\hypertarget{chronic-lymphocytic-leukemia-cll}{%
-\section{Chronic Lymphocytic Leukemia (CLL)}\label{chronic-lymphocytic-leukemia-cll}}
+\hypertarget{chronic-lymphocytic-leukaemia-cll}{%
+\section{Chronic Lymphocytic Leukaemia (CLL)}\label{chronic-lymphocytic-leukaemia-cll}}
 
 \hypertarget{intro-disease-characteristics}{%
 \subsection{Disease characteristics}\label{intro-disease-characteristics}}
@@ -502,7 +445,7 @@ The disease pathogenesis is driven by multiple factors, including molecular feat
 
 \caption{Wright--Giemsa-stained blood smear of a CLL malignant B cell, depicting typical morphology. \emph{Figure reproduced with permission from \protect\hyperlink{ref-Kipps2017}{Kipps et al.} (\protect\hyperlink{ref-Kipps2017}{2017}) }.}\label{fig:CLLmorphology}
 \end{figure}
-CLL is the most common leukaemia in the West, accounting for 37\% of leukaemia cases and \textasciitilde19,000 newly detected cancers in the US in 2016 (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017}; \protect\hyperlink{ref-Dubois2020}{Dubois et al. 2020}). The risk of developing CLL is twice as high for men than women, and more likely with increasing age (\protect\hyperlink{ref-Siegel2012}{Siegel et al. 2012}; \protect\hyperlink{ref-Nabhan2014}{Nabhan et al. 2014}; \protect\hyperlink{ref-Li2015}{Y. Li et al. 2015}; \protect\hyperlink{ref-Pulte2015}{Pulte et al. 2015}). Chemotherapy (\protect\hyperlink{ref-Robak2005}{Robak 2005}; \protect\hyperlink{ref-Chang2012}{Chang and Kahl 2012}; \protect\hyperlink{ref-Lukenbill2013}{Lukenbill and Kalaycio 2013}) and chemoimmunotherapy (\protect\hyperlink{ref-Hallek2010}{M. Hallek et al. 2010}; \protect\hyperlink{ref-Goede2014}{Goede et al. 2014}; \protect\hyperlink{ref-Hillmen2015}{Hillmen et al. 2015}) has been the mainstay of therapy for many years. More recently, the central role of BCR signalling in disease pathogenesis has been appreciated and new drugs targeting this pathway have improved patient outcomes. The overall 5-years relative survival for CLL is 84\% (\protect\hyperlink{ref-Miller2019}{Miller et al. 2019}).
+CLL is the most common leukaemia in the West, accounting for 37\% of leukaemia cases and \textasciitilde19,000 newly detected cancers in the US in 2016 (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017}; \protect\hyperlink{ref-Dubois2020}{Dubois et al. 2020}). The risk of developing CLL is twice as high for men than women, and more likely with increasing age (\protect\hyperlink{ref-Siegel2012}{Siegel et al. 2012}; \protect\hyperlink{ref-Nabhan2014}{Nabhan et al. 2014}; \protect\hyperlink{ref-Li2015}{Y. Li et al. 2015}; \protect\hyperlink{ref-Pulte2015}{Pulte et al. 2015}). Chemotherapy (\protect\hyperlink{ref-Robak2005}{Robak 2005}; \protect\hyperlink{ref-Chang2012}{Chang and Kahl 2012}; \protect\hyperlink{ref-Lukenbill2013}{Lukenbill and Kalaycio 2013}) and chemoimmunotherapy (\protect\hyperlink{ref-Hallek2010}{Hallek et al. 2010}; \protect\hyperlink{ref-Goede2014}{Goede et al. 2014}; \protect\hyperlink{ref-Hillmen2015}{Hillmen et al. 2015}) has been the mainstay of therapy for many years. More recently, the central role of BCR signalling in disease pathogenesis has been appreciated and new drugs targeting this pathway have improved patient outcomes. The disease course is highly heterogeneous, and the overall 5-years relative survival for CLL is 84\% (\protect\hyperlink{ref-Miller2019}{Miller et al. 2019}).
 
 In spite of this, CLL is widely considered to be incurable (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}), and treatment regimens induce significant side-effects. Moreover, the disease is characterised by its clinical heterogeneity (\protect\hyperlink{ref-Miller2019}{Miller et al. 2019}) and there is significant variation in disease progression amongst patients. Some patients harbour indolent disease, and can be followed by a watch-and-wait approach, sometimes going decades without requiring treatment. Others may need immediate treatment and survival can be short (\protect\hyperlink{ref-Miller2019}{Miller et al. 2019}). There is a clinical need to understand the underlying biology of the disease, with a view to understanding the causes of this clinical heterogeneity and to improving patient outcomes and experiences.
 
@@ -614,7 +557,7 @@ Moreover, methylation signatures have been used to classify distinct clinical CL
 \section{Therapies in CLL}\label{intro-therapies}}
 
 Extensive work to uncover the molecular drivers of CLL has led to the development of several therapeutic strategies. CLL represents a successful example of how developing a complex understanding of the biological characteristics of a disease can lead to significantly improved patient outcomes (\protect\hyperlink{ref-Yosifov2019}{Yosifov et al. 2019}).
-Treatment of CLL patients can be via chemotherapy, chemoimmunotherapy or targeted therapies that inhibit specific pathways (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017}; \protect\hyperlink{ref-Burger2020}{Jan A. Burger 2020}). Additionally, allogeneic stem cell transplantation is increasingly considered as an alternative option in relapsed or refractory patients (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017}).
+Treatment of CLL patients can be via chemotherapy, chemoimmunotherapy or targeted therapies that inhibit specific pathways (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017}; \protect\hyperlink{ref-Burger2020}{Jan A. Burger 2020}). Additionally, allogeneic stem cell transplantation is sometimes considered (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017}).
 
 \hypertarget{intro-chemotherapy}{%
 \subsection{Chemotherapy and chemoimmunotherapy}\label{intro-chemotherapy}}
@@ -632,24 +575,10 @@ Idelalisib also acts to inhibits BCR signalling and chemokine signalling (\prote
 
 Other drugs targeting SYK, downstream of BTK, have also shown promise in Phase I/II clinical trials (\protect\hyperlink{ref-Friedberg2010}{Friedberg et al. 2010}), though none are licenced as yet.
 
-Aside from BCR inhibitors, BCL-2 inhibitors such as venetoclax, have also shown good efficacy in CLL. Venetoclax is thought to induce apoptosis in CLL cells, by acting as a BH3 mimetic interfering with the ability of BCL-2 to sequester BIM (\protect\hyperlink{ref-Moore2007}{Moore et al. 2007}). This makes venetoclax an attractive alternative in patients with relapsed or refractory disease (\protect\hyperlink{ref-Roberts2016}{Roberts et al. 2016}), or who have del(17p) i.e.~loss of \emph{TP53 }(\protect\hyperlink{ref-Stilgenbauer2016}{Stilgenbauer et al. 2016}). Complete remissions are observed in \textasciitilde20\% patients (\protect\hyperlink{ref-Roberts2016}{Roberts et al. 2016}) which is higher than with other targeted therapies, and minimal residual disease in the bone marrow is less common (\protect\hyperlink{ref-Roberts2016}{Roberts et al. 2016}).
+Aside from BCR inhibitors, BCL-2 inhibitors such as venetoclax, have also shown good efficacy in CLL. Venetoclax is thought to induce apoptosis in CLL cells, by acting as a BH3 mimetic interfering with the ability of BCL-2 to sequester BIM (\protect\hyperlink{ref-Moore2007}{Moore et al. 2007}).
 
-\hypertarget{intro-management-algorithm}{%
-\subsection{Management algorithm}\label{intro-management-algorithm}}
+CLL is thus a manageable disease, with a well-established arsenal of treatments and associated management algorithm. However, treatments are harsh, and the disease is still considered incurable (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). Many cases develop resistance to therapy, both via acquired mutations and through survival signals provided by the microenvironment (see section \ref{intro-microenvironment-drug-response}) and minimal residual disease within the bone marrow is common. Collectively, these lead to relapse or required prolonged therapy and its associated toxicities. There remains a clinical need to improve patient outcomes and experience.
 
-The decision to initiate therapy is guided by the stage of disease, evidence for rapid disease progression or disease-related symptoms (\protect\hyperlink{ref-Hallek2008}{Michael Hallek et al. 2008}; \protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017}). Disease stage is determined by an index such as the Rai staging system, which categorises patients based on disease severity (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017}). The choice of therapy accounts for certain mutations, in particular the presence of \emph{TP53} or del(17p) mutations, the age of the patient and the objective of therapy. IGHV status is also increasingly used for patient stratification (Figure \ref{fig:CLLstratification}, (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017})).
-
-CLL is a manageable disease, with a well-established arsenal of treatments and associated management algorithm. However, treatments are harsh, and the disease is still considered incurable (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). Many cases develop resistance to therapy, both via acquired mutations and through survival signals provided by the microenvironment (see section \ref{intro-microenvironment-drug-response}) and minimal residual disease within the bone marrow is common. Collectively, these lead to relapse or required prolonged therapy and its associated toxicities. There remains a clinical need to improve patient outcomes and experience.
-
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{figures/disease_stratification} 
-
-}
-
-\caption{Management algorithm for patients with CLL. CIT (chemoimmunotherapy), LDT (lymphocyte doubling time). \emph{Figure reproduced with permission from \protect\hyperlink{ref-Kipps2017}{Kipps et al.} (\protect\hyperlink{ref-Kipps2017}{2017}) }.}\label{fig:CLLstratification}
-\end{figure}
 \hypertarget{intro-tumour-microenvironment}{%
 \section{The tumour microenvironment in CLL}\label{intro-tumour-microenvironment}}
 
@@ -660,8 +589,8 @@ In addition to genetic aberrations, the tumour microenvironment is an important 
 
 The importance of the microenvironment in CLL pathogenesis was first recognised in studies that showed CLL cells rapidly undergo apoptosis \emph{in vitro}, whilst their survival can be extended by stimulation or by co-culture with nurselike cells (NLCs) or mesenchymal bone marrow stromal cells (BMSCs) (\protect\hyperlink{ref-Collins1989}{Collins et al. 1989}; \protect\hyperlink{ref-Burger2000}{Jan A. Burger et al. 2000}; \protect\hyperlink{ref-Kurtova2009}{Kurtova et al. 2009}; \protect\hyperlink{ref-Deaglio2009}{Deaglio and Malavasi 2009}; \protect\hyperlink{ref-Purroy2015}{Purroy et al. 2015}). This observation indicated that the ability of CLL to progressively accumulate \emph{in vivo} may be highly dependent on external stimulation, rather than some cell-intrinsic feature of the tumour. Building on these observations, further \emph{in vitro} studies have shown a number of cell types and soluble factors belonging to the microenvironment are also capable of protecting the tumour cells from drugs and chemotherapeutic agents. Many CLL patients continue to harbour minimal residual disease (MRD), in which a fraction of the malignant cells remain whilst the patient is in remission and eventually lead to relapse (\protect\hyperlink{ref-Hayden2012}{Hayden et al. 2012}). It is believed that the tumour microenvironment provides a sanctuary for the malignant B cells to shield from the effects of therapy (\protect\hyperlink{ref-Dubois2020}{Dubois et al. 2020}).
 
-\hypertarget{components-of-the-tumour-microenvironment}{%
-\subsection{Components of the tumour microenvironment}\label{components-of-the-tumour-microenvironment}}
+\hypertarget{intro-TM-components}{%
+\subsection{Components of the tumour microenvironment}\label{intro-TM-components}}
 
 \textbf{Lymph Nodes}
 Over the last two decades, significant progress has been made in unravelling this complex cross-talk and many of the important cellular and molecular components have been defined and studied. Malignant B cells circulate through the blood in a resting state, and follow chemokine gradients towards the lymph nodes to form ``profileration centres'' (Figure \ref{fig:proliferationCentres}), similar to germinal centres (\protect\hyperlink{ref-Herishanu2011}{Herishanu et al. 2011}). Studies using detuerated water labelling have shown that up to 3\% of the clone is actively proliferating within the lymph node (\protect\hyperlink{ref-Messmer2005}{B. T. Messmer et al. 2005}; \protect\hyperlink{ref-Herndon2017}{Herndon et al. 2017}). Cross-talk with the non-neoplastic cells in the lymph node shapes the transcriptomic profile of the malignant B cells, and leads to upregulation of the BCR pathway \protect\hyperlink{ref-Mittal2014}{Mittal et al.} (\protect\hyperlink{ref-Mittal2014}{2014}), a central driver of CLL pathogenesis.
@@ -725,16 +654,16 @@ Previous work in our lab probed drug activity in CLL peripheral blood mononuclea
 \hypertarget{modelling-microenvironment-intro}{%
 \subsection{Modelling the tumour microenvironment}\label{modelling-microenvironment-intro}}
 
-A major goal of current research in CLL is to unravel the complexity of CLL-microenvironment cross-talk and its role in drug response. Many studies have applied a range of strategies to mimic the pro-survival effect of the microenvironment, each with their own advantages (\protect\hyperlink{ref-Crassini2017}{Crassini et al. 2017}; \protect\hyperlink{ref-Scielzo2020}{Scielzo and Ghia 2020}).
+A major goal of current research in CLL is to unravel the complexity of CLL-microenvironment cross-talk and its role in drug response. Many studies have applied a range of strategies to mimic the pro-survival effect of the microenvironment, each with their own advantages (\protect\hyperlink{ref-Crassini2017}{Crassini et al. 2017}; \protect\hyperlink{ref-Scielzo2020}{Cristina Scielzo and Ghia 2020}).
 
 \textbf{Stimulation with soluble factors}
-One such strategy is to stimulate individual pathways in CLL samples \emph{ex vivo} in order to elucidate their impact on CLL survival and drug response. For example, studies of BCR, TLR, CD40L and interleukin stimulation (\protect\hyperlink{ref-Muzio2009}{Muzio et al. 2009}; \protect\hyperlink{ref-Crassini2017}{Crassini et al. 2017}; \protect\hyperlink{ref-Scielzo2020}{Scielzo and Ghia 2020}) have proven critical in demonstrating the marked effect each of these have on CLL survival and the key downstream pathways involved (in particular NF\(\kappa\)B and MAPK) (\protect\hyperlink{ref-Crassini2017}{Crassini et al. 2017}). This strategy allows a direct understanding of cause and effect, with the caveat that accurately mimicking cytokine concentrations \emph{in vitro} is challenging, and that the activity of certain stimuli may be altered in the absence of other signals.
+One such strategy is to stimulate individual pathways in CLL samples \emph{ex vivo} in order to elucidate their impact on CLL survival and drug response. For example, studies of BCR, TLR, CD40L and interleukin stimulation (\protect\hyperlink{ref-Muzio2009}{Muzio et al. 2009}; \protect\hyperlink{ref-Crassini2017}{Crassini et al. 2017}; \protect\hyperlink{ref-Scielzo2020}{Cristina Scielzo and Ghia 2020}) have proven critical in demonstrating the marked effect each of these have on CLL survival and the key downstream pathways involved (in particular NF\(\kappa\)B and MAPK) (\protect\hyperlink{ref-Crassini2017}{Crassini et al. 2017}). This strategy allows a direct understanding of cause and effect, with the caveat that accurately mimicking cytokine concentrations \emph{in vitro} is challenging, and that the activity of certain stimuli may be altered in the absence of other signals.
 
 \textbf{Co-culture}
 Stimulation studies omit the impact of cell-cell contacts and thus co-culturing CLL cells with cell lines can provide a more complete picture. Various co-culture systems have been developed in order to mimic different components of the microenvironment, including stromal cells, T cells, endothelial cells, NLCs and FDCs (\protect\hyperlink{ref-Panayiotidis1996}{Panayiotidis et al. 1996}; \protect\hyperlink{ref-Lagneaux1998}{L. Lagneaux et al. 1998}; \protect\hyperlink{ref-Pedersen2002}{I. M. Pedersen et al. 2002}; \protect\hyperlink{ref-Kurtova2009}{Kurtova et al. 2009}; \protect\hyperlink{ref-Stamatopoulos2010}{B. Stamatopoulos et al. 2010}; \protect\hyperlink{ref-Stamatopoulos2012}{Basile Stamatopoulos et al. 2012}; \protect\hyperlink{ref-Asslaber2013}{Asslaber et al. 2013}; \protect\hyperlink{ref-Hamilton2012}{Hamilton et al. 2012}; \protect\hyperlink{ref-Crassini2017}{Crassini et al. 2017}).
 
 \textbf{3D Models}
-In recent years, interest has developed in the use of 3D culture systems, to create yet more \emph{in vivo}-like models of the microenvironment (\protect\hyperlink{ref-Jensen2020}{Jensen and Teng 2020}; \protect\hyperlink{ref-Scielzo2020}{Scielzo and Ghia 2020}). Static 3D approaches involve the use of scaffolds or the generation of spheroids, recapitulating the complexity of the protective niche to a greater degree (\protect\hyperlink{ref-Farinello2018}{Farinello et al. 2018}; \protect\hyperlink{ref-Scielzo2020}{Scielzo and Ghia 2020}). More ambitious still is the development of dynamic 3D cultures, through the use of bioreactors and microfluidics. These systems attempt to capture the influences of gravity, flow and mechanical stresses, to study the phenotypic changes that occur as CLL cells traffic through and communicate with the non-neoplastic tissues (\protect\hyperlink{ref-Walsby2014}{Walsby et al. 2014}; \protect\hyperlink{ref-Scielzo2020}{Scielzo and Ghia 2020}).
+In recent years, interest has developed in the use of 3D culture systems, to create yet more \emph{in vivo}-like models of the microenvironment (\protect\hyperlink{ref-Jensen2020}{Jensen and Teng 2020}; \protect\hyperlink{ref-Scielzo2020}{Cristina Scielzo and Ghia 2020}). Static 3D approaches involve the use of scaffolds or the generation of spheroids, recapitulating the complexity of the protective niche to a greater degree (\protect\hyperlink{ref-Farinello2018}{Farinello et al. 2018}; \protect\hyperlink{ref-Scielzo2020}{Cristina Scielzo and Ghia 2020}). More ambitious still is the development of dynamic 3D cultures, through the use of bioreactors and microfluidics. These systems attempt to capture the influences of gravity, flow and mechanical stresses, to study the phenotypic changes that occur as CLL cells traffic through and communicate with the non-neoplastic tissues (\protect\hyperlink{ref-Walsby2014}{Walsby et al. 2014}; \protect\hyperlink{ref-Scielzo2020}{Cristina Scielzo and Ghia 2020}).
 
 \textbf{in vivo murine models}
 Murine models to investigate CLL-microenvironment interactions are also possible (\protect\hyperlink{ref-Lu2004}{D. Lu et al. 2004}; \protect\hyperlink{ref-Enzler2009}{Enzler et al. 2009}; \protect\hyperlink{ref-Herishanu2011}{Herishanu et al. 2011}; \protect\hyperlink{ref-Fedorchenko2013}{Fedorchenko et al. 2013}; \protect\hyperlink{ref-Simonetti2014}{Simonetti et al. 2014}; \protect\hyperlink{ref-Crassini2017}{Crassini et al. 2017}), though the value of these models can be hampered by species-specific biological differences (\protect\hyperlink{ref-Simonetti2014}{Simonetti et al. 2014}) and \emph{in vitro} modelling is often a more accurate approach (\protect\hyperlink{ref-Crassini2017}{Crassini et al. 2017}).
@@ -1091,7 +1020,7 @@ For the in-house generated ATACseq dataset (n = 4), trisomy 12 status was alread
 \hypertarget{functional-enrichment-analysis-of-spib-chipseq-data}{%
 \subsubsection{Functional enrichment analysis of SPIB ChIPseq data}\label{functional-enrichment-analysis-of-spib-chipseq-data}}
 
-Section \ref{spib-chip}. Spi-B and PU.1 ChIPseq data in the OCILY3 DLBCL cell line (\protect\hyperlink{ref-Care2014}{Care et al. 2014}) was downloaded from the NCBI GEO database (\protect\hyperlink{ref-Edgar2002}{Edgar, Domrachev, and Lash 2002}), accession GEO : GSE56857, IDs : GSM1370276, GSM1370275. Spi-B ChIP peaks were filtered for significance (q value \textless{} 0.05). The \texttt{annotatePeaks} function from the package \texttt{clusterProfiler} (\protect\hyperlink{ref-R-clusterProfiler}{G. Yu 2021}) was used to annotate the nearest gene for each ChIP peak. The resulting gene list was filtered to only include genes where the transcription start site (TSS) was within 1kb of its associated ChIP peak, in either direction. The \texttt{enricher} function of the \texttt{clusterProfiler} package was used to perform over-representation of KEGG (\protect\hyperlink{ref-KEGG}{Kanehisa et al. 2010}) and Reactome (\protect\hyperlink{ref-Reactome}{Jassal et al. 2020}) pathways amongst this list of of genes (Bruch and Giles et al.~2021).
+Section \ref{spib-chip}. Spi-B and PU.1 ChIPseq data in the OCILY3 DLBCL (Diffuse Large B Cell Lymphoma) cell line (\protect\hyperlink{ref-Care2014}{Care et al. 2014}) was downloaded from the NCBI GEO database (\protect\hyperlink{ref-Edgar2002}{Edgar, Domrachev, and Lash 2002}), accession GEO : GSE56857, IDs : GSM1370276, GSM1370275. Spi-B ChIP peaks were filtered for significance (q value \textless{} 0.05). The \texttt{annotatePeaks} function from the package \texttt{clusterProfiler} (\protect\hyperlink{ref-R-clusterProfiler}{G. Yu 2021}) was used to annotate the nearest gene for each ChIP peak. The resulting gene list was filtered to only include genes where the transcription start site (TSS) was within 1kb of its associated ChIP peak, in either direction. The \texttt{enricher} function of the \texttt{clusterProfiler} package was used to perform over-representation of KEGG (\protect\hyperlink{ref-KEGG}{Kanehisa et al. 2010}) and Reactome (\protect\hyperlink{ref-Reactome}{Jassal et al. 2020}) pathways amongst this list of of genes (Bruch and Giles et al.~2021).
 
 \hypertarget{ibet-ATACseq-method}{%
 \subsubsection{diffTF analysis of TF activity of CLL samples after treatment with IBET-762 CLL}\label{ibet-ATACseq-method}}
@@ -1245,7 +1174,7 @@ A number of studies have demonstrated the ability of various soluble factors to 
 
 }
 
-\caption{A selection of interactions between CLL cells and components of the microenvironment, covered by the screen. See section \ref{intro-microenvironmental-pathways} for more details on these signals. \emph{Figure adapted from an original published in \protect\hyperlink{ref-Wiestner2015}{Wiestner} (\protect\hyperlink{ref-Wiestner2015}{2015}) .}}\label{fig:microenvironmentCrosstalk}
+\caption{A selection of interactions between CLL cells and components of the microenvironment, covered by the screen. See section \ref{intro-microenvironmental-pathways} for more details on these signals. \emph{Figure adapted from an original published in \protect\hyperlink{ref-Wiestner2015}{Wiestner} (\protect\hyperlink{ref-Wiestner2015}{2015}) and reproduced with permission.}}\label{fig:microenvironmentCrosstalk}
 \end{figure}
 The stimuli activate a number of critical pathways in CLL, including BCR, TLR, JAK-STAT, NF\(\kappa\)B and TGF\(\beta\). For more information on the importance of these pathways see section \ref{intro-bcr-signalling} and \ref{intro-microenvironmental-pathways}. Amongst these, the roles of BCR, IL4, sCD40L and TLR stimulation were of particular interest.
 
@@ -2070,7 +1999,7 @@ I visualised sample responses to CpG ODN and fludarabine stratified by two of th
 
 \caption{``Beeswarm-boxplots of log-transformed viability values for fludarabine (purine analogue) and CpG ODN (TLR9) single and combinatorial treatments, faceted by IGHV status and trisomy 12 status. P-values from paired Student's t-tests.'' \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:FluCpGExB}
 \end{figure}
-I observed a similar effect with other chemotherapeutic drugs. Nutlin-3a is an MDM2 inhibitor, which in our dataset showed higher efficacy in IGHV-U, trisomy12, and del(11q) CLLs (Figure \ref{fig:drugGeneIntMap}, Figure \ref{fig:drugGeneIntEx}, Appendix Figure \ref{fig:NutlinPredictors}). TLR stimulation reduced nutlin-3a toxicity in these same genetic backgrounds, i.e nutlin-3a efficacy in the context of CpG ODN stimulation was lower in IGHV-U, trisomy 12 and del(11q) samples (Figure \ref{fig:nutlinCpgEx}, Figure \ref{fig:TLRCpGIGHVdel11q}). This observation underlines the need to observe \emph{in vitro} drug activity in the context of microenvironmental signals {[}CHECK{]}.
+I observed a similar effect with other chemotherapeutic drugs. Nutlin-3a is an MDM2 inhibitor, which in our dataset showed higher efficacy in IGHV-U, trisomy12, and del(11q) CLLs (Figure \ref{fig:drugGeneIntMap}, Figure \ref{fig:drugGeneIntEx}, Appendix Figure \ref{fig:NutlinPredictors}). TLR stimulation reduced nutlin-3a toxicity in these same genetic backgrounds, i.e nutlin-3a efficacy in the context of CpG ODN stimulation was lower in IGHV-U, trisomy 12 and del(11q) samples (Figure \ref{fig:nutlinCpgEx}, Figure \ref{fig:TLRnutlin}). This observation underlines the need to measure \emph{in vitro} drug activity in the context of microenvironmental signals.
 
 
 \begin{figure}
@@ -2084,11 +2013,11 @@ I observed a similar effect with other chemotherapeutic drugs. Nutlin-3a is an M
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{thesis_files/figure-latex/TLRCpGIGHVdel11q-1} 
+{\centering \includegraphics[width=1\linewidth]{thesis_files/figure-latex/TLRnutlin-1} 
 
 }
 
-\caption{Beeswarm-boxplot showing control-normalised log transformed viability values, after treatment with CpG ODN (TLR9) and nutlin-3a (MDM2), stratified by del(11q) and IGHV status. WT indicates sample is not annotated as del(11q). p-values from Student's t-tests.}\label{fig:TLRCpGIGHVdel11q}
+\caption{Beeswarm-boxplots showing control-normalised log transformed viability values, after treatment with nutlin-3a (MDM2), and CpG ODN (TLR9) and nutlin-3a (MDM2), stratified by del(11q), IGHV and trisomy 12 status. p-values from Student's t-tests.}\label{fig:TLRnutlin}
 \end{figure}
 The modelling approach also identified interactions where the differential size of \(\beta_{int}\) was driven by the single treatment effect, rather than the combination. For example, if a drug was more efficacious in a certain genetic background, but a stimulus nonetheless eradicated drug toxicity, the size of the interaction was larger in this genetic background. This is because the increase in expected viability in these samples (quantified by \(\beta_{int}\)) would be even higher than in other genetic backgrounds.
 
@@ -2136,6 +2065,116 @@ Overall these findings illustrate how the presence of known genetic alterations 
 
 \hfill --- George E. P. Box
 \end{quote}
+For many years, the approach to managing CLL has been dominated by an understanding of the disease genetics. The collective work of many labs has identified the characteristic molecular features of CLL (\protect\hyperlink{ref-Dohner2000}{H. Döhner et al. 2000}; \protect\hyperlink{ref-Ferreira2014}{Ferreira et al. 2014}; \protect\hyperlink{ref-Landau2015}{Landau et al. 2015}; \protect\hyperlink{ref-Puente2015}{Xose S. Puente et al. 2015}; \protect\hyperlink{ref-Rendeiro2016}{Rendeiro et al. 2016}, \protect\hyperlink{ref-Rendeiro2020}{2020}; \protect\hyperlink{ref-Beekman2018}{Beekman et al. 2018}; \protect\hyperlink{ref-Zenz2019}{Zenz et al. 2019}; \protect\hyperlink{ref-Mallm2019}{Mallm et al. 2019}; \protect\hyperlink{ref-HerbstThesis}{Herbst 2020}; \protect\hyperlink{ref-MeierAbt2021}{Meier-Abt et al. 2021}) and these have informed the development of successful treatment strategies (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017}). However, despite the onset of new targeted therapies CLL remains largely incurable (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}) and relapse and the occurrence of MRD represent major issues (\protect\hyperlink{ref-Hayden2012}{Hayden et al. 2012}; \protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). Moreover, the molecular players identified so far only partially account for the level of disease heterogeneity seen amongst CLL patients.
+More recently, the role of the lymph node and bone marrow compartments become appreciated (\protect\hyperlink{ref-tenHacken2016}{Ten Hacken and Burger 2016}). Indeed, several seminal studies have underlined the importance of the tumour microenvironment in CLL pathogenesis. Firstly, CLL cells require external signals to survive \emph{ex vivo}, indicating that malignant B cells survival is likely to rely on external signals as much as on cell-intrinsic features of the tumour (\protect\hyperlink{ref-Collins1989}{Collins et al. 1989}; \protect\hyperlink{ref-Burger2000}{Jan A. Burger et al. 2000}; \protect\hyperlink{ref-Kurtova2009}{Kurtova et al. 2009}; \protect\hyperlink{ref-Deaglio2009}{Deaglio and Malavasi 2009}; \protect\hyperlink{ref-Purroy2015}{Purroy et al. 2015}). Secondly, the lymph node and bone barrow compartments are the main site of proliferation, in which the aggressive fraction of tumour cells are located (\protect\hyperlink{ref-Messmer2005}{B. T. Messmer et al. 2005}; \protect\hyperlink{ref-Herishanu2011}{Herishanu et al. 2011}; \protect\hyperlink{ref-Herndon2017}{Herndon et al. 2017}). Thirdly, the lymph node compartment has been linked to drug resistance and incomplete response to therapy and enlarged lymph nodes are associated with MRD (\protect\hyperlink{ref-Moreton2005}{Moreton et al. 2005}; \protect\hyperlink{ref-Ahn2018}{Ahn et al. 2018}).
+
+Unravelling the complex cross-talk between malignant B cells and the tumour microenvironment is likely to support several clinical goals. Many patients harbour MRD after therapy and it is likely that targeting the protective niche in combination with current therapies will lead to deeper remissions. \emph{in vitro} studies of drugs in the absence of microenvironmental stimulation have proven invaluable in the development of treatments that have improved patient outcomes. However, more successful treatment strategies will be underpinned by studying drug action within the context of the microenvironment. Greater predictive power is required to successfully stratify patients and to move towards more personalised approaches: its therefore possible that prognostic indices should account for the protective niche in addition to tumour cell-intrinsic markers, given its well-established role in treatment resistance and MRD.
+
+Achieving these goals starts with basic biology. This will require a systematic understanding of the critical pathways in CLL -- microenvironment crosstalk. In particular, this provides the opportunity to identify unifying pathogenetic mechanisms that operate across heterogeneous disease subtypes. Moreover, many studies have characterised the individual omic layers of the disease (\protect\hyperlink{ref-Ferreira2014}{Ferreira et al. 2014}; \protect\hyperlink{ref-Landau2015}{Landau et al. 2015}; \protect\hyperlink{ref-Puente2015}{Xose S. Puente et al. 2015}; \protect\hyperlink{ref-Rendeiro2016}{Rendeiro et al. 2016}, \protect\hyperlink{ref-Rendeiro2020}{2020}; \protect\hyperlink{ref-Beekman2018}{Beekman et al. 2018}; \protect\hyperlink{ref-Zenz2019}{Zenz et al. 2019}; \protect\hyperlink{ref-Mallm2019}{Mallm et al. 2019}; \protect\hyperlink{ref-HerbstThesis}{Herbst 2020}; \protect\hyperlink{ref-MeierAbt2021}{Meier-Abt et al. 2021}). Integrating these layers, and how they interact with microenvironment signals will provide a more complex understanding of disease biology. Furthermore, linking cell-intrinsic and cell-extrinsic features to response will provide greater insight into drug resistance mechanisms and guide treatment strategies
+
+Bridging the gaps between what we currently know, and where we need to be, will require the concerted efforts of many studies toward this direction. This thesis aims to provide some understanding to bridge this gap.
+
+\hypertarget{ex-vivo-profiling-of-drug-and-stimulus-responses-of-cll-primary-patient-samples}{%
+\section{\texorpdfstring{\emph{ex vivo} profiling of drug and stimulus responses of CLL primary patient samples}{ex vivo profiling of drug and stimulus responses of CLL primary patient samples}}\label{ex-vivo-profiling-of-drug-and-stimulus-responses-of-cll-primary-patient-samples}}
+
+This thesis conceived that a systematic investigation of drugs, molecular features and soluble factors within the CLL microenvironment could provide the building blocks for a more holistic understanding of interactions between tumour genetics, the microenvironment and drugs in more complex \emph{in vivo} situations. I utilised a reductionist model of microenvironmental signalling based on an \emph{ex vivo} perturbation assay to query the effect of 17 microenvironmental stimuli and 12 drugs on primary CLL samples. This dataset was combined with patient multi-omic profiles. Collectively, this work maps the effects of soluble factors in the microenvironment, both in isolation and in combination with drugs, and links these to underlying molecular properties in 192 primary CLL samples. I discuss the key findings below.
+
+This reductionist approach had both advantages and drawbacks. Cross-talk between malignant cells and the tumour microenvironment is mediated by soluble factors, along with cell-cell contacts, the extracellular matrix and secreted vesicles (see section \ref{intro-microenvironmental-pathways} (\protect\hyperlink{ref-Guarini2008}{Guarini et al. 2008}; \protect\hyperlink{ref-Oppezzo2013}{Oppezzo and Dighiero 2013}; \protect\hyperlink{ref-Crompot2017}{Crompot et al. 2017}). Thus, the functional assay employed here encompasses a cross-section of this network, but does not account for the complete landscape of microenvironmental communication. Nevertheless, the use of soluble factors enabled the identification of direct causal links between signalling pathways and tumour responses. Moreover, this study complements similar work investigating cell-cell contacts in CLL drug response (\protect\hyperlink{ref-HerbstThesis}{Herbst 2020}), and collectively these studies aim to piece together the role that both soluble factors and cell-cell contacts play in drug response.
+
+Additionally, the use of primary CLL samples, rather than cell lines, encompassed the disease heterogeneity of CLL. This approach had the disadvantage that primary CLL cells do not proliferate \emph{in vitro}, which inevitably made the assay readout more complex. Significantly, this study represents a much larger scale approach than previous work. For example, the effects of IL4 on CLL cells has been studied previous (\protect\hyperlink{ref-Dancescu1992}{Dancescu et al. 1992}; \protect\hyperlink{ref-Bhattacharya2015}{Bhattacharya et al. 2015}; \protect\hyperlink{ref-AguilarHernandez2016}{Aguilar-Hernandez et al. 2016}) but only in very small cohorts that do not represent the genetic diversity of the disease.
+
+\hypertarget{sensitivity-to-microenvironmental-stimulation}{%
+\subsection{Sensitivity to microenvironmental stimulation}\label{sensitivity-to-microenvironmental-stimulation}}
+
+The assay demonstrated the functional diversity of microenvironmental signalling pathways
+The \emph{ex vivo} functional assay evaluated the impact of 12 soluble factors on CLL viability. This approach was informed by \protect\hyperlink{ref-Carey2017}{Carey et al.} (\protect\hyperlink{ref-Carey2017}{2017}), who performed a similar screen of 94 soluble factors in AML. Both studies demonstrate the value of systematic \emph{in vitro} functional screening to probe the impact of cell-extrinsic factors on primary samples. In particular, studies of this kind can support the identification of unifying pathogenic mechanisms in genetically heterogenous haematological malignancies.
+
+We observed that most stimuli increased tumour cell survival. A few signals had a profound impact, most notably IL4 which increased tumour cell viability across all genetic backgrounds. Stimulation of TLR7/8/9 had an equally significant impact on tumour cell viability and increased or decreased viability depending on the molecular features of the tumour cells. A few signals decreased survival of the tumour cells, including TGF\(\beta\), and these pathways may represent potential targets to exploit in a clinical setting.
+
+\hypertarget{microenvironmental-response-profiling-identified-a-group-of-ighv-m-clls-with-faster-disease-progression}{%
+\subsection{Microenvironmental response profiling identified a group of IGHV-M CLLs with faster disease progression}\label{microenvironmental-response-profiling-identified-a-group-of-ighv-m-clls-with-faster-disease-progression}}
+
+In addition to highlighting key survival pathways, microenvironmental response profiling delineated four CLL subgroups. These subgroups were linked to distinct molecular profiles and showed differential disease progression, independently of known prognostic markers. The subgroup containing mostly IGHV-M CLLs that responded poorly to the panel of stimuli demonstrated faster disease progression.
+
+These subgroups highlight the importance of microenvironmental signaling in CLL pathogenesis and raise the possibility that \emph{in vitro} responses to microenvironmental signals might reflect distinct \emph{in vivo} leukemic potential and thus may have prognostic value. This is not unprecedented; for example \protect\hyperlink{ref-Scielzo2011}{C. Scielzo et al.} (\protect\hyperlink{ref-Scielzo2011}{2011}) proposed that \emph{in vitro} responses to sCD40L distinguished two functional CLL subsets, that demonstrate different clinical courses.
+
+Stimuli response profiling as a clinical tool may be implausible. However, CLL is a highly heterogenous disease, and our current understanding of molecular features only goes so far in explaining and predicting disease outcomes and relapse (\protect\hyperlink{ref-Miller2019}{Miller et al. 2019}; \protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). These observations suggest that prognostic indices may be improved through accounting for role of the protective niche. The finding that IL4 signalling is measurable and elevated within CLL lymph node biopsy samples, and relates to disease progression further underlines this. Its possible that probing signalling activity as part of lymph node biopsies may have prognostic value.
+
+\hypertarget{genetic-modulators-of-microenvironmental-signalling}{%
+\section{Genetic modulators of microenvironmental signalling}\label{genetic-modulators-of-microenvironmental-signalling}}
+
+\hypertarget{systematic-analysis-of-the-effect-of-genetic-features-on-responses-to-stimuli-1}{%
+\subsection{Systematic analysis of the effect of genetic features on responses to stimuli}\label{systematic-analysis-of-the-effect-of-genetic-features-on-responses-to-stimuli-1}}
+
+Patient subgroups with distinct molecular features responded differently to the panel of stimuli, pointing to the fact that genetic mutations alter responses to signalling pathways.
+
+I applied multivariate modelling to quantify the impact of molecular features on microenvironmental pathways. For example, multiple features modulated viability in response to TLR7/8/9 stimulation, including IGHV status, trisomy 12, del(11q), del(13q) and \emph{ATM}. This reflects the complexity of the network of molecular features and pathways that drive pathogenicity in CLL.
+
+del(11q) and \emph{ATM} mutations are thought to impact on the function of the DDR. Thus, these results suggest possible cross-talk between the TLR and DDR pathways, which is disrupted by mutations in del(11q) and \emph{ATM}. This would support previous observations suggesting a role for \emph{ATM} in TLR signalling (\protect\hyperlink{ref-Neves2017}{Neves-Costa and Moita 2017}).
+
+\hypertarget{the-role-of-trisomy-12-as-a-modulator-of-microenvironmental-response}{%
+\subsection{The role of trisomy 12 as a modulator of microenvironmental response}\label{the-role-of-trisomy-12-as-a-modulator-of-microenvironmental-response}}
+
+Amongst these gene -- microenvironment interactions, trisomy 12 emerged as a key modulator of response to microenvironmental signals. This observation raises the possibility that trisomy 12 CLLs may be more reliant on microenvironmental signals than other subtypes. This would agree with clinical observations that trisomy 12 CLLs show a shorter redistribution lymphocytosis during ibrutinib therapy (\protect\hyperlink{ref-Thompson2014}{\textbf{Thompson2014?}}), such that when tumour cells are released from the lymph node they rapidly undergo apoptosis outside of the protective niche.
+
+I investigated which molecular features of trisomy 12 CLL may lead to enhanced responses to microenvironmental signals. A number of studies have implicated over expression of genes in trisomy 12 pathogenicity, particularly those on chromosome 12 (\protect\hyperlink{ref-Dickinson2006}{Dickinson et al. 2006}; \protect\hyperlink{ref-Porpaczy2009}{Porpaczy et al. 2009}; \protect\hyperlink{ref-Abruzzo2018}{Abruzzo et al. 2018}), and thus I began by investigating expression of genes within microenvironmental signalling pathways.
+
+\emph{STAT6}, \emph{IRAK4} and \emph{SMAD3} were all overexpressed in trisomy 12. This may enable trisomy 12 CLLs to respond more strongly to external stimulation. Previous work has also pointed to a critical role for IRAK4 in trisomy 12 CLL. \protect\hyperlink{ref-Reid2021}{Reid et al.} (\protect\hyperlink{ref-Reid2021}{2021}) identified IRAK4 as a key drug target through a drug screen of inhibitors of trisomy 12-related genes. IRAK4 inhibition also selectively targeted trisomy 12 CLLs in patient-derived xenografted mouse models. Thus, IRAK4, and the TLR pathway may represent an important target in trisomy 12 CLL.
+
+Additionally, I investigated the epigenetic signature of CLL and identified TFs that showed higher binding site accessibility in trisomy 12 CLL. This analysis demonstrated that Spi-B and PU.1 showed higher inferred activity in two independent datasets. Using ChIPseq, I linked these TFs to control of BCR, TLR and TGF\(/beta\) signalling genes, suggesting that both these TFs may contribute to enhanced activity of these pathways. These findings build on work by \protect\hyperlink{ref-Beekman2018}{Beekman et al.} (\protect\hyperlink{ref-Beekman2018}{2018}), who indicated that trisomy 12 CLL is linked to a distinct epigenetic signature. They observed that NFAT, FOX and TCF/LEF TF family binding sites were enriched amongst the open chromatin regions that were unique to trisomy 12 samples. Despite the contrasting results, both studies suggest that the distinctive epigenetic profile and TF activities observed in trisomy 12 CLL may represent a targetable feature. More work will be required to establish how to exploit this in the clinic.
+
+In this thesis, I noted that IBET-762 inhibited the TF signature of trisomy 12 CLL and showed greater efficacy in trisomy 12 samples. Though speculative, its possible that BET inhibition represents a strategy through which to target enhanced microenvironmental response in trisomy 12 CLL. This is supported by other work on BET inhibitors in haematological malignancies. For example, the BET inhibitor OTX015 has been shown to inhibit growth of cell lines derived from mature B-cell lymphoid tumors via inhibition of NF\(/kappa\)B, TLR, and JAK-STAT (\protect\hyperlink{ref-Boi2015}{Boi et al. 2015}), whilst the BET inhibitor JQ1 reduced expression of NF\(\kappa\)B target genes in Mantle Cell Lymphoma (\protect\hyperlink{ref-Sun2015}{Sun et al. 2015}).
+
+\hypertarget{genetic-and-microenvironmental-modulators-of-drug-response}{%
+\section{Genetic and microenvironmental modulators of drug response}\label{genetic-and-microenvironmental-modulators-of-drug-response}}
+
+\hypertarget{the-impact-of-stimuli-on-drug-response}{%
+\subsection{The impact of stimuli on drug response}\label{the-impact-of-stimuli-on-drug-response}}
+
+In addition to drug-gene interactions, a key feature of this study was the ability to identify drug-stimulus interactions. This refers to cases where the efficacy of a drug was modulated by the activity a microenvironmental pathway, or vice versa. I identified such cases using a linear model, indicated in Equation \eqref{eq:drugCytInt}.
+
+The linear modelling approach represents the first attempt to map drug -- microenvironment interactions in CLL on a large scale. Whilst it cannot be assumed that the analysis captured all interactions existing in the dataset, the linear model nevertheless represents a valuable tool and my drug-stimulus interaction analysis recapitulated known phenomena and identified many novel cases. These included the effect of IL4 stimulation on BCR inhibition (\protect\hyperlink{ref-AguilarHernandez2016}{Aguilar-Hernandez et al. 2016}), discussed in section \ref{discussion-IL4-ibrutinib} and the impact of IFN\(/gamma\) on BCR inhibitor and chemotherapeutic efficacy.
+
+The drug -- microenvironment interaction map is also not comprehensive in that it only accounts for the pathways included within the screen. However, the approach has guided other interaction analyses, such as that published in \protect\hyperlink{ref-HerbstThesis}{Herbst} (\protect\hyperlink{ref-HerbstThesis}{2020}), who used a similar linear model to identify drug -- microenvironment interactions between drugs and BMSC cell lines. Collectively, these studies are piecing together a comprehensive picture of the importance of the microenvironment in drug response, to help guide better therapeutic strategies that account for the role of the protective nice.
+
+Intriguingly, the comprehensive approach enabled the observation that IL4 and IFN\(/gamma\) both interacted with a common set of drugs, suggesting that they may operate via a similar mechanism. This was supported by the observation that inhibition of p38 MAPK with ralimetinib increased the protective effect of both stimuli. Previous work suggests that both IL4 and IFN\(/gamma\) both induce nitric oxide synthase (NOS2) in CLL cells to promote survival (\protect\hyperlink{ref-Levesque2003}{Levesque et al. 2003}). Taken together, its possible that both IL4 and IFN\(/gamma\) increase viability via NOS2. Further work will be needed to confirm whether this represents a valuable clinical target.
+
+\hypertarget{the-modulatory-effect-of-mutations-on-drug-stimulus-interactions}{%
+\subsection{The modulatory effect of mutations on drug-stimulus interactions}\label{the-modulatory-effect-of-mutations-on-drug-stimulus-interactions}}
+
+Together with the impact of cell-extrinsic factors on drug response, the network of cell-intrinsic molecular components adds an additional layer of complexity. I captured the impact of genetic features on drug -- stimulus interactions using multivariate modelling. The size of each drug-stimulus interaction within each patient was measured by fitting Equation \eqref{eq:drugCytInt} (Bruch and Giles et al.~2021) in a patient specific manner. Then the impact of genetic features on the size of the interaction for each drug -- stimulus combination was quantified through multivariate modelling, with lasso penalisation.
+
+This chosen method had both benefits and caveats. The approach effectively screened a large number of drug-stimulus-gene combinations to generate a smaller list of interactions that could be interpreted individually. It is possible that certain hits were artefacts of the modelling approach, which meant that interpreting each individual hit within a biological context was important. Additionally, the use of lasso penalisation generated sparse models with only a few genetic predictors per interaction which supported the interpretation. However, its likely that some genetic features may have been eliminated from the model outputs, due to the fact they correlated with other genetic features that were assigned coefficients. In these cases, it was not possible to know which mutation was causing the observed effect and again careful interpretation was required.
+
+Nevertheless, this drug-stimulus-gene interaction map successfully highlighted many interesting cases. Strikingly, TLR stimulation induced drug resistance or increased drug efficacy with chemotherapeutic drugs depending on the genetic background. For example, TLR stimulation increased fludarabine efficacy in IGHV-M non-trisomy 12 CLL samples, but induced resistance in all other cases. TLR signalling is also known to be highly active within CLL-infiltrated lymph nodes (Bruch and Giles et al.~2021). Collectively, these observations may partially explain why fludarabine therapy often achieves lasting remission in IGHV-M but not in IGHV-U CLL cases (\protect\hyperlink{ref-Chai2017}{Chai-Adisaksopha and Brown 2017}). These observations also underline how greater understanding of the protective niche will bridge some of the gaps in our understanding of disease heterogeneity in CLL.
+
+\hypertarget{discussion-IL4-ibrutinib}{%
+\section{The interaction between IL4 and ibrutinib}\label{discussion-IL4-ibrutinib}}
+
+Throughout this thesis, IL4 has continually emerged as a central pro-survival signal, at least within this \emph{in vitro} context. Not only did IL4 stimulation increase viability in the absence of drugs, it also induced resistance to all BCR inhibitors and chemotherapeutics included in the screen. IL4 also represented a unifying mechanism of CLL survival as it increased survival and induced drug resistance across diverse genetic backgrounds. Notably, the impact of IL4 was elevated in trisomy 12 CLL, and slightly reduced in CLL samples with mutation is Ras/Raf/MEK/ERK.
+
+Given these findings, it was natural to investigate whether IL4 signalling is relevant within the \emph{in vivo} context. This thesis demonstrated increased IL4 activity within CLL-infiltrated lymph nodes compared to non-neoplastic samples and showed that higher IL4 activity was associated with faster disease progression. This builds on work by \protect\hyperlink{ref-AguilarHernandez2016}{Aguilar-Hernandez et al.} (\protect\hyperlink{ref-AguilarHernandez2016}{2016}), who identified enrichment of IL-4 signature genes within the lymph node compared with blood and bone marrow samples from the same CLL patients. Combined with the observation that enlarged lymph nodes are linked to resistance to BCR inhibition (\protect\hyperlink{ref-Ahn2018}{Ahn et al. 2018}), its possible that \emph{in vivo} activity of IL4 within the lymph node could induce resistance to treatment with chemotherapeutics and BCR inhibitors. Future studies should now focus on single cell studies of lymph node biopsies. It will be of particular interest to define the impact of microenvironmental signals on drug response directly within the \emph{in vivo} context, with the aim of generating effective strategies to eliminate MRD within the protective niche.
+
+It will also be important to confirm the source of IL4, as this is still debated. CD4+ T cells may be involved (\protect\hyperlink{ref-Patten2008}{Patten et al. 2008}; \protect\hyperlink{ref-Monserrat2014}{Monserrat et al. 2014}; \protect\hyperlink{ref-AguilarHernandez2016}{Aguilar-Hernandez et al. 2016}). Recent work within out lab suggests that follicular helper T cells provide the source of IL4 (\protect\hyperlink{ref-Roider2020}{Roider et al. 2020}). Levels of these T cells are higher in CLL patient blood samples and cells thought to be follicular helper T cells have also been observed within lymph node samples (\protect\hyperlink{ref-Ahearne2013}{Ahearne et al. 2013}).
+
+Deeper remissions during ibrutinib and idelalisib therapy are essential to improving patient outcomes and targeting IL4 signalling \emph{in vivo} could support this goal. This thesis identified bromodomain inhibition via IBET-762 to be an effective strategy to inhibit IL4 activity and support BCR inhibitor efficacy within \emph{in vitro} CLL primary samples. Bromodomain inhibition reduced JAK-STAT signalling in IL4 stimulated CLL cells, in agreement with other studies showing bromodomain suppresses transcriptional responses to JAK-STAT signaling (\protect\hyperlink{ref-Chan2015}{Chan et al. 2015}) in monocytes.
+
+Moreover, bromodomain inhibition in combination with other therapies may also be useful as a broad spectrum microenvironmental inhibitor: BET inhibitors have been shown to target cytokine signalling via NF\(\kappa\)B, TLR and JAK-STAT) mature B-cell lymphoid tumor cell lines (\protect\hyperlink{ref-Boi2015}{Boi et al. 2015}).
+
+Our results indicate that BET inhibition increases ibrutinib efficacy in the context of IL4, and may be useful as a combinatorial therapy. This agrees with other work showing that bromodomain inhibition reduces expression of BTK in Mantle Cell Lymphoma cell (\protect\hyperlink{ref-Sun2015}{Sun et al. 2015}), indicating that BET inhibition may complement BCR inhibition by operating downstream of current BTK and SYK targeted drugs. BET inhibition has also been shown to synergise with ibrutinib in DLBCL mouse models (\protect\hyperlink{ref-Ceribelli2014}{Ceribelli et al. 2014}). Beyond ibrutinib and idelalisib, bromodomain inhibition may be a useful in combination with other drug types. For example, BRD inhibition shows additional activity in combination with venetoclax (\protect\hyperlink{ref-Carra2019}{Carrà et al. 2020}) in CLL cell lines and in \emph{ex vivo} CLL samples.
+
+Collectively, these studies make the case for evaluating bromodomain inhibitors in combination with current targeted therapies, although more \emph{in vivo} work will be needed here. Current phase I clinical studies have focused on directly targeting JAK-STAT signalling in combination with BCR inhibitors and have shown promise (\protect\hyperlink{ref-Hamlin2019}{Hamlin et al. 2019}; \protect\hyperlink{ref-Spaner2019}{Spaner et al. 2019}). Bromodomain inhibition may provide an additional tool, inhibiting both cytokine signalling and BCR signalling to increase the efficacy of BCR and BCL2-targeted drugs.
+
+\hypertarget{open-science}{%
+\section{Open Science}\label{open-science}}
+
+Few studies have so far investigated cell-intrinsic and cell-extrinsic features systematically in cancer, and this study represents an important milestone in this direction. Thus an important goal was to ensure that this work is freely available, through the publication of open-access software. In this thesis, and published alongside Bruch and Giles et al.~2021, I present a resource for the study of drug response in the context of molecular and microenvironmental modulators. This resource has already been used by other researchers e.g. \protect\hyperlink{ref-Lu2021}{J. Lu et al.} (\protect\hyperlink{ref-Lu2021}{2021}) and aims to inform targeted mechanistic investigations and support efforts to identify combination therapies (Giles and Bruch et al.~2021).
+
+\hypertarget{summary-3}{%
+\section{Summary}\label{summary-3}}
+
+This thesis presents the analysis of an \emph{ex vivo} perturbation assay to query the effect of 17 microenvironmental stimuli and 12 drugs on primary CLL samples, combined with patient multi-omic profiles. The aim was to generate a systematic investigation of drugs, molecular features and soluble factors within the CLL microenvironment and to provide the building blocks for a more holistic understanding of interactions between tumour genetics, the microenvironment and drugs in more complex \emph{in vivo} situations.
+
 \newpage
 
 \hypertarget{references}{%
@@ -2158,6 +2197,9 @@ Agathangelidis, Andreas, Nikos Darzentas, Anastasia Hadzidimitriou, Xavier Broch
 
 \leavevmode\vadjust pre{\hypertarget{ref-AguilarHernandez2016}{}}%
 Aguilar-Hernandez, Maria M, Matthew D Blunt, Rachel Dobson, Alison Yeomans, Stephen Thirdborough, Marta Larrayoz, Lindsay D Smith, et al. 2016. {``{IL-4 enhances expression and function of surface IgM in CLL cells}.''} \emph{Blood} 127 (24): 3015--25. \url{https://doi.org/10.1182/blood-2015-11-682906}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Ahearne2013}{}}%
+Ahearne, Matthew J, Shaun Willimott, Lucia Piñon, D Benjamin Kennedy, Fiona Miall, Martin J. S. Dyer, and Simon D Wagner. 2013. {``{Enhancement of CD154/IL4 proliferation by the T follicular helper (Tfh) cytokine, IL21 and increased numbers of circulating cells resembling Tfh cells in chronic lymphocytic leukaemia}.''} \emph{British Journal of Haematology} 162 (3): 360--70. \url{https://doi.org/10.1111/bjh.12401}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Ahn2018}{}}%
 Ahn, Inhye E, Mohammed Z H Farooqui, Xin Tian, Janet Valdez, Clare Sun, Susan Soto, Jennifer Lotter, et al. 2018. {``{Depth and durability of response to ibrutinib in CLL: 5-year follow-up of a phase 2 study.}''} \emph{Blood} 131 (21): 2357--66. \url{https://doi.org/10.1182/blood-2017-12-820910}.
@@ -2221,6 +2263,9 @@ Bhoi, Sujata, Viktor Ljungström, Panagiotis Baliakas, Mattias Mattsson, Karin E
 
 \leavevmode\vadjust pre{\hypertarget{ref-Binder2010}{}}%
 Binder, Mascha, Barbara Léchenne, Ramesh Ummanni, Christan Scharf, Stefan Balabanov, Maria Trusch, Hartmut Schlüter, Ingke Braren, Edzard Spillner, and Martin Trepel. 2010. {``{Stereotypical chronic lymphocytic leukemia B-cell receptors recognize survival promoting antigens on stromal cells}.''} \emph{PLoS ONE} 5 (12): e15992. \url{https://doi.org/10.1371/journal.pone.0015992}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Boi2015}{}}%
+Boi, Michela, Eugenio Gaudio, Paola Bonetti, Ivo Kwee, Elena Bernasconi, Chiara Tarantelli, Andrea Rinaldi, et al. 2015. {``{The BET bromodomain inhibitor OTX015 affects pathogenetic pathways in preclinical B-cell tumor models and synergizes with targeted drugs}.''} \emph{Clinical Cancer Research} 21 (7): 1628--38. \url{https://doi.org/10.1158/1078-0432.CCR-14-1561}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Trimmomatic}{}}%
 Bolger, Anthony M, Marc Lohse, and Bjoern Usadel. 2014. {``{Genome analysis Trimmomatic: a flexible trimmer for Illumina sequence data}''} 30 (15): 2114--20. \url{https://doi.org/10.1093/bioinformatics/btu170}.
@@ -2291,6 +2336,15 @@ Care, Matthew A, Mario Cocco, Jon P Laye, Nicholas Barnes, Yuanxue Huang, Ming W
 \leavevmode\vadjust pre{\hypertarget{ref-Carey2017}{}}%
 Carey, Alyssa, David K Edwards, Christopher A Eide, Laura Newell, Elie Traer, Bruno C Medeiros, Daniel A Pollyea, et al. 2017. {``{Identification of Interleukin-1 by Functional Screening as a Key Mediator of Cellular Expansion and Disease Progression in Acute Myeloid Leukemia}.''} \emph{Cell Reports} 18 (13): 3204--18. \url{https://doi.org/10.1016/j.celrep.2017.03.018}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-Carra2019}{}}%
+Carrà, Giovanna, Paolo Nicoli, Marcello Francesco Lingua, Beatrice Maffeo, Antonio Cartellà, Paola Circosta, Mara Brancaccio, et al. 2020. {``{Inhibition of bromodomain and extra‐terminal proteins increases sensitivity to venetoclax in chronic lymphocytic leukaemia}.''} \emph{Journal of Cellular and Molecular Medicine} 24 (2): 1650--57. \url{https://doi.org/10.1111/jcmm.14857}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Ceribelli2014}{}}%
+Ceribelli, Michele, Priscilla N Kelly, Arthur L Shaffer, George W Wright, Wenming Xiao, Yibin Yang, Lesley A Mathews Griner, et al. 2014. {``{Blockade of oncogenic I\(\kappa\)B kinase activity in diffuse large B-cell lymphoma by bromodomain and extraterminal domain protein inhibitors.}''} \emph{Proceedings of the National Academy of Sciences of the United States of America} 111 (31): 11365--70. \url{https://doi.org/10.1073/pnas.1411701111}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Chai2017}{}}%
+Chai-Adisaksopha, Chatree, and Jennifer R. Brown. 2017. {``{FCR achieves long-term durable remissions in patients with IGHV-mutated CLL}.''} American Society of Hematology. \url{https://doi.org/10.1182/blood-2017-07-731588}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-Chan2015}{}}%
 Chan, Chun Hin, Celestia Fang, Anna Yarilina, Rab K Prinjha, Yu Qiao, and Lionel B Ivashkiv. 2015. {``{BET bromodomain inhibition suppresses transcriptional responses to cytokine-Jak-STAT signaling in a gene-specific manner in human monocytes.}''} \emph{European Journal of Immunology} 45 (1): 287--97. \url{https://doi.org/10.1002/eji.201444862}.
 
@@ -2353,6 +2407,9 @@ Delgado, Amanda, and Achuta Kumar Guddati. 2021. {``{Clinical endpoints in oncol
 
 \leavevmode\vadjust pre{\hypertarget{ref-Dicker2009}{}}%
 Dicker, F, H Herholz, S Schnittger, A Nakao, N Patten, L Wu, W Kern, T Haferlach, and C Haferlach. 2009. {``{The detection of TP53 mutations in chronic lymphocytic leukemia independently predicts rapid disease progression and is highly correlated with a complex aberrant karyotype.}''} \emph{Leukemia} 23 (1): 117--24. \url{https://doi.org/10.1038/leu.2008.274}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Dickinson2006}{}}%
+Dickinson, John D., Avadhut Joshi, Javeed Iqbal, Warren Sanger, Philip J. Bierman, and Shantaram S. Joshi. 2006. {``{Genomic abnormalities in chronic lymphocytic leukemia influence gene expression by a gene dosage effect}.''} \emph{International Journal of Molecular Medicine} 17 (5): 769--78. \url{https://doi.org/10.3892/ijmm.17.5.769}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-JCIpaper}{}}%
 Dietrich, Sascha, Małgorzata Oleś, Junyan Lu, Leopold Sellner, Simon Anders, Britta Velten, Bian Wu, et al. 2017. {``{Drug-perturbation-based stratification of blood cancer}.''} \emph{Journal of Clinical Investigation} 128 (1): 427--45. \url{https://doi.org/10.1172/JCI93801}.
@@ -2459,14 +2516,14 @@ Guruharsha, K. G., Mark W. Kankel, and Spyros Artavanis-Tsakonas. 2012. {``{The 
 \leavevmode\vadjust pre{\hypertarget{ref-Hallek2010}{}}%
 Hallek, M, K Fischer, G Fingerle-Rowson, A M Fink, R Busch, J Mayer, M Hensel, et al. 2010. {``{Addition of rituximab to fludarabine and cyclophosphamide in patients with chronic lymphocytic leukaemia: A randomised, open-label, phase 3 trial}.''} \emph{The Lancet} 376 (9747): 1164--74. \url{https://doi.org/10.1016/S0140-6736(10)61381-5}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Hallek2008}{}}%
-Hallek, Michael, Bruce D Cheson, Daniel Catovsky, Federico Caligaris-Cappio, Guillaume Dighiero, Hartmut Döhner, Peter Hillmen, et al. 2008. {``{Guidelines for the diagnosis and treatment of chronic lymphocytic leukemia: a report from the International Workshop on Chronic Lymphocytic Leukemia updating the National Cancer Institute-Working Group 1996 guidelines.}''} \emph{Blood} 111 (12): 5446--56. \url{https://doi.org/10.1182/blood-2007-06-093906}.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Hamblin1999}{}}%
 Hamblin, Terry J., Zadie Davis, Anne Gardiner, David G. Oscier, and Freda K. Stevenson. 1999. {``{Unmutated Ig VH Genes Are Associated With a More Aggressive Form of Chronic Lymphocytic Leukemia}.''} \emph{Blood} 94 (6): 1848--54. \url{https://doi.org/10.1182/BLOOD.V94.6.1848}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Hamilton2012}{}}%
 Hamilton, Emma, Laurence Pearce, Liam Morgan, Sophie Robinson, Vicki Ware, Paul Brennan, N Shaun B Thomas, et al. 2012. {``{Mimicking the tumour microenvironment: Three different co-culture systems induce a similar phenotype but distinct proliferative signals in primary chronic lymphocytic leukaemia cells}.''} \emph{British Journal of Haematology} 158 (5): 589--99. \url{https://doi.org/10.1111/j.1365-2141.2012.09191.x}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Hamlin2019}{}}%
+Hamlin, Paul A., Ian W. Flinn, Nina Wagner-Johnston, Jan A. Burger, Greg P. Coffey, Pamela B. Conley, Glenn Michelson, et al. 2019. {``{Efficacy and safety of the dual SYK/JAK inhibitor cerdulatinib in patients with relapsed or refractory B-cell malignancies: Results of a phase I study}.''} John Wiley \& Sons, Ltd. \url{https://doi.org/10.1002/ajh.25387}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Hayden2012}{}}%
 Hayden, Rachel E, Guy Pratt, Claudia Roberts, Mark T Drayson, and Chris M Bunce. 2012. {``{Treatment of chronic lymphocytic leukemia requires targeting of the protective lymph node environment with novel therapeutic approaches}.''} Leuk Lymphoma. \url{https://doi.org/10.3109/10428194.2011.610014}.
@@ -2609,6 +2666,9 @@ Lebien, Tucker W., and Thomas F Tedder. 2008. {``{B lymphocytes: How they develo
 \leavevmode\vadjust pre{\hypertarget{ref-Letai2017}{}}%
 Letai, Anthony. 2017. {``{Functional precision cancer medicine-moving beyond pure genomics.}''} \emph{Nature Medicine} 23 (9): 1028--35. \url{https://doi.org/10.1038/nm.4389}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-Levesque2003}{}}%
+Levesque, M C, M A Misukonis, C. W. O'Loughlin, Y Chen, B E Beasley, D L Wilson, D J Adams, R Silber, and J B Weinberg. 2003. {``{IL-4 and interferon gamma regulate expression of inducible nitric oxide synthase in chronic lymphocytic leukemia cells}.''} \emph{Leukemia} 17 (2): 442--50. \url{https://doi.org/10.1038/sj.leu.2402783}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-Samtools}{}}%
 Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, et al. 2009. {``{The Sequence Alignment/Map format and SAMtools}.''} \emph{BIOINFORMATICS APPLICATIONS NOTE} 25 (16): 2078--79. \url{https://doi.org/10.1093/bioinformatics/btp352}.
 
@@ -2634,7 +2694,7 @@ Love, Michael, Charlotte Soneson, Mark Robinson, Rob Patro, Andrew Parker Morgan
 Lu, Desheng, Yandong Zhao, Rommel Tawatao, Howard B Cottam, Malini Sen, Lorenzo M Leoni, Thomas J Kipps, Maripat Corr, and Dennis A Carson. 2004. {``{Activation of the Wnt signaling pathway in chronic lymphocytic leukemia}.''} \emph{Proceedings of the National Academy of Sciences of the United States of America} 101 (9): 3118--23. \url{https://doi.org/10.1073/pnas.0308648100}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Lu2021}{}}%
-Lu, Junyan, Ester Cannizzaro, Fabienne Meier-Abt, Sebastian Scheinost, Peter Martin Bruch, Holly A. R. Giles, Almut Lütge, et al. 2021. {``{Multi-omics reveals clinically relevant proliferative drive associated with mTOR-MYC-OXPHOS activity in chronic lymphocytic leukemia}.''} \emph{Nature Cancer} 2 (8): 853--64. \url{https://doi.org/10.1038/s43018-021-00216-6}.
+Lu, Junyan, Ester Cannizzaro, Fabienne Meier-Abt, Sebastian Scheinost, Peter-Martin Bruch, Holly Ar Giles, Almut Lütge, et al. 2021. {``{Multi-omics reveals clinically relevant proliferative drive associated with mTOR-MYC-OXPHOS activity in chronic lymphocytic leukemia.}''} \emph{Nature Cancer} 2 (8): 853--64. \url{https://doi.org/10.1038/s43018-021-00216-6}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Lukas2020}{}}%
 Lukas, Marina, Britta Velten, Leopold Sellner, Katarzyna Tomska, Jennifer Hüellein, Tatjana Walther, Lena Wagner, et al. 2020. {``{Survey of ex vivo drug combination effects in chronic lymphocytic leukemia reveals synergistic drug effects and genetic dependencies}.''} \emph{Leukemia} 34 (11): 2934--50. \url{https://doi.org/10.1038/s41375-020-0846-5}.
@@ -2667,7 +2727,7 @@ McKenna, Aaron, Matthew Hanna, Eric Banks, Andrey Sivachenko, Kristian Cibulskis
 McWilliams, Emily M, Christopher R Lucas, Timothy Chen, Bonnie K Harrington, Ronni Wasmuth, Amanda Campbell, Kerry A Rogers, et al. 2019. {``{Anti--BAFF-R antibody VAY-736 demonstrates promising preclinical activity in CLL and enhances effectiveness of ibrutinib}.''} \emph{Blood Advances} 3 (3): 447--60. \url{https://doi.org/10.1182/bloodadvances.2018025684}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-MeierAbt2021}{}}%
-Meier-Abt, Fabienne, Junyan Lu, Ester Cannizzaro, Marcel F Pohly, Sandra Kummer, Sibylle Pfammatter, Laura Kunz, et al. 2021. {``{The Protein Landscape of Chronic Lymphocytic Leukemia (CLL).}''} \emph{Blood}, June. \url{https://doi.org/10.1182/blood.2020009741}.
+Meier-Abt, Fabienne, Junyan Lu, Ester Cannizzaro, Marcel F. Pohly, Sandra Kummer, Sibylle Pfammatter, Laura Kunz, et al. 2021. {``{The Protein Landscape of Chronic Lymphocytic Leukemia (CLL)}.''} \emph{Blood}, June. \url{https://doi.org/10.1182/blood.2020009741}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Menyhart2021}{}}%
 Menyhárt, Otília, and Balázs Győrffy. 2021. {``{Multi-omics approaches in cancer research with applications in tumor subtyping, prognosis, and diagnosis}.''} Comput Struct Biotechnol J. \url{https://doi.org/10.1016/j.csbj.2021.01.009}.
@@ -2692,6 +2752,9 @@ Minden, Marcus Dühren Von, Rudolf Übelhart, Dunja Schneider, Thomas Wossning, 
 
 \leavevmode\vadjust pre{\hypertarget{ref-Mittal2014}{}}%
 Mittal, Amit K., Nagendra K. Chaturvedi, Karan J. Rai, Christine E. Gilling-Cutucache, Tara M. Nordgren, Margaret Moragues, Runqing Lu, et al. 2014. {``{Chronic Lymphocytic Leukemia Cells in a Lymph Node Microenvironment Depict Molecular Signature Associated with an Aggressive Disease}.''} \emph{Molecular Medicine} 20 (1): 290--301. \url{https://doi.org/10.2119/molmed.2012.00303}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Monserrat2014}{}}%
+Monserrat, Jorge, Miguel Ángel Sánchez, Raquel de Paz, David Díaz, Sonia Mur, Eduardo Reyes, Alfredo Prieto, Antonio de la Hera, Carlos Martínez-A, and Melchor Álvarez-Mon. 2014. {``{Distinctive patterns of na{ï}ve/memory subset distribution and cytokine expression in CD4 T lymphocytes in ZAP-70 B-chronic lymphocytic patients}.''} \emph{Cytometry Part B: Clinical Cytometry} 86 (1): 32--43. \url{https://doi.org/10.1002/cyto.b.21120}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Montresor2018}{}}%
 Montresor, Alessio, Lara Toffali, Antonella Rigo, Isacco Ferrarini, Fabrizio Vinante, and Carlo Laudanna. 2018. {``{CXCR4-and BCR-triggered integrin activation in B-cell chronic lymphocytic leukemia cells depends on JAK2-activated Bruton's tyrosine kinase}.''} \emph{Oncotarget} 9 (80): 35123--40. \url{https://doi.org/10.18632/oncotarget.26212}.
@@ -2722,6 +2785,9 @@ Nadeu, Ferran, Julio Delgado, Cristina Royo, Tycho Baumann, Tatjana Stankovic, M
 
 \leavevmode\vadjust pre{\hypertarget{ref-Nelder1972}{}}%
 Nelder, J. A., and R. W. M. Wedderburn. 1972. {``{Generalized Linear Models}.''} \emph{Journal of the Royal Statistical Society. Series A (General)} 135 (3): 370. \url{https://doi.org/10.2307/2344614}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Neves2017}{}}%
+Neves-Costa, Ana, and Luis F. Moita. 2017. {``{Modulation of inflammation and disease tolerance by DNA damage response pathways}.''} John Wiley \& Sons, Ltd. \url{https://doi.org/10.1111/febs.13910}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Nishio2005}{}}%
 Nishio, Mitsufumi, Tomoyuki Endo, Nobuhiro Tsukada, Junko Ohata, Shinichi Kitada, John C Reed, Nathan J Zvaifler, and Thomas J Kipps. 2005. {``{Nurselike cells express BAFF and APRIL, which can promote survival of chronic lymphocytic leukemia cells via a paracrine pathway distinct from that of SDF-1alpha.}''} \emph{Blood} 106 (3): 1012--20. \url{https://doi.org/10.1182/blood-2004-03-0889}.
@@ -2768,6 +2834,9 @@ Patel, Viralkumar, Lisa S. Chen, William G. Wierda, Kumudha Balakrishnan, and Va
 \leavevmode\vadjust pre{\hypertarget{ref-Salmon}{}}%
 Patro, Rob, Geet Duggal, Michael I Love, Rafael A Irizarry, and Carl Kingsford. 2017. {``{Salmon provides fast and bias-aware quantification of transcript expression}.''} \emph{Nature Methods} 14 (4): 417--19. \url{https://doi.org/10.1038/nmeth.4197}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-Patten2008}{}}%
+Patten, Piers E. M., Andrea G. S. Buggins, Julie Richards, Andrew Wotherspoon, Jon Salisbury, Ghulam J Mufti, Terry J Hamblin, and Stephen Devereux. 2008. {``{CD38 expression in chronic lymphocytic leukemia is regulated by the tumor microenvironment}.''} \emph{Blood} 111 (10): 5173--81. \url{https://doi.org/10.1182/blood-2007-08-108605}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-Pedersen2002}{}}%
 Pedersen, Irene M., Shinichi Kitada, Lorenzo M. Leoni, Juan M. Zapata, James G. Karras, Nobuhiro Tsukada, Thomas J. Kipps, Yong Sung Choi, Frank Bennett, and John C. Reed. 2002. {``{Protection of CLL B cells by a follicular dendritic cell line is dependent on induction of Mcl-1}.''} \emph{Blood} 100 (5): 1795--1801. \url{https://doi.org/10.1182/BLOOD.V100.5.1795.H81702001795_1795_1801}.
 
@@ -2779,6 +2848,9 @@ Pelanda, Roberta, and Raul M. Torres. 2012. {``{Central B-Cell tolerance: Where 
 
 \leavevmode\vadjust pre{\hypertarget{ref-Pemovska2013}{}}%
 Pemovska, Tea, Mika Kontro, Bhagwan Yadav, Henrik Edgren, Samuli Eldfors, Agnieszka Szwajda, Henrikki Almusa, et al. 2013. {``{Individualized systems medicine strategy to tailor treatments for patients with chemorefractory acute myeloid leukemia}.''} \emph{Cancer Discovery} 3 (12): 1416--29. \url{https://doi.org/10.1158/2159-8290.CD-13-0350}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Porpaczy2009}{}}%
+Porpaczy, E., M. Bilban, G. Heinze, M. Gruber, K. Vanura, I. Schwarzinger, S. Stilgenbauer, B. Streubel, C. Fonatsch, and U. Jaeger. 2009. {``{Gene expression signature of chronic lymphocytic leukaemia with Trisomy 12}.''} \emph{European Journal of Clinical Investigation} 39 (7): 568--75. \url{https://doi.org/10.1111/j.1365-2362.2009.02146.x}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Puente2015}{}}%
 Puente, Xose S, Silvia Beà, Rafael Valdés-Mas, Neus Villamor, Jesús Gutiérrez-Abril, José I Martín-Subero, Marta Munar, et al. 2015. {``{Non-coding recurrent mutations in chronic lymphocytic leukaemia.}''} \emph{Nature} 526 (7574): 519--24. \url{https://doi.org/10.1038/nature14666}.
@@ -2807,6 +2879,9 @@ Ramírez, Fidel, Friederike D ¨ Undar, Sarah Diehl, Björn Bj¨, Björn A Grün
 \leavevmode\vadjust pre{\hypertarget{ref-Ramsay2013b}{}}%
 Ramsay, Andrew J, Víctor Quesada, Miguel Foronda, Laura Conde, Alejandra Martínez-Trillos, Neus Villamor, David Rodríguez, et al. 2013. {``{POT1 mutations cause telomere dysfunction in chronic lymphocytic leukemia}.''} \emph{Nature Genetics} 45 (5): 526--30. \url{https://doi.org/10.1038/ng.2584}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-Reid2021}{}}%
+Reid, Jennifer C., Diana Golubeva, Allison L. Boyd, Cameron G. Hollands, Charisa Henly, Luca Orlando, Andrew Leber, et al. 2021. {``{Human pluripotent stem cells identify molecular targets of trisomy 12 in chronic lymphocytic leukemia patients}.''} \emph{Cell Reports} 34 (11): 108845. \url{https://doi.org/10.1016/j.celrep.2021.108845}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-Rendeiro2020}{}}%
 Rendeiro, André F., Thomas Krausgruber, Nikolaus Fortelny, Fangwen Zhao, Thomas Penz, Matthias Farlik, Linda C. Schuster, et al. 2020. {``{Chromatin mapping and single-cell immune profiling define the temporal dynamics of ibrutinib response in CLL}.''} \emph{Nature Communications 2020 11:1} 11 (1): 1--14. \url{https://doi.org/10.1038/s41467-019-14081-6}.
 
@@ -2819,11 +2894,11 @@ Robak, Tadeusz. 2005. {``{Therapy of chronic lymphocytic leukaemia with purine n
 \leavevmode\vadjust pre{\hypertarget{ref-Robak2010}{}}%
 Robak, Tadeusz, Anna Dmoszynska, Philippe Solal-Céligny, Krzysztof Warzocha, Javier Loscertales, John Catalano, Boris V Afanasiev, et al. 2010. {``{Rituximab plus fludarabine and cyclophosphamide prolongs progression-free survival compared with fludarabine and cyclophosphamide alone in previously treated chronic lymphocytic leukemia}.''} \emph{Journal of Clinical Oncology} 28 (10): 1756--65. \url{https://doi.org/10.1200/JCO.2009.26.4556}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Roberts2016}{}}%
-Roberts, Andrew W., Matthew S. Davids, John M. Pagel, Brad S. Kahl, Soham D. Puvvada, John F. Gerecitano, Thomas J. Kipps, et al. 2016. {``{Targeting BCL2 with Venetoclax in Relapsed Chronic Lymphocytic Leukemia}.''} \emph{New England Journal of Medicine} 374 (4): 311--22. \url{https://doi.org/10.1056/nejmoa1513257}.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Roessner2020}{}}%
 Roessner, Philipp M, and Martina Seiffert. 2020. {``{T-cells in chronic lymphocytic leukemia: Guardians or drivers of disease?}''} \emph{Leukemia} 34 (8): 2012--24. \url{https://doi.org/10.1038/s41375-020-0873-2}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Roider2020}{}}%
+Roider, Tobias, Julian Seufert, Alexey Uvarovskii, Felix Frauhammer, Marie Bordas, Nima Abedpour, Marta Stolarczyk, et al. 2020. {``{Dissecting intratumour heterogeneity of nodal B-cell lymphomas at the transcriptional, genetic and drug-response levels}.''} \emph{Nature Cell Biology} 22 (7): 896--906. \url{https://doi.org/10.1038/s41556-020-0532-x}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Rosenwald2001}{}}%
 Rosenwald, Andreas, Ash A Alizadeh, George Widhopf, Richard Simon, R Eric Davis, Xin Yu, Liming Yang, et al. 2001. {``{Relation of gene expression phenotype to immunoglobulin mutation genotype in B cell chronic lymphocytic leukemia}.''} \emph{Journal of Experimental Medicine} 194 (11): 1639--47. \url{https://doi.org/10.1084/jem.194.11.1639}.
@@ -2845,6 +2920,9 @@ Scheffold, Annika, and Stephan Stilgenbauer. 2020. {``{Revolution of Chronic Lym
 
 \leavevmode\vadjust pre{\hypertarget{ref-Schulz2011}{}}%
 Schulz, A., G. Toedt, T. Zenz, S. Stilgenbauer, P. Lichter, and M. Seiffert. 2011. {``{Inflammatory cytokines and signaling pathways are associated with survival of primary chronic lymphocytic leukemia cells in vitro: a dominant role of CCL2}.''} \emph{Haematologica} 96 (3): 408--16. \url{https://doi.org/10.3324/haematol.2010.031377}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Scielzo2011}{}}%
+Scielzo, C, B Apollonio, L Scarfò, A Janus, M Muzio, E. Ten Hacken, P Ghia, and F Caligaris-Cappio. 2011. {``{The functional in vitro response to CD40 ligation reflects a different clinical outcome in patients with chronic lymphocytic leukemia}.''} \emph{Leukemia} 25 (11): 1760--67. \url{https://doi.org/10.1038/leu.2011.149}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Scielzo2020}{}}%
 Scielzo, Cristina, and Paolo Ghia. 2020. {``{Modeling the Leukemia Microenviroment In Vitro}.''} Frontiers Media SA. \url{https://doi.org/10.3389/fonc.2020.607608}.
@@ -2872,6 +2950,9 @@ Skowronska, Anna, Anton Parker, Gulshanara Ahmed, Ceri Oldreive, Zadie Davis, Su
 
 \leavevmode\vadjust pre{\hypertarget{ref-Snijder2017}{}}%
 Snijder, Berend, Gregory I Vladimer, Nikolaus Krall, Katsuhiro Miura, Ann Sofie Schmolke, Christoph Kornauth, Oscar Lopez de la Fuente, et al. 2017. {``{Image-based ex-vivo drug screening for patients with aggressive haematological malignancies: interim results from a single-arm, open-label, pilot study}.''} \emph{The Lancet Haematology} 4 (12): e595--606. \url{https://doi.org/10.1016/S2352-3026(17)30208-9}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Spaner2019}{}}%
+Spaner, David E., Lindsay McCaw, Guizhei Wang, Hubert Tsui, and Yonghong Shi. 2019. {``{Persistent janus kinase-signaling in chronic lymphocytic leukemia patients on ibrutinib: Results of a phase I trial}.''} \emph{Cancer Medicine} 8 (4): 1540--50. \url{https://doi.org/10.1002/cam4.2042}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Srinivasan2009}{}}%
 Srinivasan, Lakshmi, Yoshiteru Sasaki, Dinis Pedro Calado, Baochun Zhang, Ji Hye Paik, Ronald A DePinho, Jeffrey L Kutok, John F Kearney, Kevin L Otipoby, and Klaus Rajewsky. 2009. {``{PI3 kinase signals BCR-dependent mature B cell survival.}''} \emph{Cell} 139 (3): 573--86. \url{https://doi.org/10.1016/j.cell.2009.08.041}.
@@ -2903,11 +2984,11 @@ Stevenson, Freda K, and Federico Caligaris-Cappio. 2004. {``{Chronic lymphocytic
 \leavevmode\vadjust pre{\hypertarget{ref-Sthoeger1989}{}}%
 Sthoeger, Z. M., M. Wakai, D. B. Tse, V. P. Vinciguerra, S. L. Allen, D. R. Budman, S. M. Lichtman, P. Schulman, L. R. Weiselberg, and N. Chiorazzi. 1989. {``{Production of autoantibodies by CD5-expressing B lymphocytes from patients with chronic lymphocytic leukemia}.''} \emph{Journal of Experimental Medicine} 169 (1): 255--68. \url{https://doi.org/10.1084/jem.169.1.255}.
 
-\leavevmode\vadjust pre{\hypertarget{ref-Stilgenbauer2016}{}}%
-Stilgenbauer, Stephan, Barbara Eichhorst, Johannes Schetelig, Steven Coutre, John F Seymour, Talha Munir, Soham D Puvvada, et al. 2016. {``{Venetoclax in relapsed or refractory chronic lymphocytic leukaemia with 17p deletion: a multicentre, open-label, phase 2 study}.''} \emph{The Lancet Oncology} 17 (6): 768--78. \url{https://doi.org/10.1016/S1470-2045(16)30019-5}.
-
 \leavevmode\vadjust pre{\hypertarget{ref-Stilgenbauer2014}{}}%
 Stilgenbauer, Stephan, Andrea Schnaiter, Peter Paschka, Thorsten Zenz, Marianna Rossi, Konstanze Döhner, Andreas Bühler, et al. 2014. {``{Gene mutations and treatment outcome in chronic lymphocytic leukemia: results from the CLL8 trial.}''} \emph{Blood} 123 (21): 3247--54. \url{https://doi.org/10.1182/blood-2014-01-546150}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Sun2015}{}}%
+Sun, Baohua, Bhavin Shah, Warren Fiskus, Jun Qi, Kimal Rajapakshe, Cristian Coarfa, Li Li, et al. 2015. {``{Synergistic activity of BET protein antagonist-based combinations in mantle cell lymphoma cells sensitive or resistant to ibrutinib}.''} \emph{Blood} 126 (13): 1565--74. \url{https://doi.org/10.1182/blood-2015-04-639542}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-tenHacken2016}{}}%
 Ten Hacken, Elisa, and Jan A Burger. 2016. {``{Microenvironment interactions and B-cell receptor signaling in Chronic Lymphocytic Leukemia: Implications for disease pathogenesis and treatment.}''} \emph{Biochimica Et Biophysica Acta} 1863 (3): 401--13. \url{https://doi.org/10.1016/j.bbamcr.2015.07.009}.
@@ -2994,7 +3075,7 @@ Yu, Guangchuang. 2021. \emph{clusterProfiler: A Universal Enrichment Tool for In
 Yu, Lijian, Haesook T Kim, Siddha N. Kasar, Parul Benien, Wei Du, Kevin Hoang, Andrew Aw, et al. 2017. {``{Survival of Del17p CLL depends on genomic complexity and somatic mutation}.''} \emph{Clinical Cancer Research} 23 (3): 735--45. \url{https://doi.org/10.1158/1078-0432.CCR-16-0594}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Zenz2008}{}}%
-Zenz, Thorsten, Alexander Kröber, Katrin Scherer, Sonja Häbe, Andreas Bühler, Axel Benner, Tina Denzel, et al. 2008. {``{Monoallelic TP53 inactivation is associated with poor prognosis in chronic lymphocytic leukemia: results from a detailed genetic characterization with long-term follow-up.}''} \emph{Blood} 112 (8): 3322--29. \url{https://doi.org/10.1182/blood-2008-04-154070}.
+Zenz, Thorsten, Alexander Kröber, Katrin Scherer, Sonja Häbe, Andreas Bühler, Axel Benner, Tina Denzel, et al. 2008. {``{Monoallelic TP53 inactivation is associated with poor prognosis in chronic lymphocytic leukemia: Results from a detailed genetic characterization with long-term follow-up}.''} \emph{Blood} 112 (8): 3322--29. \url{https://doi.org/10.1182/blood-2008-04-154070}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Zenz2019}{}}%
 Zenz, Thorsten, Almut Luetge, Junyan Lu, Huellein Jennifer, Sascha Dietrich, Leopold Sellner, and Wolfgang Huber. 2019. {``{Transcriptional Profiling Reveals Strong Impact of Major Molecular Disease Subgroups and Mixed Epistasis in Chronic Lymphocytic Leukemia}.''} \emph{Blood} 134 (Supplement\_1): 1742--42. \url{https://doi.org/10.1182/blood-2019-126388}.
@@ -3019,9 +3100,9 @@ Ziller, Michael J., Hongcang Gu, Fabian Müller, Julie Donaghey, Linus T.-Y. Tsa
 
 \newpage
 
-\hypertarget{appendix}{%
-\chapter*{Appendix}\label{appendix}}
-\addcontentsline{toc}{chapter}{Appendix}
+\hypertarget{appendix-appendix---figures}{%
+\appendix}
+
 
 \hypertarget{figures}{%
 \section*{Figures}\label{figures}}
@@ -3034,7 +3115,7 @@ Ziller, Michael J., Hongcang Gu, Fabian Müller, Julie Donaghey, Linus T.-Y. Tsa
 
 }
 
-\caption{Layout of the 15 drugs on each screening plate. \emph{Plate plot generated by Peter-Martin Bruch.}}\label{fig:drugPlot}
+\caption{Layout of the 15 drugs in two concentrations on each screening plate. \emph{Plot produced by Peter-Martin Bruch.}}\label{fig:drugPlot}
 \end{figure}
 
 \begin{figure}
@@ -3043,7 +3124,7 @@ Ziller, Michael J., Hongcang Gu, Fabian Müller, Julie Donaghey, Linus T.-Y. Tsa
 
 }
 
-\caption{Layout of 9 / 18 stimuli on the first screening plate. A.A., S.P., Beads, B.S.A. and C.A. refer to additional agents tested in the screen which were not included in downstream analysis. \emph{Plate plot generated by Peter-Martin Bruch.}}\label{fig:stimulusPlot1}
+\caption{Layout of 9 / 18 stimuli on the first screening plate. A.A., S.P., Beads, B.S.A. and C.A. refer to additional agents tested in the screen which were not included in downstream analysis. \emph{Plot produced by Peter-Martin Bruch.}}\label{fig:stimulusPlot1}
 \end{figure}
 
 \begin{figure}
@@ -3052,7 +3133,7 @@ Ziller, Michael J., Hongcang Gu, Fabian Müller, Julie Donaghey, Linus T.-Y. Tsa
 
 }
 
-\caption{Layout of the remaining 9 / 18 stimuli on the second screening plate. A.A., S.P., Beads, B.S.A. and C.A. refer to additional agents tested in the screen which were not included in downstream analysis. \emph{Plate plot generated by Peter-Martin Bruch.}}\label{fig:stimulusPlot2}
+\caption{Layout of the remaining 9 / 18 stimuli on the second screening plate. A.A., S.P., Beads, B.S.A. and C.A. refer to additional agents tested in the screen which were not included in downstream analysis. \emph{Plot produced by Peter-Martin Bruch.}}\label{fig:stimulusPlot2}
 \end{figure}
 
 \begin{figure}
@@ -3061,29 +3142,29 @@ Ziller, Michael J., Hongcang Gu, Fabian Müller, Julie Donaghey, Linus T.-Y. Tsa
 
 }
 
-\caption{``Analysis of ATACseq dataset of two trisomy 12 and two non-trisomy 12 untreated CLL PMBC samples. The volcano plot depicts change in TF activity (x axis) versus BH-adjusted p-values (y axis) for 636 TFs, comparing trisomy 12 and non-trisomy 12 samples. The \texttt{diffTF} (\protect\hyperlink{ref-Berest2019}{Berest et al. 2019}) software was run in analytical mode to calculate TF activity, measured as weighted mean difference. TFs are labelled if adjusted p-value \textless{} 0.01 and absolute weighted mean difference \textgreater{} 0.15.'' \emph{diffTF analysis ran by Ivan Berest, figure and caption published in Bruch and Giles et al.~2021.}}\label{fig:diffTFsmallvolPlot}
+\caption{``Analysis of ATACseq dataset of two trisomy 12 and two non-trisomy 12 untreated CLL PMBC samples. The volcano plot depicts change TF binding site accessibility (x axis) versus BH-adjusted p-values (y axis), comparing trisomy 12 and non-trisomy 12 samples. The \texttt{diffTF} (\protect\hyperlink{ref-Berest2019}{Berest et al. 2019}) software was run in analytical mode to calculate TF activity, measured as weighted mean difference. TFs are labelled if adjusted p-value \textless{} 0.01 and absolute weighted mean difference \textgreater{} 0.15.'' \emph{diffTF pipeline was run by Ivan Berest, figure and caption published in Bruch and Giles et al.~2021.}}\label{fig:diffTFsmallvolPlot}
 \end{figure}
 \newpage
 
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{thesis_files/figure-latex/drugcytGeneIntAll-1} 
+{\centering \includegraphics[width=0.9\linewidth]{thesis_files/figure-latex/drugcytGeneIntAll-1} 
 
 }
 
-\caption{Heatmap depicting overview of genetic predictors of drug - stimulus interactions (each row represents the coefficients from fitting a single multivariate model). Stimuli are shown on left, and corresponding drugs on right. Drugs, stimuli and genetic alterations are alphabetically sorted. Coloured fields indicate that the \(\beta_{int}\) for given drug and stimulus is modulated by corresponding genetic feature. Positive coefficients are shown in red, indicating \(\beta_{int}\) is more positive for given drug and stimulus combination if the feature is present. \emph{Figure and caption generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}}\label{fig:drugcytGeneIntAll}
+\caption{``Heatmap depicting overview of genetic predictors of drug - stimulus interactions (each row represents the coefficients from fitting a single multivariate model). Stimuli are shown on left, and corresponding drugs on right. Drugs, stimuli and genetic alterations are alphabetically sorted. Coloured fields indicate that the \(\beta_{int}\) for given drug and stimulus is modulated by corresponding genetic feature. Positive coefficients are shown in red, indicating \(\beta_{int}\) is more positive for given drug and stimulus combination if the feature is present.'' \emph{Figure and caption generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}}\label{fig:drugcytGeneIntAll}
 \end{figure}
 \newpage
 
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/NutlinPredictors-1} 
+{\centering \includegraphics[width=0.7\linewidth]{figures/Nutlin-3a} 
 
 }
 
-\caption{Add NUTLIN-3A Predictor profile}\label{fig:NutlinPredictors}
+\caption{Predictor profile plot depicting genetic features that predict \emph{in vitro} response to Nutlin-3a. Bar plot on left indicates size and sign of coefficients for the named predictors. Positive coefficients indicate higher viability after treatment, if the feature is present. Scatter plot and heatmap indicate how each genetic feature relates to patient sample viabilities: Scatter plot indicates log(viability) values, in order of magnitude, for each individual sample. Heatmap shows patient mutation status for each of genetic predictors for corresponding sample in scatter plot.}\label{fig:NutlinPredictors}
 \end{figure}
 
 \begin{figure}
@@ -3092,7 +3173,7 @@ Ziller, Michael J., Hongcang Gu, Fabian Müller, Julie Donaghey, Linus T.-Y. Tsa
 
 }
 
-\caption{Beeswarm-boxplots of log-transformed control-normalised viability values for IFN\(\gamma\) and Ralimetinib + IFN\(\gamma\) treated samples.}\label{fig:ifngamma}
+\caption{Beeswarm-boxplots of log-transformed control-normalised viability values for IFN\(\gamma\) treated samples, with and without Ralimetinib.}\label{fig:ifngamma}
 \end{figure}
 
 
@@ -3101,15 +3182,15 @@ Ziller, Michael J., Hongcang Gu, Fabian Müller, Julie Donaghey, Linus T.-Y. Tsa
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.6\linewidth]{thesis_files/figure-latex/ibetatac-1} 
+{\centering \includegraphics[width=1\linewidth]{figures/IBET-trisomy12-ATAC} 
 
 }
 
-\caption{Differential TF binding site accessibility (y axis) in trisomy 12 vs non-trisomy 12 CLL samples (purple) and for IBET-762 vs DMSO treated CLL samples (green). Direction of
+\caption{``Differential TF binding site accessibility (y axis) in trisomy 12 vs non-trisomy 12 CLL PBMC samples (purple) and for IBET-762 vs DMSO treated CLL samples (green). Direction of
 differential accessibility values are shown for two independent datasets comparing trisomy 12
 vs non-trisomy 12 CLL and IBET-762 vs control-treated CLL, for all TFs with adjusted p value
 \textless0.05 in the trisomy 12 comparison. Absolute change in TF accessibility can not be compared
-between the two experiments. See Methods section \ref{treated-ATACseq-method} and \ref{ibet-ATACseq-method}. \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:ibetatac}
+between the two experiments. See Methods section \ref{treated-ATACseq-method} and \ref{ibet-ATACseq-method}.'' \emph{Figure and caption generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}}\label{fig:ibetatac}
 \end{figure}
 \hypertarget{tables}{%
 \section*{Tables}\label{tables}}
@@ -3119,12 +3200,12 @@ between the two experiments. See Methods section \ref{treated-ATACseq-method} an
 \begin{longtable}[t]{l|l|r|l|l|l|l|l|l}
 \caption{\label{tab:patientTable}Summary of the patient samples and selected genetic features included in this study. Table published in Bruch and Giles et al. 2021.}\\
 \hline
-\textbf{Patient ID} & \textbf{Sex} & \textbf{Treated before} & \textbf{IGHV status} & \textbf{Methylation Cluster} & \textbf{Del13q} & \textbf{Del11q} & \textbf{Trisomy 12} & \textbf{Del17p}\\
+\textbf{Patient ID} & \textbf{Sex} & \textbf{Treated before} & \textbf{IGHV status} & \textbf{Methylation Cluster} & \textbf{Del(13q)} & \textbf{Del(11q)} & \textbf{Trisomy 12} & \textbf{Del(17p)}\\
 \hline
 \endfirsthead
 \caption[]{\label{tab:patientTable}Summary of the patient samples and selected genetic features included in this study. Table published in Bruch and Giles et al. 2021. \textit{(continued)}}\\
 \hline
-\textbf{Patient ID} & \textbf{Sex} & \textbf{Treated before} & \textbf{IGHV status} & \textbf{Methylation Cluster} & \textbf{Del13q} & \textbf{Del11q} & \textbf{Trisomy 12} & \textbf{Del17p}\\
+\textbf{Patient ID} & \textbf{Sex} & \textbf{Treated before} & \textbf{IGHV status} & \textbf{Methylation Cluster} & \textbf{Del(13q)} & \textbf{Del(11q)} & \textbf{Trisomy 12} & \textbf{Del(17p)}\\
 \hline
 \endhead
 \cellcolor[HTML]{E2E868}{Pat\_001} & \cellcolor[HTML]{E2E868}{f} & \cellcolor[HTML]{E2E868}{1} & \cellcolor[HTML]{E2E868}{U} & \cellcolor[HTML]{E2E868}{LP} & \cellcolor[HTML]{E2E868}{1} & \cellcolor[HTML]{E2E868}{0} & \cellcolor[HTML]{E2E868}{0} & \cellcolor[HTML]{E2E868}{0}\\
@@ -3515,7 +3596,7 @@ Pat\_192 & f & 0 & NA & NA & 1 & 0 & 0 & 0\\
 \endgroup{}
 \begin{table}
 
-\caption{\label{tab:drugTableAppendix}Characteristics of drugs included in the screen. Table published in Bruch and Giles et al. 2021.}
+\caption{\label{tab:drugTableAppendix}Characteristics of the drugs included in the screen. Table published in Bruch and Giles et al. 2021. Table generated with Peter-Martin Bruch and published in Bruch and Giles et al. 2021. }
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{7}{9}\selectfont
@@ -3551,122 +3632,44 @@ I-BET 762 & BRD2/3/4 & Epigenome & other & Selleck Chemicals & S7189 & 1000nM & 
 \end{table}
 \begin{table}
 
-\caption{\label{tab:stimulusTableAppendix}Characteristics of the stimuli included in the screen.  Table published in Bruch and Giles et al. 2021.}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{7}{9}\selectfont
-\begin{tabular}[t]{l|l|l|l|l|l|l|l}
-\hline
-\textbf{Stimulus} & \textbf{Name} & \textbf{Company} & \textbf{Concentration} & \textbf{Cat. No.} & \textbf{Lot No.} & \textbf{Source} & \textbf{Pathway}\\
-\hline
-\cellcolor[HTML]{E2E868}{IL4 human recombinant animal component free} & \cellcolor[HTML]{E2E868}{IL4} & \cellcolor[HTML]{E2E868}{Sigma-Aldrich} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{SRP3093} & \cellcolor[HTML]{E2E868}{0712AFC14} & \cellcolor[HTML]{E2E868}{Company} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
-\hline
-IL10 human Animal component free & IL10 & Sigma-Aldrich & 10 ng/ml & SRP3312 & 1012AFC21 & Company & JAK/STAT\\
-\hline
-\cellcolor[HTML]{E2E868}{IL2 human recombinant animal component free} & \cellcolor[HTML]{E2E868}{IL2} & \cellcolor[HTML]{E2E868}{Sigma-Aldrich} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{SRP3085} & \cellcolor[HTML]{E2E868}{0416AFC12} & \cellcolor[HTML]{E2E868}{Company} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
-\hline
-R-848 & Resiquimod & Enzo Life Siences & 1000 ng/ml & ALX-420-038-M025 & 10211615 & Company & TLR 7/8\\
-\hline
-\cellcolor[HTML]{E2E868}{Human IL-21} & \cellcolor[HTML]{E2E868}{IL21} & \cellcolor[HTML]{E2E868}{Peprotech} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{200-21} & \cellcolor[HTML]{E2E868}{414226} & \cellcolor[HTML]{E2E868}{Company} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
-\hline
-Human BAFF & BAFF & Peprotech & 250 ng/ml & 310-13 & 0706CY194 & Company & NFkB\\
-\hline
-\cellcolor[HTML]{E2E868}{Human IL-1\$\textbackslash{}beta\$} & \cellcolor[HTML]{E2E868}{IL1β} & \cellcolor[HTML]{E2E868}{Peprotech} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{200-01} & \cellcolor[HTML]{E2E868}{0606B95} & \cellcolor[HTML]{E2E868}{Company} & \cellcolor[HTML]{E2E868}{NFkB}\\
-\hline
-Human sCD40 Ligand & sCD40L & Peprotech & 1000 ng/ml & 310-02 & 1214145 & Company & NFkB\\
-\hline
-\cellcolor[HTML]{E2E868}{Goat F(AB')2 Fragment to human IgM} & \cellcolor[HTML]{E2E868}{soluble anti-IgM} & \cellcolor[HTML]{E2E868}{MP Biomedicals} & \cellcolor[HTML]{E2E868}{20000 ng/ml} & \cellcolor[HTML]{E2E868}{55055} & \cellcolor[HTML]{E2E868}{7227} & \cellcolor[HTML]{E2E868}{Company} & \cellcolor[HTML]{E2E868}{BCR}\\
-\hline
-Human TGF\$\textbackslash{}beta\$ & TGFβ1 & Peprotech & 10 ng/ml & 100-21 & 1117209 & Company & MAPK\\
-\hline
-\cellcolor[HTML]{E2E868}{Human IL15} & \cellcolor[HTML]{E2E868}{IL15} & \cellcolor[HTML]{E2E868}{Peprotech} & \cellcolor[HTML]{E2E868}{10 ng/ml} & \cellcolor[HTML]{E2E868}{200-15} & \cellcolor[HTML]{E2E868}{91624} & \cellcolor[HTML]{E2E868}{Company} & \cellcolor[HTML]{E2E868}{JAK/STAT}\\
-\hline
-Human IL6 & IL6 & Peprotech & 10 ng/ml & 200-06 & 031316-2 & Company & JAK/STAT\\
-\hline
-\cellcolor[HTML]{E2E868}{ODN 2006 (ODN 7909)} & \cellcolor[HTML]{E2E868}{CpG ODN} & \cellcolor[HTML]{E2E868}{Invivogen} & \cellcolor[HTML]{E2E868}{1000 ng/ml} & \cellcolor[HTML]{E2E868}{tlrl-2006-1} & \cellcolor[HTML]{E2E868}{3901-09T} & \cellcolor[HTML]{E2E868}{Company} & \cellcolor[HTML]{E2E868}{TLR 9}\\
-\hline
-Human SDF-1\$\textbackslash{}alpha\$ (CXCL12) & SDF-1α & Peprotech & 200 ng/ml & 300-28A & 101492 & Company & JAK/STAT\\
-\hline
-\cellcolor[HTML]{E2E868}{Human Interferon \$\textbackslash{}gamma\$} & \cellcolor[HTML]{E2E868}{Interferon γ} & \cellcolor[HTML]{E2E868}{Peprotech} & \cellcolor[HTML]{E2E868}{5 ng/ml} & \cellcolor[HTML]{E2E868}{300-02} & \cellcolor[HTML]{E2E868}{121527} & \cellcolor[HTML]{E2E868}{Company} & \cellcolor[HTML]{E2E868}{NFkB}\\
-\hline
-HS-5 conditioned medium & HS-5 CM & self produced & 20 \% & NA & NA & self produced & NA\\
-\hline
-\end{tabular}}
-\end{table}
-\begin{table}
-
-\caption{\label{tab:receptorPairs}Table depicting stimulus and receptor pairs used in stimulus response - stimulus receptor expression analysis.}
+\caption{\label{tab:stimulusTableAppendix}Characteristics of the stimuli included in the screen.  Table produced with Peter-Martin Bruch and published in Bruch and Giles et al. 2021.}
 \centering
 \fontsize{7}{9}\selectfont
-\begin{tabular}[t]{l|l|l|l}
+\begin{tabular}[t]{l|l|l|l|l|l|l}
 \hline
-Cytokine & Receptor & ENSEMBLID & Kegg\\
+\textbf{Stimulus} & \textbf{Name} & \textbf{Supplier} & \textbf{Concentration} & \textbf{Catalogue Number} & \textbf{Lot Number} & \textbf{Pathway}\\
 \hline
-\cellcolor[HTML]{E2E868}{SDF-1a} & \cellcolor[HTML]{E2E868}{CXCR 4} & \cellcolor[HTML]{E2E868}{ENSG00000121966} & \cellcolor[HTML]{E2E868}{7852}\\
+IL4 human recombinant animal component free & IL4 & Sigma-Aldrich & 10 ng/ml & SRP3093 & 0712AFC14 & JAK/STAT\\
 \hline
-SDF-1a & CXCR 7 & ENSG00000144476 & 57007\\
+IL10 human Animal component free & IL10 & Sigma-Aldrich & 10 ng/ml & SRP3312 & 1012AFC21 & JAK/STAT\\
 \hline
-\cellcolor[HTML]{E2E868}{IL-6} & \cellcolor[HTML]{E2E868}{IL-6 R} & \cellcolor[HTML]{E2E868}{ENSG00000160712} & \cellcolor[HTML]{E2E868}{3570}\\
+IL2 human recombinant animal component free & IL2 & Sigma-Aldrich & 10 ng/ml & SRP3085 & 0416AFC12 & JAK/STAT\\
 \hline
-IL-6 & IL-6 ST & ENSG00000134352 & 3572\\
+R-848 & Resiquimod & Enzo Life Siences & 1000 ng/ml & ALX-420-038-M025 & 10211615 & TLR 7/8\\
 \hline
-\cellcolor[HTML]{E2E868}{IL-15} & \cellcolor[HTML]{E2E868}{IL-15 R alpha} & \cellcolor[HTML]{E2E868}{ENSG00000134470} & \cellcolor[HTML]{E2E868}{3601}\\
+Human IL-21 & IL21 & Peprotech & 10 ng/ml & 200-21 & 414226 & JAK/STAT\\
 \hline
-IL-15 & IL-2 R beta & ENSG00000100385 & 3560\\
+Human BAFF & BAFF & Peprotech & 250 ng/ml & 310-13 & 0706CY194 & NFkB\\
 \hline
-\cellcolor[HTML]{E2E868}{IL-15} & \cellcolor[HTML]{E2E868}{IL-2 R gamma} & \cellcolor[HTML]{E2E868}{ENSG00000147168} & \cellcolor[HTML]{E2E868}{3561}\\
+Human IL-1 beta & IL1β & Peprotech & 10 ng/ml & 200-01 & 0606B95 & NFkB\\
 \hline
-IL-21 & IL-21 R & ENSG00000103522 & 50615\\
+Human sCD40 Ligand & sCD40L & Peprotech & 1000 ng/ml & 310-02 & 1214145 & NFkB\\
 \hline
-\cellcolor[HTML]{E2E868}{IL-21} & \cellcolor[HTML]{E2E868}{IL-21 R gamma} & \cellcolor[HTML]{E2E868}{ENSG00000147168} & \cellcolor[HTML]{E2E868}{3561}\\
+Goat F(AB')2 Fragment to human IgM & soluble anti-IgM & MP Biomedicals & 20000 ng/ml & 55055 & 7227 & BCR\\
 \hline
-IL-2 & IL-2 R alpha & ENSG00000134460 & 3559\\
+Human TGFβ1 & TGFβ1 & Peprotech & 10 ng/ml & 100-21 & 1117209 & MAPK\\
 \hline
-\cellcolor[HTML]{E2E868}{IL-2} & \cellcolor[HTML]{E2E868}{IL-2 R beta} & \cellcolor[HTML]{E2E868}{ENSG00000100385} & \cellcolor[HTML]{E2E868}{3560}\\
+Human IL15 & IL15 & Peprotech & 10 ng/ml & 200-15 & 91624 & JAK/STAT\\
 \hline
-IL-2 & IL-2 R gamma & ENSG00000147168 & 3561\\
+Human IL6 & IL6 & Peprotech & 10 ng/ml & 200-06 & 031316-2 & JAK/STAT\\
 \hline
-\cellcolor[HTML]{E2E868}{IL-10} & \cellcolor[HTML]{E2E868}{IL-10 R alpha} & \cellcolor[HTML]{E2E868}{ENSG00000110324} & \cellcolor[HTML]{E2E868}{3587}\\
+ODN 2006 (ODN 7909) & CpG ODN & Invivogen & 1000 ng/ml & tlrl-2006-1 & 3901-09T & TLR 9\\
 \hline
-IL-10 & IL-10 R beta & ENSG00000243646 & 3588\\
+Human SDF1 alpha (CXCL12) & SDF-1α & Peprotech & 200 ng/ml & 300-28A & 101492 & JAK/STAT\\
 \hline
-\cellcolor[HTML]{E2E868}{IL-4} & \cellcolor[HTML]{E2E868}{IL-4 R} & \cellcolor[HTML]{E2E868}{ENSG00000077238} & \cellcolor[HTML]{E2E868}{3566}\\
+Human Interferon gamma & Interferon γ & Peprotech & 5 ng/ml & 300-02 & 121527 & NFkB\\
 \hline
-IL-4 & IL-2 R gamma & ENSG00000147168 & 3561\\
-\hline
-\cellcolor[HTML]{E2E868}{IL-4} & \cellcolor[HTML]{E2E868}{IL-13 R A1} & \cellcolor[HTML]{E2E868}{ENSG00000131724} & \cellcolor[HTML]{E2E868}{3597}\\
-\hline
-soluble anti-IgM & B cell receptor & ENSG00000275063 & 102723407\\
-\hline
-\cellcolor[HTML]{E2E868}{soluble anti-IgM} & \cellcolor[HTML]{E2E868}{CD79A} & \cellcolor[HTML]{E2E868}{ENSG00000105369} & \cellcolor[HTML]{E2E868}{973}\\
-\hline
-soluble anti-IgM & CD79B & ENSG00000007312 & 974\\
-\hline
-\cellcolor[HTML]{E2E868}{Resiquimod} & \cellcolor[HTML]{E2E868}{TLR 7} & \cellcolor[HTML]{E2E868}{ENSG00000196664} & \cellcolor[HTML]{E2E868}{51284 }\\
-\hline
-Resiquimod & TLR 8 & ENSG00000101916 & 51311\\
-\hline
-\cellcolor[HTML]{E2E868}{CpG ODN} & \cellcolor[HTML]{E2E868}{TLR9} & \cellcolor[HTML]{E2E868}{ENSG00000239732} & \cellcolor[HTML]{E2E868}{54106}\\
-\hline
-BAFF & BAFF R & ENSG00000159958 & 115650\\
-\hline
-\cellcolor[HTML]{E2E868}{BAFF} & \cellcolor[HTML]{E2E868}{TACI} & \cellcolor[HTML]{E2E868}{ENSG00000240505} & \cellcolor[HTML]{E2E868}{23495}\\
-\hline
-BAFF & BCMA & ENSG00000048462 & 608\\
-\hline
-\cellcolor[HTML]{E2E868}{IL-1b} & \cellcolor[HTML]{E2E868}{IL-1 R1} & \cellcolor[HTML]{E2E868}{ENSG00000115594} & \cellcolor[HTML]{E2E868}{3554}\\
-\hline
-IL-1b & IL-1 R2 & ENSG00000115590 & 7850\\
-\hline
-\cellcolor[HTML]{E2E868}{sCD40L} & \cellcolor[HTML]{E2E868}{CD40} & \cellcolor[HTML]{E2E868}{ENSG00000101017} & \cellcolor[HTML]{E2E868}{958}\\
-\hline
-Interferon gamma & IFN-gamma R1 & ENSG00000027697 & 3459\\
-\hline
-\cellcolor[HTML]{E2E868}{Interferon gamma} & \cellcolor[HTML]{E2E868}{IFN-gamma R2} & \cellcolor[HTML]{E2E868}{ENSG00000159128} & \cellcolor[HTML]{E2E868}{3460}\\
-\hline
-TGF-b1 & TGF-beta R1 & ENSG00000106799 & 7046\\
-\hline
-\cellcolor[HTML]{E2E868}{TGF-b1} & \cellcolor[HTML]{E2E868}{TGF-beta R2} & \cellcolor[HTML]{E2E868}{ENSG00000163513} & \cellcolor[HTML]{E2E868}{7048}\\
+HS-5 conditioned medium & HS-5 CM & self produced & 20 \% & NA & NA & NA\\
 \hline
 \end{tabular}
 \end{table}
