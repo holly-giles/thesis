@@ -1,5 +1,5 @@
 \documentclass[11pt, a4paper, twosided]{book}
-\usepackage[hmarginratio=1:1]{geometry} % equal right and left raitios
+\usepackage[hmarginratio=1:1, hmargin={2.2cm,2.2cm}, tmargin=2cm]{geometry} % equal right and left raitios, vmargin ration is 2:3 so bmargin should be set automatically. If this doesn't work jsut go back to deafult 
 \usepackage{amsmath,amssymb,amsfonts,amsthm}    % Typical maths resource packages
 \usepackage{graphicx}                           % Packages to allow inclusion of graphics
 \usepackage[authoryear]{natbib}                 % literature reference style
@@ -32,6 +32,7 @@
 \usepackage{breqn} %to break up equations accross multiple lines, where neccesary 
 \usepackage{helvet} %to set font as helvetica 
 \usepackage{amsmath} % to put equation on multiple line 
+
 
 $if(highlighting-macros)$
 $highlighting-macros$
@@ -123,12 +124,14 @@ $endfor$
 
 \thispagestyle{empty}
   \begin{center}
-  {\Large{Dissertation\\
-    submitted to the\\
-    Combined Faculty of Natural Sciences and Mathematics\\
-    of the Ruperto Carola University Heidelberg, Germany\\
-    for the degree of\\
-    Doctor of Natural Sciences\\}} \vspace*{\fill}
+  {\Large{Inaugural dissertation\\
+    for\\
+    obtaining the doctoral degree\\
+    of the\\
+    Combined Faculty of Mathematics, Engineering and Natural Sciences\\
+    of the\\
+    Ruprecht - Karls - University\\
+    Heidelberg\\}} \vspace*{\fill}
 
   \Large{Presented by} \\\vspace{0.5cm}
   \Large{$authordegree$ $author$} \\
@@ -222,14 +225,6 @@ $endif$
 % --------------------------------------------
 $if(list-of-publications)$
     $list-of-publications$
-\newpage\null\newpage
-$endif$
-
-% --------------------------------------------
-% ---------- List of contributions ------------
-% --------------------------------------------
-$if(list-of-contributions)$
-    $list-of-contributions$
 \newpage\null\newpage
 $endif$
 
