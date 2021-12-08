@@ -2,7 +2,8 @@
 #
 # Required Information --------------------------------------------------------
 # change lines 5 - 15
-title: "Chronic Lymphocytic Leukaemia and the tumour microenvironment: A multi-omics investigation of interactions between molecular features and external signals on drug response and clinical outcomes"
+title: "Chronic Lymphocytic Leukaemia and the Tumour Microenvironment"
+subtitle: "A multi-omics investigation of interactions between genetic aberrations and external signals and their impact on drug response and clinical outcomes"
 type: "Dissertation"
 author: "Holly Amelia Rebecca Giles"
 authordegree: "B.A."
