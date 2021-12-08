@@ -43,15 +43,15 @@ output:
 \end{tabular}
 \newpage   
 \begin{tabular}{rp{0.2cm}lp{1cm}rp{0.2cm}l}
-    
-  IHC & & Immunohistochemistry \\
+  IGLV & & Immunoglobulin light chain variable region \\
+    IHC & & Immunohistochemistry \\
     IL & & Interleukin \\
     JAK & & Janus kinase \\
     M-CLL & & CLL with somatic hypermutations in IGHV loci \\
     MACS & & Magnetic-activated cell sorting \\
     MAPK & & Mitogen-activated protein kinase  \\
     MRD & & Minimal residual disease  \\
-    MSCs & & Mesenchymal stromal cells  \\
+    MSC & & Mesenchymal stromal cell  \\
     NF$\kappa$B & & Nuclear factor $\kappa$-light-chain-enhancer of activated B cells \\
     NLC & & Nurselike cell  \\
     NOTCH & & Neurogenic locus notch  \\
