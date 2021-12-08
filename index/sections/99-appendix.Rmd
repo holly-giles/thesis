@@ -1,4 +1,4 @@
-# (APPENDIX) Appendix - Figures {-}
+# (APPENDIX) Appendix {-}
 
 ```{r, echo = FALSE}
 
@@ -161,7 +161,7 @@ na_color="#f0f0f0"
 
 
 
-## Figures {-}
+# Appendix - Figures {-}
 
 (ref:drugPlot) Layout of the 15 drugs in two concentrations on each screening plate. _Plot produced by Peter-Martin Bruch._
 
@@ -328,7 +328,7 @@ knitr::include_graphics("figures/IBET-trisomy12-ATAC.eps")
 
 ```
 
-## Tables {-}
+# Appendix - Tables {-}
 
 ```{r patientTable, echo = FALSE}
 
@@ -373,6 +373,24 @@ kable_styling(latex_options = c("striped", "scale_down"),
 #generate table of Cytokines and assosciated labels
 colnames(Cytokine_labels) <- c("name", "Cytlabel")
 
+Cytokine_labels_table <- Cytokine_labels %>%
+  dplyr::mutate(name = as.character(name)) %>%
+  dplyr::mutate(Cytlabel = ifelse(name == "IL-2", "IL2",
+                            ifelse(name == "IL-4", "IL4",
+                                   ifelse(name == "IL-6", "IL6",
+                                          ifelse(name == "IL-10", "IL10",
+
+                                                        ifelse(name == "IL-21", "IL21",
+                                                               ifelse(name == "sCD40L+IL-4","sCD40L + IL4",
+                                                                      ifelse(name == "IL-15", "IL15",
+                                                                             ifelse(name == "Interferon gamma","Interferon gamma",
+                                                                                    ifelse(name == "SDF-1a","SDF-1a",
+                                                                                           ifelse(name == "IL-1b","IL1b",
+                                                                                                  ifelse(name == "TGF-b1","TGFB1", name)))))))))))) %>%
+
+  dplyr::mutate(name = factor(name))
+
+
 #tidy names for table
 cytokines$stimulus[grepl("IL-4 human recombinant animal component free",cytokines$stimulus)]<-"IL4 human recombinant animal component free"
 cytokines$stimulus[grepl("IL-2 human recombinant animal component free",cytokines$stimulus)]<-"IL2 human recombinant animal component free"
@@ -380,21 +398,23 @@ cytokines$stimulus[grepl("Human IL-1beta",cytokines$stimulus)]<-"Human IL-1 beta
 cytokines$stimulus[grepl("Human IL-15",cytokines$stimulus)]<-"Human IL15"
 cytokines$stimulus[grepl("Human IFN-gamma",cytokines$stimulus)]<-"Human Interferon gamma"
 cytokines$stimulus[grepl("IL-10 human Animal component free",cytokines$stimulus)]<-"IL10 human Animal component free"
-cytokines$stimulus[grepl("Human TGF-beta1",cytokines$stimulus)] <- "Human TGF\u03B21"
+cytokines$stimulus[grepl("Human TGF-beta1",cytokines$stimulus)] <- "Human TGFbeta"
 cytokines$stimulus[grepl("Human IL-6",cytokines$stimulus)]<-"Human IL6"
 cytokines$stimulus[grepl("alpha",cytokines$stimulus)] <- "Human SDF1 alpha (CXCL12)"
 cytokines$stimulus[grepl("HS-5 konditioniertes Medium",cytokines$stimulus)] <- "HS-5 conditioned medium"
 cytokines %>%
-  left_join(Cytokine_labels, by = "name") %>%
+  left_join(Cytokine_labels_table, by = "name") %>%
   dplyr::select(-name, -additional_pathways, -source) %>%
   dplyr::rename(Stimulus=stimulus, Name = Cytlabel, Supplier=company, Concentration=conc, `Catalogue Number`=cat_no, `Lot Number`=lot_no, Pathway=pathway) %>%
   dplyr::select(Stimulus, Name,  everything()) %>%
   kable(caption = "Characteristics of the stimuli included in the screen.  Table produced with Peter-Martin Bruch and published in Bruch and Giles et al. 2021.") %>%
   row_spec(0,bold=TRUE) %>%
-  kable_styling(c("striped", "scale_down"), 
-                stripe_color = colors[7],
-                font_size=7, 
-                html_font = "arial")
+  kable_styling(latex_options = c("striped", "scale_down"), 
+              stripe_color = colors[7],
+                html_font = "Helvetica", 
+                font_size = 7)
+
+
 
 
 ```
