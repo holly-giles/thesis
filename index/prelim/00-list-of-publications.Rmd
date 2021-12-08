@@ -6,30 +6,25 @@ output:
 # List of publications {-}
 
 #### Thesis-related {-}
-
 \begin{itemize}
-    \item Bruch, Peter Martin\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Müller-Tidow, Thorsten Zenz, Wolfgang Huber\ast and Sascha Dietrich\ast. 2021. "Combinatorial drug-microenvironment interaction mapping reveals cell-extrinsic drug resistance mechanisms and clinically relevant patient subgroups in CLL." \textit{bioRxiv}.\href{https://doi.org/10.1101/2021.07.23.453514}{DOI: 10.1101/2021.07.23.453514} 
+    \item Bruch, Peter-Martin\ast,  \textbf{\underline{Holly A. R. Giles}}\ast, Carolin Kolb, Sophie Herbst, Tina Becirovic, Tobias Roider, Junyan Lu, Sebastian Scheinost, Lena Wagner, Jennifer Huellein, Ivan Berest, Mark Kriegsmann, Katharina Kriegsmann, Christiane Zgorzelski, Peter Dreger, Judith Zaugg, Carsten Müller-Tidow, Thorsten Zenz, Wolfgang Huber\ast  and Sascha Dietrich\ast. 2021. "Combinatorial drug-microenvironment interaction mapping reveals cell-extrinsic drug resistance mechanisms and clinically relevant patient subgroups in CLL." \textit{bioRxiv}. \href{https://doi.org/10.1101/2021.07.23.453514}{DOI: 10.1101/2021.07.23.453514} 
     
 \end{itemize}
 
 
 #### Software
-
-During my PhD, I have published the following software: 
 \begin{itemize}
-  \item \textbf{\underline{Giles, Holly A. R.}} and Peter Martin Bruch. 2021. "CLLCytokineScreen2021: Complete data and executable scripts to reproduce the figures and analysis presented in Bruch and Giles et al. 2021." GitHub. Updated December 6, 2021. \href{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}
+  \item \textbf{\underline{Giles, Holly A. R.}} and Peter-Martin Bruch. 2021. "CLLCytokineScreen2021: Data and executable scripts to reproduce analysis presented in Bruch and Giles et al. 2021." GitHub. Updated Dec 6, 2021. \href{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}
   
-   \item \textbf{\underline{Giles, Holly A. R.}} and Peter Martin Bruch. 2021. "CLLCytokineScreen2021Shiny: Shiny app to explore the dataset presented in Bruch and Giles et al. 2021." Uni-Heidelberg. Updated November 25. \href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/} 
+   \item \textbf{\underline{Giles, Holly A. R.}} and Peter-Martin Bruch. 2021. "CLLCytokineScreen2021Shiny: Shiny app to explore dataset presented in Bruch and Giles et al. 2021." Uni-Heidelberg. Updated Nov 25, 2021. \href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/} 
 \end{itemize}
 
 #### Other contributions {-}
-
-The author of this thesis also contributed to the following publications: 
-
 \begin{itemize}
     \item Berest, Ivan\ast, Christian Arnold\ast, Armando Reyes-Palomares, Giovanni Palla, Kasper Dindler Rasmussen, \textbf{\underline{Holly A. R. Giles}}, Peter-Martin Bruch, Wolfgang Huber, Sascha Dietrich, Kristian Helin and Judith B. Zaugg. 2019. "Quantification Of Differential Transcription Factor Activity And Multiomics-Based Classification Into Activators And Repressors: DiffTF". \textit{Cell Reports} 29 (10): 3147–3159.e12. \href{https://doi.org/10.1016/j.celrep.2019.10.106}{DOI: 10.1016/j.celrep.2019.10.106}
     
   \item Lu, Junyan\ast, Ester Cannizzaro\ast, Fabienne Meier-Abt, Sebastian Scheinost, Peter-Martin Bruch, \textbf{\underline{Holly A. R. Giles}}, Almut Lütge, Jennifer Hüllein, Lena Wagner, Brian Giacopelli, Ferran Nadeu, Julio Delgado, Elias Campo, Maurizio Mangolini, Ingo Ringshausen, Martin Böttcher, Dimitrios Mougiakakos, Andrea Jacobs, Bernd Bodenmiller, Sascha Dietrich, Christopher C. Oakes, Thorsten Zenz and Wolfgang Huber.  2021. "Multi-Omics Reveals Clinically Relevant Proliferative Drive Associated With Mtor-MYC-OXPHOS Activity In Chronic Lymphocytic Leukemia". \textit{Nature Cancer} 2 (8): 853–64. \href{https://doi.org/10.1038/s43018-021-00216-6}{DOI: 10.1038/s43018-021-00216-6}
 \end{itemize}
 
+\ast These first / last authors contributed equally to this work.
 
