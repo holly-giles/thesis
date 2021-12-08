@@ -150,6 +150,7 @@ $endfor$
 \null
 \begin{center}
 \Large{$title$} \\
+\large{$subtitle$} \\
 \vspace*{\fill}
 \begin{tabular}{ c c }
 Referees: & $referee1$ \\
@@ -224,7 +225,9 @@ $endif$
 % ---------- List of publications ------------
 % --------------------------------------------
 $if(list-of-publications)$
+\begin{sloppypar}
     $list-of-publications$
+\end{sloppypar}
 \newpage\null\newpage
 $endif$
 
@@ -240,9 +243,16 @@ $endif$
 % -------------------------------------
 % --- frontmatter: Zusammendfassung ---
 % -------------------------------------
+ %avoid text going into margins in this section 
+
 $if(zusammenfassung)$
+\begin{sloppypar}
     $zusammenfassung$
+\end{sloppypar}
 $endif$
+
+
+
 \newpage\null\newpage
 
 % -----------------------------
