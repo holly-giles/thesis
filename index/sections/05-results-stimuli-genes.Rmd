@@ -1630,9 +1630,9 @@ These results collectively suggest that increased gene dosage of key genes in th
 ###  Spi-B and PU.1 TFs show higher binding site accessibility in trisomy 12 CLL {#trisomy12-ATACseq}
 Trisomy 12 has been well-studied at both the transcriptomic and proteomic level, and yet the cause of its recurrence in CLL is not fully understood. Thus, I next decided to investigate the impact of trisomy 12 on the epigenetic landscape of CLL, which is less well studied. In particular, I wanted to investigate differential transcription factor binding site accessibility in CLL, which would give an indicator of which pathways are differentially active (Bruch and Giles et al. 2021). 
 
-This investigation involved two independent ATAC sequencing datasets. The first, generated internally, consisted of two WT and two trisomy 12 samples (Bruch & Giles et al. 2021). The second, taken from @Rendeiro2016 comprised 43 WT and nine trisomy 12 samples. 
+This investigation involved two independent ATAC sequencing datasets. The first, generated internally and refered to as dataset 1, consisted of two WT and two trisomy 12 samples (Bruch & Giles et al. 2021). The second, refered to as dataset 2, was taken from @Rendeiro2016 and comprised 43 WT and nine trisomy 12 samples. 
 
-In the external dataset, trisomy 12 status was not annotated. To do this, we used the ATACseq reads to call trisomy 12 in samples that contained > 1.4 times more reads per peak (i.e. genomic region) on average in chromosome 12, compared to peaks on other chromosomes. 
+In dataset 2, trisomy 12 status was not annotated. To do this, we used the ATACseq reads to call trisomy 12 in samples that contained > 1.4 times more reads per peak (i.e. genomic region) on average in chromosome 12, compared to peaks on other chromosomes. 
 
 Next, we used the `diffTF` software [@Berest2019] to identify TFs that showed differential binding site accessibility between the WT and trisomy 12 samples (Figure \@ref(fig:diffTFexplainer). `diffTF` enables comparison of TF activity between two conditions, using chromatin accessibility data. In this cases, `diffTF` compared binding site accessibility for 638 TFs, from the HOCOMOCO v10 database [@HOCOMOCO], between trisomy 12 and WT samples (Bruch & Giles et al. 2021).
 
@@ -1644,7 +1644,7 @@ knitr::include_graphics("figures/diffTF_method.eps")
 
 ```
 
-Running this analysis on both ATACseq datasets indicated that the binding sites of nine TFs  were more accessible (p<0.05) in the trisomy 12 samples of the larger, external dataset (Figure \@ref(fig:tri12diffTF)). In the smaller in-house dataset, the binding sites of 92 TFs were likewise more accessible (Supp. Figure \@ref(fig:diffTFsmallvolPlot)). RNA and proteomics data show different abundances of transcripts and proteins in trisomy 12 CLL: ATACseq data here shows that this also corresponds to a specific signalling signature in trisomy 12 CLL (Bruch and Giles et al. 2021). 
+Running this analysis on both ATACseq datasets indicated that the binding sites of nine TFs  were more accessible (p<0.05) in the trisomy 12 samples of the larger dataset 2 (Figure \@ref(fig:tri12diffTF)). In the smaller dataset 1, the binding sites of 92 TFs were likewise more accessible (Supp. Figure \@ref(fig:diffTFsmallvolPlot)). RNA and proteomics data show different abundances of transcripts and proteins in trisomy 12 CLL: ATACseq data here shows that this also corresponds to a specific signalling signature in trisomy 12 CLL (Bruch and Giles et al. 2021). 
 
 We confirmed that the results were not affected by the additional copy of chromosome 12.  Rerunning the diffTF analysis without the ATACseq reads from chromosome 12 had minor impact on the significant TFs. 
 
