@@ -328,6 +328,15 @@ knitr::include_graphics("figures/IBET-trisomy12-ATAC.eps")
 
 ```
 
+
+(ref:ibribetil4) Overview of the approach for the validation experiments. Four CLL PBMC samples were incubated with ibrutinib, IL4 and IBET-762, both individually and in all combinations. Samples were taken for ATAC sequencing and RNA sequencing after 6 hours and for mass spectrometry after 24 hours. 
+
+```{r ibribetil4, out.width = "100%", fig.cap='(ref:ibribetil4)', echo = FALSE}
+
+knitr::include_graphics("figures/ibribetil4.eps")
+
+```
+
 # Appendix - Tables {-}
 
 ```{r patientTable, echo = FALSE}
