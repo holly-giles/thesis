@@ -1083,7 +1083,7 @@ I performed a comprehensive survey of genetic determinants of drug response, to 
 
 This analysis recapitulated the findings of previous work [@JCIpaper]. For example IGHV-U CLL samples responded more strongly to BCR inhibition by ibrutinib (BTK) and idelalisib (Pi3K), and TP53 and del(17p) mutations conferred resistance to nutlin-3a (MDM2) and fludarabine (Purine analogue). 
 
-(ref:drugGeneIntMap) Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested drug-gene associations. Tests performed for IGHV status, somatic mutations and copy number aberrations (n = 54). Each coloured circle represents a gene-stimulus association meeting 10% FDR cut off. See Methods section \@ref(univariate-gene-stimulus-associations-method) _Figure from Bruch and Giles et al. 2021._ 
+(ref:drugGeneIntMap) Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested drug-gene associations. Tests performed for IGHV status, somatic mutations and copy number aberrations (n = 54). Each coloured circle represents a gene-stimulus association meeting 10% FDR cut off. See Methods section \@ref(drug-gene-method) 
 
 ```{r drugGeneIntMap, fig.cap='(ref:drugGeneIntMap)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 7, fig.align="center", out.width = '70%', dev = 'cairo_pdf'}
 
@@ -1231,7 +1231,7 @@ In addition, this analysis highlighted the broad impact of trisomy 12 on drug re
 
 These included increased sensitivity to p38 MAPK inhibition by ralimetinib, agreeing with previous work demonstrating higher trisomy 12 sensitivity with a range of MEK and ERK inhibitors and suggesting an essential role for MEK/ERK signalling in trisomy 12 CLL [@JCIpaper]. 
 
-I also noted that trisomy 12 CLL showed increased sensitivity to IBET-762, a bromodomain inhibitor that has been shown to suppress transcriptional responses to cytokine signalling via JAK-STAT [@Chan2015]. The results in section \@ref(trisomy12-modulator) indicated that trisomy 12 enhances responses to some cytokines. I was interested to see whether bromodomain inhibition may provide a strategy to target this feature of trisomy 12 samples. I decided to investigate the impact of IBET-762 treatment on the trisomy 12 transcription factor signature determined in Figure \@ref(fig:tri12diffTF).  I made use of an additional ATACseq dataset consisting of four CLL PBMC samples each treated  with  IBET-762  and  DMSO  as control. I visualised inferred TF activity for trisomy 12 signature TFs, calculated using `diffTF` [@Berest2019]. All nine TFs showing  higher  accessibility  in  trisomy  12 CLL (Figure \@ref(fig:tri12diffTF)) exhibited  decreased  accessibility  upon  treatment with IBET-762  (Appendix Figure \@ref(fig:ibetatac)). This result suggests that  bromodomain inhibition may represent a potential target in CLL patients with trisomy 12 (Bruch and Giles et al. 2021). [CHECK: Does it make sense to include this here, or is it a distraction from the main story?]
+I also noted that trisomy 12 CLL showed increased sensitivity to IBET-762, a bromodomain inhibitor that has been shown to suppress transcriptional responses to cytokine signalling via JAK-STAT [@Chan2015]. The results in section \@ref(trisomy12-modulator) indicated that trisomy 12 enhances responses to some cytokines. I was interested to see whether bromodomain inhibition may provide a strategy to target this feature of trisomy 12 samples. I decided to investigate the impact of IBET-762 treatment on the trisomy 12 transcription factor signature determined in Figure \@ref(fig:tri12diffTF).  I made use of an additional ATACseq dataset consisting of four CLL PBMC samples each treated  with  IBET-762  and  DMSO  as control. I visualised inferred TF activity for trisomy 12 signature TFs, calculated using `diffTF` [@Berest2019]. All nine TFs showing  higher  accessibility  in  trisomy  12 CLL (Figure \@ref(fig:tri12diffTF)) exhibited  decreased  accessibility  upon  treatment with IBET-762  (Appendix Figure \@ref(fig:ibetatac)). This result suggests that  bromodomain inhibition may represent a potential target in CLL patients with trisomy 12 (Bruch and Giles et al. 2021). 
 
 (ref:drugGeneIntEx) Beeswarm-boxplots showing control-normalised log transformed viability values after treatment with (A) Ralimetinib (p38 MAPK) and (B) IBET-762 (BRD2/3/4), stratified by trisomy 12.
 
@@ -1612,7 +1612,194 @@ grid.arrange(grobs = Lasso_Plots_Fig6["Ibrutinib + IL-4"], ncol = 1)
 ```
 
 ## IL4 induced resistance to BCR inhibition {#il4-ibrutinib}
-ADD
+### IL4 induces resistance to BCR inhibitors and chemotherapeutics {#IL4resistance}
+
+(Figure \@ref(fig:IL4Res)). 
+
+(ref:IL4Res) Examples of IL4-induced resistance. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. Plots show IL4 + (A) idelalisib (Pi3K), (B) PRT062607 (SYK) (C) everolimus (mTOR), and (D) selumetinib  (MEK). See Methods section \@ref(drug-stimulus-linear-model-method). _Figure from Bruch & Giles et al. 2021._
+
+```{r IL4Res, fig.cap='(ref:IL4Res)', message = FALSE,  echo = FALSE, fig.height=6.6, fig.width = 12, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
+
+
+(wrap_plots(plotList$`treatment_drug:Idelalisib:treatment_cytokine:IL-4`) + wrap_plots(plotList$`treatment_drug:PRT062607:treatment_cytokine:IL-4`)) /
+  
+(wrap_plots(plotList$`treatment_drug:Everolimus:treatment_cytokine:IL-4`) +
+  
+wrap_plots(plotList$`treatment_drug:Selumetinib:treatment_cytokine:IL-4`)) + plot_annotation(tag_levels = c("A"))
+
+```
+
+This is accross genetic backgrounds  (refer to above)
+
+### Levels of _in vivo_ IL4 signalling correlate with outcome {#il4-ihc}
+(Figure \@ref(fig:IL4ihc)). 
+
+(ref:IL4ihc) See Methods sections  \@ref(il4-ihc-exp) and \@ref(il4-ihc-method).  _Figure from Bruch & Giles et al. 2021._
+
+```{r message = FALSE,  echo = FALSE, results = FALSE}
+
+STAT6_beeswarm <-
+  ihc_patient_data %>%
+  #get staining intensities for pSTAT6 only
+  dplyr::filter(Stain %in% c("pSTAT6")) %>%
+  #plot staining intensity, stratified by CLL / Healthy LN
+  ggplot(aes(x = Tissue, y = Intensity)) +
+  geom_boxplot() +
+  geom_beeswarm(aes(color=Tissue), alpha=1, cex=2) +
+  #add p values
+  stat_compare_means(method = "t.test", comparisons=list(c(1,2)), size=6) +
+  scale_color_manual(values = c(palreds[8], palblues[2])) +
+  xlab("") +
+  ylab("Mean pSTAT6 Staining Intensity") +
+  guides(color = "none") +
+  scale_x_discrete(labels = c( "CLL"="CLL-infiltrated \nlymph nodes", "LK"="Non-neoplastic \nlymph nodes")) +
+  coord_cartesian(clip = "off") +
+  #add preset theme 2
+  t2
+
+
+
+##read image
+CLL_LN <- cowplot::ggdraw() +
+  cowplot::draw_image("/Volumes/huber/users/giles/thesis/index/data/CLL1_I3_pSTAT6.png", scale = 1)
+
+
+##read image
+healthy_LN <- cowplot::ggdraw() + 
+  cowplot::draw_image("/Volumes/huber/users/giles/thesis/index/data/LK2_B4_pSTAT6.png", scale = 1)
+
+
+#Define stains for which want to visualize TTT
+stains <- c("pSTAT6")
+
+#Get optimal cut offs 
+stats <- lapply(stains, function(stn){
+ 
+  survival <- dplyr::select(ihc_surv_data, PatientID, Tissue, Diagnosis, Sex, TTT, treatedAfter, all_of(stn))
+  colnames(survival) <- c("PatientID", "Tissue", "Diagnosis", "Sex", "TTT", "treatedAfter", "target")
+  
+  #Run test to obtain cut off threshold for high pSTAT6 versus low pSTAT6
+  maxtest <- maxstat.test(Surv(TTT, treatedAfter)~ target, 
+                          data = survival,
+                          smethod = "LogRank",
+                          alpha = NULL)
+  
+  cutpoint <- maxtest$estimate
+  
+ })
+  
+  names(stats) <- c("pSTAT6")
+  
+                                          
+  #Annotate by cutoff point
+  survdf <- mutate(ihc_surv_data, 
+                   phosphoSTAT6 = ifelse(pSTAT6 < stats$pSTAT6, "low", "high"))
+  
+                                      
+  #fit survival models
+  f_pstat6 <- survfit(Surv(TTT, treatedAfter) ~ phosphoSTAT6, data= survdf)
+  
+  fits <- list(pSTAT6 = f_pstat6)
+  
+  #Make plot
+  gg = ggsurvplot_list(fits, 
+                       survdf,  
+                       pval=TRUE, 
+                       palette=c(palreds[8],palreds[3]),  
+                       risk.table = TRUE, legend.title = "", 
+                       ggtheme = t2, 
+                       legend.labs =list(c("High", "Low"),c("High", "Low")),  
+                       xlab="Time in years", ylab="\nTime to next treatment (probability)", title= "", legend = "bottom")
+  
+#get plot for pSTAT6 stain
+pSTAT6_KM <-
+  wrap_elements(gg$pSTAT6$plot + 
+                  theme(axis.title.x = element_blank()) +
+                  gg$pSTAT6$table + 
+                  theme(plot.title = element_blank()) +
+                  plot_layout(ncol = 1, heights = c(85, 15)))
+  
+```
+
+```{r, IL4ihc, fig.cap='(ref:IL4ihc)', message = FALSE,  echo = FALSE, results = FALSE,  fig.height=7, fig.width = 16, fig.align="center", out.width = '80%', dev = 'cairo_pdf'}
+
+design1 <-"
+  ABD
+  ACD
+  "
+tp <- theme(plot.tag = element_text(size = 30, vjust = 1, face="plain"))
+
+ihc <-
+  wrap_elements(STAT6_beeswarm) + tp +
+  CLL_LN + tp +
+  healthy_LN + tp +
+  pSTAT6_KM + tp +
+  
+  plot_layout(design = design1, widths = c(1,0.7,1), heights =c(0.8, 1))+
+  plot_annotation(tag_levels = "A", theme = theme(title=element_text(size = 20)))
+  
+ihc
+```
+
+### STAT6 is necessary for IL4 induced resistance {#treated-atacseq}
+IL4 and IL4 + ibrutinib ATAC and RNA seq
+
+STAT6 inhibition 
+
+(Figure \@ref(fig:stat6inhib)). 
+
+
+(ref:stat6inhib)
+
+
+```{r stat6inhib, out.width = "100%", fig.cap='(ref:stat6inhib)', echo = FALSE}
+
+IbrStat6iComb %>%
+  mutate(trisomy12=as.character(trisomy12)) %>% 
+  
+  ggplot( aes(x = interaction(Drug_2, Drug_1, Cytokine), y = Log))+
+  geom_boxplot(outlier.shape = NA)+
+  geom_beeswarm(aes(color = IGHV.status, shape = trisomy12), cex = 2) +
+  geom_hline(yintercept = 0) +
+  t2 +
+  theme(legend.key = element_blank()) +
+  ylab("\n\n\nViability") +
+  ggtitle(paste0("")) +
+  xlab("") +
+  ylab("Log(Viability)") +
+  scale_color_manual(values = c("M"=palblues[1], "U"=palreds[8]), na.value="#7a7c80") +
+  scale_x_discrete(labels=c("DMSO.DMSO.IL-4" = "IL4",
+                            "Ibrutinib.DMSO.IL-4" = "IL4\nIbrutinib",
+                            "DMSO.STAT6i.IL-4" = "IL4\nSTAT6i",
+                            "Ibrutinib.STAT6i.IL-4" = "IL4\nIbrutinib\nSTAT6i"))+
+  labs(shape = "trisomy 12", color = "IGHV status")
+
+```
+
+
+### IBET-762 rescues ibrutinib toxicity in the context of IL4 stimulation 
+
+(Figure \@ref(fig:ibetil4)). 
+
+(ref:ibetil4)  
+
+```{r ibetil4, fig.cap='(ref:ibetil4)', message = FALSE,  echo = FALSE, fig.height=6.6, fig.width = 12, fig.align="center", out.width = '80%', dev = 'cairo_pdf', eval = FALSE}
+
+#this plto doesnt exist so have to make from scratch 
+wrap_plots(plotList$`treatment_drug:I-BET 762:treatment_cytokine:IL-4`)
+
+```
+
+ADD rescue plot 
+
+REFRE TO:
+ (Appendix Figure \@ref(fig:ibribetil4)). 
+
+### IBET-762 inhibits STAT6 targets, without affecting STAT6 activity {#ibet-stat6}
+ATAC - doesnt inihibt STAT6 acitivty
+RNA GSEA - does inhibit STAT6 targets
+
+
 
 ## Summary 
 This work aims to integrate the effects of mutations and the microenvironment in drug response in CLL, at a large scale. The results demonstrate the value of using multi-omic data (consisting of both observational data on patient samples and perturbation data generated through screening) to generate more complex biological insights that can guide further clinical studies. 
