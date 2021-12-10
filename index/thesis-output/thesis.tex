@@ -32,6 +32,7 @@
 \usepackage{breqn} %to break up equations accross multiple lines, where neccesary 
 \usepackage{helvet} %to set font as helvetica 
 \usepackage{amsmath} % to put equation on multiple line 
+\usepackage{xurl} %this shuold break up urls, remove if not 
 
 
        % For being able to set `echo = TRUE` in code chunk options, and thus in-line representation of code
@@ -387,6 +388,7 @@ Finally, and importantly, I would like to thank my family for all the support an
     NLC & & Nurselike cell  \\
     NOTCH & & Neurogenic locus notch  \\
     OS & & Overall survival \\
+    PACE & & Primary Cancer Cell Encyclopedia  \\
     PBMC & & Peripheral blood mononuclear cells \\
     PCA & & Principal component analysis \\
     PI3K & & Phosphoinositide 3-kinase \\
@@ -582,7 +584,7 @@ Other drugs targeting SYK, downstream of BTK, have also shown promise in Phase I
 
 Aside from BCR inhibitors, BCL-2 inhibitors such as venetoclax, have also shown good efficacy in CLL. Venetoclax is thought to induce apoptosis in CLL cells, by acting as a BH3 mimetic interfering with the ability of BCL-2 to sequester BIM (\protect\hyperlink{ref-Moore2007}{Moore et al. 2007}).
 
-CLL is thus a manageable disease, with a well-established arsenal of treatments and associated management algorithm. However, treatments are harsh, and the disease is still considered incurable (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). Many cases develop resistance to therapy, both via acquired mutations and through survival signals provided by the microenvironment (see section \ref{intro-microenvironment-drug-response}) and minimal residual disease within the bone marrow is common. Collectively, these lead to relapse or required prolonged therapy and its associated toxicities. There remains a clinical need to improve patient outcomes and experience.
+CLL is thus a manageable disease, with a well-established arsenal of treatments and associated management algorithm. However, treatments are harsh, and the disease is still considered incurable (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). Many cases develop resistance to therapy, both via acquired mutations and through survival signals provided by the microenvironment (see Section \ref{intro-microenvironment-drug-response}) and minimal residual disease within the bone marrow is common. Collectively, these lead to relapse or required prolonged therapy and its associated toxicities. There remains a clinical need to improve patient outcomes and experience.
 
 \hypertarget{intro-tumour-microenvironment}{%
 \section{The tumour microenvironment in CLL}\label{intro-tumour-microenvironment}}
@@ -823,19 +825,19 @@ Section \ref{il4-ihc}. ``Lymph node biopsies of CLL-infiltrated and non-neoplast
 \hypertarget{ibrutinib---il4---stat6i-interaction-assay}{%
 \subsection{Ibrutinib - IL4 - STAT6i interaction assay}\label{ibrutinib---il4---stat6i-interaction-assay}}
 
-Section \ref{treated-atacseq}. The experiment was performed on 16 independent CLL PBMC samples. The same sample preparation and drug-stimulation profiling method was followed as described in sections \ref{prep}, \ref{plate-prep} and \ref{thescreen}, except that luminescence was read with a Perkin Elmer EnSight. \emph{Performed by Peter-Martin Bruch. }
+Section \ref{treated-atacseq}. The experiment was performed on 16 independent CLL PBMC samples. The same sample preparation and drug-stimulation profiling method was followed as described in Sections \ref{prep}, \ref{plate-prep} and \ref{thescreen}, except that luminescence was read with a Perkin Elmer EnSight. \emph{Performed by Peter-Martin Bruch. }
 
 \hypertarget{preparation-of-samples-for-atacseq-and-rnaseq-of-cll-pbmcs-treated-with-dmso-ibrutinib-ibet-762-and-il4}{%
 \subsection{Preparation of samples for ATACseq and RNAseq of CLL PBMCs treated with DMSO, ibrutinib, IBET-762 and IL4}\label{preparation-of-samples-for-atacseq-and-rnaseq-of-cll-pbmcs-treated-with-dmso-ibrutinib-ibet-762-and-il4}}
 
 Sections \ref{trisomy12-ATACseq}, \ref{treated-atacseq} and \ref{ibet-stat6}. Peripheral blood was taken from four CLL patients and separated by Ficoll gradient (GE Healthcare), mononuclear cells were cryopreserved on liquid nitrogen. Samples were later thawed from frozen following the protocol described in \protect\hyperlink{ref-JCIpaper}{Dietrich et al.} (\protect\hyperlink{ref-JCIpaper}{2017}), and MACS-sorted for CD19 positive cells (Milteny autoMACS). The cells were resuspended in RPMI (GIBCO, Cat. No.~21875-034), with the addition of 2mM glutamine (GIBCO, Cat. No.~25030-24), 1\% Pen/Strep (GIBCO, Cat. No.~15140-122) and 10\% pooled, heat-inactivated and sterile filtered human type AB male off the clot serum (PAN Biotech, Cat. No.~P40-2701, Lot.No:P-020317). 5ml of cell suspension was cultured in 6-well plates (Greiner Bio-One Cat. No.~657160). To prepare the treatments, ibrutinib (Selleckchem, Cat.No. S2680) and IBET-762 (Selleckchem, Cat. No.~S7189) were dissolved in DMSO (SERVA, Cat. No.~20385) and IL4 (Sigma-Aldrich, Cat.No.SRP3093 Lot. No.~0712AFC14) was stored according to manufacturer's protocol, all stored at - 20\(^\circ\)C. After thawing, ibrutinib, IBET-72 and IL4 were prediluted in DMSO and added to the plates. In both treatments and control, the final DMSO concentration was 0.2\%. Cells were then added and incubated at 37\(^\circ\)C and 5\% CO\textsubscript{2} for 6 hours. The final cell concentration was 2 x 10\textsuperscript{6} cells/ml and the final treatment concentrations were ibrutinib (500nM), IBET-72 (1\(\mu\)M) and IL4 (10ng/ml). After treatment, cell viability and purity was assessed using FACS. All samples had a viability over 90\% and over 95\% of CD19+/CD5+/CD3- cells (Bruch and Giles et al.~2021).
 
-The four control samples were analysed as part of the investigation of TF activity in trisomy 12 CLL (section \ref{trisomy12-ATACseq}). For the analysis of the effects of ibrutinib, IBET-762 and IL4 treatments, all 32 control and treated samples were investigated (Section \ref{il4-ibrutinib}). \emph{Text adapted from extracts originally published in \protect\hyperlink{ref-Berest2019}{Berest et al.} (\protect\hyperlink{ref-Berest2019}{2019}) and Bruch and Giles et al.~(2021). Original text authored by myself and Peter-Martin Bruch. Experiment performed by Peter-Martin Bruch.}
+The four control samples were analysed as part of the investigation of TF activity in trisomy 12 CLL (Section \ref{trisomy12-ATACseq}). For the analysis of the effects of ibrutinib, IBET-762 and IL4 treatments, all 32 control and treated samples were investigated (Section \ref{il4-ibrutinib}). \emph{Text adapted from extracts originally published in \protect\hyperlink{ref-Berest2019}{Berest et al.} (\protect\hyperlink{ref-Berest2019}{2019}) and Bruch and Giles et al.~(2021). Original text authored by myself and Peter-Martin Bruch. Experiment performed by Peter-Martin Bruch.}
 
 \hypertarget{treated-ATACseq-method}{%
 \subsection{ATACseq library generation and sequencing of CLL PMBCs treated with DMSO, ibrutinib, IBET-762 and IL4}\label{treated-ATACseq-method}}
 
-Sections \ref{trisomy12-ATACseq}, \ref{univariate-gene-drug-associations} and \ref{treated-atacseq}. ``ATACseq libraries were generated as described previously (\protect\hyperlink{ref-Buenrostro2013}{Buenrostro et al. 2013}). Cell preparation and transposition was performed according to the protocol, starting with 5 x 10\textsuperscript{4} cells per sample. Purified DNA was stored at -20\(^\circ\)C until library preparation was performed. To generate multiplexed libraries, the transposed DNA was initially amplified for 5x PCR cycles using 2.5 \(\mu\)L each of 25 \(\mu\)M PCR Primer 1 and 2.5 \(\mu\)L of 25 \(\mu\)M Barcoded PCR Primer 2 (included in the Nextera index kit, Illumina, San Diego, CA, USA), 25 \(\mu\)L of NEBNext High-Fidelity 2x PCR Master Mix (New England Biolabs, Boston, Massachusetts) in a total volume of 50 \(\mu\)L. 5 \(\mu\)L of the amplified DNA was used to determine the appropriate number of additional PCR cycles using qPCR. Additional number of cycles was calculated through the plotting of the linear Rn versus cycle, and corresponds to one-third of the maximum fluorescent intensity. Finally, amplification was performed on the remaining 45 \(\mu\)L of the PCR reaction using the optimal number of cycles determined for each library by qPCR (max. 13 cycles in total). The amplified fragments were purified with two rounds of SPRI bead clean-up (1.4x). The size distribution of the libraries was assessed on Bioanalyzer with a DNA High Sensitivity kit (Agilent Technologies, Santa Clara, CA), concentration was measured with Qubit DNA High Sensitivity kit in Qubit 2.0 Flurometer (Life Technologies, Carlsbad, CA). Sequencing was performed on NextSeq 500 (Illumina, San Diego, CA, USA) using 75bp paired-end sequencing, generating ∼450 million paired-reads per run, with an average of 55 million reads per sample.'' (\protect\hyperlink{ref-Berest2019}{Berest et al.} (\protect\hyperlink{ref-Berest2019}{2019}); Bruch and Giles et al.~(2021)) \emph{Original text written by Nayara Trevisan Doimo de Azevedohe of the EMBL Genomics Core Facility. Experiment performed by Nayara Trevisan Doimo de Azevedohe and Peter-Martin Bruch.}
+Sections \ref{trisomy12-ATACseq}, \ref{univariate-gene-drug-associations} and \ref{treated-atacseq}. ``ATACseq libraries were generated as described previously (\protect\hyperlink{ref-Buenrostro2013}{Buenrostro et al. 2013}). Cell preparation and transposition was performed according to the protocol, starting with 5 x 10\textsuperscript{4} cells per sample. Purified DNA was stored at -20\(^\circ\)C until library preparation was performed. To generate multiplexed libraries, the transposed DNA was initially amplified for 5x PCR cycles using 2.5 \(\mu\)L each of 25 \(\mu\)M PCR Primer 1 and 2.5 \(\mu\)L of 25 \(\mu\)M Barcoded PCR Primer 2 (included in the Nextera index kit, Illumina, San Diego, CA, USA), 25 \(\mu\)L of NEBNext High-Fidelity 2x PCR Master Mix (New England Biolabs, Boston, Massachusetts) in a total volume of 50 \(\mu\)L. 5 \(\mu\)L of the amplified DNA was used to determine the appropriate number of additional PCR cycles using qPCR. Additional number of cycles was calculated through the plotting of the linear Rn versus cycle, and corresponds to one-third of the maximum fluorescent intensity. Finally, amplification was performed on the remaining 45 \(\mu\)L of the PCR reaction using the optimal number of cycles determined for each library by qPCR (max. 13 cycles in total). The amplified fragments were purified with two rounds of SPRI bead clean-up (1.4x). The size distribution of the libraries was assessed on Bioanalyzer with a DNA High Sensitivity kit (Agilent Technologies, Santa Clara, CA), concentration was measured with Qubit DNA High Sensitivity kit in Qubit 2.0 Flurometer (Life Technologies, Carlsbad, CA). Sequencing was performed on NextSeq 500 (Illumina, San Diego, CA, USA) using 75bp paired-end sequencing, generating ∼450 million paired-reads per run, with an average of 55 million reads per sample.'' (\protect\hyperlink{ref-Berest2019}{Berest et al. 2019}; \protect\hyperlink{ref-Giles2021}{Bruch et al. 2021}). \emph{Original text written by Nayara Trevisan Doimo de Azevedohe of the EMBL Genomics Core Facility. Experiment performed by Nayara Trevisan Doimo de Azevedohe and Peter-Martin Bruch.}
 
 \hypertarget{rnaseq-library-generation-and-sequencing-of-cll-pmbcs-treated-with-dmso-ibrutinib-ibet-762-and-il4}{%
 \subsection{RNAseq library generation and sequencing of CLL PMBCs treated with DMSO, ibrutinib, IBET-762 and IL4}\label{rnaseq-library-generation-and-sequencing-of-cll-pmbcs-treated-with-dmso-ibrutinib-ibet-762-and-il4}}
@@ -846,17 +848,17 @@ RNA was isolated using the miRNeasy Mini Kit (QIAGEN, Cat. No.~217004), starting
 \hypertarget{additional-data-and-data-availability}{%
 \section{Additional Data and Data availability}\label{additional-data-and-data-availability}}
 
-\textbf{Patient sample multi-omic profiles} Whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data were taken from the PACE repository (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021}).
+\textbf{Patient sample multi-omic profiles} Whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data were taken from the Primary Cancer Cell Encyclopedia (PACE) repository (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021}).
 
 \textbf{Clinical data on patient samples} Clinical follow-up data was available for some of the 192 patients, taken from PACE (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021}) including TTT (n = 188), TTFT (n = 189) and OS (n = 192). LDT (n = 115) measurements were curated from clinical records.
 
-\textbf{CLL PBMC ATACseq data} ATACseq Dataset 2 in section \ref{trisomy12-ATACseq} was generated by \protect\hyperlink{ref-Rendeiro2016}{Rendeiro et al.} (\protect\hyperlink{ref-Rendeiro2016}{2016}) and downloaded from the European Genome-Phenome Archive (EGA, EGAD00001002110).
+\textbf{CLL PBMC ATACseq data} ATACseq Dataset 2 in Section \ref{trisomy12-ATACseq} was generated by \protect\hyperlink{ref-Rendeiro2016}{Rendeiro et al.} (\protect\hyperlink{ref-Rendeiro2016}{2016}) and downloaded from the European Genome-Phenome Archive (EGA, EGAD00001002110).
 
 \textbf{Spi-B and PU.1 ChIPseq data}
 Spi-B and PU.1 ChIPseq data in the OCILY3 DLBCL cell line (\protect\hyperlink{ref-Care2014}{Care et al. 2014}) was downloaded from the NCBI GEO database (\protect\hyperlink{ref-Edgar2002}{Edgar, Domrachev, and Lash 2002}), accession GEO : GSE56857, IDs : GSM1370276, GSM1370275
 
 \textbf{Proteomics data for CLL PMBCs}
-The proteomics dataset used to investigate gene dosage effects in trisomy 12 (section \ref{gene-dosage-effects}) was shared by Dr.~Sophie Herbst (\protect\hyperlink{ref-HerbstThesis}{Herbst 2020}).
+The proteomics dataset used to investigate gene dosage effects in trisomy 12 (Section \ref{gene-dosage-effects}) was shared by Dr.~Sophie Herbst (\protect\hyperlink{ref-HerbstThesis}{Herbst 2020}).
 
 \textbf{Availability}
 The datasets described in this thesis, including the drug-stimulus combinatorial screen and associated patient meta data, along with validation experiments (\emph{SPIB} and \emph{PU1} shRNA knockdowns, ATACseq of CLL PBMCs and IHC data of patient lymph nodes) are all available as part of the online repository, which can be found at \url{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}.
@@ -900,7 +902,7 @@ Section \ref{drug-responses} and \ref{cytokine-profiling}. Pearson correlation c
 \hypertarget{correlation-of-cytokine-receptor-expression-with-viability-scores-of-corresponding-stimulus}{%
 \subsection{Correlation of cytokine receptor expression with viability scores of corresponding stimulus}\label{correlation-of-cytokine-receptor-expression-with-viability-scores-of-corresponding-stimulus}}
 
-Section \ref{rna-correlations}. RNA count data for matched samples was available for 49 patients and was transformed using the variance stabilising transformation. Stimulus - receptor pairs were defined using the available literature, see Appendix Table \ref{tab:receptorPairs}. For each stimulus, a Pearson correlation coefficient was calculated between the log-transformed control-normalised viability values and the expression of the corresponding stimulus receptor for matching samples. Correlation coefficients were visualised in a volcano plot, to determine if any cytokine-receptor pairs showed R\textgreater0.4 (Bruch and Giles et al.~2021). \emph{Performed with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}
+Section \ref{rna-correlations}. RNA count data for matched samples was available for 49 patients and was transformed using the variance stabilising transformation. Stimulus - receptor pairs were defined using the available literature. For each stimulus, a Pearson correlation coefficient was calculated between the log-transformed control-normalised viability values and the expression of the corresponding stimulus receptor for matching samples. Correlation coefficients were visualised in a volcano plot, to determine if any cytokine-receptor pairs showed R\textgreater0.4 (Bruch and Giles et al.~2021). \emph{Performed with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}
 
 \hypertarget{stimulus-heatmap-method}{%
 \subsection{Consensus clustering and visualisation of stimulus responses}\label{stimulus-heatmap-method}}
@@ -991,7 +993,7 @@ Section \ref{univariate-gene-drug-associations}. Two-sided Student's t-tests, wi
 \hypertarget{ibet-ATACseq-method}{%
 \subsection{diffTF analysis of TF activity of CLL samples after treatment with IBET-762 CLL}\label{ibet-ATACseq-method}}
 
-Section \ref{univariate-gene-drug-associations}. To compare the TF binding site accessibility profiles of trisomy 12 CLL with IBET-762-treated CLL, \texttt{diffTF} (\protect\hyperlink{ref-Berest2019}{Berest et al. 2019}) was used to calculate inferred TF activity as described in sections \ref{trisomy12-ATACseq-method} and \ref{treated-atacseq-method}. Weighted mean difference values of the two \texttt{diffTF} analyses (trisomy 12 vs.~non-trisomy 12 and IBET-762 treated cells vs.~DMSO treated cells) were plotted. TFs with adjusted p value \textless{} 0.05 from the trisomy 12 vs.~non-trisomy 12 analysis are shown, absolute effect sizes cannot be directly compared (Bruch and Giles et al.~2021).
+Section \ref{univariate-gene-drug-associations}. To compare the TF binding site accessibility profiles of trisomy 12 CLL with IBET-762-treated CLL, \texttt{diffTF} (\protect\hyperlink{ref-Berest2019}{Berest et al. 2019}) was used to calculate inferred TF activity as described in Sections \ref{trisomy12-ATACseq-method} and \ref{treated-atacseq-method}. Weighted mean difference values of the two \texttt{diffTF} analyses (trisomy 12 vs.~non-trisomy 12 and IBET-762 treated cells vs.~DMSO treated cells) were plotted. TFs with adjusted p value \textless{} 0.05 from the trisomy 12 vs.~non-trisomy 12 analysis are shown, absolute effect sizes cannot be directly compared (Bruch and Giles et al.~2021).
 
 \hypertarget{drug-stimulus-gene-interactions-method}{%
 \subsection{Modelling of drug - stimulus - gene interactions}\label{drug-stimulus-gene-interactions-method}}
@@ -1015,20 +1017,18 @@ Section \ref{il4-ihc}. The levels of pSTAT6 were obtained from IHC data. First p
 \subsection{Analysis of gene expression changes after ibrutinib, IBET-762 and IL4 treatment}\label{analysis-of-gene-expression-changes-after-ibrutinib-ibet-762-and-il4-treatment}}
 
 Sections \ref{treated-atacseq} and \ref{ibet-stat6}.
-0 and il4 and IL4 + ibrutinib fiugre
-IBET veresus Ibet + il4 GSEA
 
 \hypertarget{treated-atacseq-method}{%
 \subsection{Analysis of TF activity changes after ibrutinib, IBET-762 and IL4 treatment}\label{treated-atacseq-method}}
 
-Sections \ref{treated-atacseq} and \ref{ibet-stat6}. TF activity was calculated using \texttt{diffTF} (\protect\hyperlink{ref-Berest2019}{Berest et al. 2019}). First, the consensus peak set was defined using \texttt{minOverlap} = 2 and TF binding sites were defined using the hg38 HOCOMOCO v10 database (\protect\hyperlink{ref-HOCOMOCO}{Kulakovskiy et al. 2016}). \texttt{diffTF} was run in analytical mode (due to the smaller sample size, 4*4) with the following design formula \texttt{\textasciitilde{}\ patient\ +\ treatment}, for each treatment (DMSO, IL4, ibrutinib, IBET-762) and combinatorial treatment versus control, and for treatment comparisons shown in section \ref{treated-atacseq} (Bruch and Giles et al.~2021). \emph{Performed with Dr.~Ivan Berest, IBET-62 versus control comparison published in the manuscript Bruch and Giles et al.~2021.}
+Sections \ref{treated-atacseq} and \ref{ibet-stat6}. TF activity was calculated using \texttt{diffTF} (\protect\hyperlink{ref-Berest2019}{Berest et al. 2019}). First, the consensus peak set was defined using \texttt{minOverlap} = 2 and TF binding sites were defined using the hg38 HOCOMOCO v10 database (\protect\hyperlink{ref-HOCOMOCO}{Kulakovskiy et al. 2016}). \texttt{diffTF} was run in analytical mode (due to the smaller sample size, 4*4) with the following design formula \texttt{\textasciitilde{}\ patient\ +\ treatment}, for each treatment (DMSO, IL4, ibrutinib, IBET-762) and combinatorial treatment versus control, and for treatment comparisons shown in Section \ref{treated-atacseq} (Bruch and Giles et al.~2021). \emph{Performed with Dr.~Ivan Berest, IBET-762 versus control comparison published in the manuscript Bruch and Giles et al.~2021.}
 
 \hypertarget{data}{%
 \chapter{Data}\label{data}}
 
 This chapter provides an overview of the datasets that are central to this thesis. It also covers the generation of resources to make the data and associated analysis publicly-available.
 
-The screening dataset discussed here was produced and published as part of the manuscript Giles and Bruch et al.~2021. Some analysis and figures outlined in this chapter have also been published in Bruch and Giles et al.~2021, and this is clearly stated where this is the case.
+The screening dataset discussed here was produced and published as part of the manuscript Bruch and Giles et al.~(2021). Some analysis and figures outlined in this chapter have also been published in Bruch and Giles et al.~(2021), and this is clearly stated where this is the case.
 
 \hypertarget{experimental-overview}{%
 \section{Experimental overview}\label{experimental-overview}}
@@ -1038,11 +1038,11 @@ The screening dataset discussed here was produced and published as part of the m
 
 This thesis centres on a dataset of 192 CLL patient samples subjected to functional and molecular profiling. A drug-stimulus combinatorial perturbation assay (refered to below as the screen) measured the effects of 17 cytokines and microenvironmental stimuli alone and in combination with 12 drugs, to investigate the influence on spontaneous and drug-induced apoptosis (Bruch and Giles et al.~2021).
 
-The screen was primarily designed and performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al.~2021. Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient sample. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells (Appendix Figures \ref{fig:drugPlot}, \ref{fig:stimulusPlot1} and \ref{fig:stimulusPlot2}). After 48 hours of incubation at 37\(^\circ\)C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method estimates the number of viable cells in a culture by determining the quantity of ATP present, which indicates the number of metabolically active cells. The drugs and stimuli tested in the screens are outlined in sections \ref{drugs} and \ref{stimuli}.
+The screen was primarily designed and performed by Peter-Martin Bruch in the Department of Medicine, University of Heidelberg, and published in the manuscript by Bruch and Giles et al.~(2021). Drugs and stimuli were deposited first and patient samples second, using two 384-well plates per patient sample. Each plate contained stimulus, drug and drug - stimulus wells along with DMSO control wells (Appendix Figures \ref{fig:drugPlot}, \ref{fig:stimulusPlot1} and \ref{fig:stimulusPlot2}). After 48 hours of incubation at 37\(^\circ\)C, cell viability was assessed using the CellTiter-Glo Luminescent Cell Viability Assay. This method estimated the number of viable cells in a culture by determining the quantity of ATP present, an indicator the number of metabolically active cells. The drugs and stimuli tested in the screens are outlined in Sections \ref{drugs} and \ref{stimuli}.
 
 Multi-omics profiles for the patient samples were also available from the PACE repository (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021}), consisting of whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical follow-up data was also available for some patients, including LDT, TTT, TTFT and OS.
 
-Collectively, these data enabled (i) characterisation of responses to microenvironmental stimuli, (ii) definition of functional patient subgroups, (iii) profiling of molecular determinants of drug and stimulus responses (iv) mapping of drug - stimulus and drug - stimulus - gene interactions, thus shedding light on the heterogeneity of CLL biology and drug response (Figure \ref{fig:studyOverview}).
+Collectively, these data enabled (i) characterisation of responses to microenvironmental stimuli, (ii) definition of functional patient subgroups, (iii) profiling of molecular determinants of drug and stimulus responses (iv) mapping of drug-stimulus and drug-stimulus-gene interactions, thus shedding light on the heterogeneity of CLL biology and drug response (Figure \ref{fig:studyOverview}).
 
 
 \begin{figure}
@@ -1051,12 +1051,12 @@ Collectively, these data enabled (i) characterisation of responses to microenvir
 
 }
 
-\caption{Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n = 192). Integrating functional drug-stimulus response profiling with four additional omic layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment responses, and drug-stimulus interactions in CLL. \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:studyOverview}
+\caption{``Schematic of experimental protocol. By combining 12 drugs and 17 stimuli, we systematically queried the effects of simultaneous stimulation and inhibition of critical pathways in CLL (n = 192). Integrating functional drug-stimulus response profiling with four additional omic layers, we identified pro-survival pathways, underlying molecular modulators of drug and microenvironment responses, and drug-stimulus interactions in CLL.'' \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:studyOverview}
 \end{figure}
 \hypertarget{additional-datasets}{%
 \subsection{Additional datasets}\label{additional-datasets}}
 
-A number of key findings emerged from the above data which warranted further investigation. In addition to the screen, this thesis makes use of a number of validatory datasets, from within our lab and from external sources. These are outlined in the Methods (Chapter \ref{methods}) and in the relevant results chapters.
+A number of key findings emerged from the above data which warranted further investigation. In addition to the screen, I made use of a number of validatory datasets, from within our lab and from external sources. These are outlined in the Methods (Chapter \ref{methods}) and in the relevant results chapters.
 
 \hypertarget{data-processing}{%
 \section{Data Processing}\label{data-processing}}
@@ -1064,7 +1064,7 @@ A number of key findings emerged from the above data which warranted further inv
 \hypertarget{processing-the-raw-values-obtained-from-the-screen}{%
 \subsection{Processing the raw values obtained from the screen}\label{processing-the-raw-values-obtained-from-the-screen}}
 
-This section describes the process of generating viability scores used in downstream analyses (following the same process as published in Bruch and Giles et al.~2021). Initially, raw luminescence measurements from the experiments were read in using custom-made \texttt{R} scripts and functions. Raw values represent the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to the amount of ATP present. The ATP levels are directly proportional to the number of viable cells in the well.
+This section describes the process of generating viability scores used in downstream analyses (following the same process as published in Bruch and Giles et al.~(2021)). Initially, raw luminescence measurements from the experiments were read in using custom-made \texttt{R} scripts and functions. Raw values represent the luminescence readout of the CellTiter-Glo Luminescent Cell Viability Assay, which is proportional to the amount of ATP present. The ATP levels are directly proportional to the number of viable cells in the well.
 
 
 \begin{figure}
@@ -1077,18 +1077,18 @@ This section describes the process of generating viability scores used in downst
 \end{figure}
 Figure \ref{fig:rawViabilities} shows the raw viability values from the DMSO-treated wells for each patient sample. The absolute values vary between patient samples, and between measuring dates, and thus the viability values required additional normalisation.
 
-Each viability value was normalised to internal DMSO values of the same plate. Specifically, the well for each stimulus, drug or drug-stimulus treatment was divided by the median of the 50 DMSO negative control wells present on each plate, resulting in viability scores. A value of 0 indicated that all cells were killed by the treatment, and a value of 1 indicated the cells survived as well as in the negative control.
+Each viability value was normalised to internal DMSO values of the same plate. Specifically, the well for each stimulus, drug or drug-stimulus treatment was divided by the median of the DMSO negative control wells present on each plate, resulting in viability scores. A value of 0 indicated that all cells were killed by the treatment, and a value of 1 indicated the cells survived as well as in the negative control.
 
 Given the downstream analysis involved the use of linear modelling, I thus applied a natural logarithm transformation to the viability scores. This generated log-transformed control-normalised viability scores which are used for the majority of the downstream analysis. Here 0 indicates that cells survived as well as negative control.
 
 \hypertarget{quality-control-and-data-reproducibility}{%
 \subsection{Quality control and data reproducibility}\label{quality-control-and-data-reproducibility}}
 
-Next, several additional quality control steps were considered, with the aim of a) adjusting for any spatial effects on each screening plate, b) accounting for any batch effects between screening batches, c) testing data reproducibility.
+Next, several additional quality control steps were considered, with the aim of a) adjusting for any spatial effects on each screening plate, b) accounting for any batch effects between screening batches and c) testing data reproducibility.
 
 First, the screening data for each well on each plate was plotted in a grid corresponding to the plate layout, to visualise whether viability values were affected by their position on the plate. We discussed adjusting for any position effect by fitting a surface to the negative control wells, to generate correction factors for each well for each plate. The resulting correction factor was then subtracted from each of the treatment wells. We decided that the position effect was not sufficient to warrant this adjustment, and continued the analysis with the unadjusted values.
 
-With regards to batch effects, screening was performed on 16 separate days. Normalising data to the DMSO-treated wells on each plate sufficiently accounted for this. With respect to data reproducibility, technical replicates existed for single drug treatments (two) and DMSO wells (100), for each patient sample. These replicates indicated that data was reproducible.
+With regards to batch effects, screening was performed on 16 separate days. Peter-Martin Bruch normalised data to the DMSO-treated wells on each plate and concluded that this sufficiently accounted for any batch effects. With respect to data reproducibility, technical replicates existed for single drug treatments (two) and DMSO wells (100), for each patient sample. Peter-Martin Bruch compared replicates to ensure data was reproducible.
 
 Thus, the data processing steps generated robust, log-transformed control-normalised viability scores that aim to capture the biological impact of the concomitant application of drugs and stimuli, outlined below.
 
@@ -1098,7 +1098,7 @@ Thus, the data processing steps generated robust, log-transformed control-normal
 \hypertarget{the-panel-of-drugs}{%
 \subsection{The panel of drugs}\label{the-panel-of-drugs}}
 
-This study aims to generate a systematic investigation of the impact of soluble factors on therapies and critical pathways in CLL (Bruch and Giles et al.~2021). To that end, a panel of 17 drugs was constructed, encompassing FDA-approved therapies for CLL, along with a number of drugs in clinical trial or laboratory compounds targeting pathways of interest (Figure \ref{fig:drugCategories}). These included fludarabine (a frontline chemotherapeutic) and ibrutinib and idelalisib (newer BCR inhibitors).
+This study aimed to generate a systematic investigation of the impact of soluble factors on therapies and critical pathways in CLL (Bruch and Giles et al.~2021). To that end, a panel of 17 drugs was constructed, encompassing FDA-approved therapies for CLL, along with a number of drugs in clinical trial or laboratory compounds targeting pathways of interest (Figure \ref{fig:drugCategories}). These included fludarabine (a frontline chemotherapeutic) and ibrutinib and idelalisib (BCR inhibitors).
 
 
 \begin{figure}
@@ -1107,7 +1107,7 @@ This study aims to generate a systematic investigation of the impact of soluble 
 
 }
 
-\caption{Bar plot of the drugs used in screen, indicating targets and licencing status. \emph{Figure from Bruch and Giles et al.~2021.}}\label{fig:drugCategories}
+\caption{Bar plot of the drugs used in screen, indicating targets and licencing status. \emph{Screen primarily designed by Peter-Martin Bruch. Figure from Bruch and Giles et al.~2021.}}\label{fig:drugCategories}
 \end{figure}
 The number and concentration of drugs included was limited by the size of the plate. Thus there is minimal overlap between drug targets, and two concentrations were used for each drug. The choice of concentration was guided by the results of a previous drug screen in CLL patients, performed in our lab (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}). The concentrations used were expected to reduce CLL viability without eliminating all cells. Drug concentrations are shown in Appendix Table \ref{tab:drugTableAppendix}.
 
@@ -1123,7 +1123,7 @@ To assess the quality of the drug response data, we quantified correlation coeff
 
 }
 
-\caption{(A) Heatmap of Pearson correlation coefficients of each pair of drugs, based on log transformed viability values. See Methods section \ref{correlations}. (B) Log transformed control-normalised viability values for all drugs that were included in the screen after quality control. p values from Student's t-test. \emph{Figure (A) adapted from original generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}}\label{fig:drugCorrelations}
+\caption{(A) Heatmap of Pearson correlation coefficients of each pair of drugs, based on log transformed viability values. See Methods Section \ref{correlations}. (B) Log transformed control-normalised viability values for all drugs that were included in the screen after quality control. p values from Student's t-test. \emph{Figure (A) adapted from original generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~(2021).}}\label{fig:drugCorrelations}
 \end{figure}
 In addition, the individual drug response profiles (Figure \ref{fig:drugCorrelations}B) indicated that each of the drugs decreased CLL viability as expected, and in line with previous CLL drug screens performed in our lab (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}).
 
@@ -1133,9 +1133,9 @@ In addition, the individual drug response profiles (Figure \ref{fig:drugCorrelat
 \hypertarget{stimuli-info}{%
 \subsection{The panel of stimuli}\label{stimuli-info}}
 
-The stimuli selected for the screen, their associated targets and concentrations used are described in Appendix Table \ref{tab:stimulusTableAppendix}. They include 16 individual stimuli, plus HS-5 Culture Medium which encompasses the range of soluble factors secreted by the stromal cell line HS-5 (Bruch and Giles et al.~2021.)
+The stimuli selected for the screen, their associated targets and concentrations used are described in Appendix Table \ref{tab:stimulusTableAppendix}, including 16 individual stimuli, plus HS-5 Culture Medium which encompasses the range of soluble factors secreted by the stromal cell line HS-5 (Bruch and Giles et al.~2021).
 
-A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance \emph{ex vivo} (see section \ref{intro-microenvironmental-pathways}). Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvironment. \ref{fig:microenvironmentCrosstalk}.
+A number of studies have demonstrated the ability of various soluble factors to increase CLL viability or induce drug resistance \emph{ex vivo} (see Section \ref{intro-microenvironmental-pathways}). Guided by these observations, the panel of stimuli was selected so as to cover a range of key survival signals in CLL, aiming to minimise redundancy amongst the targeted pathways. The stimuli encompass a cross-section of the complex communication network between CLL cells and non-neoplastic cells, mediated by soluble factors within the tumour microenvironment (Figure \ref{fig:microenvironmentCrosstalk}).
 
 
 \begin{figure}
@@ -1144,9 +1144,9 @@ A number of studies have demonstrated the ability of various soluble factors to 
 
 }
 
-\caption{A selection of interactions between CLL cells and components of the microenvironment, covered by the screen. See section \ref{intro-microenvironmental-pathways} for more details on these signals. \emph{Figure adapted from an original published in \protect\hyperlink{ref-Wiestner2015}{Wiestner} (\protect\hyperlink{ref-Wiestner2015}{2015}) and reproduced with permission.}}\label{fig:microenvironmentCrosstalk}
+\caption{A selection of interactions between CLL cells and components of the microenvironment, covered by the screen. See Section \ref{intro-microenvironmental-pathways} for more details on these signals. \emph{Figure adapted from an original published in \protect\hyperlink{ref-Wiestner2015}{Wiestner} (\protect\hyperlink{ref-Wiestner2015}{2015}) and reproduced with permission.}}\label{fig:microenvironmentCrosstalk}
 \end{figure}
-The stimuli activate a number of critical pathways in CLL, including BCR, TLR, JAK-STAT, NF\(\kappa\)B and TGF\(\beta\). For more information on the importance of these pathways see section \ref{intro-bcr-signalling} and \ref{intro-microenvironmental-pathways}. Amongst these, the roles of BCR, IL4, sCD40L and TLR stimulation were of particular interest.
+The stimuli targeted a number of critical pathways in CLL, including BCR, TLR, JAK-STAT, NF\(\kappa\)B and TGF\(\beta\). For more information on the importance of these pathways see Section \ref{intro-bcr-signalling} and \ref{intro-microenvironmental-pathways}. Amongst these, the roles of BCR, IL4, sCD40L and TLR stimulation were of particular interest.
 
 
 \begin{figure}
@@ -1155,14 +1155,14 @@ The stimuli activate a number of critical pathways in CLL, including BCR, TLR, J
 
 }
 
-\caption{Overview of stimuli included in the screen and summary of their associated targets. HS-5 Culture Medium is omitted, as no specific target can be shown. \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:stimuliPathways}
+\caption{``Overview of stimuli included in the screen and summary of their associated targets. HS-5 Culture Medium is omitted, as no specific target can be shown.'' \emph{Screen primarily designed by Peter-Martin Bruch. Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:stimuliPathways}
 \end{figure}
 \hypertarget{rna-correlations}{%
 \subsection{Assessing stimulus response}\label{rna-correlations}}
 
-Before beginning the downstream analysis, it was first important to determine whether heterogeneity of response to the stimuli could be caused by differences receptor expression, rather than some other cell-intrinsic feature (Bruch and Giles et al.~2021). This would guide our interpretation of the stimulus responses.
+To guide our interpretation of the stimulus responses, it was important to determine whether heterogeneity of response to the stimuli could be caused by differences in receptor expression (Bruch and Giles et al.~2021).
 
-To determine this, we calculated Pearson correlation coefficients to compare log-transformed control - normalised viability values for each stimulus, with vst-transformed RNA counts of the matching receptor(s). All Pearson coefficients were less than 0.4, indicating that heterogeneity of response was not related to differential receptor expression.
+Pearson correlation coefficients were calculated to compare log-transformed control - normalised viability values for each stimulus, with vst-transformed RNA counts of the matching receptor(s). All coefficients were \textless0.4, indicating that response heterogeneity was not related to receptor expression.
 
 \hypertarget{characteristics-of-patient-samples-used-in-the-screen}{%
 \section{Characteristics of patient samples used in the screen}\label{characteristics-of-patient-samples-used-in-the-screen}}
@@ -1170,40 +1170,34 @@ To determine this, we calculated Pearson correlation coefficients to compare log
 \hypertarget{overview-of-the-molecular-profiles-of-the-patient-samples}{%
 \subsection{Overview of the molecular profiles of the patient samples}\label{overview-of-the-molecular-profiles-of-the-patient-samples}}
 
-Multi-omics profiles were available for the patient samples in the screen, taken from the Primary Cancer Cell Encyclopedia (PACE) (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021}). The PACE repository represents an initiative by our lab to characterise the multi-omic characteristics of primary tumour samples from leukemia and lymphoma patients. Patient multi-omic profiles included whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical information and follow-up data was also available for some patients, including their sex, IGHV status and LDT, TTT, TTFT and OS. Figure \ref{fig:geneticData} summarises the molecular characteristics of the patient samples. For a summary of the number of samples with each mutation, see Appendix Table \ref{tab:geneTable}.
-
-The findings from this study have potential relevance in a clinical setting. Thus it was important to ensure that the distribution of genetic features amongst the cohort was representative of those observed in clinical practice. Other studies have determined the expected frequency of many recurrent genetic features in CLL (\protect\hyperlink{ref-Dohner2000}{Döhner et al. 2000}; \protect\hyperlink{ref-Puente2015}{Puente et al. 2015}; \protect\hyperlink{ref-Landau2015}{Landau et al. 2015}) : the distribution of molecular lesions in our cohort is comparable to these (Bruch and Giles et al.~2021).
+Multi-omics profiles were available for the patient samples in the screen, taken from PACE (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021}). The PACE repository represents an initiative by our lab to characterise primary tumour samples from leukemia and lymphoma patients. Patient multi-omic profiles included whole-exome sequencing, DNA-methylation, RNA-sequencing and copy number variant data. In addition, clinical information and follow-up data was also available for some patients, including sex, IGHV status and LDT, TTT, TTFT and OS. Figure \ref{fig:geneticData} summarises the molecular characteristics of the patient samples. See also Appendix Table \ref{tab:geneTable}.
 
 
-\begin{figure}
+\begin{figure}[h]
 
 {\centering \includegraphics[width=0.7\linewidth]{thesis_files/figure-latex/geneticData-1} 
 
 }
 
-\caption{Summary of the genetic characteristics of the patient samples in the screen. Annotations: Grey shows when patient sample is not annotated. Black indicates treated / IGHV-M, Green indicates occurrence of CNV, Yellow indicates gene is Mutated.}\label{fig:geneticData-1}
+\caption{Summary of the genetic characteristics of the patient samples in the screen. Annotations: Grey shows when patient sample is not annotated. Black indicates treated / IGHV-M, Green indicates occurrence of CNV, Yellow indicates gene is Mutated.}\label{fig:geneticData}
 \end{figure}
-\begin{figure}
+The findings from this study have potential relevance in a clinical setting. Thus it was important to ensure that the distribution of genetic features amongst the cohort was representative of those observed in clinical practice. Other studies have determined the frequency of many recurrent genetic features in CLL (\protect\hyperlink{ref-Dohner2000}{Döhner et al. 2000}; \protect\hyperlink{ref-Puente2015}{Puente et al. 2015}; \protect\hyperlink{ref-Landau2015}{Landau et al. 2015}) : the distribution of molecular lesions in our cohort is comparable to these (Bruch and Giles et al.~2021).
 
-{\centering \includegraphics[width=0.7\linewidth]{thesis_files/figure-latex/geneticData-2} 
-
-}
-
-\caption{Summary of the genetic characteristics of the patient samples in the screen. Annotations: Grey shows when patient sample is not annotated. Black indicates treated / IGHV-M, Green indicates occurrence of CNV, Yellow indicates gene is Mutated.}\label{fig:geneticData-2}
-\end{figure}
 \hypertarget{making-the-data-and-assosciated-analysis-available}{%
 \section{Making the data and assosciated analysis available}\label{making-the-data-and-assosciated-analysis-available}}
 
 Collectively, this dataset represents a valuable resource providing the ability to explore genetic, epigenetic and microenvironmental modulators of survival and drug response in a heterogeneous cohort, and how these relate to clinical outcomes. With CLL samples relatively simple to obtain compared to other cancers, this project (in collaboration with the PACE initiative (\protect\hyperlink{ref-R-BloodCancerMultiOmics2017}{Oles et al. 2021})) represents a considerable dataset containing joint functional and molecular profiling of primary cancer samples.
 
-An important goal of my work was thus to ensure that this dataset was both publicly available and accessible for a range of users. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the manuscript Bruch and Giles et al.~2021 to an online git repository.
+An important goal of my work was thus to ensure that this dataset was both publicly available and accessible for a range of users. I aimed to ensure that our analysis was transparent and reproducible, and that others could explore the dataset for the purposes of their own research. To that end, I developed a shiny app to explore the screening dataset, and published all code and data from the manuscript Bruch and Giles et al.~(2021) to an online git repository.
+
+The process of generating these resources is described below.
 
 \hypertarget{shiny-app}{%
 \subsection{Shiny app}\label{shiny-app}}
 
-The shiny app can be found \href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{here}. Figure \ref{fig:shinyApp1} shows the home page. It consists of four tabs, covering the following:
+The shiny app can be found at \url{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}. Figure \ref{fig:shinyApp1} shows the home page. It consists of four tabs, covering the following:
 \begin{itemize}
-    \item  \textbf{\textit{Drug and stimulus responses}} Explore drug - stimulus interactions and view log-transformed viabilities with single and combinatorial treatments (Figure \ref{fig:shinyApp3}).
+    \item  \textbf{\textit{Drug and stimulus responses}} Explore drug - stimulus interactions and view log-transformed viabilities with single and combinatorial treatments
     \item \textbf{\textit{Effects of mutations on drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features and view log-transformed viability data stratified by mutations
     \item \textbf{\textit{Genetic predictors of drug and stimulus responses}} Explore how drug and stimulus responses are modulated by genetic features with predictor profiles from section \ref{multivariate-gene-stimulus-assosciations}
     \item \textbf{\textit{Genetic predictors of drug and stimulus interactions}} Explore how drug - stimulus interactions are further modulated by mutations, and view predictor profiles from section \ref{drug-stimulus-gene-predictor-profile}
@@ -1218,35 +1212,17 @@ The shiny app can be found \href{https://www.imbi.uni-heidelberg.de/dietrichlab/
 
 \caption{Home page of the shiny app accompanying this project. The app was published alongside Bruch and Giles et al.~2021.}\label{fig:shinyApp1}
 \end{figure}
-To generate the app, I first curated the individual datasets and ran each of the individual analyses required to generate the plots outline above. I then set up the four tab structure, and adapted the code required to generate plots in a dynamic manner. Finally, I worked on the aesthetics and interface of the app, to ensure that it was both professional and understandable. I then tested the app with number of colleagues, to ensure it was accessible and understandable by a range of users both familiar and unfamiliar with the project. I maintain the app on the university server.
+To generate the app, I first curated the individual datasets and ran each of the individual analyses required to generate the plots outlined above. I then set up the four tab structure, and adapted the code required to generate plots in a dynamic manner. Finally, I worked on the aesthetics and interface of the app, to ensure that it was both professional and understandable. I then tested the app with number of colleagues, to ensure it was accessible and understandable by a range of users both familiar and unfamiliar with the project. I maintain the app on the university server.
 
-
-\begin{figure}
-
-{\centering \includegraphics[width=1\linewidth]{figures/shiny3} 
-
-}
-
-\caption{Image of one of the shiny tabs, in which the user can explore log-transformed viability values for different drug and stimulus treatments, stratified by genetic features.}\label{fig:shinyApp3}
-\end{figure}
 \hypertarget{online-code-repository}{%
 \subsection{Online code repository}\label{online-code-repository}}
 
-The online repository can be found \href{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}{here}.The repository consists of the data and executable transcripts to completely reproduce the analysis described in Bruch and Giles et al.~2021 (Figure \ref{fig:package1}).
+The online repository can be found at \url{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}.The repository consists of the data and executable transcripts to completely reproduce the analysis described in Bruch and Giles et al.~(2021).
 
-To generate the repository, I first curated each of the individual datasets, including various objects containing the screening data, patient genetic meta data, ATACseq processed data, RNAseq counts, clinical data include LDT, TTT and OS data, plus the follow up data including lymph node IHV experiments, shRNA knockdown experiments, and additional stimulation and inhibition assays. As many of these data contain sensitive information on patients, I anonymised each object by updating the patient IDs and removing potential identifying features such as age.
+To generate the repository, I first curated each of the individual datasets to generate objects containing the screening data, patient genetic meta data, ATACseq processed data, RNAseq counts and clinical data (including LDT, TTT and OS data), plus the follow up data including lymph node IHC experiments, shRNA knockdown experiments, and additional stimulation and inhibition assays. As many of these data contain sensitive information on patients, I anonymised each object by updating the patient IDs and removing potential identifying features such as age.
 
 I next arranged the analysis into seven separate scripts, one for each figure, such that all individual sections can be rendered into a single html vignette outlining the entire analysis. I ensured that the code in each script was well-annotated and relatively simple to understand and to follow. I shared the code with several colleagues to receive feedback on coding style, and ensured that the analysis could be reproduced by others, and on different operating systems. I published the repository with the along with the preprint (Bruch and Giles et al.~2021).
 
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.7\linewidth]{figures/package} 
-
-}
-
-\caption{Interface of the online code repository}\label{fig:package1}
-\end{figure}
 These online resources are already beginning to serve as a community resource (e.g. \protect\hyperlink{ref-Lu2021}{J. Lu et al.} (\protect\hyperlink{ref-Lu2021}{2021}), Nature Cancer), as querying them enables researchers to test new hypotheses within minutes and may obviate the need for certain small-scale experiments.
 
 \hypertarget{chapter4}{%
@@ -1277,7 +1253,7 @@ In the resulting heatmap, several clusters of stimuli could be identified, inclu
 
 }
 
-\caption{Heatmap of Pearson correlation coefficients of each pair of stimuli, based on log transformed viability values. See Methods section \ref{correlations}. \emph{Figure adapted from original generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}}\label{fig:stimuliCorrelations}
+\caption{Heatmap of Pearson correlation coefficients of each pair of stimuli, based on log transformed viability values. See Methods Section \ref{correlations}. \emph{Figure adapted from original generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}}\label{fig:stimuliCorrelations}
 \end{figure}
 However, whilst certain stimuli clustered into groups, very few stimulus pairs showed any significant correlation. Almost all stimulus pairs showed little correlation (R \textless{} 0.6), including those that targeted similar downstream pathways, indicating a high degree of functional diversity amongst soluble factors in the CLL microenvironment. For example, JAK-STAT agonists such as IL4 and IL6 showed little correlation (Figure \ref{fig:correlationsScatter}A).
 
@@ -1319,7 +1295,7 @@ To further investigate the variability in responses across the cohort, we next g
 
 }
 
-\caption{The heatmap matrix shows viability measurements for 192 samples (columns) and 17 stimuli (rows). The data are shown z-scores of log-transformed, control-normalised viability values. The colour bars to the right show sample annotations. Consensus clustering was used to define column tree layout, using hierarchical clustering with the Euclidean metric. See Methods section \ref{stimulus-heatmap-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021. }}\label{fig:stimuliHeatmap}
+\caption{The heatmap matrix shows viability measurements for 192 samples (columns) and 17 stimuli (rows). The data are shown z-scores of log-transformed, control-normalised viability values. The colour bars to the right show sample annotations. Consensus clustering was used to define column tree layout, using hierarchical clustering with the Euclidean metric. See Methods Section \ref{stimulus-heatmap-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021. }}\label{fig:stimuliHeatmap}
 \end{figure}
 The consensus clustering method generates robust hierarchical clustering by subsampling from the matrix of values (in this case, the viability z-scores). Using subsampling, it is possible to calculate a ``consensus matrix'' which indicates the proportion of times each pair of values occupy the same cluster when subsampled together. This is repeated for different numbers of clusters, denoted by k, allowing the user to select the optimal number of clusters for a given dataset.
 
@@ -1334,7 +1310,7 @@ To support the choice of four clusters, I additionally visualised summaries of t
 
 }
 
-\caption{(left) CDFs of the consensus matrices for k = 2 - 7, as indicated in the legend, estimated using 100 bin histogram. (right) Relative change in area under the CDF curve, for k = 2 - 7, to compare k with k - 1. In the case of k = 2, there is no k - 1, so the total area is plotted. Line shows relative increase in consensus between each value of k. See Methods section \ref{stimulus-heatmap-method}.}\label{fig:consensusClusteringA}
+\caption{(left) CDFs of the consensus matrices for k = 2 - 7, as indicated in the legend, estimated using 100 bin histogram. (right) Relative change in area under the CDF curve, for k = 2 - 7, to compare k with k - 1. In the case of k = 2, there is no k - 1, so the total area is plotted. Line shows relative increase in consensus between each value of k. See Methods Section \ref{stimulus-heatmap-method}.}\label{fig:consensusClusteringA}
 \end{figure}
 
 \begin{figure}
@@ -1343,7 +1319,7 @@ To support the choice of four clusters, I additionally visualised summaries of t
 
 }
 
-\caption{Assignment of patient samples (columns), to each cluster, for k = 1 - 7 (rows) to demonstrate stability of cluster membership. Cluster colour for k = 4 match those in heatmap in \ref{fig:stimuliHeatmap}. See Methods section \ref{stimulus-heatmap-method}.}\label{fig:consensusClusteringB}
+\caption{Assignment of patient samples (columns), to each cluster, for k = 1 - 7 (rows) to demonstrate stability of cluster membership. Cluster colour for k = 4 match those in heatmap in \ref{fig:stimuliHeatmap}. See Methods Section \ref{stimulus-heatmap-method}.}\label{fig:consensusClusteringB}
 \end{figure}
 The graph of the Cumulative Distribution Functions (CDFs) of the consensus matrix for each k indicated that the CDF reaches a maximum and cluster confidence is maximised at k = 7, though above k = 4 there is little appreciable increase (Figure \ref{fig:consensusClusteringA}). This is confirmed in the graph showing relative change in the area under the CDF curve, showing there is only a small increase in consensus between k = 4 and k = 5, supporting the choice of k = 4. The cluster tracking plot depicts how each patient sample is assigned for each value of k. For k = 4, the plot indicates that C3 and 4 in particular are highly stable (Figure \ref{fig:consensusClusteringB}).
 
@@ -1382,7 +1358,7 @@ To further validate this, we observed that TTT in the IGHV-M enriched C3 was sig
 
 }
 
-\caption{(A) LDT stratified by cluster, p-values from Student's t-test. (B) Kaplan-Meier curves to show TTT for each cluster. p-values from univariate Cox proportional hazard models comparing IGHV-U enriched C1 with C2, and IGHV-M enriched C3 with C4. See Methods sections \ref{LDT-method} and \ref{survival-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021 .}}\label{fig:clusterLDTTTT}
+\caption{(A) LDT stratified by cluster, p-values from Student's t-test. (B) Kaplan-Meier curves to show TTT for each cluster. p-values from univariate Cox proportional hazard models comparing IGHV-U enriched C1 with C2, and IGHV-M enriched C3 with C4. See Methods Sections \ref{LDT-method} and \ref{survival-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021 .}}\label{fig:clusterLDTTTT}
 \end{figure}
 The difference in disease progression between the clusters indicated that microenvironmental response represents an additional biological layer, holding information relevant to disease dynamics. To validate that these clusters were not simply an indication of any underlying genetic features, we checked whether the observed differences in progression dynamics could be explained by other prognostic markers (Bruch and Giles et al.~2021).
 
@@ -1442,11 +1418,11 @@ Next I assessed differences in the molecular profiles of samples within each clu
 
 \caption{Distribution of selected genetic features (rows) within each cluster for all patient samples (columns). White indicates patient sample is not annotated.}\label{fig:clusterMatrix}
 \end{figure}
-To quantify whether each cluster was enriched or depleted for certain genetic features, I used a multinomial modelling approach, with lasso penalisation (for more background on generalised linear models, see section \ref{intro-multivariate-modelling} (Bruch and Giles et al.~2021).
+To quantify whether each cluster was enriched or depleted for certain genetic features, I used a multinomial modelling approach, with lasso penalisation (for more background on generalised linear models, see Section \ref{intro-multivariate-modelling} (Bruch and Giles et al.~2021).
 
 I ran the multinomial model to assign coefficients to genetic features that were associated with each cluster, C1 to C4. Running the regression with lasso regularisation meant that the majority of the coefficients were shrunk towards 0. Genetic features that were assigned a coefficient were thus assumed to be either enriched or depleted within a cluster.
 
-To run the model, I generated a feature matrix, consisting of the genetic data for patient samples and a discrete response matrix, which included the cluster assigned to each patient. Genetic features with \textgreater20\% missing values were excluded (n = 39), and only patients with complete annotation were included in the feature matrix (n = 137). I used the function \texttt{cv.glmnet} from the \texttt{R} package \texttt{glmnet} (\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}) to generate the model, using 3-fold cross validation, and selecting the optimal model using \(\lambda{min}\).
+To run the model, I generated a feature matrix, consisting of the genetic data for patient samples and a discrete response matrix, which included the cluster assigned to each patient. Genetic features with \textgreater20\% missing values were excluded (n = 39), and only patients with complete annotation were included in the feature matrix (n = 137). I used the function \texttt{cv.glmnet} from the \texttt{R} package \texttt{glmnet} (\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}) to generate the model, using 3-fold cross validation, and selecting the optimal model using \(\lambda_{min}\).
 
 Each cluster was thus assigned a set of genetic coefficients. To ensure that these were robust, I applied certain cut-offs. I ran 50 bootstrapped repeats, and removed features if they were not selected in at least 60\% of cases. Additionally, coefficients \textless0.35 were eliminated.
 
@@ -1459,7 +1435,7 @@ Figure \ref{fig:clusterEnrichment} shows the resulting mean coefficients. A posi
 
 }
 
-\caption{Enrichment and depletion of genetic features within each cluster, quantified using lasso-penalised regression. x axis shows genetic features, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and error bars represent the mean plus and minus standard deviation. See Methods section \ref{cluster-genetics-method}. \emph{Figure from Bruch and Giles et al.~2021. }}\label{fig:clusterEnrichment}
+\caption{Enrichment and depletion of genetic features within each cluster, quantified using lasso-penalised regression. x axis shows genetic features, y axis indicates value and sign of coefficient assigned to feature, for each cluster (positive coefficients are enriched in the cluster, negative coefficients are depleted). Coefficients shown are mean coefficients from 50 bootstrapped repeats and error bars represent the mean plus and minus standard deviation. See Methods Section \ref{cluster-genetics-method}. \emph{Figure from Bruch and Giles et al.~2021. }}\label{fig:clusterEnrichment}
 \end{figure}
 As expected, IGHV status was the main feature that predicted cluster membership. Beyond IGHV status, trisomy 12 and \emph{SF3B1} mutations were enriched in C2, which showed enhanced responses to many stimuli. C4, which was associated with slow in-vivo progression, showed depletion of \emph{TP53}, \emph{ATM}, mutations in \emph{RAS} and \emph{RAF} and gain(8q) (Bruch and Giles et al.~2021).
 
@@ -1479,7 +1455,7 @@ I followed the \texttt{DESeq2} protocol (\protect\hyperlink{ref-R-DESeq2}{Love, 
 
 }
 
-\caption{Volcano plot of differentially expressed genes between C3 and C4. x axis indicates log2 fold change values, calculated using the \texttt{DESeq2} package (\protect\hyperlink{ref-R-DESeq2}{Love, Anders, and Huber 2021}), y axis gives corresponding -log10(BH-adjusted p value). Darker grey points are labelled where adjusted p \textless{} 0.01. See Methods section \ref{cluster-rna-method}. \emph{Figure from Bruch and Giles et al.~2021.}}\label{fig:clusterDE}
+\caption{Volcano plot of differentially expressed genes between C3 and C4. x axis indicates log2 fold change values, calculated using the \texttt{DESeq2} package (\protect\hyperlink{ref-R-DESeq2}{Love, Anders, and Huber 2021}), y axis gives corresponding -log10(BH-adjusted p value). Darker grey points are labelled where adjusted p \textless{} 0.01. See Methods Section \ref{cluster-rna-method}. \emph{Figure from Bruch and Giles et al.~2021.}}\label{fig:clusterDE}
 \end{figure}
 To assign biological meaning to the differentially expressed genes, I quantified the enrichment of Hallmark pathways amongst the genes. I ranked the genes based on the Wald statistic, and then ran GSEA using the fgsea algorithm (Figure \ref{fig:clusterGSEA}) (Bruch and Giles et al.~2021).
 
@@ -1492,7 +1468,7 @@ Several pathways were upregulated amongst samples in C3, compared to C4, indicat
 
 }
 
-\caption{Bar plot showing gene set enrichment to compare gene expression of samples in C3 and C4. Normalised enrichment scores (NES) are shown for top ten pathways with smallest adjusted p-value. Gene ranking performed based on Wald statistic, calculated using the \texttt{DESeq2} package. See Methods section \ref{cluster-rna-method}. \emph{Figure from Bruch and Giles et al.~2021. }}\label{fig:clusterGSEA}
+\caption{Bar plot showing gene set enrichment to compare gene expression of samples in C3 and C4. Normalised enrichment scores (NES) are shown for top ten pathways with smallest adjusted p-value. Gene ranking performed based on Wald statistic, calculated using the \texttt{DESeq2} package. See Methods Section \ref{cluster-rna-method}. \emph{Figure from Bruch and Giles et al.~2021. }}\label{fig:clusterGSEA}
 \end{figure}
 In addition, C3 showed upregulation of microenvironmental signalling pathways relative to C4, including TNFa Signalling via NFKB and Interferon Gamma Response (Figure \ref{fig:GSEApathways}) (Bruch and Giles et al.~2021). This finding underlines our hypothesis that differential activity of microenvironmental signalling, both \emph{in vivo} and \emph{ex vivo} may be relevant to disease prognosis (Bruch and Giles et al.~2021).
 
@@ -1503,7 +1479,7 @@ In addition, C3 showed upregulation of microenvironmental signalling pathways re
 
 }
 
-\caption{Enrichment plot of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes. The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software. See Methods section \ref{cluster-rna-method}. \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:GSEApathways}
+\caption{Enrichment plot of selected pathways. Gene set enrichment analysis (GSEA) was performed with the Hallmark gene sets from the GSEA Molecular Signatures Database. Wald statistic was used to rank the genes. The green curve corresponds to the Enrichment Score curve, which is the running sum of the weighted enrichment score obtained from GSEA software. See Methods Section \ref{cluster-rna-method}. \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:GSEApathways}
 \end{figure}
 \hypertarget{summary}{%
 \section{Summary}\label{summary}}
@@ -1536,14 +1512,14 @@ To begin, I ran a univariate analysis to compare viability values post-stimulati
 
 }
 
-\caption{Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested gene-stimulus associations. Each circle represents a gene-stimulus association. Associations that meet 10\% FDR cut off are indicated in colour, where the colour denotes the genetic feature. See Methods section \ref{univariate-gene-stimulus-associations-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch \& Giles et al.~2021, and caption adapted from manuscript.}}\label{fig:stimuliGeneAssosciations}
+\caption{Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested gene-stimulus associations. Each circle represents a gene-stimulus association. Associations that meet 10\% FDR cut off are indicated in colour, where the colour denotes the genetic feature. See Methods Section \ref{univariate-gene-stimulus-associations-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch \& Giles et al.~2021, and caption adapted from manuscript.}}\label{fig:stimuliGeneAssosciations}
 \end{figure}
 This analysis revealed the extent to which genetic features modulate microenvironmental response: for 10/17 stimuli, at least one genetic feature determined response and for 6/17 stimuli, two or more genetic features significantly altered the response (Student's t-tests, FDR = 10\%, Bruch \& Giles et al.~2021). The most common features were IGHV status and trisomy 12. Del(11q) also affected response to several stimuli. Notably, del(13q) and del(17p), which like trisomy 12 and del(11q) are the most common aberrations in CLL and act as prognostic markers (\protect\hyperlink{ref-Dohner2000}{Döhner et al. 2000}), had no impact on the responses to the panel of stimuli.
 
 \hypertarget{multivariate-gene-stimulus-assosciations}{%
 \subsection{Multivariate analysis of gene - stimulus assosciations confirms IGHV status and trisomy 12 as key modulators of stimulus response}\label{multivariate-gene-stimulus-assosciations}}
 
-It was possible that there may be interplay between genetic factors in determining responses to external signals. To address this, I applied multivariate modelling to integrate the influence of genetic features, IGHV status and DNA methylation on the size of response (Bruch \& Giles et al.~2021). I used a Gaussian linear model with L1-penalty (i.e., lasso regression), to derive a predictor for each stimulus, comprised of these covariates. For background on this approach, see section \ref{intro-multivariate-modelling}.
+It was possible that there may be interplay between genetic factors in determining responses to external signals. To address this, I applied multivariate modelling to integrate the influence of genetic features, IGHV status and DNA methylation on the size of response (Bruch \& Giles et al.~2021). I used a Gaussian linear model with L1-penalty (i.e., lasso regression), to derive a predictor for each stimulus, comprised of these covariates. For background on this approach, see Section \ref{intro-multivariate-modelling}.
 
 As input to the model, the response matrix was composed of the log transformed viability values for each stimulus. To generate the feature matrix (137 samples versus 41 features), I excluded genetic features for which \textgreater20\% of the values were missing, and patient samples with incomplete annotation. As predictors, I included genetic mutations and CNVs (p= 39), IGHV status and Methylation Cluster. I ran lasso regression, as implemented in the \texttt{R} package \texttt{glmnet}(\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}) and the resulting predictors are the mean of those coefficients that were selected in at least 75\% of 30 bootstrapped repeats.
 
@@ -1556,7 +1532,7 @@ Using the output of the regression, I generated predictor profiles for each stim
 
 }
 
-\caption{Predictor profiles for IL4 and CpG ODN (TLR9) depicting gene - stimulus associations. Bar plots (left) show size and sign of assigned coefficients from Gaussian linear modelling. A positive coefficient indicates that stimulated increase in viability is larger when genetic feature is present. Scatter plots (bottom) and corresponding heatmaps above show how presence of selected genetic feature relates to sample viabilities. Scatter plots show ranked log-transformed viability values for each sample and heatmaps show mutation status for each predictor, for corresponding sample in scatter plot. See Methods section \ref{multivariate-gene-stimulus-assosciations-method}. \emph{Figure and caption adapted from Bruch \& Giles et al.~2021}.}\label{fig:stimuliGeneAssosciationsMulti}
+\caption{Predictor profiles for IL4 and CpG ODN (TLR9) depicting gene - stimulus associations. Bar plots (left) show size and sign of assigned coefficients from Gaussian linear modelling. A positive coefficient indicates that stimulated increase in viability is larger when genetic feature is present. Scatter plots (bottom) and corresponding heatmaps above show how presence of selected genetic feature relates to sample viabilities. Scatter plots show ranked log-transformed viability values for each sample and heatmaps show mutation status for each predictor, for corresponding sample in scatter plot. See Methods Section \ref{multivariate-gene-stimulus-assosciations-method}. \emph{Figure and caption adapted from Bruch \& Giles et al.~2021}.}\label{fig:stimuliGeneAssosciationsMulti}
 \end{figure}
 The multivariate analysis demonstrated that responses to IL4 and sCD40L + IL4, TLR stimuli and TGF\(\beta\) were all affected by multiple genetic features (Bruch \& Giles et al.~2021). For example, higher viability in response to IL4 stimulation was associated with trisomy 12 and unmutated IGHV. In contrast, IL4 generated little or no increase in viability in samples with a mutation in \emph{KRAS}, \emph{NRAS} or \emph{BRAF.} These tumours benefited less from the anti-apoptotic effects of IL4, indicating that signalling via Ras-Raf-MEK-ERK may have an inhibitory effect of the pro-survival effects of IL4. To validate this, I visualised data from the screen for IL4 and IL4 + Ralimetinib (a p38 MAPK inhibitor) treated samples. Inhibition of signalling via Ras-Raf-MEK-ERK increased the pro-survival effect of IL4 (paired t-test, p \textless0.0001, Figure @ref(fig:ral\_il4)) {[}CHECK{]}.
 
@@ -1572,7 +1548,7 @@ The multivariate analysis demonstrated that responses to IL4 and sCD40L + IL4, T
 \hypertarget{response-to-tlr-stimulation-is-dependent-on-ighv-status-trisomy-12-and-mutations-in-dna-damage-response-genes}{%
 \subsection{Response to TLR stimulation is dependent on IGHV status, trisomy 12 and mutations in DNA Damage Response genes}\label{response-to-tlr-stimulation-is-dependent-on-ighv-status-trisomy-12-and-mutations-in-dna-damage-response-genes}}
 
-The multivariate analysis highlighted that TLR stimulation by CpG ODN (TLR9) and Resiquimod (TLR 7/8) both showed the largest number of predictors, so I next decided to look into this in more detail. The predictors included del(11q) and \emph{ATM} , del(17p) and \emph{TP53}, IGHV status, trisomy 12 and \emph{SF3B1} (Bruch \& Giles et al.~2021), reflecting the multiple layers of biology involved here. Further, the survival differences between the clusters identified in section \ref{cluster-responses} indicated that TLR response may relate to disease progression, thus warranting a more detailed look at the underlying features modulating TLR signalling (Figure \ref{fig:TLRGenes}).
+The multivariate analysis highlighted that TLR stimulation by CpG ODN (TLR9) and Resiquimod (TLR 7/8) both showed the largest number of predictors, so I next decided to look into this in more detail. The predictors included del(11q) and \emph{ATM} , del(17p) and \emph{TP53}, IGHV status, trisomy 12 and \emph{SF3B1} (Bruch \& Giles et al.~2021), reflecting the multiple layers of biology involved here. Further, the survival differences between the clusters identified in Section \ref{cluster-responses} indicated that TLR response may relate to disease progression, thus warranting a more detailed look at the underlying features modulating TLR signalling (Figure \ref{fig:TLRGenes}).
 
 
 \begin{figure}
@@ -1583,7 +1559,7 @@ The multivariate analysis highlighted that TLR stimulation by CpG ODN (TLR9) and
 
 \caption{Control-normalised log transformed viability values after treatment with Resiquimod (TLR 7/8), stratified by named genetic features.}\label{fig:TLRGenes}
 \end{figure}
-The features with the strongest impact on TLR response were IGHV status and trisomy 12. \protect\hyperlink{ref-Chatzouli2014}{Chatzouli et al.} (\protect\hyperlink{ref-Chatzouli2014}{2014}) have previously shown that TLR responses is dependent on IGHV status (see also, section \ref{intro-microenvironmental-pathways} and these results highlight trisomy 12 as an additional, novel determinant (Bruch \& Giles et al.~2021). In samples without trisomy 12, TLR stimulation increases the viability of IGHV-U samples, whilst it decreases viability in IGHV-M samples, as expected. In contrast, in samples with trisomy 12, TLR stimulation increases viability regardless of IGHV status (Student's t-test, p\textless0.001 and p = 0.018, Figure \ref{fig:TLRIHGVtri12}).
+The features with the strongest impact on TLR response were IGHV status and trisomy 12. \protect\hyperlink{ref-Chatzouli2014}{Chatzouli et al.} (\protect\hyperlink{ref-Chatzouli2014}{2014}) have previously shown that TLR responses is dependent on IGHV status (see also, Section \ref{intro-microenvironmental-pathways} and these results highlight trisomy 12 as an additional, novel determinant (Bruch \& Giles et al.~2021). In samples without trisomy 12, TLR stimulation increases the viability of IGHV-U samples, whilst it decreases viability in IGHV-M samples, as expected. In contrast, in samples with trisomy 12, TLR stimulation increases viability regardless of IGHV status (Student's t-test, p\textless0.001 and p = 0.018, Figure \ref{fig:TLRIHGVtri12}).
 
 \protect\hyperlink{ref-Chatzouli2014}{Chatzouli et al.} (\protect\hyperlink{ref-Chatzouli2014}{2014})'s observations point to the existence of specific types of BCR/TLR collaboration in CLL depending on the IGHV status of the tumour, either activating pro-survival pathways, or inducing apoptosis. The results here suggest that synergy between the BCR and TLR pathways may also be modulated by trisomy 12. {[}CHECK{]}
 
@@ -1598,7 +1574,7 @@ The features with the strongest impact on TLR response were IGHV status and tris
 \end{figure}
 TLR stimulation also increased viability in samples with mutations in the DNA damage response pathway, namely del(11q), del(17p), and \emph{ATM} and \emph{TP53} (Del(17p) is associated with loss of TP53 (\protect\hyperlink{ref-Zenz2010}{Zenz et al. 2010}) and Del(11q) is associated with loss of ATM (\protect\hyperlink{ref-Kipps2017}{Kipps et al. 2017})). This suggests that there may also be cross-talk between the TLR and DNA damage response pathway, and that this affects the outcome of TLR stimulation. {[}CHECK{]}
 
-The effect of TLR stimulation on CLL viability is thus dependent on the molecular make-up of the tumour. The observations in section \ref{cluster-responses} also indicate that pro-survival versus pro-apoptotic responses to TLR stimulation may relate to disease progression i.e.~the subgroup of patients (C3) that showed slower disease progression was the sole subgroup in which TLR stimulation induced apoptosis. BCR signalling is viewed as central to CLL pathogenesis and prognosis; the role of TLR signalling may be under appreciated. {[}CHECK{]}
+The effect of TLR stimulation on CLL viability is thus dependent on the molecular make-up of the tumour. The observations in Section \ref{cluster-responses} also indicate that pro-survival versus pro-apoptotic responses to TLR stimulation may relate to disease progression i.e.~the subgroup of patients (C3) that showed slower disease progression was the sole subgroup in which TLR stimulation induced apoptosis. BCR signalling is viewed as central to CLL pathogenesis and prognosis; the role of TLR signalling may be under appreciated. {[}CHECK{]}
 
 Collectively, this work represents a large-scale attempt to profile the integrative effects of cell-extrinsic signals and cell-intrinsic features in lymphoma (Bruch and Giles et al.~2021). In CLL, this systematic approach highlighted trisomy 12 as the most common feature to modulate responses (Bruch and Giles et al.~2021). The rest of this chapter outlines my work to investigate the role of trisomy 12 in microenvironmental response.
 
@@ -1610,7 +1586,7 @@ Collectively, this work represents a large-scale attempt to profile the integrat
 
 Trisomy 12 modulated responses to IL4, TGF\(\beta\), soluble CD40L + IL4 and TLR stimuli (Bruch \& Giles et al.~2021, Figure \ref{fig:tri12cytResponse}). For example, the increase in viability induced by IL4 was enhanced in trisomy 12 samples, as was the decrease in viability in response to TGF\(\beta\) stimulation.
 
-Trisomy 12 is commonly mutated in CLL (15\% of cases) (\protect\hyperlink{ref-Dohner2000}{Döhner et al. 2000}). Until recently, this genetic lesion was regarded as conferring intermediate risk, though novel therapies have improved outcomes for trisomy 12 cases (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). However, the functional explanation for its recurrence is incompletely understood. Previous work has shown a role for gene dosage effects in the pathogenic mechanism: \protect\hyperlink{ref-Kienle2005}{Kienle et al.} (\protect\hyperlink{ref-Kienle2005}{2005}) show that overexpression of genes including CDK4 and E2F1 leads to increased cell cycling and higher proliferative capacity. Likewise, \protect\hyperlink{ref-HerbstThesis}{Herbst} (\protect\hyperlink{ref-HerbstThesis}{2020}) showed that BCR signalling proteins are also upregulated, which may also contribute to the increased proliferative capacity. Correspondingly trisomy 12 cases show increased susceptibility to BCR inhibition (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}) (see also, section \ref{intro-trisomy12}).
+Trisomy 12 is commonly mutated in CLL (15\% of cases) (\protect\hyperlink{ref-Dohner2000}{Döhner et al. 2000}). Until recently, this genetic lesion was regarded as conferring intermediate risk, though novel therapies have improved outcomes for trisomy 12 cases (\protect\hyperlink{ref-Bosch2019}{Bosch and Dalla-Favera 2019}). However, the functional explanation for its recurrence is incompletely understood. Previous work has shown a role for gene dosage effects in the pathogenic mechanism: \protect\hyperlink{ref-Kienle2005}{Kienle et al.} (\protect\hyperlink{ref-Kienle2005}{2005}) show that overexpression of genes including CDK4 and E2F1 leads to increased cell cycling and higher proliferative capacity. Likewise, \protect\hyperlink{ref-HerbstThesis}{Herbst} (\protect\hyperlink{ref-HerbstThesis}{2020}) showed that BCR signalling proteins are also upregulated, which may also contribute to the increased proliferative capacity. Correspondingly trisomy 12 cases show increased susceptibility to BCR inhibition (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}) (see also, Section \ref{intro-trisomy12}).
 
 In the following, I outline my work to investigate the incompletely understood role of trisomy 12 in CLL.
 
@@ -1641,18 +1617,18 @@ Only a small proportion of the differentially expressed genes belonged to the TG
 
 }
 
-\caption{Beeswarm-boxplots showing RNA counts and protein abundances stratified by trisomy 12 status. P values from Student's t-test. See Methods section \ref{gene-dosage-effects-method}. \emph{Proteomics dataset from \protect\hyperlink{ref-HerbstThesis}{Herbst} (\protect\hyperlink{ref-HerbstThesis}{2020}) }}\label{fig:geneDosage}
+\caption{Beeswarm-boxplots showing RNA counts and protein abundances stratified by trisomy 12 status. P values from Student's t-test. See Methods Section \ref{gene-dosage-effects-method}. \emph{Proteomics dataset from \protect\hyperlink{ref-HerbstThesis}{Herbst} (\protect\hyperlink{ref-HerbstThesis}{2020}) }}\label{fig:geneDosage}
 \end{figure}
 Next I looked for further evidence to directly link the higher gene dosage of cytokine signalling genes, to enhanced responses to cytokine signals.
 
 \hypertarget{trisomy12-classifier}{%
 \subsection{\texorpdfstring{Classification analysis identifies trisomy 12 phenocopies that show increased expression of \emph{IRAK4} and \emph{SMAD3}}{Classification analysis identifies trisomy 12 phenocopies that show increased expression of IRAK4 and SMAD3}}\label{trisomy12-classifier}}
 
-I next investigated whether any non-trisomy 12 samples might display a trisomy 12-like phenotype (referred to as a phenocopy), in that they respond in a similar way to the panel of stimuli. The aim was to identify trisomy 12 phenocopies and to isolate the feature of these samples that might explain the underlying cause of enhanced response to external signals in trisomy 12 CLL. In particular, I was interested to see if these phenocopies showed higher expression, or even gene amplification, of the signalling genes identified in section \ref{gene-dosage-effects}.
+I next investigated whether any non-trisomy 12 samples might display a trisomy 12-like phenotype (referred to as a phenocopy), in that they respond in a similar way to the panel of stimuli. The aim was to identify trisomy 12 phenocopies and to isolate the feature of these samples that might explain the underlying cause of enhanced response to external signals in trisomy 12 CLL. In particular, I was interested to see if these phenocopies showed higher expression, or even gene amplification, of the signalling genes identified in Section \ref{gene-dosage-effects}.
 
 To identify trisomy 12 phenocopies, I began by generating a classifier to predict the trisomy 12 status of a sample from the stimulus response matrix. I aimed to find non-trisomy 12 samples that were consistently misclassified as trisomy 12.
 
-The classifier was built using binomial regression, with lasso penalisation, as implemented in the \texttt{R} package \texttt{glmnet} (\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}). The feature matrix consisted of z scores of the viability values after treatment with each stimulus, and was used to predict the response (trisomy 12 status). I ran the model for 50 bootstrapped repeats. Resiquimod (TLR 7/8), sCD40L+IL4 and TGF\(\beta\) were selected as coefficients that predict trisomy 12 status (Figure \ref{fig:tri12Classifier}), as would be expected based on the observations in section \ref{trisomy12-modulator}.
+The classifier was built using binomial regression, with lasso penalisation, as implemented in the \texttt{R} package \texttt{glmnet} (\protect\hyperlink{ref-R-glmnet}{Friedman et al. 2021}). The feature matrix consisted of z scores of the viability values after treatment with each stimulus, and was used to predict the response (trisomy 12 status). I ran the model for 50 bootstrapped repeats. Resiquimod (TLR 7/8), sCD40L+IL4 and TGF\(\beta\) were selected as coefficients that predict trisomy 12 status (Figure \ref{fig:tri12Classifier}), as would be expected based on the observations in Section \ref{trisomy12-modulator}.
 
 
 \begin{figure}
@@ -1661,7 +1637,7 @@ The classifier was built using binomial regression, with lasso penalisation, as 
 
 }
 
-\caption{Predictor profile showing coefficients selected as predictors of trisomy 12 status. Here, binomial modelling with L1-penalty was used to identify associations between responses to stimuli and trisomy 12 status. Bar plots (left) show size and sign of assigned coefficients named on the right. A positive coefficient indicates that trisomy 12 samples show larger increase in viability when stimulated. Facet labels (top) and corresponding heatmap below show how the viability with each named stimulus relates to trisomy 12 status. The model shown was selected from 50 bootstrapped repeats, based on maximal AUC. See Methods section \ref{trisomy12-classifier-method}.}\label{fig:tri12Classifier}
+\caption{Predictor profile showing coefficients selected as predictors of trisomy 12 status. Here, binomial modelling with L1-penalty was used to identify associations between responses to stimuli and trisomy 12 status. Bar plots (left) show size and sign of assigned coefficients named on the right. A positive coefficient indicates that trisomy 12 samples show larger increase in viability when stimulated. Facet labels (top) and corresponding heatmap below show how the viability with each named stimulus relates to trisomy 12 status. The model shown was selected from 50 bootstrapped repeats, based on maximal AUC. See Methods Section \ref{trisomy12-classifier-method}.}\label{fig:tri12Classifier}
 \end{figure}
 I then predicted trisomy 12 status with the same viability matrix, using each of the 50 bootstrapped model fits. I compared the results of the classification with the true trisomy 12 status. I identified two trisomy 12 phenocopies i.e.~patient samples that were misclassified as trisomy 12 in more than 50\% of repeats, refered to as Phenocopy A and B in the below.
 
@@ -1674,7 +1650,7 @@ I aimed to determine what features these phenocopies shared with trisomy 12 samp
 
 }
 
-\caption{Control-normalised log-transformed viability values, for all samples after treatment with Resiquimod (TLR 7/8), sCD40L + IL4 and TGF\(\beta\). Phenocopies A and B are indicated in blue and red, respectively. See Methods section \ref{trisomy12-classifier-method}.}\label{fig:tri12PhenocopiesCytResponse}
+\caption{Control-normalised log-transformed viability values, for all samples after treatment with Resiquimod (TLR 7/8), sCD40L + IL4 and TGF\(\beta\). Phenocopies A and B are indicated in blue and red, respectively. See Methods Section \ref{trisomy12-classifier-method}.}\label{fig:tri12PhenocopiesCytResponse}
 \end{figure}
 I investigated whether either of these non-trisomy 12 samples contained any regional amplifications on chromosome 12, which may help to isolate the gene(s) causing the tumour to respond more strongly to these signals. The whole exome sequencing data (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}) for both patient samples indicated that Phenocopy A had several amplified regions at 12p13.31 (42 copies), 12q24.13 (10 copies) and 12q24.33 (21 copies). An examination of the genes in these regions indicated that none of the signalling genes identified in \ref{gene-dosage-effects} could be found in these regions, and no clear candidate gene(s) emerged that may be involved in responses to external signals.
 
@@ -1726,7 +1702,7 @@ Spi-B and PU.1 are haematopoetic regulators that are known to be key regulators 
 
 }
 
-\caption{Bar plot showing the results of the diffTF analysis for the external dataset (\protect\hyperlink{ref-Rendeiro2016}{Rendeiro et al. 2016}). y axis shows change in TF binding site accessibility (weighted mean difference) between trisomy 12 (n = 9) and non-trisomy 12 samples (n = 43), x axis indicates TF names. 17 / 638 TFs, with BH adjusted p \textless0.05 are shown. p values generated by diffTF in permutation mode. TF binding sites defined in HOCOMOCO v10 (\protect\hyperlink{ref-HOCOMOCO}{Kulakovskiy et al. 2016}). See Methods section \ref{trisomy12-ATACseq-method} \emph{ATACseq data from \protect\hyperlink{ref-Rendeiro2016}{Rendeiro et al.} (\protect\hyperlink{ref-Rendeiro2016}{2016}). Trisomy 12 annotation performed together with PhD student Ivan Berest. ATACseq processing and \texttt{diffTF} run by Ivan Berest. Figure and caption adapted from Bruch and Giles et al.~2021.}}\label{fig:tri12diffTF}
+\caption{Bar plot showing the results of the diffTF analysis for the external dataset (\protect\hyperlink{ref-Rendeiro2016}{Rendeiro et al. 2016}). y axis shows change in TF binding site accessibility (weighted mean difference) between trisomy 12 (n = 9) and non-trisomy 12 samples (n = 43), x axis indicates TF names. 17 / 638 TFs, with BH adjusted p \textless0.05 are shown. p values generated by diffTF in permutation mode. TF binding sites defined in HOCOMOCO v10 (\protect\hyperlink{ref-HOCOMOCO}{Kulakovskiy et al. 2016}). See Methods Section \ref{trisomy12-ATACseq-method} \emph{ATACseq data from \protect\hyperlink{ref-Rendeiro2016}{Rendeiro et al.} (\protect\hyperlink{ref-Rendeiro2016}{2016}). Trisomy 12 annotation performed together with PhD student Ivan Berest. ATACseq processing and \texttt{diffTF} run by Ivan Berest. Figure and caption adapted from Bruch and Giles et al.~2021.}}\label{fig:tri12diffTF}
 \end{figure}
 Spi-B and PU.1 appeared to be upregulated in trisomy 12 CLL, and evidence in the literature indicated that these may regulate environmental sensing genes, providing a link between trisomy 12, and enhanced responses to external signals (Bruch and Giles et al.~2021).
 
@@ -1760,7 +1736,7 @@ To establish the functional impact of Spi-B and PU.1 inhibition in trisomy 12 ly
 
 }
 
-\caption{Relative cell counts of Diffuse Large B Cell Lymphoma cell lines with single and double knockdown of Spi-B and PU.1. Data shown is the mean of three technical replicates. SU-DHL 5 shows reduced growth rate after Spi-B knockdown. SU-DHL 2 and SU-DHL 4 show reduced growth rate with double knock-down. Double knockdown induced rapid cell death in SU-DHL 5 (data not shown). Cell count normalised to seeded cell number of cell lines after knockdown of Spi-B or double knockdown of Spi-B and PU.1 or shRNA as control. See Methods section \ref{shRNA-KDs-method}. \emph{Experiment performed by Tina Bercirovic. Figure and caption generated with Peter-Martin Bruch and adapted from Bruch \& Giles et al.~2021.}}\label{fig:SpiBshRNAKD}
+\caption{Relative cell counts of Diffuse Large B Cell Lymphoma cell lines with single and double knockdown of Spi-B and PU.1. Data shown is the mean of three technical replicates. SU-DHL 5 shows reduced growth rate after Spi-B knockdown. SU-DHL 2 and SU-DHL 4 show reduced growth rate with double knock-down. Double knockdown induced rapid cell death in SU-DHL 5 (data not shown). Cell count normalised to seeded cell number of cell lines after knockdown of Spi-B or double knockdown of Spi-B and PU.1 or shRNA as control. See Methods Section \ref{shRNA-KDs-method}. \emph{Experiment performed by Tina Bercirovic. Figure and caption generated with Peter-Martin Bruch and adapted from Bruch \& Giles et al.~2021.}}\label{fig:SpiBshRNAKD}
 \end{figure}
 The single knockdowns had a small impact on proliferation: Spi-B inhibition reduced proliferation in SU-DHL5, as did PU.1 to a lesser extent. Double knockdown of both TFs markedly reduced proliferation in SU-DHL2 and SU-DHL4, and was lethal in SU-DHL5. This result suggested that both these TFs play an important role in the proliferative capacity of the tumour cells, and that there is functional redundancy between Spi-B and PU.1 in this context.
 
@@ -1778,11 +1754,11 @@ Chapters \ref{chapter4} and \ref{chapter5} provide a systematic exploration of t
 
 The effect of genetic features on \emph{in vitro} drug response in CLL has been well-characterised, including as part of recent work produced by our lab (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}). Many studies have also demonstrated the impact of individual microenvironmental signals on drug response \emph{ex vivo}, including a number of studies demonstrating that soluble factors can induce resistance to clinical drugs (\protect\hyperlink{ref-Fonte2013}{Fonte et al. 2013}; \protect\hyperlink{ref-AguilarHernandez2016}{Aguilar-Hernandez et al. 2016}; \protect\hyperlink{ref-Jayappa2017}{Jayappa et al. 2017}; \protect\hyperlink{ref-McWilliams2019}{McWilliams et al. 2019}).
 
-Evidence of microenvironmental signals inducing resistance to therapies \emph{in vivo} is less prevalent, although there is widespread consensus that the microenvironment, in particular the lymph node, plays an important role in patient outcomes. A number of studies have shown enlarged lymph nodes are associated with MRD (\protect\hyperlink{ref-Moreton2005}{Moreton et al. 2005}), in particular, incomplete response to ibrutinib is associated with persistently enlarged lymph nodes (\protect\hyperlink{ref-Ahn2018}{Ahn et al. 2018}). For more information see Introduction section \ref{intro-microenvironment-drug-response}.
+Evidence of microenvironmental signals inducing resistance to therapies \emph{in vivo} is less prevalent, although there is widespread consensus that the microenvironment, in particular the lymph node, plays an important role in patient outcomes. A number of studies have shown enlarged lymph nodes are associated with MRD (\protect\hyperlink{ref-Moreton2005}{Moreton et al. 2005}), in particular, incomplete response to ibrutinib is associated with persistently enlarged lymph nodes (\protect\hyperlink{ref-Ahn2018}{Ahn et al. 2018}). For more information see Introduction Section \ref{intro-microenvironment-drug-response}.
 
-Guided by these observations, this chapter explores the impact of genetic features, and microenvironmental stimulation on drug response, both individually and in combination. In section \ref{mapping-interactions}, the impact of the panel of stimuli on drug response is quantified by identifying drug - stimulus interactions. In section \ref{mapping-genetic-modulators}, the impact of genetic features on drug response is explored. In section \ref{drug-stimulus-gene-interactions}, multivariate modelling is applied to investigate how drug - microenvironment interactions can be further modulated by genetic features. Finally, in section \ref{il4-ibrutinib}, I outline my work to investigate the interaction between IL4 and ibrutinib, identified in the above analysis.
+Guided by these observations, this chapter explores the impact of genetic features, and microenvironmental stimulation on drug response, both individually and in combination. In Section \ref{mapping-interactions}, the impact of the panel of stimuli on drug response is quantified by identifying drug - stimulus interactions. In Section \ref{mapping-genetic-modulators}, the impact of genetic features on drug response is explored. In Section \ref{drug-stimulus-gene-interactions}, multivariate modelling is applied to investigate how drug - microenvironment interactions can be further modulated by genetic features. Finally, in Section \ref{il4-ibrutinib}, I outline my work to investigate the interaction between IL4 and ibrutinib, identified in the above analysis.
 
-The analyses described here benefit from linear regression and generalised linear modelling approaches, described in more detail in section \ref{intro-multivariate-modelling}.
+The analyses described here benefit from linear regression and generalised linear modelling approaches, described in more detail in Section \ref{intro-multivariate-modelling}.
 
 Some findings and figures outlined in this chapter have been published in Bruch and Giles et al.~2021, and this is clearly stated where this is the case.
 
@@ -1805,7 +1781,7 @@ Equation \eqref{eq:drugCytInt} quantifies how the viability with any combination
             log(V) = \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{int}X_{drug}X_{stimulus} + \epsilon
                                        \label{eq:drugCytInt}
     \end{equation}
-\emph{where \(V\) is the predicted viability with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\) \emph{and} \(\beta_{int}\) \emph{are coefficients for the drug, stimulus and combinatorial terms and} \(X_{drug}\) \emph{and} \(X_{stimulus}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus.} \(\epsilon\) \emph{is the vector of model residuals. See also Methods section \ref{drug-stimulus-linear-model-method}. Equation from Bruch and Giles et al.~2021.}
+\emph{where \(V\) is the predicted viability with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\) \emph{and} \(\beta_{int}\) \emph{are coefficients for the drug, stimulus and combinatorial terms and} \(X_{drug}\) \emph{and} \(X_{stimulus}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus.} \(\epsilon\) \emph{is the vector of model residuals. See also Methods Section \ref{drug-stimulus-linear-model-method}. Equation from Bruch and Giles et al.~2021.}
 
 Here \(\beta_{int}\) quantifies how the combined treatment effect differs from the sum of the individual treatments. This approach identified 45 drug-stimulus combinations (out of 204), where \(\beta_{int}\) had p \textless{} 0.05, highlighting the extent to which drug action can be modulated by cell-extrinsic signals \emph{ex vivo} (Bruch and Giles et al.~2021).
 
@@ -1823,14 +1799,14 @@ The categories were firstly defined based on whether the interaction was antagon
 
 }
 
-\caption{(A) Graphical line plots representing typical response patterns for each of the four drug - stimulus interaction categories (types I - IV). x-axis shows treatment, y-axis shows log transformed viability values, facet labels indicate interaction type. Blue and black horizontal lines demonstrate effect of interaction on viability with combinatorial treatment. Blue line shows predicted viability based on additive effects alone and black line shows viability accounting for additive effects and interaction. (B) Histogram showing number of drug-stimulus interactions within each category, where p value for \(\beta_{int}\) is \textless0.05. See Methods section \ref{drug-stimulus-linear-model-method} and \ref{drug-stimulus-categories-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch \& Giles et al.~2021, and caption adapted from manuscript.}}\label{fig:drugStimulusDummyPLots}
+\caption{(A) Graphical line plots representing typical response patterns for each of the four drug - stimulus interaction categories (types I - IV). x-axis shows treatment, y-axis shows log transformed viability values, facet labels indicate interaction type. Blue and black horizontal lines demonstrate effect of interaction on viability with combinatorial treatment. Blue line shows predicted viability based on additive effects alone and black line shows viability accounting for additive effects and interaction. (B) Histogram showing number of drug-stimulus interactions within each category, where p value for \(\beta_{int}\) is \textless0.05. See Methods Section \ref{drug-stimulus-linear-model-method} and \ref{drug-stimulus-categories-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch \& Giles et al.~2021, and caption adapted from manuscript.}}\label{fig:drugStimulusDummyPLots}
 \end{figure}
 These categories encompassed the following interaction types. Type I defined positive antagonisms in which stimuli reversed drug action, leading to decreased drug efficacy and increased CLL viability. This group highlights drug - stimulus interactions that could be relevant to treatment resistance pathways \emph{in vivo}. Type II negative antagonisms highlighted cases where the drug inhibited the stimulus, reducing the effect of the stimulus on baseline viability, and decreasing CLL viability. These interactions include drugs that represent candidates to target microenvironmental signalling pathways \emph{in vivo}. Type III and type IV interactions cover synergies, in which the drug and stimulus increase the effect of the other. Type III positive synergies led to increased CLL viability with the combinatorial treatment, whilst type IV negative synergies led to increased drug efficacy and lower viability. In the latter case, these may highlight cases where drug efficacy is dependent on external pathways, and indicate where co-culture approaches may be more appropriate in laboratory studies of \emph{ex vivo} drug action. Figure \ref{fig:drugStimulusDummyPLots}B quantifies the number of interactions in each category.
 
 \hypertarget{drug-stimulus-interaction-examples}{%
 \subsection{\texorpdfstring{Investigating specific drug-stimulus interactions indicates that INF\(\gamma\) induces resistance to ibrutinib \emph{in vitro}}{Investigating specific drug-stimulus interactions indicates that INF\textbackslash gamma induces resistance to ibrutinib in vitro}}\label{drug-stimulus-interaction-examples}}
 
-The combined approach of fitting linear models and subsequently classifying these interactions represents an attempt to generate a comprehensive map of drug - stimulus interactions in CLL (Bruch and Giles et al.~2021, Figure \ref{fig:drugStimulusIntMapt}). The aim is that this resource may facilitate further work into these drug - stimulus interactions, such as the work outlined in section \ref{il4-ibrutinib}.
+The combined approach of fitting linear models and subsequently classifying these interactions represents an attempt to generate a comprehensive map of drug - stimulus interactions in CLL (Bruch and Giles et al.~2021, Figure \ref{fig:drugStimulusIntMapt}). The aim is that this resource may facilitate further work into these drug - stimulus interactions, such as the work outlined in Section \ref{il4-ibrutinib}.
 
 
 \begin{figure}
@@ -1839,17 +1815,17 @@ The combined approach of fitting linear models and subsequently classifying thes
 
 }
 
-\caption{``Heatmap of \(\beta_{int}\) values for all drug - stimulus combinations where p for \(\beta_{int}\) \textless0.05, annotated with interaction type (I - IV). Scale indicates size and sign of \(\beta_{int}\). Rows and columns clustered according to hierarchical clustering.'' See Methods section \ref{drug-stimulus-linear-model-method} and \ref{drug-stimulus-categories-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch \& Giles et al.~2021, and caption taken from manuscript.}}\label{fig:drugStimulusIntMapt}
+\caption{``Heatmap of \(\beta_{int}\) values for all drug - stimulus combinations where p for \(\beta_{int}\) \textless0.05, annotated with interaction type (I - IV). Scale indicates size and sign of \(\beta_{int}\). Rows and columns clustered according to hierarchical clustering.'' See Methods Section \ref{drug-stimulus-linear-model-method} and \ref{drug-stimulus-categories-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch \& Giles et al.~2021, and caption taken from manuscript.}}\label{fig:drugStimulusIntMapt}
 \end{figure}
 Having generated an overview of drug - stimulus interactions, I next examined each interaction within each category with the aim of identifying the most clinically interesting examples (Figure \ref{fig:drugStimulusIntEx}, (Bruch and Giles et al.~2021)).
 
 \textbf{Positive antagonistic} Interactions categorised as positive antagonistic were the most common i.e.~the stimulus reversed drug action. This group included known resistance mechanisms such as the inactivation of ibrutinib by IL4 stimulation (Figure \ref{fig:drugStimulusIntEx}A)(\protect\hyperlink{ref-AguilarHernandez2016}{Aguilar-Hernandez et al. 2016}), indicating that the modelling and classification approach successfully recapitulated established drug - stimulus interactions (Bruch and Giles et al.~2021).
 
-Additionally, this analysis demonstrated the broader significance of IL4-induced resistance, beyond what previous work has shown. IL4 showed the highest number of positive antagonistic interactions amongst all of the stimuli and inhibited a range of drugs, including BCR inhibitors and chemotherapeutics. This is investigated in more detail in section \ref{IL4resistance} below.
+Additionally, this analysis demonstrated the broader significance of IL4-induced resistance, beyond what previous work has shown. IL4 showed the highest number of positive antagonistic interactions amongst all of the stimuli and inhibited a range of drugs, including BCR inhibitors and chemotherapeutics. This is investigated in more detail in Section \ref{IL4resistance} below.
 
 In addition to IL4, IFN\(\gamma\) showed the second largest number of positive antagonistic interactions. IFN\(\gamma\) stimulation induced resistance to BCR inhibition by ibrutinib and idelalisib, and to the chemotherapeutic nutlin-3a (MDM2) (Figure \ref{fig:drugStimulusIntEx}B, Bruch and Giles et al.~2021), and may represent a novel targetable resistance mechanism (Bruch and Giles et al.~2021).
 
-IL4 and IFN\(\gamma\) induced resistance to common pathways and thus I stipulated that both stimuli may share the same mechanism of action. This was supported by the observations in section \ref{multivariate-gene-stimulus-assosciations}, in which I demonstrated that IL4 showed a smaller increase in viability in cells that had mutations in Ras-Raf-MEK-ERK, and that inhibition of p38 MAPK activity with ralimetinib increased the pro-survival effect of IL4 stimulation. IFN\(\gamma\) demonstrated similar behaviour whereby p38 MAPK inhibition increased the pro-survival effect of stimulating this pathway (Appendix Figure \ref{fig:ifngamma}). Collectively these observations suggest that IL4 and IFN\(\gamma\) may operate via a common pro-survival mechanism, which is negatively regulated by activity of MAPK signalling. {[}CHECK{]}
+IL4 and IFN\(\gamma\) induced resistance to common pathways and thus I stipulated that both stimuli may share the same mechanism of action. This was supported by the observations in Section \ref{multivariate-gene-stimulus-assosciations}, in which I demonstrated that IL4 showed a smaller increase in viability in cells that had mutations in Ras-Raf-MEK-ERK, and that inhibition of p38 MAPK activity with ralimetinib increased the pro-survival effect of IL4 stimulation. IFN\(\gamma\) demonstrated similar behaviour whereby p38 MAPK inhibition increased the pro-survival effect of stimulating this pathway (Appendix Figure \ref{fig:ifngamma}). Collectively these observations suggest that IL4 and IFN\(\gamma\) may operate via a common pro-survival mechanism, which is negatively regulated by activity of MAPK signalling. {[}CHECK{]}
 
 
 \begin{figure}
@@ -1858,7 +1834,7 @@ IL4 and IFN\(\gamma\) induced resistance to common pathways and thus I stipulate
 
 }
 
-\caption{Line plots showing examples of drug-stimulus interactions. x-axis indicates treatment, y-axis shows log transformed viability values, with matching samples linked across treatments. Black horizontal lines represent predicted viability for each treatment, using coefficients from linear model fit. For combinatorial treatment, blue line indicates predicted viability based on additive effects alone, and black line indicates predicted viability accounting for additive effects plus interaction. See Methods section \ref{drug-stimulus-linear-model-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch \& Giles et al.~2021, and caption taken from manuscript.}}\label{fig:drugStimulusIntEx}
+\caption{Line plots showing examples of drug-stimulus interactions. x-axis indicates treatment, y-axis shows log transformed viability values, with matching samples linked across treatments. Black horizontal lines represent predicted viability for each treatment, using coefficients from linear model fit. For combinatorial treatment, blue line indicates predicted viability based on additive effects alone, and black line indicates predicted viability accounting for additive effects plus interaction. See Methods Section \ref{drug-stimulus-linear-model-method}. \emph{Figure generated with Peter-Martin Bruch for the manuscript Bruch \& Giles et al.~2021, and caption taken from manuscript.}}\label{fig:drugStimulusIntEx}
 \end{figure}
 \textbf{Negative antagonisms} There were six cases of negative antagonisms, whereby drug action inhibited the pro-survival effect of the stimulus. Such cases could potentially be used to target micronenivronmental signals \emph{in vivo}. As IL4 appeared to be the most potent conferrer of drug resistance, it was of greatest interest to identify drugs that may inhibit this pathway. For example, the Pan-JAK inhibitor pyridone-6 inhibited the increase in viability with sCD40L + IL4 stimulation (Figure \ref{fig:drugStimulusIntEx}C, Bruch and Giles et al.~2021).
 
@@ -1868,7 +1844,7 @@ IL4 and IFN\(\gamma\) induced resistance to common pathways and thus I stipulate
 
 Collectively, these results represent a comprehensive and systematic study of the influence of the microenvironment on drug efficacy in CLL. This work highlights key resistance pathways, strategies for targeting microenvironmental resistance, and underlines important pathways in \emph{ex vivo} studies of drug efficacy (Bruch and Giles et al.~2021).
 
-This work aims to serve as a resource, to provide a basis for further follow-up studies. All drug - stimulus combinations and interactions can be explored on the \href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{online shiny app}, and the whole analysis can be replicated, or adapted, from the \href{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}{online code repository}, published alongside Bruch and Giles et al.~2021. In this thesis, I have selected IL4-induced resistance to BCR inhibition and ibrutinib to investgiate in more detail (see below, section \ref{il4-ibrutinib}.
+This work aims to serve as a resource, to provide a basis for further follow-up studies. All drug - stimulus combinations and interactions can be explored on the \href{https://www.imbi.uni-heidelberg.de/dietrichlab/CLL_Microenvironment/}{online shiny app}, and the whole analysis can be replicated, or adapted, from the \href{https://github.com/Huber-group-EMBL/CLLCytokineScreen2021}{online code repository}, published alongside Bruch and Giles et al.~2021. In this thesis, I have selected IL4-induced resistance to BCR inhibition and ibrutinib to investgiate in more detail (see below, Section \ref{il4-ibrutinib}.
 
 \hypertarget{mapping-genetic-modulators}{%
 \section{Genetic modulators of drug response}\label{mapping-genetic-modulators}}
@@ -1889,13 +1865,13 @@ This analysis recapitulated the findings of previous work (\protect\hyperlink{re
 
 }
 
-\caption{Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested drug-gene associations. Tests performed for IGHV status, somatic mutations and copy number aberrations (n = 54). Each coloured circle represents a gene-stimulus association meeting 10\% FDR cut off. See Methods section \ref{drug-gene-method}}\label{fig:drugGeneIntMap}
+\caption{Plot showing BH-adjusted p values from Student's t-tests (two-sided, with equal variance), for all tested drug-gene associations. Tests performed for IGHV status, somatic mutations and copy number aberrations (n = 54). Each coloured circle represents a gene-stimulus association meeting 10\% FDR cut off. See Methods Section \ref{drug-gene-method}}\label{fig:drugGeneIntMap}
 \end{figure}
 In addition, this analysis highlighted the broad impact of trisomy 12 on drug response \emph{ex vivo} (Figure \ref{fig:drugGeneIntEx}). While trisomy 12 CLL demonstrates higher proliferative capacity, tumours with trisomy 12 are more treatable due to higher sensitivity to chemotherapeutics and ibrutinib. This was reflected in the \emph{in vitro} data in this study; the presence of trisomy 12 increased sensitivity to 8 / 12 drugs.
 
 These included increased sensitivity to p38 MAPK inhibition by ralimetinib, agreeing with previous work demonstrating higher trisomy 12 sensitivity with a range of MEK and ERK inhibitors and suggesting an essential role for MEK/ERK signalling in trisomy 12 CLL (\protect\hyperlink{ref-JCIpaper}{Dietrich et al. 2017}).
 
-I also noted that trisomy 12 CLL showed increased sensitivity to IBET-762, a bromodomain inhibitor that has been shown to suppress transcriptional responses to cytokine signalling via JAK-STAT (\protect\hyperlink{ref-Chan2015}{Chan et al. 2015}). The results in section \ref{trisomy12-modulator} indicated that trisomy 12 enhances responses to some cytokines. I was interested to see whether bromodomain inhibition may provide a strategy to target this feature of trisomy 12 samples. I decided to investigate the impact of IBET-762 treatment on the trisomy 12 transcription factor signature determined in Figure \ref{fig:tri12diffTF}. I made use of an additional ATACseq dataset consisting of four CLL PBMC samples each treated with IBET-762 and DMSO as control. I visualised inferred TF activity for trisomy 12 signature TFs, calculated using \texttt{diffTF} (\protect\hyperlink{ref-Berest2019}{Berest et al. 2019}). All nine TFs showing higher accessibility in trisomy 12 CLL (Figure \ref{fig:tri12diffTF}) exhibited decreased accessibility upon treatment with IBET-762 (Appendix Figure \ref{fig:ibetatac}). This result suggests that bromodomain inhibition may represent a potential target in CLL patients with trisomy 12 (Bruch and Giles et al.~2021).
+I also noted that trisomy 12 CLL showed increased sensitivity to IBET-762, a bromodomain inhibitor that has been shown to suppress transcriptional responses to cytokine signalling via JAK-STAT (\protect\hyperlink{ref-Chan2015}{Chan et al. 2015}). The results in Section \ref{trisomy12-modulator} indicated that trisomy 12 enhances responses to some cytokines. I was interested to see whether bromodomain inhibition may provide a strategy to target this feature of trisomy 12 samples. I decided to investigate the impact of IBET-762 treatment on the trisomy 12 transcription factor signature determined in Figure \ref{fig:tri12diffTF}. I made use of an additional ATACseq dataset consisting of four CLL PBMC samples each treated with IBET-762 and DMSO as control. I visualised inferred TF activity for trisomy 12 signature TFs, calculated using \texttt{diffTF} (\protect\hyperlink{ref-Berest2019}{Berest et al. 2019}). All nine TFs showing higher accessibility in trisomy 12 CLL (Figure \ref{fig:tri12diffTF}) exhibited decreased accessibility upon treatment with IBET-762 (Appendix Figure \ref{fig:ibetatac}). This result suggests that bromodomain inhibition may represent a potential target in CLL patients with trisomy 12 (Bruch and Giles et al.~2021).
 
 
 \begin{figure}
@@ -1923,7 +1899,7 @@ log(V) ={} & \beta_{drug}X_{drug} + \beta_{stimulus}X_{stimulus} + \beta_{patien
            \label{eq:drugCytGeneInt}
 \end{aligned}
 \end{equation}
-\emph{where \(V\) is the predicted viability of a patient sample with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\), \(\beta_{patient}\), \(\beta_{drug-stimulus}\), \(\beta_{drug-patient}\), \(\beta_{stimulus-patient}\) \emph{and} \(\beta_{int}\) \emph{are regression coefficients for the drug, stimulus, patient sample and combinatorial terms and} \(X_{drug}\), \(X_{stimulus}\) \emph{and} \(X_{patient}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus/patient sample.} \(\epsilon\) \emph{is the vector of model residuals. See also Methods section \ref{drug-stimulus-gene-interactions-method}. Equation from Bruch and Giles et al.~2021.}
+\emph{where \(V\) is the predicted viability of a patient sample with a given treatment,} \(\beta_{drug}\), \(\beta_{stimulus}\), \(\beta_{patient}\), \(\beta_{drug-stimulus}\), \(\beta_{drug-patient}\), \(\beta_{stimulus-patient}\) \emph{and} \(\beta_{int}\) \emph{are regression coefficients for the drug, stimulus, patient sample and combinatorial terms and} \(X_{drug}\), \(X_{stimulus}\) \emph{and} \(X_{patient}\) \emph{are indicator variables (0 or 1) for the presence or absence of a drug/stimulus/patient sample.} \(\epsilon\) \emph{is the vector of model residuals. See also Methods Section \ref{drug-stimulus-gene-interactions-method}. Equation from Bruch and Giles et al.~2021.}
 
 With these patient sample-specific \(\beta_{int}\) terms, it was possible to search for associations between the size of \(\beta_{int}\) and genetic features. The aim was to screen for molecular features that increased or decreased the size of a drug - stimulus interactions, using multivariate regression with L1 (lasso) regularisation.
 
@@ -1936,7 +1912,7 @@ To assemble the inputs for the model, first the response matrix was composed of 
 
 }
 
-\caption{Heatmap summarising genetic predictors of drug - stimulus interactions. Each row depicts a single drug - stimulus combination, and each coloured tile indicates that \(\beta_{int}\) for given drug and stimulus combination is modulated by corresponding genetic feature. Thus each row represents the output of a single model fit (as in Figure \ref{fig:FluCpGExA}). Colour of tile indicates size and sign of coefficient assigned to genetic feature, where a positive coefficient corresponds to a more positive \(\beta_{int}\) if the feature is present. Only top 8 most commonly selected genetic features are shown. Drug - stimulus combinations with no genetic predictors of \(\beta_{int}\) amongst top 8 shown are omitted for clarity. See Methods section \ref{drug-stimulus-gene-interactions-method}. \emph{Figure from Bruch and Giles et al.~2021. Peter-Martin Bruch contributed to figure design.}}\label{fig:drugCytGeneIntMap}
+\caption{Heatmap summarising genetic predictors of drug - stimulus interactions. Each row depicts a single drug - stimulus combination, and each coloured tile indicates that \(\beta_{int}\) for given drug and stimulus combination is modulated by corresponding genetic feature. Thus each row represents the output of a single model fit (as in Figure \ref{fig:FluCpGExA}). Colour of tile indicates size and sign of coefficient assigned to genetic feature, where a positive coefficient corresponds to a more positive \(\beta_{int}\) if the feature is present. Only top 8 most commonly selected genetic features are shown. Drug - stimulus combinations with no genetic predictors of \(\beta_{int}\) amongst top 8 shown are omitted for clarity. See Methods Section \ref{drug-stimulus-gene-interactions-method}. \emph{Figure from Bruch and Giles et al.~2021. Peter-Martin Bruch contributed to figure design.}}\label{fig:drugCytGeneIntMap}
 \end{figure}
 This analysis revealed that 60/204 drug - stimulus interactions were modulated by at least one genetic feature (Figure \ref{fig:drugCytGeneIntMap}, Appendix Figure \ref{fig:drugcytGeneIntAll}, Bruch and Giles et al.~2021). A positive coefficient here indicates that the presence of the genetic feature is associated with more positive \(\beta_{int}\), in other words, the viability with the drug and stimulus is higher than expected in the presence of the genetic feature.
 
@@ -1956,7 +1932,7 @@ The first of these concerned the interaction between fludarabine (purine analogu
 
 }
 
-\caption{``Genetic features that modulate the size of \(\beta_{int}\) between fludarabine (purine analogue) and CpG ODN (TLR9). Scatter plot, heatmap and bar plots indicate inputs and outputs of equation \eqref{eq:drugCytGeneInt}. Bar plots indicate size and sign of coefficients assigned to genetic features named on right. Scatter plot depicts \(\beta_{int}\) values for each patient sample i.e.response matrix. Heatmap tiles indicate mutation status for the selected genetic features (i.e.~feature matrix) corresponding to same sample in scatter plot below, to show how size of \(\beta_{int}\) varies with each feature.'' See Methods section \ref{drug-stimulus-gene-interactions-method}. \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:FluCpGExA}
+\caption{``Genetic features that modulate the size of \(\beta_{int}\) between fludarabine (purine analogue) and CpG ODN (TLR9). Scatter plot, heatmap and bar plots indicate inputs and outputs of equation \eqref{eq:drugCytGeneInt}. Bar plots indicate size and sign of coefficients assigned to genetic features named on right. Scatter plot depicts \(\beta_{int}\) values for each patient sample i.e.response matrix. Heatmap tiles indicate mutation status for the selected genetic features (i.e.~feature matrix) corresponding to same sample in scatter plot below, to show how size of \(\beta_{int}\) varies with each feature.'' See Methods Section \ref{drug-stimulus-gene-interactions-method}. \emph{Figure and caption from Bruch and Giles et al.~2021.}}\label{fig:FluCpGExA}
 \end{figure}
 I visualised sample responses to CpG ODN and fludarabine stratified by two of these features: IGHV status and trisomy 12 (Figure \ref{fig:FluCpGExB}, Bruch and Giles et al.~2021). In IGHV-M non-trisomy 12 samples, TLR stimulation increased fludarabine efficacy. In samples that were either IGHV-U or trisomy 12, the reverse was true and TLR stimulation induced resistance to fludarabine (Bruch and Giles et al.~2021).
 
@@ -1978,7 +1954,7 @@ I observed a similar effect with other chemotherapeutic drugs. Nutlin-3a is an M
 
 }
 
-\caption{Predictor profile depicting genetic features that modulate the size of \(\beta_{int}\) between nutlin-3a (MDM2) and CpG ODN (TLR9). Plot generated as in Figure \ref{fig:FluCpGExA}. See Methods section \ref{drug-stimulus-gene-interactions-method}.}\label{fig:nutlinCpgEx}
+\caption{Predictor profile depicting genetic features that modulate the size of \(\beta_{int}\) between nutlin-3a (MDM2) and CpG ODN (TLR9). Plot generated as in Figure \ref{fig:FluCpGExA}. See Methods Section \ref{drug-stimulus-gene-interactions-method}.}\label{fig:nutlinCpgEx}
 \end{figure}
 
 \begin{figure}
@@ -2004,7 +1980,7 @@ This result highlights that IL4-induced resistance may be a broad spectrum resis
 
 }
 
-\caption{Predictor profile depicting genetic features that modulate the size of \(\beta_{int}\) between ibrutinib (BTK) and IL4. Plot generated as in Figure \ref{fig:FluCpGExA}. See also Methods section \ref{drug-stimulus-gene-interactions-method}. \emph{Figure from Bruch and Giles et al.~2021.}}\label{fig:ibrIl4ExA}
+\caption{Predictor profile depicting genetic features that modulate the size of \(\beta_{int}\) between ibrutinib (BTK) and IL4. Plot generated as in Figure \ref{fig:FluCpGExA}. See also Methods Section \ref{drug-stimulus-gene-interactions-method}. \emph{Figure from Bruch and Giles et al.~2021.}}\label{fig:ibrIl4ExA}
 \end{figure}
 \begin{figure}
 
@@ -2029,7 +2005,7 @@ This result highlights that IL4-induced resistance may be a broad spectrum resis
 
 }
 
-\caption{Examples of IL4-induced resistance. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. Plots show IL4 + (A) idelalisib (Pi3K), (B) PRT062607 (SYK) (C) everolimus (mTOR), and (D) selumetinib (MEK). See Methods section \ref{drug-stimulus-linear-model-method}. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:IL4Res}
+\caption{Examples of IL4-induced resistance. Plots show log transformed viability values with each treatment, for all samples. Matching samples are linked across treatments. Black and blue horizontal lines indicate the predicted viability from the linear model for each single and combinatorial treatment. In combinatorial treatment, both the expected viability based on the additive effect of drug and stimulus (blue), and the viability with interaction (black) are shown, to indicate the impact of the interaction. Plots show IL4 + (A) idelalisib (Pi3K), (B) PRT062607 (SYK) (C) everolimus (mTOR), and (D) selumetinib (MEK). See Methods Section \ref{drug-stimulus-linear-model-method}. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:IL4Res}
 \end{figure}
 This is accross genetic backgrounds (refer to above)
 
@@ -2045,7 +2021,7 @@ This is accross genetic backgrounds (refer to above)
 
 }
 
-\caption{See Methods sections \ref{il4-ihc-exp} and \ref{il4-ihc-method}. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:IL4ihc}
+\caption{See Methods Sections \ref{il4-ihc-exp} and \ref{il4-ihc-method}. \emph{Figure from Bruch \& Giles et al.~2021.}}\label{fig:IL4ihc}
 \end{figure}
 \hypertarget{treated-atacseq}{%
 \subsection{STAT6 is necessary for IL4 induced resistance}\label{treated-atacseq}}
@@ -2113,7 +2089,7 @@ Bridging the gaps between what we currently know, and where we need to be, will 
 
 This thesis conceived that a systematic investigation of drugs, molecular features and soluble factors within the CLL microenvironment could provide the building blocks for a more holistic understanding of interactions between tumour genetics, the microenvironment and drugs in more complex \emph{in vivo} situations. I utilised a reductionist model of microenvironmental signalling based on an \emph{ex vivo} perturbation assay to query the effect of 17 microenvironmental stimuli and 12 drugs on primary CLL samples. This dataset was combined with patient multi-omic profiles. Collectively, this work maps the effects of soluble factors in the microenvironment, both in isolation and in combination with drugs, and links these to underlying molecular properties in 192 primary CLL samples. I discuss the key findings below.
 
-This reductionist approach had both advantages and drawbacks. Cross-talk between malignant cells and the tumour microenvironment is mediated by soluble factors, along with cell-cell contacts, the extracellular matrix and secreted vesicles (see section \ref{intro-microenvironmental-pathways} (\protect\hyperlink{ref-Guarini2008}{Guarini et al. 2008}; \protect\hyperlink{ref-Oppezzo2013}{P. Oppezzo and Dighiero 2013}; \protect\hyperlink{ref-Crompot2017}{Crompot et al. 2017}). Thus, the functional assay employed here encompasses a cross-section of this network, but does not account for the complete landscape of microenvironmental communication. Nevertheless, the use of soluble factors enabled the identification of direct causal links between signalling pathways and tumour responses. Moreover, this study complements similar work investigating cell-cell contacts in CLL drug response (\protect\hyperlink{ref-HerbstThesis}{Herbst 2020}), and collectively these studies aim to piece together the role that both soluble factors and cell-cell contacts play in drug response.
+This reductionist approach had both advantages and drawbacks. Cross-talk between malignant cells and the tumour microenvironment is mediated by soluble factors, along with cell-cell contacts, the extracellular matrix and secreted vesicles (see Section \ref{intro-microenvironmental-pathways} (\protect\hyperlink{ref-Guarini2008}{Guarini et al. 2008}; \protect\hyperlink{ref-Oppezzo2013}{P. Oppezzo and Dighiero 2013}; \protect\hyperlink{ref-Crompot2017}{Crompot et al. 2017}). Thus, the functional assay employed here encompasses a cross-section of this network, but does not account for the complete landscape of microenvironmental communication. Nevertheless, the use of soluble factors enabled the identification of direct causal links between signalling pathways and tumour responses. Moreover, this study complements similar work investigating cell-cell contacts in CLL drug response (\protect\hyperlink{ref-HerbstThesis}{Herbst 2020}), and collectively these studies aim to piece together the role that both soluble factors and cell-cell contacts play in drug response.
 
 Additionally, the use of primary CLL samples, rather than cell lines, encompassed the disease heterogeneity of CLL. This approach had the disadvantage that primary CLL cells do not proliferate \emph{in vitro}, which inevitably made the assay readout more complex. Significantly, this study represents a much larger scale approach than previous work. For example, the effects of IL4 on CLL cells has been studied previous (\protect\hyperlink{ref-Dancescu1992}{Dancescu et al. 1992}; \protect\hyperlink{ref-Bhattacharya2015}{Bhattacharya et al. 2015}; \protect\hyperlink{ref-AguilarHernandez2016}{Aguilar-Hernandez et al. 2016}) but only in very small cohorts that do not represent the genetic diversity of the disease.
 
@@ -2167,7 +2143,7 @@ In this thesis, I noted that IBET-762 inhibited the TF signature of trisomy 12 C
 
 In addition to drug-gene interactions, a key feature of this study was the ability to identify drug-stimulus interactions. This refers to cases where the efficacy of a drug was modulated by the activity a microenvironmental pathway, or vice versa. I identified such cases using a linear model, indicated in Equation \eqref{eq:drugCytInt}.
 
-The linear modelling approach represents the first attempt to map drug -- microenvironment interactions in CLL on a large scale. Whilst it cannot be assumed that the analysis captured all interactions existing in the dataset, the linear model nevertheless represents a valuable tool and my drug-stimulus interaction analysis recapitulated known phenomena and identified many novel cases. These included the effect of IL4 stimulation on BCR inhibition (\protect\hyperlink{ref-AguilarHernandez2016}{Aguilar-Hernandez et al. 2016}), discussed in section \ref{discussion-IL4-ibrutinib} and the impact of IFN\(/gamma\) on BCR inhibitor and chemotherapeutic efficacy.
+The linear modelling approach represents the first attempt to map drug -- microenvironment interactions in CLL on a large scale. Whilst it cannot be assumed that the analysis captured all interactions existing in the dataset, the linear model nevertheless represents a valuable tool and my drug-stimulus interaction analysis recapitulated known phenomena and identified many novel cases. These included the effect of IL4 stimulation on BCR inhibition (\protect\hyperlink{ref-AguilarHernandez2016}{Aguilar-Hernandez et al. 2016}), discussed in Section \ref{discussion-IL4-ibrutinib} and the impact of IFN\(/gamma\) on BCR inhibitor and chemotherapeutic efficacy.
 
 The drug -- microenvironment interaction map is also not comprehensive in that it only accounts for the pathways included within the screen. However, the approach has guided other interaction analyses, such as that published in \protect\hyperlink{ref-HerbstThesis}{Herbst} (\protect\hyperlink{ref-HerbstThesis}{2020}), who used a similar linear model to identify drug -- microenvironment interactions between drugs and BMSC cell lines. Collectively, these studies are piecing together a comprehensive picture of the importance of the microenvironment in drug response, to help guide better therapeutic strategies that account for the role of the protective nice.
 
@@ -3227,7 +3203,7 @@ Ziller, Michael J., Hongcang Gu, Fabian Müller, Julie Donaghey, Linus T.-Y. Tsa
 differential accessibility values are shown for two independent datasets comparing trisomy 12
 vs non-trisomy 12 CLL and IBET-762 vs control-treated CLL, for all TFs with adjusted p value
 \textless0.05 in the trisomy 12 comparison. Absolute change in TF accessibility can not be compared
-between the two experiments. See Methods section \ref{treated-ATACseq-method} and \ref{ibet-ATACseq-method}.'' \emph{Figure and caption generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}}\label{fig:ibetatac}
+between the two experiments. See Methods Section \ref{treated-ATACseq-method} and \ref{ibet-ATACseq-method}.'' \emph{Figure and caption generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al.~2021.}}\label{fig:ibetatac}
 \end{figure}
 
 \begin{figure}
