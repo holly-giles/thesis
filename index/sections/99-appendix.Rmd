@@ -319,7 +319,7 @@ left_join(df, patMeta, by = "PatientID") %>%
 differential accessibility values are shown for two independent datasets comparing trisomy 12 
 vs non-trisomy 12 CLL and IBET-762 vs control-treated CLL, for all TFs with adjusted p value 
 <0.05 in the trisomy 12 comparison. Absolute change in TF accessibility can not be compared 
-between the two experiments. See Methods section \@ref(treated-ATACseq-method) and \@ref(ibet-ATACseq-method)."  _Figure and caption generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al. 2021._
+between the two experiments. See Methods Section \@ref(treated-ATACseq-method) and \@ref(ibet-ATACseq-method)."  _Figure and caption generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al. 2021._
 
 ```{r ibetatac, fig.cap='(ref:ibetatac)', message = FALSE,  echo = FALSE, fig.align="center",  dev = 'cairo_pdf', out.width='100%' }
 
