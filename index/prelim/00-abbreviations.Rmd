@@ -56,6 +56,7 @@ output:
     NLC & & Nurselike cell  \\
     NOTCH & & Neurogenic locus notch  \\
     OS & & Overall survival \\
+    PACE & & Primary Cancer Cell Encyclopedia  \\
     PBMC & & Peripheral blood mononuclear cells \\
     PCA & & Principal component analysis \\
     PI3K & & Phosphoinositide 3-kinase \\
