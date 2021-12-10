@@ -129,7 +129,7 @@ Other drugs targeting SYK, downstream of BTK, have also shown promise in Phase I
 
 Aside from BCR inhibitors, BCL-2 inhibitors such as venetoclax, have also shown good efficacy in CLL. Venetoclax is thought to induce apoptosis in CLL cells, by acting as a BH3 mimetic interfering with the ability of BCL-2 to sequester BIM [@Moore2007]. 
 
-CLL is thus a manageable disease, with a well-established arsenal of treatments and associated management algorithm. However, treatments are harsh, and the disease is still considered incurable [@Bosch2019]. Many cases develop resistance to therapy, both via acquired mutations and through survival signals provided by the microenvironment (see section \@ref(intro-microenvironment-drug-response)) and minimal residual disease within the bone marrow is common. Collectively, these lead to relapse or required prolonged therapy and its associated toxicities. There remains a clinical need to improve patient outcomes and experience.
+CLL is thus a manageable disease, with a well-established arsenal of treatments and associated management algorithm. However, treatments are harsh, and the disease is still considered incurable [@Bosch2019]. Many cases develop resistance to therapy, both via acquired mutations and through survival signals provided by the microenvironment (see Section \@ref(intro-microenvironment-drug-response)) and minimal residual disease within the bone marrow is common. Collectively, these lead to relapse or required prolonged therapy and its associated toxicities. There remains a clinical need to improve patient outcomes and experience.
 
 ## The tumour microenvironment in CLL {#intro-tumour-microenvironment}
 
