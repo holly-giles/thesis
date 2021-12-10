@@ -156,16 +156,16 @@ Raw_Screening_Data %>%
 
 Figure \@ref(fig:rawViabilities) shows the raw viability values from the DMSO-treated wells for each patient sample. The absolute values vary between patient samples, and between measuring dates, and thus the viability values required additional normalisation. 
 
-Each viability value was normalised to internal DMSO values of the same plate.  Specifically, the well for each stimulus, drug or drug-stimulus treatment was divided by the median of the 48 DMSO negative control wells present on each plate, resulting in viability scores. A value of 0 indicated that all cells were killed by the treatment, and a value of 1 indicated the cells survived as well as in the negative control. 
+Each viability value was normalised to internal DMSO values of the same plate.  Specifically, the well for each stimulus, drug or drug-stimulus treatment was divided by the median of the 50 DMSO negative control wells present on each plate, resulting in viability scores. A value of 0 indicated that all cells were killed by the treatment, and a value of 1 indicated the cells survived as well as in the negative control. 
 
 Given the downstream analysis involved the use of linear modelling, I thus applied a natural logarithm transformation to the viability scores. This generated log-transformed control-normalised viability scores which are used for the majority of the downstream analysis. Here 0 indicates that cells survived as well as negative control. 
 
 ### Quality control and data reproducibility 
 Next, several additional quality control steps were considered, with the aim of a) adjusting for any spatial effects on each screening plate, b) accounting for any batch effects between screening batches, c) testing data reproducibility. 
 
-First, the screening data for each well on each plate was plotted in a grid corresponding to the plate layout, to visualise whether viability values were affected by their position on the plate. We discussed adjusting for any position effect by fitting a surface to the negative control wells, to generate correction factors for each well for each plate. The resulting correction factor was then subtracted from each of the treatment wells. We decided that the position effect was not sufficient to warrant this adjustment, and continued the analysis with the unadjusted values. [CHECK/remove]
+First, the screening data for each well on each plate was plotted in a grid corresponding to the plate layout, to visualise whether viability values were affected by their position on the plate. We discussed adjusting for any position effect by fitting a surface to the negative control wells, to generate correction factors for each well for each plate. The resulting correction factor was then subtracted from each of the treatment wells. We decided that the position effect was not sufficient to warrant this adjustment, and continued the analysis with the unadjusted values. 
 
-With regards to batch effects, screening was performed on 16 separate days. We concluded that normalising data to the DMSO-treated wells on each plate sufficiently accounted for this. [CHECK]. Finally, with respect to data reproducibility, each plate was tested twice, such that the  resulting viability scores are the mean of two duplicates [CHECK, add correlation figure].
+With regards to batch effects, screening was performed on 16 separate days. Normalising data to the DMSO-treated wells on each plate sufficiently accounted for this. With respect to data reproducibility, technical replicates existed for single drug treatments (two) and DMSO wells (100), for each patient sample. These replicates indicated that data was reproducible. 
 
 Thus, the data processing steps generated robust, log-transformed control-normalised viability scores that aim to capture the biological impact of the concomitant application of drugs and stimuli, outlined below. 
 
