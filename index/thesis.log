@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.13.0 (TeX Live 2021)  (format=lualatex 2021.6.3)  10 DEC 2021 17:48
+This is LuaHBTeX, Version 1.13.0 (TeX Live 2021)  (format=lualatex 2021.6.3)  12 DEC 2021 18:40
  restricted system commands enabled.
 **thesis.tex
 (./thesis.tex
@@ -868,17 +868,7 @@ y and pa-tient sam-ple multi-omic
 
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10.95> not available
 (Font)              Font shape `T1/phv/b/sl' tried instead on input line 93.
-[21] [22]
-Overfull \hbox (1.29184pt too wide) detected at line 145
- []\T1/phv/m/n/10.95 100
- []
-
-
-Overfull \hbox (1.29184pt too wide) detected at line 146
- []\T1/phv/m/n/10.95 100
- []
-
-)
+[21] [22])
 \tf@toc=\write4
 
 \openout4 = thesis.toc
@@ -1140,13 +1130,13 @@ Package luatex.def Info: thesis_files/figure-latex/drugCategories-1.pdf  used o
 n input line 1106.
 (luatex.def)             Requested size: 236.15797pt x 153.66154pt.
 [38<./thesis_files/figure-latex/drugCategories-1.pdf>]
-<thesis_files/figure-latex/drugCorrelations-1.pdf, id=2260, 918.43124pt x 314.1
-7375pt>
+<thesis_files/figure-latex/drugCorrelations-1.pdf, id=2260, 846.16125pt x 418.5
+6375pt>
 File: thesis_files/figure-latex/drugCorrelations-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/drugCorrelations-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/drugCorrelations-1.pdf  used
  on input line 1122.
-(luatex.def)             Requested size: 330.61972pt x 113.09766pt.
+(luatex.def)             Requested size: 330.61972pt x 163.53937pt.
 Package epstopdf Info: Source file: <figures/microenvironmentCrosstalk.eps>
 (epstopdf)                    date: 2021-08-09 12:03:39
 (epstopdf)                    size: 4374174 bytes
@@ -1166,6 +1156,7 @@ File: figures/microenvironmentCrosstalk-eps-converted-to.pdf Graphic file (type
 Package luatex.def Info: figures/microenvironmentCrosstalk-eps-converted-to.pdf
   used on input line 1143.
 (luatex.def)             Requested size: 283.39244pt x 163.83035pt.
+[39<./thesis_files/figure-latex/drugCorrelations-1.pdf>]
 Package epstopdf Info: Source file: <figures/stimuliPathways.eps>
 (epstopdf)                    date: 2021-10-07 17:17:40
 (epstopdf)                    size: 1176958 bytes
@@ -1177,16 +1168,15 @@ df>
 s-converted-to.pdf figures/stimuliPathways.eps>
 (epstopdf)             \includegraphics on input line 1154.
 Package epstopdf Info: Output file is already uptodate.
-<figures/stimuliPathways-eps-converted-to.pdf, id=2277, 768.8725pt x 512.91624p
+<figures/stimuliPathways-eps-converted-to.pdf, id=2298, 768.8725pt x 512.91624p
 t>
 File: figures/stimuliPathways-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/stimuliPathways-eps-converted-to.pdf>
 Package luatex.def Info: figures/stimuliPathways-eps-converted-to.pdf  used on 
 input line 1154.
 (luatex.def)             Requested size: 283.39244pt x 189.056pt.
-[39<./thesis_files/figure-latex/drugCorrelations-1.pdf>] [40<./figures/microenvi
-ronmentCrosstalk-eps-converted-to.pdf><./figures/stimuliPathways-eps-converted-t
-o.pdf>]
+[40<./figures/microenvironmentCrosstalk-eps-converted-to.pdf><./figures/stimuliP
+athways-eps-converted-to.pdf>]
 <thesis_files/figure-latex/geneticData-1.pdf, id=2325, 3082.51625pt x 2833.5862
 4pt>
 File: thesis_files/figure-latex/geneticData-1.pdf Graphic file (type pdf)
@@ -1222,7 +1212,7 @@ f)
 <use thesis_files/figure-latex/stimuliCorrelations-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/stimuliCorrelations-1.pdf  u
 sed on input line 1252.
-(luatex.def)             Requested size: 283.39244pt x 208.94893pt.
+(luatex.def)             Requested size: 236.15797pt x 174.12221pt.
 <thesis_files/figure-latex/correlationsScatter-1.pdf, id=2398, 335.2525pt x 188
 .705pt>
 File: thesis_files/figure-latex/correlationsScatter-1.pdf Graphic file (type pd
@@ -1230,427 +1220,416 @@ f)
 <use thesis_files/figure-latex/correlationsScatter-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/correlationsScatter-1.pdf  u
 sed on input line 1265.
-(luatex.def)             Requested size: 472.31595pt x 265.85524pt.
-[46<./thesis_files/figure-latex/stimuliCorrelations-1.pdf>]
-<thesis_files/figure-latex/stimuliBeeswarms-1.pdf, id=2426, 706.64pt x 260.975p
+(luatex.def)             Requested size: 330.61972pt x 186.09578pt.
+<thesis_files/figure-latex/stimuliBeeswarms-1.pdf, id=2400, 706.64pt x 260.975p
 t>
 File: thesis_files/figure-latex/stimuliBeeswarms-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/stimuliBeeswarms-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/stimuliBeeswarms-1.pdf  used
  on input line 1276.
 (luatex.def)             Requested size: 472.31595pt x 174.43422pt.
-
+[46<./thesis_files/figure-latex/stimuliCorrelations-1.pdf>]
 Overfull \hbox (25.60767pt too wide) in paragraph at lines 1287--1287
 []\T1/phv/b/n/12 Mi-croen-vi-ron-men-tal re-sponse pro-fil-ing iden-ti-fies dis-
 crete pa-tient sub-groups 
  []
 
-<thesis_files/figure-latex/stimuliHeatmap-1.pdf, id=2429, 1073.00874pt x 529.98
+[47<./thesis_files/figure-latex/correlationsScatter-1.pdf><./thesis_files/figure
+-latex/stimuliBeeswarms-1.pdf>]
+<thesis_files/figure-latex/stimuliHeatmap-1.pdf, id=2465, 1073.00874pt x 529.98
 pt>
 File: thesis_files/figure-latex/stimuliHeatmap-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/stimuliHeatmap-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/stimuliHeatmap-1.pdf  used o
 n input line 1294.
 (luatex.def)             Requested size: 472.31595pt x 233.28087pt.
-[47<./thesis_files/figure-latex/correlationsScatter-1.pdf>]
-<figures/consensus008.png, id=2448, 481.8pt x 481.8pt>
+<figures/consensus008.png, id=2468, 481.8pt x 481.8pt>
 File: figures/consensus008.png Graphic file (type png)
 <use figures/consensus008.png>
-Package luatex.def Info: figures/consensus008.png  used on input line 1309.
+Package luatex.def Info: figures/consensus008.png  used on input line 1303.
 (luatex.def)             Requested size: 212.54073pt x 212.53667pt.
-<figures/consensus009.png, id=2449, 481.8pt x 481.8pt>
+<figures/consensus009.png, id=2469, 481.8pt x 481.8pt>
 File: figures/consensus009.png Graphic file (type png)
 <use figures/consensus009.png>
-Package luatex.def Info: figures/consensus009.png  used on input line 1309.
+Package luatex.def Info: figures/consensus009.png  used on input line 1303.
 (luatex.def)             Requested size: 212.54073pt x 212.53667pt.
-<figures/consensus010.png, id=2452, 481.8pt x 481.8pt>
-File: figures/consensus010.png Graphic file (type png)
-<use figures/consensus010.png>
-Package luatex.def Info: figures/consensus010.png  used on input line 1318.
-(luatex.def)             Requested size: 212.54073pt x 212.53667pt.
-[48<./thesis_files/figure-latex/stimuliBeeswarms-1.pdf>]
-<thesis_files/figure-latex/clusterStimuliResponse-1.pdf, id=2491, 1074.0125pt x
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[48<./thesis_files/figure-latex/stimuliHeatmap-1.pdf>] [49<./figures/consensus00
+8.png><./figures/consensus009.png>]
+<thesis_files/figure-latex/clusterStimuliResponse-1.pdf, id=2519, 1074.0125pt x
  492.84125pt>
 File: thesis_files/figure-latex/clusterStimuliResponse-1.pdf Graphic file (type
  pdf)
 <use thesis_files/figure-latex/clusterStimuliResponse-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/clusterStimuliResponse-1.pdf
-  used on input line 1339.
+  used on input line 1330.
 (luatex.def)             Requested size: 472.31595pt x 216.73048pt.
 
 Package hyperref Warning: No autoref name for `BackrefHyperFootnoteCounter' on 
-input line 1348.
+input line 1339.
 
 
 Package hyperref Warning: No autoref name for `BackrefHyperFootnoteCounter' on 
-input line 1348.
+input line 1339.
 
-[49<./thesis_files/figure-latex/stimuliHeatmap-1.pdf>]
-<thesis_files/figure-latex/clusterLDTTTT-1.pdf, id=2539, 623.32875pt x 336.2562
+<thesis_files/figure-latex/clusterLDTTTT-1.pdf, id=2529, 623.32875pt x 336.2562
 6pt>
 File: thesis_files/figure-latex/clusterLDTTTT-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/clusterLDTTTT-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/clusterLDTTTT-1.pdf  used on
- input line 1357.
-(luatex.def)             Requested size: 472.31595pt x 254.79291pt.
-[50<./figures/consensus008.png><./figures/consensus009.png>]
-<thesis_files/figure-latex/clusterDrugResponse-1.pdf, id=2557, 712.6625pt x 565
+ input line 1348.
+(luatex.def)             Requested size: 425.08147pt x 229.31311pt.
+[50<./thesis_files/figure-latex/clusterStimuliResponse-1.pdf>] [51<./thesis_file
+s/figure-latex/clusterLDTTTT-1.pdf>]
+<thesis_files/figure-latex/clusterDrugResponse-1.pdf, id=2586, 712.6625pt x 565
 .11125pt>
 File: thesis_files/figure-latex/clusterDrugResponse-1.pdf Graphic file (type pd
 f)
 <use thesis_files/figure-latex/clusterDrugResponse-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/clusterDrugResponse-1.pdf  u
-sed on input line 1401.
-(luatex.def)             Requested size: 330.61972pt x 262.16179pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[51<./figures/consensus010.png>]
-<thesis_files/figure-latex/clusterMatrix-1.pdf, id=2566, 407.5225pt x 252.945pt
+sed on input line 1392.
+(luatex.def)             Requested size: 377.85419pt x 299.61963pt.
+<thesis_files/figure-latex/clusterMatrix-1.pdf, id=2588, 407.5225pt x 252.945pt
 >
 File: thesis_files/figure-latex/clusterMatrix-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/clusterMatrix-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/clusterMatrix-1.pdf  used on
- input line 1415.
+ input line 1406.
 (luatex.def)             Requested size: 283.39244pt x 175.90627pt.
-<thesis_files/figure-latex/clusterEnrichment-1.pdf, id=2570, 284.06125pt x 244.
+[52<./thesis_files/figure-latex/clusterDrugResponse-1.pdf>]
+<thesis_files/figure-latex/clusterEnrichment-1.pdf, id=2606, 284.06125pt x 244.
 915pt>
 File: thesis_files/figure-latex/clusterEnrichment-1.pdf Graphic file (type pdf)
 
 <use thesis_files/figure-latex/clusterEnrichment-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/clusterEnrichment-1.pdf  use
-d on input line 1434.
-(luatex.def)             Requested size: 377.85419pt x 325.81505pt.
-[52<./thesis_files/figure-latex/clusterStimuliResponse-1.pdf>] [53<./thesis_file
-s/figure-latex/clusterLDTTTT-1.pdf>]
-<thesis_files/figure-latex/clusterDE-1.pdf, id=2617, 464.73625pt x 315.1775pt>
+d on input line 1421.
+(luatex.def)             Requested size: 236.15797pt x 203.61946pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[53<./thesis_files/figure-latex/clusterMatrix-1.pdf>]
+<thesis_files/figure-latex/clusterDE-1.pdf, id=2626, 464.73625pt x 315.1775pt>
 File: thesis_files/figure-latex/clusterDE-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/clusterDE-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/clusterDE-1.pdf  used on inp
-ut line 1454.
-(luatex.def)             Requested size: 330.61972pt x 224.22484pt.
-<thesis_files/figure-latex/clusterGSEA-1.pdf, id=2624, 464.73625pt x 312.16624p
+ut line 1445.
+(luatex.def)             Requested size: 283.39244pt x 192.19547pt.
+[54<./thesis_files/figure-latex/clusterEnrichment-1.pdf>]
+<thesis_files/figure-latex/clusterGSEA-1.pdf, id=2647, 464.73625pt x 312.16624p
 t>
 File: thesis_files/figure-latex/clusterGSEA-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/clusterGSEA-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/clusterGSEA-1.pdf  used on i
-nput line 1467.
-(luatex.def)             Requested size: 330.61972pt x 222.08257pt.
-<thesis_files/figure-latex/GSEApathways-1.pdf, id=2628, 442.65375pt x 295.1025p
-t>
-File: thesis_files/figure-latex/GSEApathways-1.pdf Graphic file (type pdf)
-<use thesis_files/figure-latex/GSEApathways-1.pdf>
-Package luatex.def Info: thesis_files/figure-latex/GSEApathways-1.pdf  used on 
-input line 1478.
-(luatex.def)             Requested size: 442.65265pt x 295.10176pt.
+nput line 1458.
+(luatex.def)             Requested size: 283.39244pt x 190.3592pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-[54<./thesis_files/figure-latex/clusterDrugResponse-1.pdf>] [55<./thesis_files/f
-igure-latex/clusterMatrix-1.pdf>] [56<./thesis_files/figure-latex/clusterEnrichm
-ent-1.pdf>] [57<./thesis_files/figure-latex/clusterDE-1.pdf><./thesis_files/figu
-re-latex/clusterGSEA-1.pdf>] [58<./thesis_files/figure-latex/GSEApathways-1.pdf>
-]
+[55<./thesis_files/figure-latex/clusterDE-1.pdf>] [56<./thesis_files/figure-late
+x/clusterGSEA-1.pdf>]
 Chapter 5.
 
-Overfull \hbox (5.32687pt too wide) in paragraph at lines 1501--1501
+Overfull \hbox (5.32687pt too wide) in paragraph at lines 1483--1483
 []\T1/phv/b/n/14.4 Sys-tem-atic anal-y-sis of the ef-fect of ge-netic fea-tures on re-sponses
  []
 
-<thesis_files/figure-latex/stimuliGeneAssosciations-1.pdf, id=2711, 351.3125pt 
+<thesis_files/figure-latex/stimuliGeneAssosciations-1.pdf, id=2687, 351.3125pt 
 x 348.30125pt>
 File: thesis_files/figure-latex/stimuliGeneAssosciations-1.pdf Graphic file (ty
 pe pdf)
 <use thesis_files/figure-latex/stimuliGeneAssosciations-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/stimuliGeneAssosciations-1.p
-df  used on input line 1511.
+df  used on input line 1493.
 (luatex.def)             Requested size: 283.39244pt x 280.98514pt.
-[59
+[57
 
-] [60<./thesis_files/figure-latex/stimuliGeneAssosciations-1.pdf>]
-<thesis_files/figure-latex/stimuliGeneAssosciationsMulti-1.pdf, id=2762, 579.16
+] [58<./thesis_files/figure-latex/stimuliGeneAssosciations-1.pdf>]
+<thesis_files/figure-latex/stimuliGeneAssosciationsMulti-1.pdf, id=2736, 579.16
 376pt x 543.02875pt>
 File: thesis_files/figure-latex/stimuliGeneAssosciationsMulti-1.pdf Graphic fil
 e (type pdf)
 <use thesis_files/figure-latex/stimuliGeneAssosciationsMulti-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/stimuliGeneAssosciationsMult
-i-1.pdf  used on input line 1531.
+i-1.pdf  used on input line 1513.
 (luatex.def)             Requested size: 283.39244pt x 265.71353pt.
-[61<./thesis_files/figure-latex/stimuliGeneAssosciationsMulti-1.pdf>]
-<thesis_files/figure-latex/ral_il4-1.pdf, id=2787, 459.7175pt x 293.095pt>
+[59<./thesis_files/figure-latex/stimuliGeneAssosciationsMulti-1.pdf>]
+<thesis_files/figure-latex/ral_il4-1.pdf, id=2763, 459.7175pt x 293.095pt>
 File: thesis_files/figure-latex/ral_il4-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/ral_il4-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/ral_il4-1.pdf  used on input
- line 1542.
+ line 1524.
 (luatex.def)             Requested size: 283.39244pt x 180.68839pt.
-<thesis_files/figure-latex/TLRGenes-1.pdf, id=2790, 558.085pt x 410.53375pt>
+<thesis_files/figure-latex/TLRGenes-1.pdf, id=2766, 558.085pt x 410.53375pt>
 File: thesis_files/figure-latex/TLRGenes-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/TLRGenes-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/TLRGenes-1.pdf  used on inpu
-t line 1556.
+t line 1538.
 (luatex.def)             Requested size: 472.31595pt x 347.45192pt.
-[62<./thesis_files/figure-latex/ral_il4-1.pdf>]
-<thesis_files/figure-latex/TLRIHGVtri12-1.pdf, id=2822, 423.5825pt x 261.97874p
+[60<./thesis_files/figure-latex/ral_il4-1.pdf>]
+<thesis_files/figure-latex/TLRIHGVtri12-1.pdf, id=2798, 423.5825pt x 261.97874p
 t>
 File: thesis_files/figure-latex/TLRIHGVtri12-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/TLRIHGVtri12-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/TLRIHGVtri12-1.pdf  used on 
-input line 1569.
+input line 1551.
 (luatex.def)             Requested size: 472.31595pt x 292.131pt.
-[63<./thesis_files/figure-latex/TLRGenes-1.pdf>] [64<./thesis_files/figure-latex
+[61<./thesis_files/figure-latex/TLRGenes-1.pdf>] [62<./thesis_files/figure-latex
 /TLRIHGVtri12-1.pdf>]
-<thesis_files/figure-latex/tri12cytResponse-1.pdf, id=2879, 546.04pt x 184.69pt
+<thesis_files/figure-latex/tri12cytResponse-1.pdf, id=2855, 546.04pt x 184.69pt
 >
 File: thesis_files/figure-latex/tri12cytResponse-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/tri12cytResponse-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/tri12cytResponse-1.pdf  used
- on input line 1596.
+ on input line 1578.
 (luatex.def)             Requested size: 472.31595pt x 159.75464pt.
-[65<./thesis_files/figure-latex/tri12cytResponse-1.pdf>]
-<thesis_files/figure-latex/geneDosage-1.pdf, id=2916, 568.1225pt x 568.1225pt>
+[63<./thesis_files/figure-latex/tri12cytResponse-1.pdf>]
+<thesis_files/figure-latex/geneDosage-1.pdf, id=2892, 568.1225pt x 568.1225pt>
 File: thesis_files/figure-latex/geneDosage-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/geneDosage-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/geneDosage-1.pdf  used on in
-put line 1616.
+put line 1598.
 (luatex.def)             Requested size: 283.39244pt x 283.4017pt.
 
-Overfull \hbox (3.46732pt too wide) in paragraph at lines 1625--1625
+Overfull \hbox (3.46732pt too wide) in paragraph at lines 1607--1607
 []\T1/phv/b/n/12 Clas-si-fi-ca-tion anal-y-sis iden-ti-fies tri-somy 12 phe-no-c
 opies that show in-creased
  []
 
-[66<./thesis_files/figure-latex/geneDosage-1.pdf>]
-<thesis_files/figure-latex/tri12Classifier-1.pdf, id=2948, 513.92pt x 99.37125p
+[64<./thesis_files/figure-latex/geneDosage-1.pdf>]
+<thesis_files/figure-latex/tri12Classifier-1.pdf, id=2924, 513.92pt x 99.37125p
 t>
 File: thesis_files/figure-latex/tri12Classifier-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/tri12Classifier-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/tri12Classifier-1.pdf  used 
-on input line 1636.
+on input line 1618.
 (luatex.def)             Requested size: 472.31595pt x 91.32864pt.
-<thesis_files/figure-latex/tri12PhenocopiesCytResponse-1.pdf, id=2952, 206.7725
+<thesis_files/figure-latex/tri12PhenocopiesCytResponse-1.pdf, id=2928, 206.7725
 pt x 189.70876pt>
 File: thesis_files/figure-latex/tri12PhenocopiesCytResponse-1.pdf Graphic file 
 (type pdf)
 <use thesis_files/figure-latex/tri12PhenocopiesCytResponse-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/tri12PhenocopiesCytResponse-
-1.pdf  used on input line 1649.
+1.pdf  used on input line 1631.
 (luatex.def)             Requested size: 283.39244pt x 260.03258pt.
-<thesis_files/figure-latex/tri12PhenocopiesRNA-1.pdf, id=2959, 558.085pt x 177.
+<thesis_files/figure-latex/tri12PhenocopiesRNA-1.pdf, id=2935, 558.085pt x 177.
 66376pt>
 File: thesis_files/figure-latex/tri12PhenocopiesRNA-1.pdf Graphic file (type pd
 f)
 <use thesis_files/figure-latex/tri12PhenocopiesRNA-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/tri12PhenocopiesRNA-1.pdf  u
-sed on input line 1662.
+sed on input line 1644.
 (luatex.def)             Requested size: 472.31595pt x 150.36427pt.
-[67<./thesis_files/figure-latex/tri12Classifier-1.pdf>] [68<./thesis_files/figur
+[65<./thesis_files/figure-latex/tri12Classifier-1.pdf>] [66<./thesis_files/figur
 e-latex/tri12PhenocopiesCytResponse-1.pdf><./thesis_files/figure-latex/tri12Phen
 ocopiesRNA-1.pdf>]
 warning  (file figures/diffTF_method.pdf) (pdf inclusion): PDF inclusion: found 
 PDF version '1.6', but at most version '1.5' allowed
-<figures/diffTF_method.pdf, id=3026, 215.12971pt x 237.49866pt>
+<figures/diffTF_method.pdf, id=3002, 215.12971pt x 237.49866pt>
 File: figures/diffTF_method.pdf Graphic file (type pdf)
 <use figures/diffTF_method.pdf>
-Package luatex.def Info: figures/diffTF_method.pdf  used on input line 1684.
+Package luatex.def Info: figures/diffTF_method.pdf  used on input line 1666.
 (luatex.def)             Requested size: 236.15797pt x 260.7166pt.
-<thesis_files/figure-latex/tri12diffTF-1.pdf, id=3040, 568.1225pt x 406.51875pt
+<thesis_files/figure-latex/tri12diffTF-1.pdf, id=3016, 568.1225pt x 406.51875pt
 >
 File: thesis_files/figure-latex/tri12diffTF-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/tri12diffTF-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/tri12diffTF-1.pdf  used on i
-nput line 1701.
+nput line 1683.
 (luatex.def)             Requested size: 377.85419pt x 270.3812pt.
-[69] [70<./figures/diffTF_method.pdf>]
-<thesis_files/figure-latex/SpiBChipSeq-1.pdf, id=3081, 997.7275pt x 122.4575pt>
+[67] [68<./figures/diffTF_method.pdf>]
+<thesis_files/figure-latex/SpiBChipSeq-1.pdf, id=3056, 997.7275pt x 122.4575pt>
 
 File: thesis_files/figure-latex/SpiBChipSeq-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/SpiBChipSeq-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/SpiBChipSeq-1.pdf  used on i
-nput line 1721.
+nput line 1703.
 (luatex.def)             Requested size: 472.31595pt x 57.96983pt.
-<thesis_files/figure-latex/SpiBshRNAKD-1.pdf, id=3087, 712.6625pt x 265.99374pt
+<thesis_files/figure-latex/SpiBshRNAKD-1.pdf, id=3062, 712.6625pt x 265.99374pt
 >
 File: thesis_files/figure-latex/SpiBshRNAKD-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/SpiBshRNAKD-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/SpiBshRNAKD-1.pdf  used on i
-nput line 1735.
+nput line 1717.
 (luatex.def)             Requested size: 472.31595pt x 176.28697pt.
-[71<./thesis_files/figure-latex/tri12diffTF-1.pdf>] [72<./thesis_files/figure-la
-tex/SpiBChipSeq-1.pdf>] [73<./thesis_files/figure-latex/SpiBshRNAKD-1.pdf>] [74
+[69<./thesis_files/figure-latex/tri12diffTF-1.pdf>] [70<./thesis_files/figure-la
+tex/SpiBChipSeq-1.pdf>] [71<./thesis_files/figure-latex/SpiBshRNAKD-1.pdf>] [72
 
 ]
 Chapter 6.
-[75]
+[73]
 Underfull \vbox (badness 1189) has occurred while \output is active []
 
-[76]
-<thesis_files/figure-latex/drugStimulusDummyPLots-1.pdf, id=3195, 557.08125pt x
+[74]
+<thesis_files/figure-latex/drugStimulusDummyPLots-1.pdf, id=3171, 557.08125pt x
  321.2pt>
 File: thesis_files/figure-latex/drugStimulusDummyPLots-1.pdf Graphic file (type
  pdf)
 <use thesis_files/figure-latex/drugStimulusDummyPLots-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/drugStimulusDummyPLots-1.pdf
-  used on input line 1798.
+  used on input line 1780.
 (luatex.def)             Requested size: 472.31595pt x 272.33023pt.
-[77<./thesis_files/figure-latex/drugStimulusDummyPLots-1.pdf>]
-<thesis_files/figure-latex/drugStimulusIntMapt-1.pdf, id=3238, 489.83pt x 493.8
+[75<./thesis_files/figure-latex/drugStimulusDummyPLots-1.pdf>]
+<thesis_files/figure-latex/drugStimulusIntMapt-1.pdf, id=3214, 489.83pt x 493.8
 45pt>
 File: thesis_files/figure-latex/drugStimulusIntMapt-1.pdf Graphic file (type pd
 f)
 <use thesis_files/figure-latex/drugStimulusIntMapt-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/drugStimulusIntMapt-1.pdf  u
-sed on input line 1814.
+sed on input line 1796.
 (luatex.def)             Requested size: 377.85419pt x 380.96262pt.
 
-Overfull \hbox (10.85156pt too wide) in paragraph at lines 1826--1827
+Overfull \hbox (10.85156pt too wide) in paragraph at lines 1808--1809
 \T1/phv/m/n/10.95 IFN$\OML/cmm/m/it/10.95 $ \T1/phv/m/n/10.95 stim-u-la-tion in
 -duced re-sis-tance to BCR in-hi-bi-tion by ibru-ti-nib and ide-lal-isib, and to
  the chemother-
  []
 
-<thesis_files/figure-latex/drugStimulusIntEx-1.pdf, id=3250, 917.4275pt x 683.5
+<thesis_files/figure-latex/drugStimulusIntEx-1.pdf, id=3226, 917.4275pt x 683.5
 5376pt>
 File: thesis_files/figure-latex/drugStimulusIntEx-1.pdf Graphic file (type pdf)
 
 <use thesis_files/figure-latex/drugStimulusIntEx-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/drugStimulusIntEx-1.pdf  use
-d on input line 1833.
+d on input line 1815.
 (luatex.def)             Requested size: 425.08147pt x 316.72275pt.
-[78]
+[76]
 Underfull \vbox (badness 1881) has occurred while \output is active []
 
-[79<./thesis_files/figure-latex/drugStimulusIntMapt-1.pdf>] [80<./thesis_files/f
+[77<./thesis_files/figure-latex/drugStimulusIntMapt-1.pdf>] [78<./thesis_files/f
 igure-latex/drugStimulusIntEx-1.pdf>]
-Overfull \hbox (28.18733pt too wide) in paragraph at lines 1853--1853
+Overfull \hbox (28.18733pt too wide) in paragraph at lines 1835--1835
 []\T1/phv/b/n/12 Uni-vari-ate anal-y-sis iden-ti-fies tri-somy 12 as a key mod-u
 -la-tor of drug re-sponse 
  []
 
-<thesis_files/figure-latex/drugGeneIntMap-1.pdf, id=3339, 495.8525pt x 421.575p
+<thesis_files/figure-latex/drugGeneIntMap-1.pdf, id=3314, 495.8525pt x 421.575p
 t>
 File: thesis_files/figure-latex/drugGeneIntMap-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/drugGeneIntMap-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/drugGeneIntMap-1.pdf  used o
-n input line 1864.
+n input line 1846.
 (luatex.def)             Requested size: 330.61972pt x 281.09647pt.
-[81]
-<thesis_files/figure-latex/drugGeneIntEx-1.pdf, id=3360, 521.95pt x 340.27126pt
+[79]
+<thesis_files/figure-latex/drugGeneIntEx-1.pdf, id=3336, 521.95pt x 340.27126pt
 >
 File: thesis_files/figure-latex/drugGeneIntEx-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/drugGeneIntEx-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/drugGeneIntEx-1.pdf  used on
- input line 1879.
+ input line 1861.
 (luatex.def)             Requested size: 330.61972pt x 215.54024pt.
 
-Overfull \hbox (20.43155pt too wide) detected at line 1901
+Overfull \hbox (20.43155pt too wide) detected at line 1883
 [][][]
  []
 
 
 Underfull \vbox (badness 2837) has occurred while \output is active []
 
-[82<./thesis_files/figure-latex/drugGeneIntMap-1.pdf>]
-<thesis_files/figure-latex/drugCytGeneIntMap-1.pdf, id=3395, 634.37pt x 1281.78
+[80<./thesis_files/figure-latex/drugGeneIntMap-1.pdf>]
+<thesis_files/figure-latex/drugCytGeneIntMap-1.pdf, id=3371, 634.37pt x 1281.78
 876pt>
 File: thesis_files/figure-latex/drugCytGeneIntMap-1.pdf Graphic file (type pdf)
 
 <use thesis_files/figure-latex/drugCytGeneIntMap-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/drugCytGeneIntMap-1.pdf  use
-d on input line 1911.
+d on input line 1893.
 (luatex.def)             Requested size: 236.15797pt x 477.16862pt.
-[83<./thesis_files/figure-latex/drugGeneIntEx-1.pdf>]
-<thesis_files/figure-latex/FluCpGExA-1.pdf, id=3423, 639.38875pt x 371.3875pt>
+[81<./thesis_files/figure-latex/drugGeneIntEx-1.pdf>]
+<thesis_files/figure-latex/FluCpGExA-1.pdf, id=3399, 639.38875pt x 371.3875pt>
 File: thesis_files/figure-latex/FluCpGExA-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/FluCpGExA-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/FluCpGExA-1.pdf  used on inp
-ut line 1931.
+ut line 1913.
 (luatex.def)             Requested size: 330.61972pt x 192.04022pt.
-<thesis_files/figure-latex/FluCpGExB-1.pdf, id=3429, 418.56375pt x 397.485pt>
+<thesis_files/figure-latex/FluCpGExB-1.pdf, id=3405, 418.56375pt x 397.485pt>
 File: thesis_files/figure-latex/FluCpGExB-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/FluCpGExB-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/FluCpGExB-1.pdf  used on inp
-ut line 1942.
+ut line 1924.
 (luatex.def)             Requested size: 283.39244pt x 269.11565pt.
-<thesis_files/figure-latex/nutlinCpgEx-1.pdf, id=3435, 639.38875pt x 341.275pt>
+<thesis_files/figure-latex/nutlinCpgEx-1.pdf, id=3411, 639.38875pt x 341.275pt>
 
 File: thesis_files/figure-latex/nutlinCpgEx-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/nutlinCpgEx-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/nutlinCpgEx-1.pdf  used on i
-nput line 1953.
+nput line 1935.
 (luatex.def)             Requested size: 283.39244pt x 151.26022pt.
-<thesis_files/figure-latex/TLRnutlin-1.pdf, id=3440, 423.5825pt x 531.9875pt>
+<thesis_files/figure-latex/TLRnutlin-1.pdf, id=3416, 423.5825pt x 531.9875pt>
 File: thesis_files/figure-latex/TLRnutlin-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/TLRnutlin-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/TLRnutlin-1.pdf  used on inp
-ut line 1962.
+ut line 1944.
 (luatex.def)             Requested size: 472.31595pt x 593.21623pt.
-[84] [85<./thesis_files/figure-latex/drugCytGeneIntMap-1.pdf>]
-<thesis_files/figure-latex/ibrIl4ExA-1.pdf, id=3493, 639.38875pt x 282.05376pt>
+[82] [83<./thesis_files/figure-latex/drugCytGeneIntMap-1.pdf>]
+<thesis_files/figure-latex/ibrIl4ExA-1.pdf, id=3469, 639.38875pt x 282.05376pt>
 
 File: thesis_files/figure-latex/ibrIl4ExA-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/ibrIl4ExA-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/ibrIl4ExA-1.pdf  used on inp
-ut line 1979.
+ut line 1961.
 (luatex.def)             Requested size: 283.39244pt x 125.01213pt.
-<thesis_files/figure-latex/ibrIl4ExB-1.pdf, id=3498, 418.56375pt x 385.44pt>
+<thesis_files/figure-latex/ibrIl4ExB-1.pdf, id=3474, 418.56375pt x 385.44pt>
 File: thesis_files/figure-latex/ibrIl4ExB-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/ibrIl4ExB-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/ibrIl4ExB-1.pdf  used on inp
-ut line 1987.
+ut line 1969.
 (luatex.def)             Requested size: 283.39244pt x 260.96063pt.
-<thesis_files/figure-latex/IL4Res-1.pdf, id=3500, 845.1575pt x 433.62pt>
+<thesis_files/figure-latex/IL4Res-1.pdf, id=3476, 845.1575pt x 433.62pt>
 File: thesis_files/figure-latex/IL4Res-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/IL4Res-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/IL4Res-1.pdf  used on input 
-line 2004.
+line 1986.
 (luatex.def)             Requested size: 377.85419pt x 193.87006pt.
-<thesis_files/figure-latex/IL4ihc-1.pdf, id=3504, 1124.2pt x 474.77374pt>
+<thesis_files/figure-latex/IL4ihc-1.pdf, id=3480, 1124.2pt x 474.77374pt>
 File: thesis_files/figure-latex/IL4ihc-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/IL4ihc-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/IL4ihc-1.pdf  used on input 
-line 2020.
+line 2002.
 (luatex.def)             Requested size: 377.85419pt x 159.5736pt.
-[86<./thesis_files/figure-latex/FluCpGExA-1.pdf>]
-<thesis_files/figure-latex/stat6inhib-1.pdf, id=3543, 453.695pt x 279.0425pt>
+[84<./thesis_files/figure-latex/FluCpGExA-1.pdf>]
+<thesis_files/figure-latex/stat6inhib-1.pdf, id=3519, 453.695pt x 279.0425pt>
 File: thesis_files/figure-latex/stat6inhib-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/stat6inhib-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/stat6inhib-1.pdf  used on in
-put line 2038.
+put line 2020.
 (luatex.def)             Requested size: 472.31595pt x 290.49539pt.
 
-LaTeX Warning: Reference `fig:ibetil4' on page 87 undefined on input line 2047.
+LaTeX Warning: Reference `fig:ibetil4' on page 85 undefined on input line 2029.
 
 
-[87<./thesis_files/figure-latex/FluCpGExB-1.pdf>] [88<./thesis_files/figure-late
-x/nutlinCpgEx-1.pdf>] [89<./thesis_files/figure-latex/TLRnutlin-1.pdf>] [90<./th
+[85<./thesis_files/figure-latex/FluCpGExB-1.pdf>] [86<./thesis_files/figure-late
+x/nutlinCpgEx-1.pdf>] [87<./thesis_files/figure-latex/TLRnutlin-1.pdf>] [88<./th
 esis_files/figure-latex/ibrIl4ExA-1.pdf><./thesis_files/figure-latex/ibrIl4ExB-1
-.pdf>] [91<./thesis_files/figure-latex/IL4Res-1.pdf><./thesis_files/figure-latex
-/IL4ihc-1.pdf>] [92<./thesis_files/figure-latex/stat6inhib-1.pdf>]
+.pdf>] [89<./thesis_files/figure-latex/IL4Res-1.pdf><./thesis_files/figure-latex
+/IL4ihc-1.pdf>] [90<./thesis_files/figure-latex/stat6inhib-1.pdf>]
 Chapter 7.
-[93
+[91
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 2088.
-[94] [95] [96]
-Overfull \hbox (13.12283pt too wide) in paragraph at lines 2139--2139
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 2070.
+[92] [93] [94]
+Overfull \hbox (13.12283pt too wide) in paragraph at lines 2121--2121
 []\T1/phv/b/n/14.4 Ge-netic and mi-croen-vi-ron-men-tal mod-u-la-tors of drug re
 -sponse 
  []
 
-[97]
-Overfull \hbox (9.35936pt too wide) in paragraph at lines 2159--2160
+[95]
+Overfull \hbox (9.35936pt too wide) in paragraph at lines 2141--2142
 \T1/phv/m/n/10.95 cases. Strik-ingly, TLR stim-u-la-tion in-duced drug re-sis-ta
 nce or in-creased drug ef-fi-cacy with chemother-
  []
 
-[98] [99] [100]
+[96] [97] [98]
 Underfull \vbox (badness 5446) has occurred while \output is active []
 
-[101
+[99
 
 ]
-Overfull \hbox (7.21385pt too wide) in paragraph at lines 2244--2246
+Overfull \hbox (7.21385pt too wide) in paragraph at lines 2226--2228
  []\T1/phv/m/n/10.95 Bal-atti, Veron-ica, Ar-i-anna Bot-toni, Alexey Pala-marchu
 k, Han-sjuerg Alder, Laura Z. Rassenti, Thomas
  []
@@ -1658,25 +1637,25 @@ k, Han-sjuerg Alder, Laura Z. Rassenti, Thomas
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[102
+[100
 Missing character: There is no ‐ (U+2010) in font phvr8t!
 Missing character: There is no ‐ (U+2010) in font phvr8t!
 ]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[101]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[102]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [103]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[104]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[105]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[106
+[104
 Missing character: There is no ‐ (U+2010) in font phvr8t!
 ]
-Overfull \hbox (8.35205pt too wide) in paragraph at lines 2382--2384
+Overfull \hbox (8.35205pt too wide) in paragraph at lines 2364--2366
  []\T1/phv/m/n/10.95 Cim-mino, Amelia, George Adrian Calin, Muller Fab-bri, Mar-
 ilena V Io-rio, Manuela Fer-racin, Masayoshi
  []
@@ -1684,13 +1663,13 @@ ilena V Io-rio, Manuela Fer-racin, Masayoshi
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[107
+[105
 Missing character: There is no ‐ (U+2010) in font phvr8t!
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[108]
-Overfull \hbox (9.07455pt too wide) in paragraph at lines 2433--2435
+[106]
+Overfull \hbox (9.07455pt too wide) in paragraph at lines 2415--2417
  []\T1/phv/m/n/10.95 Döh-ner, Hart-mut, Stephan Stil-gen-bauer, Axel Ben-ner, 
 Elke Le-upolt, Alexan-der Kröber, Lars Bullinger,
  []
@@ -1698,11 +1677,11 @@ Elke Le-upolt, Alexan-der Kröber, Lars Bullinger,
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[109
+[107
 Missing character: There is no ł (U+0142) in font phvr8t!
 Missing character: There is no ś (U+015B) in font phvr8t!
 ]
-Overfull \hbox (6.77617pt too wide) in paragraph at lines 2472--2474
+Overfull \hbox (6.77617pt too wide) in paragraph at lines 2454--2456
  []\T1/phv/m/n/10.95 Fis-cher, Ute, Jun J. Yang, Tomokatsu Ikawa, Daniel Hein, 
 Car-olina Vicente-Dueñas, Arndt Borkhardt,
  []
@@ -1710,13 +1689,13 @@ Car-olina Vicente-Dueñas, Arndt Borkhardt,
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[110
+[108
 Missing character: There is no ń (U+0144) in font phvr8t!
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[111]
-Overfull \hbox (8.82315pt too wide) in paragraph at lines 2517--2519
+[109]
+Overfull \hbox (8.82315pt too wide) in paragraph at lines 2499--2501
  []\T1/phv/m/n/10.95 Guar-ini, Anna, Sabina Chiaretti, Si-mona Tavolaro, Roberta
  Mag-gio, Na-dia Per-agine, Franca Citarella,
  []
@@ -1724,8 +1703,8 @@ Overfull \hbox (8.82315pt too wide) in paragraph at lines 2517--2519
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[112]
-Overfull \hbox (4.19194pt too wide) in paragraph at lines 2562--2564
+[110]
+Overfull \hbox (4.19194pt too wide) in paragraph at lines 2544--2546
  []\T1/phv/m/n/10.95 Hill-men, Pe-ter, Tadeusz Robak, Ann Janssens, K Govind Bab
 u, Janusz Kloczko, Se-bas-tian Grosicki,
  []
@@ -1733,13 +1712,13 @@ u, Janusz Kloczko, Se-bas-tian Grosicki,
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[113
+[111
 Missing character: There is no ′ (U+2032) in font phvr8t!
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[114]
-Overfull \hbox (2.55981pt too wide) in paragraph at lines 2619--2621
+[112]
+Overfull \hbox (2.55981pt too wide) in paragraph at lines 2601--2603
  \T1/phv/m/n/10.95 re-veals a ho-mo-ge-neous phe-no-type re-lated to mem-ory B 
 cells.'' \T1/phv/m/sl/10.95 Jour-nal of Ex-per-i-men-tal Medicine
  []
@@ -1747,20 +1726,20 @@ cells.'' \T1/phv/m/sl/10.95 Jour-nal of Ex-per-i-men-tal Medicine
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+[113]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[114]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 [115]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[116]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[117]
-Overfull \hbox (3.47957pt too wide) in paragraph at lines 2709--2711
+Overfull \hbox (3.47957pt too wide) in paragraph at lines 2691--2693
  []\T1/phv/m/n/10.95 Lukas, Ma-rina, Britta Vel-ten, Leopold Sell-ner, Katarzyna
  Tom-ska, Jen-nifer Hüellein, Tat-jana Walther,
  []
 
 
-Overfull \hbox (0.131pt too wide) in paragraph at lines 2715--2717
+Overfull \hbox (0.131pt too wide) in paragraph at lines 2697--2699
  \T1/phv/m/n/10.95 Vladimir B Teif, et al. 2019. ``Link-ing aber-rant chro-matin
  fea-tures in chronic lym-pho-cytic leukemia
  []
@@ -1768,8 +1747,8 @@ Overfull \hbox (0.131pt too wide) in paragraph at lines 2715--2717
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[118]
-Overfull \hbox (9.44554pt too wide) in paragraph at lines 2727--2729
+[116]
+Overfull \hbox (9.44554pt too wide) in paragraph at lines 2709--2711
  []\T1/phv/m/n/10.95 Martínez-Trillos, Ale-jan-dra, Alba Navarro, Marta Aymeric
 h, Julio Del-gado, Ar-mando López-Guillermo,
  []
@@ -1777,16 +1756,16 @@ h, Julio Del-gado, Ar-mando López-Guillermo,
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[119
+[117
 Missing character: There is no ő (U+0151) in font phvr8t!
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[120]
+[118]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[121]
-Overfull \hbox (1.5422pt too wide) in paragraph at lines 2835--2837
+[119]
+Overfull \hbox (1.5422pt too wide) in paragraph at lines 2817--2819
  []\T1/phv/m/n/10.95 Palma, Marzia, Giusy Gen-til-core, Kia Heimers-son, Fariba Mozaf-fari, Bar-bro N
 äsman-Glaser, Emma
  []
@@ -1794,11 +1773,11 @@ Overfull \hbox (1.5422pt too wide) in paragraph at lines 2835--2837
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[122]
+[120]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[123]
-Overfull \hbox (7.23613pt too wide) in paragraph at lines 2898--2900
+[121]
+Overfull \hbox (7.23613pt too wide) in paragraph at lines 2880--2882
  []\T1/phv/m/n/10.95 Ren-deiro, An-dré F., Thomas Kraus-gru-ber, Niko-laus Fort
 elny, Fang-wen Zhao, Thomas Penz, Matthias
  []
@@ -1806,13 +1785,25 @@ elny, Fang-wen Zhao, Thomas Penz, Matthias
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[124
+[122
 Missing character: There is no ł (U+0142) in font phvr8t!
 Missing character: There is no ł (U+0142) in font phvr8t!
 ]
-Overfull \hbox (8.03479pt too wide) in paragraph at lines 2910--2912
+Overfull \hbox (8.03479pt too wide) in paragraph at lines 2892--2894
  []\T1/phv/m/n/10.95 Roess-ner, Philipp M, and Mar-tina Seif-fert. 2020. ``T-cel
 ls in chronic lym-pho-cytic leukemia: Guardians
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[123]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[124]
+Overfull \hbox (5.28583pt too wide) in paragraph at lines 2946--2948
+ []\T1/phv/m/n/10.95 Sni-jder, Berend, Gre-gory I Vladimer, Niko-laus Krall, Kat
+-suhiro Miura, Ann Sofie Schmolke, Christoph
  []
 
 
@@ -1822,42 +1813,42 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [126]
-Overfull \hbox (5.28583pt too wide) in paragraph at lines 2964--2966
- []\T1/phv/m/n/10.95 Sni-jder, Berend, Gre-gory I Vladimer, Niko-laus Krall, Kat
--suhiro Miura, Ann Sofie Schmolke, Christoph
- []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [127]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[128]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[129]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[130] [131] [132
+[128] [129] [130
 
 ]
-<figures/drugPlate.png, id=4528, 878.28125pt x 429.605pt>
+<figures/drugPlate.png, id=4504, 878.28125pt x 429.605pt>
 File: figures/drugPlate.png Graphic file (type png)
 <use figures/drugPlate.png>
-Package luatex.def Info: figures/drugPlate.png  used on input line 3127.
+Package luatex.def Info: figures/drugPlate.png  used on input line 3109.
 (luatex.def)             Requested size: 330.61972pt x 161.72421pt.
-<figures/stimulusPlate1.png, id=4529, 755.82375pt x 500.87125pt>
+<figures/stimulusPlate1.png, id=4505, 755.82375pt x 500.87125pt>
 File: figures/stimulusPlate1.png Graphic file (type png)
 <use figures/stimulusPlate1.png>
-Package luatex.def Info: figures/stimulusPlate1.png  used on input line 3136.
+Package luatex.def Info: figures/stimulusPlate1.png  used on input line 3118.
 (luatex.def)             Requested size: 330.61972pt x 219.0924pt.
-<figures/stimulusPlate2.png, id=4530, 760.8425pt x 498.86375pt>
+<figures/stimulusPlate2.png, id=4506, 760.8425pt x 498.86375pt>
 File: figures/stimulusPlate2.png Graphic file (type png)
 <use figures/stimulusPlate2.png>
-Package luatex.def Info: figures/stimulusPlate2.png  used on input line 3145.
+Package luatex.def Info: figures/stimulusPlate2.png  used on input line 3127.
 (luatex.def)             Requested size: 330.61972pt x 216.78323pt.
-<thesis_files/figure-latex/diffTFsmallvolPlot-1.pdf, id=4531, 351.3125pt x 351.
+<figures/consensus010.png, id=4507, 481.8pt x 481.8pt>
+File: figures/consensus010.png Graphic file (type png)
+<use figures/consensus010.png>
+Package luatex.def Info: figures/consensus010.png  used on input line 3136.
+(luatex.def)             Requested size: 212.54073pt x 212.53667pt.
+<thesis_files/figure-latex/GSEApathways-1.pdf, id=4512, 442.65375pt x 295.1025p
+t>
+File: thesis_files/figure-latex/GSEApathways-1.pdf Graphic file (type pdf)
+<use thesis_files/figure-latex/GSEApathways-1.pdf>
+Package luatex.def Info: thesis_files/figure-latex/GSEApathways-1.pdf  used on 
+input line 3145.
+(luatex.def)             Requested size: 442.65265pt x 295.10176pt.
+<thesis_files/figure-latex/diffTFsmallvolPlot-1.pdf, id=4515, 351.3125pt x 351.
 3125pt>
 File: thesis_files/figure-latex/diffTFsmallvolPlot-1.pdf Graphic file (type pdf
 )
@@ -1865,8 +1856,8 @@ File: thesis_files/figure-latex/diffTFsmallvolPlot-1.pdf Graphic file (type pdf
 Package luatex.def Info: thesis_files/figure-latex/diffTFsmallvolPlot-1.pdf  us
 ed on input line 3154.
 (luatex.def)             Requested size: 283.39244pt x 283.41438pt.
-[133<./figures/drugPlate.png><./figures/stimulusPlate1.png>]
-<thesis_files/figure-latex/drugcytGeneIntAll-1.pdf, id=4540, 1140.26pt x 1391.1
+[131<./figures/drugPlate.png><./figures/stimulusPlate1.png>]
+<thesis_files/figure-latex/drugcytGeneIntAll-1.pdf, id=4524, 1140.26pt x 1391.1
 975pt>
 File: thesis_files/figure-latex/drugcytGeneIntAll-1.pdf Graphic file (type pdf)
 
@@ -1884,13 +1875,13 @@ Package epstopdf Info: Source file: <figures/Nutlin-3a.eps>
 erted-to.pdf figures/Nutlin-3a.eps>
 (epstopdf)             \includegraphics on input line 3176.
 Package epstopdf Info: Output file is already uptodate.
-<figures/Nutlin-3a-eps-converted-to.pdf, id=4541, 883.3pt x 604.2575pt>
+<figures/Nutlin-3a-eps-converted-to.pdf, id=4525, 883.3pt x 604.2575pt>
 File: figures/Nutlin-3a-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/Nutlin-3a-eps-converted-to.pdf>
 Package luatex.def Info: figures/Nutlin-3a-eps-converted-to.pdf  used on input 
 line 3176.
 (luatex.def)             Requested size: 330.61972pt x 226.17188pt.
-<thesis_files/figure-latex/ifngamma-1.pdf, id=4542, 459.7175pt x 293.095pt>
+<thesis_files/figure-latex/ifngamma-1.pdf, id=4526, 459.7175pt x 293.095pt>
 File: thesis_files/figure-latex/ifngamma-1.pdf Graphic file (type pdf)
 <use thesis_files/figure-latex/ifngamma-1.pdf>
 Package luatex.def Info: thesis_files/figure-latex/ifngamma-1.pdf  used on inpu
@@ -1907,25 +1898,26 @@ to.pdf>
 C-eps-converted-to.pdf figures/IBET-trisomy12-ATAC.eps>
 (epstopdf)             \includegraphics on input line 3198.
 Package epstopdf Info: Output file is already uptodate.
-<figures/IBET-trisomy12-ATAC-eps-converted-to.pdf, id=4543, 2285.53876pt x 1885
+<figures/IBET-trisomy12-ATAC-eps-converted-to.pdf, id=4527, 2285.53876pt x 1885
 .0425pt>
 File: figures/IBET-trisomy12-ATAC-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/IBET-trisomy12-ATAC-eps-converted-to.pdf>
 Package luatex.def Info: figures/IBET-trisomy12-ATAC-eps-converted-to.pdf  used
  on input line 3198.
 (luatex.def)             Requested size: 472.31595pt x 389.54266pt.
-<figures/ibribetil4.png, id=4548, 1007.765pt x 578.16pt>
+<figures/ibribetil4.png, id=4532, 1007.765pt x 578.16pt>
 File: figures/ibribetil4.png Graphic file (type png)
 <use figures/ibribetil4.png>
 Package luatex.def Info: figures/ibribetil4.png  used on input line 3211.
 (luatex.def)             Requested size: 472.31595pt x 270.96771pt.
-[134<./figures/stimulusPlate2.png>] [135<./thesis_files/figure-latex/diffTFsmall
-volPlot-1.pdf>] [136<./thesis_files/figure-latex/drugcytGeneIntAll-1.pdf>] [137
-<./figures/Nutlin-3a-eps-converted-to.pdf><./thesis_files/figure-latex/ifngamma-
-1.pdf>] [138<./figures/IBET-trisomy12-ATAC-eps-converted-to.pdf>] [139<./figures
-/ibribetil4.png>] [140
+[132<./figures/stimulusPlate2.png><./figures/consensus010.png>] [133<./thesis_fi
+les/figure-latex/GSEApathways-1.pdf>] [134<./thesis_files/figure-latex/diffTFsma
+llvolPlot-1.pdf>] [135<./thesis_files/figure-latex/drugcytGeneIntAll-1.pdf>] [1
+36<./figures/Nutlin-3a-eps-converted-to.pdf><./thesis_files/figure-latex/ifngamm
+a-1.pdf>] [137<./figures/IBET-trisomy12-ATAC-eps-converted-to.pdf>] [138<./figur
+es/ibribetil4.png>] [139
 
-] [141] [142] [143] [144] [145] (./thesis.aux)
+] [140] [141] [142] [143] (./thesis.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1933,16 +1925,16 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: F587B7E406F290686A324AF5340182EC;45236.
+(rerunfilecheck)             Checksum: 57AA1738267BDD9E587752E8360F7516;45216.
 )
 
 Here is how much of LuaTeX's memory you used:
- 18807 strings out of 478531
+ 18805 strings out of 478531
  244330,953878 words of node,token memory allocated
- 6113 words of node memory still in use:
-   6 hlist, 2 vlist, 2 rule, 4 glue, 361 kern, 1 glyph, 492 attribute, 80 glue_s
-pec, 492 attribute_list, 1 write, 291 pdf_action nodes
-   avail lists: 1:2,2:7686,3:623,4:1382,5:1790,6:27,7:14708,8:157,9:8700,10:26,1
+ 6128 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 5 glue, 361 kern, 1 glyph, 494 attribute, 80 glue_s
+pec, 494 attribute_list, 1 write, 291 pdf_action nodes
+   avail lists: 1:1,2:7686,3:623,4:1382,5:1790,6:40,7:14708,8:157,9:8700,10:26,1
 1:872
  36244 multiletter control sequences out of 65536+600000
  124 fonts using 9843447 bytes
@@ -1964,10 +1956,10 @@ c/lm/lmtt10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/lm/lmtti1
 usr/local/texlive/2021/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/loc
 al/texlive/2021/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texli
 ve/2021/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on thesis.pdf (177 pages, 11240389 bytes).
+Output written on thesis.pdf (175 pages, 11241101 bytes).
 
-PDF statistics: 4778 PDF objects out of 5155 (max. 8388607)
- 4119 compressed objects within 42 object streams
- 854 named destinations out of 1000 (max. 131072)
+PDF statistics: 4772 PDF objects out of 5155 (max. 8388607)
+ 4115 compressed objects within 42 object streams
+ 852 named destinations out of 1000 (max. 131072)
  1137 words of extra memory for PDF output out of 10000 (max. 100000000)
 
