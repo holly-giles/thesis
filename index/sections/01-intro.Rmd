@@ -308,7 +308,7 @@ The thesis is structured as follows:
    
 **Chapter 3: Data** Overview of the datasets employed in this thesis, and the corresponding public code repository and shiny app.  
    
-**Chapter 4: *Ex-vivo* sensitivity to microenvironmental stimulation in primary CLL cells **
+**Chapter 4: *Ex-vivo* responses of primary CLL samples to microenvironmental stimuli **
 Phenotypic profiling of the responses of CLL samples to the panel of microenvironmental stimuli. 
 
 **Chapter 5: Genetic modulators of responses to microenvironmental stimulation** Integration of the screening data with patient sample multi-omic profiles to perform a comprehensive survey of molecular determinants of stimulus response.   
