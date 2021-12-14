@@ -18,6 +18,7 @@ load("data/patMeta.RData")
 load("data/cytokines.RData")
 load("data/drugs.RData")
 load("data/df.RData")
+df_complete <-df
 load("data/cyt_and_receptors.RData")
 load("data/diffTF_small.RData")
 load("data/Lasso_Plots_Fig6.RData")
@@ -520,13 +521,59 @@ knitr::include_graphics("figures/IBET-trisomy12-ATAC.eps")
 ```
 
 
-(ref:ibribetil4) Overview of the approach for the validation experiments. Four CLL PBMC samples were incubated with ibrutinib, IL4 and IBET-762, both individually and in all combinations. Samples were taken for ATAC sequencing and RNA sequencing after 6 hours and for mass spectrometry after 24 hours. 
 
-```{r ibribetil4, out.width = "100%", fig.cap='(ref:ibribetil4)', echo = FALSE}
+(ref:TLRnutlin) Beeswarm-boxplots showing control-normalised log-transformed viability values, after treatment with nutlin-3a (MDM2), and CpG ODN (TLR9) and nutlin-3a (MDM2), stratified by del(11q), IGHV and trisomy 12 status. p-values from Student’s t-tests.
 
-knitr::include_graphics("figures/ibribetil4.eps")
+```{r TLRnutlin, fig.cap='(ref:TLRnutlin)', message = FALSE,  echo = FALSE, fig.height = 8, fig.width = 6,  fig.align="center", out.width = '100%', dev = 'cairo_pdf'}
+
+TLR_Nut_plotTab <-  
+left_join(df_complete, patMeta, by = "PatientID") %>%
+  dplyr::filter(Cytokine %in% c("CpG ODN", "No Cytokine"),
+                Drug== "Nutlin-3a",
+                Drug_Concentration== "High", 
+                !is.na(del11q),
+                !is.na(IGHV.status), 
+                !is.na(trisomy12)) %>% 
+  mutate(del11q = ifelse(del11q == "1", "Mutated", "Unmutated")) %>% 
+  mutate(IGHV.status = ifelse(IGHV.status == "M", "Mutated", "Unmutated")) %>% 
+  mutate(trisomy12 = ifelse(trisomy12 == "1", "Mutated", "Unmutated")) %>% 
+  dplyr::select(DCK, Log, trisomy12, del11q, IGHV.status) 
+
+TLR_Nut_plotTab$IGHV.status <- as.factor(TLR_Nut_plotTab$IGHV.status)
+
+TLR_Nut_plotTab%<>% pivot_longer(c(trisomy12, IGHV.status, del11q), names_to = "mutation", values_to= "status")
+
+#adjust factor levels
+TLR_Nut_plotTab$DCK <- factor(TLR_Nut_plotTab$DCK, levels = c("Nutlin-3a:No Cytokine", "Nutlin-3a:CpG ODN"))
+
+#adjut labels
+# New facet label names for supp variable
+DCK.labs <- c("Nutlin-3a", "Nutlin-3a + CpG ODN")
+names(DCK.labs) <- c("Nutlin-3a:No Cytokine", "Nutlin-3a:CpG ODN")
+
+mutation.labs <- c("del(11q)", "IGHV status", "trisomy 12")
+names(mutation.labs) <- c("del11q", "IGHV.status", "trisomy12")
+
+
+  ggplot(TLR_Nut_plotTab, aes(x=status,y=Log,color=status))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  stat_compare_means(method = "t.test",
+                     label.x.npc = "left", 
+                     size=3)+
+    
+  xlab("") +
+  ylab("Log(Viability)") +
+  ggtitle("") +
+  scale_color_manual(values=c(colors[1], colors[2])) + 
+  facet_grid(mutation ~ DCK, labeller = labeller(DCK = DCK.labs, mutation = mutation.labs))+
+  t2
+
 
 ```
+
 
 # Appendix - Tables {-}
 
