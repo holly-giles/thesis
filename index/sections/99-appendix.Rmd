@@ -416,8 +416,18 @@ rm(plotTab)
 
 ```
 
+(ref:diffTFexplainer) diffTF workflow from @Berest2019. diffTF accepts a list of TFs along with the genomic locations of their bindings sites. For each TF, the software computes the distribution of fold changes between the trisomy 12 and WT samples, using the ATACseq peaks at each TF binding site in each condition. The software compares this distribution to a set of background fold changes produced from loci that show the same GC content but not the TF binding site motif. Each TF is thus assigned assigned a weighted mean difference value, which quantifies the change in binding site accessibility, and a p value. _Figure from original published in @Berest2019, and adapted with permission._
+
+```{r diffTFexplainer, fig.cap='(ref:diffTFexplainer)', message = FALSE,  echo = FALSE, fig.height=5, fig.width = 5, fig.align="center", out.width = '50%', dev = 'cairo_pdf'}
+
+knitr::include_graphics("figures/diffTF_method.eps")
+
+```
+
 
 \newpage
+
+
 
 (ref:drugcytGeneIntAll)  "Heatmap depicting overview of genetic predictors of drug - stimulus interactions (each row represents the coefficients from fitting a single multivariate model). Stimuli are shown on left, and corresponding drugs on right. Drugs, stimuli and genetic alterations are alphabetically sorted. Coloured fields indicate that the $\beta_{int}$ for given drug and stimulus is modulated by corresponding genetic feature. Positive coefficients are shown in red, indicating $\beta_{int}$ is more positive for given drug and stimulus combination if the feature is present." _Figure and caption generated with Peter-Martin Bruch for the manuscript Bruch and Giles et al. 2021._
 
