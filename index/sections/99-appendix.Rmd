@@ -585,6 +585,60 @@ names(mutation.labs) <- c("del11q", "IGHV.status", "trisomy12")
 ```
 
 
+(ref:ibrIl4ExB) "Beeswarm-boxplots of log-transformed viability values for ibrutinib (BTK) and IL4 single and combinatorial treatments, faceted by IGHV status and trisomy 12 status. P-values from paired Student’s t-tests." _Figure and caption from Bruch and Giles et al. 2021._
+
+```{r ibrIl4ExB, fig.cap='(ref:ibrIl4ExB)', message = FALSE,  echo = FALSE, fig.height=6, fig.width = 6, fig.align="center", out.width = '60%', dev = 'cairo_pdf'}
+#set facet labels 
+tri12.labs <- c("0" = "Non-\ntrisomy 12", "1" = "trisomy 12")
+ighv.labs <- c("U" = "IGHV-U", "M" =  "IGHV-M")
+
+  left_join(df, patMeta, by = "PatientID")%>%
+  #filter for drug:stimulus combinations of interest, make sure no NAs in genetic data
+  dplyr::filter(DCK%in%c("DMSO:IL-4","Ibrutinib:IL-4","Ibrutinib:No Cytokine"),
+                Drug_Concentration %in% c("High", "None"),
+                !is.na(trisomy12),
+                !is.na(IGHV.status)) %>%
+     mutate(DCK = factor(DCK, levels=c("DMSO:IL-4",
+                                      "Ibrutinib:No Cytokine",
+                                      "Ibrutinib:IL-4"))) %>%
+  
+  #plot treatment combination against viability 
+  ggplot(aes(x = DCK,y = Log,color= DCK))+
+  geom_hline(yintercept = 0)+
+  geom_boxplot()+
+  geom_beeswarm(cex=1.5) +
+  guides(color="none", shape="none")+
+  #add p values
+  stat_compare_means(method = "t.test",
+                     label.y.npc = 0.8, 
+                     paired = TRUE, 
+                     comparisons = list(c(1,3), c(2,3)),
+                     step.increase=0.2, 
+                     size=3) +
+  xlab("") +
+  ylab("Log(Viability)") +
+  #facet by trisomy 12 and IGHV status
+  facet_grid(vars(trisomy12), 
+             vars(IGHV.status),
+             labeller = labeller(trisomy12 = tri12.labs, IGHV.status = ighv.labs))+
+  
+  scale_x_discrete(labels=c("DMSO:IL-4"="IL4",
+                            "Ibrutinib:No Cytokine"="Ibrutinib",
+                            "Ibrutinib:IL-4"="Ibrutinib \n+ IL4"))+  
+    
+  scale_color_manual(values=c(colors[4], colors[5], colors[3])) + 
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))+
+  t2 +
+  theme(strip.background =element_rect(fill=NA),
+        strip.text = element_text(size=fontsize+4, face="bold"),
+        strip.text.y = element_text(angle = 0),
+        axis.text.x = element_text(size=fontsize+4, angle = 35, hjust = 1, vjust = 1))
+ 
+
+
+```
+
+
 # Appendix - Tables {-}
 
 ```{r patientTable, echo = FALSE}
