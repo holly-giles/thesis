@@ -1805,6 +1805,9 @@ ATAC - doesnt inihibt STAT6 acitivty
 RNA - does inhibit STAT6 targets
 anything more sepcific 
 Futrue work 
+```{r}
+
+```
 
 ## Summary 
 This work aims to integrate the effects of mutations and the microenvironment in drug response in CLL, at a large scale. The results demonstrate the value of using multi-omic data (consisting of both observational data on patient samples and perturbation data generated through screening) to generate more complex biological insights that can guide further clinical studies. 
